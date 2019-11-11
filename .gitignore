@@ -1,0 +1,4 @@
+# Ignore nix build output
+result
+
+secrets.nix
