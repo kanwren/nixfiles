@@ -69,11 +69,18 @@
       vim_configurable
       bash
       git
+      killall
+      manpages
       tmux
       alacritty
-      firefox
-      tldr
+
       xclip
+      tldr
+      gist
+
+      firefox
+      feh
+      zathura
     ];
 
     interactiveShellInit = ''
