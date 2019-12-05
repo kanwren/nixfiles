@@ -6,7 +6,6 @@ with rec {
   baseSystemPackages = with pkgs; [
     nix-prefetch-git
 
-    bash
     wget
     curl
     git
@@ -31,13 +30,10 @@ with rec {
 {
   imports = [
     ./vim.nix
+    ./bash.nix
   ];
 
   environment = {
     systemPackages = baseSystemPackages ++ scripts;
-
-    interactiveShellInit = ''
-      set -o vi
-    '';
   };
 }
