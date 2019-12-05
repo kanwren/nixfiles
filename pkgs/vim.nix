@@ -3,6 +3,9 @@
 {
   environment = {
     systemPackages = with pkgs; [ vim_configurable ctags ];
+    shellAliases.vi = "vim";
+    variables.EDITOR = "vim";
+    variables.VISUAL = "vim";
   };
 
   nixpkgs.config.vim = {
@@ -12,6 +15,6 @@
 
   programs.bash.shellAliases = {
     vi = "vim";
-    svim = "sudoedit";
+    svim = "sudo -E vim"; # or sudoedit
   };
 }
