@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  secrets = import ../secrets.nix;
+  importOr = path: default:
+    if builtins.pathExists path then import path else default;
+  secrets = importOr ../secrets.nix {};
 in
 {
   networking = {
