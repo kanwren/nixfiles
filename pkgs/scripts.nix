@@ -96,9 +96,24 @@ let
     brightness "$1"
   '';
 
+  ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
+    case "$1" in
+      ghc*)
+        args=''${*:2}
+        ghc="$1"
+        ;;
+      *)
+        args="$*"
+        ghc="ghc865"
+        ;;
+    esac
+    ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
+  '';
+
 in [
   extractScript
   bakScript
   nightScript
   brightScript
+  ghcWithPackagesScript
 ]
