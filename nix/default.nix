@@ -1,10 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  unstablePkgs = import ./unstable.nix {
-    nixpkgsConfig = config.nixpkgs.config;
-  };
-in
 {
   system.autoUpgrade.enable = false;
 
@@ -21,13 +16,15 @@ in
     ];
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = false;
-    allowUnsupportedSystem = false;
-
-    packageOverrides = pkgs: {
-      inherit unstablePkgs;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowBroken = false;
+      allowUnsupportedSystem = false;
     };
+
+    overlays = builtins.map import [
+      ./overlays/unstable.nix
+    ];
   };
 }
