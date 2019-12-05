@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  unstablePkgs = import ./unstable.nix {
+    nixpkgsConfig = config.nixpkgs.config;
+  };
+in
 {
   system.autoUpgrade.enable = false;
 
@@ -21,8 +26,8 @@
     allowBroken = false;
     allowUnsupportedSystem = false;
 
-    packageOverrides = pkgs: rec {
-      unstable = import ./unstable.nix { inherit pkgs config; };
+    packageOverrides = pkgs: {
+      inherit unstablePkgs;
     };
   };
 }

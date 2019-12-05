@@ -1,4 +1,4 @@
-{ pkgs, config }:
+{ nixpkgsConfig }:
 
 let
   unstableSrc = builtins.fetchTarball {
@@ -6,4 +6,4 @@ let
   };
 in
 
-import unstableSrc { config = config.nixpkgs.config; }
+import unstableSrc { config = nixpkgsConfig; }
