@@ -3,31 +3,38 @@
 let
   extractScript = with pkgs; writeShellScriptBin "extract" ''
     if [ -z "$1" ]; then
-      echo "Usage: extract </path/to/file>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|sz|ex|tar.bz2|tar.gz|tar.xz>"
-      else
-      if [ -f $1 ]; then
-        case $1 in
-          *.tar.bz2)   ${gnutar} xvjf ./$1    ;;
-          *.tar.gz)    ${gnutar} xvzf ./$1    ;;
-          *.tar.xz)    ${gnutar} xvJf ./$1    ;;
-          *.lzma)      ${xz} --format=lzma --decompress ./$1 ;;
-          *.bz2)       ${bzip2}/bin/bzip2 -d ./$1 ;;
-          *.rar)       ${unrar}/bin/unrar x -ad ./$1 ;;
-          *.gz)        ${gzip}/bin/gzip -d ./$1      ;;
-          *.tar)       ${gnutar} xvf ./$1     ;;
-          *.tbz2)      ${gnutar} xvjf ./$1    ;;
-          *.tgz)       ${gnutar} xvzf ./$1    ;;
-          *.zip)       ${unzip}/bin/unzip ./$1       ;;
-          *.Z)         ${ncompress}/bin/uncompress ./$1  ;;
-          *.7z)        ${p7zip}/bin/7z x ./$1        ;;
-          *.xz)        ${xz}/bin/xz --decompress ./$1 ;;
-          *.exe)       ${cabextract}/bin/cabextract ./$1  ;;
-          *.cab)       ${cabextract}/bin/cabextract ./$1  ;;
-          *)           echo "extract: '$1' - unknown archive method" ;;
-        esac
-      else
-        echo "$1 - file does not exist"
-      fi
+      >&2 echo "Usage: extract <filepath>.<tar.bz2|tar.gz|tar.xz|lzma|bz2|rar|gz|tar|tbz2|tgz|zip|Z|7z|xz|exe|cab>"
+      exit 1
+    else
+      for arg in "$@"; do
+        if [ -f "$arg" ]; then
+          case "$arg" in
+            *.tar.bz2)   ${gnutar}/bin/tar xvjf "$arg" ;;
+            *.tar.gz)    ${gnutar}/bin/tar xvzf "$arg" ;;
+            *.tar.xz)    ${gnutar}/bin/tar xvJf "$arg" ;;
+            *.lzma)      ${xz}/bin/lzma --format=lzma --decompress "$arg" ;;
+            *.bz2)       ${bzip2}/bin/bzip2 -d "$arg" ;;
+            *.rar)       ${unrar}/bin/unrar x -ad "$arg" ;;
+            *.gz)        ${gzip}/bin/gzip -d "$arg" ;;
+            *.tar)       ${gnutar}/bin/tar xvf "$arg" ;;
+            *.tbz2)      ${gnutar}/bin/tar xvjf "$arg" ;;
+            *.tgz)       ${gnutar}/bin/tar xvzf "$arg" ;;
+            *.zip)       ${unzip}/bin/unzip "$arg" ;;
+            *.Z)         ${ncompress}/bin/uncompress "$arg" ;;
+            *.7z)        ${p7zip}/bin/7z x "$arg" ;;
+            *.xz)        ${xz}/bin/xz --decompress "$arg" ;;
+            *.exe)       ${cabextract}/bin/cabextract "$arg" ;;
+            *.cab)       ${cabextract}/bin/cabextract "$arg" ;;
+            *)
+              >&2 echo "extract: '$arg' - unknown archive method"
+              exit 1
+              ;;
+          esac
+        else
+          >&2 echo "$arg - file does not exist"
+          exit 1
+        fi
+      done
     fi
   '';
 
@@ -38,9 +45,11 @@ let
         echo "Copied $1 to $1.bak"
       else
          >&2 echo "error: cannot find file $1"
+         exit 1
       fi
     else
        >&2 echo "error: expected 1 argument, got $#"
+       exit 1
     fi
   '';
 
@@ -52,10 +61,19 @@ let
       done
     }
 
-    case $1 in
-      off) echo "Night mode off" && configure_night_mode 1:1:1 1.0 ;;
-      *) echo "Night mode on" && configure_night_mode 1:1:0.5 0.7 ;;
-    esac
+    if [ "$1" = "off" ]; then
+      echo "Night mode off"
+      configure_night_mode 1:1:1 1.0
+    elif [[ "$1" =~ 0\.[2-9][0-9]*|1(\.0+)? ]]; then
+      echo "Night mode on"
+      configure_night_mode 1:1:0.5 "$1"
+    elif [ -z "$1" ]; then
+      echo "Night mode on"
+      configure_night_mode 1:1:0.5 0.7
+    else
+      >&2 echo "Usage: night [<off|0.2-1.0>]"
+      exit 1
+    fi
   '';
 
   # xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness 1
@@ -70,7 +88,8 @@ let
           xrandr --output $disp --brightness $1
         done
       else
-        echo "Invalid brightness; enter a value between 0.2 and 1.0"
+        >&2 echo "Invalid brightness; enter a value between 0.2 and 1.0"
+        exit 1
       fi
     }
 
