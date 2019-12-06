@@ -1,4 +1,5 @@
 { config, pkgs, ... }:
+
 let
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
@@ -8,14 +9,16 @@ let
 in
 
 {
-  imports = [
-    home-manager
-    # Programs to enable/configure or manage dotfiles for
-    ./alacritty/default.nix
-    ./tmux/default.nix
-    ./zathura/default.nix
-    # TODO: configure git here
-  ];
+  imports =
+    let
+      # Programs to enable/configure or manage dotfiles for
+      homeProgramConfigs = [
+        ./alacritty/default.nix
+        ./tmux/default.nix
+        ./zathura/default.nix
+        ./git/default.nix
+      ];
+    in [ home-manager ] ++ homeProgramConfigs;
 
   home-manager.users.nprin = {
     home = {
