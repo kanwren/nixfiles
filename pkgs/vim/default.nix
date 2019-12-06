@@ -8,13 +8,18 @@
     variables.VISUAL = "vim";
   };
 
-  nixpkgs.config.vim = {
-    ftNixSupport = true;
-    pythonSupport = true;
-  };
+  # This is an option, but filetype support is managed by plugins in vim configs
+  # instead of by patching vim
+  # nixpkgs.config.vim = {
+  #   ftNixSupport = true;
+  #   pythonSupport = true;
+  # };
 
-  programs.bash.shellAliases = {
-    vi = "vim";
-    svim = "sudo -E vim"; # or sudoedit
+  programs = {
+    vim.defaultEditor = true;
+    bash.shellAliases = {
+      vi = "vim";
+      svim = "sudo -E vim"; # or sudoedit
+    };
   };
 }
