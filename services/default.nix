@@ -4,6 +4,7 @@
   imports = [
     ./x/xserver.nix
     ./compton.nix
+    ./redshift.nix
   ];
 
   services = {
