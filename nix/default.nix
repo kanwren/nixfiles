@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   system.autoUpgrade.enable = false;
@@ -23,8 +23,15 @@
       allowUnsupportedSystem = false;
     };
 
-    overlays = builtins.map import [
-      ./overlays/unstable.nix
-    ];
+    # Import all the overlays in ./overlays
+    overlays =
+      let
+        # Get all files in a directory
+        getFiles = dir:
+          builtins.map (x: dir + "/${x}")
+          (builtins.attrNames
+          (lib.filterAttrs (_: type: type == "regular" || type == "symlink")
+          (builtins.readDir dir)));
+      in builtins.map import (getFiles ./overlays);
   };
 }
