@@ -13,17 +13,14 @@ with rec {
     manpages
     xclip
     tldr
-    gist
     ag
     tmux
     alacritty
 
-    firefox
     feh
     zathura
-    discord
-    slack
-    spotify
+
+    firefox
   ];
 };
 
