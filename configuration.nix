@@ -10,32 +10,14 @@
     ./boot/default.nix
     ./nix/default.nix
     ./hardware/default.nix
+    ./time/default.nix
+    ./i18n/default.nix
     ./services/default.nix
     ./users/default.nix
+    ./programs/default.nix
     ./pkgs/default.nix
     ./networking/default.nix
   ];
-
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
-
-  time = {
-    timeZone = "America/New_York";
-    hardwareClockInLocalTime = false;
-  };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs = {
-    mtr.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

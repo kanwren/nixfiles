@@ -36,4 +36,5 @@ with rec {
   environment = {
     systemPackages = baseSystemPackages ++ scripts;
   };
+
 }
