@@ -3,9 +3,7 @@
 {
   home-manager.users.nprin = {
 
-    # programs.tmux = {
-    #   enable = true;
-    # };
+    # TODO: enable tmux and configure plugins
 
     home.packages = [ pkgs.tmux ];
 

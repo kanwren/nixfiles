@@ -3,10 +3,6 @@
 {
   home-manager.users.nprin = {
 
-    # programs.zathura = {
-    #   enable = true;
-    # };
-
     home.packages = [ pkgs.zathura ];
 
     home.file = {
