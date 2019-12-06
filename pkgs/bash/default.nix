@@ -4,10 +4,13 @@ rec {
   environment = {
     systemPackages = with pkgs; [ bash ];
 
-    interactiveShellInit = programs.bash.interactiveShellInit;
+    interactiveShellInit = builtins.readFile ./bashrc;
   };
 
   programs.bash = {
+    # This gets appended to the interactiveShellInit
+    interactiveShellInit = "";
+
     enableCompletion = true;
 
     shellAliases = with pkgs; {
@@ -35,35 +38,6 @@ rec {
 
       nrn = "${nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
     };
-
-    interactiveShellInit = ''
-      set -o vi
-      # Make C-l clear the screen in insert mode
-      bind -m vi-insert "\C-l":clear-screen
-
-      # Check update LINES and COLUMNS after each command based on window size
-      shopt -s checkwinsize
-      # Use ** to match zero or more subdirectories
-      shopt -s globstar
-
-      # Don't put duplicate lines or lines starting with space in the history.
-      HISTCONTROL=ignoreboth
-      HISTSIZE=1000
-      HISTFILESIZE=2000
-      # Append to the history file, don't overwrite it
-      shopt -s histappend
-
-      # Set colorful prompt
-      case "$TERM" in
-        xterm-color|*-256color|*-256-color|alacritty) color_prompt=true ;;
-      esac
-
-      if [ "$color_prompt" ]; then
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      else
-        PS1='\u@\h:\w\$ '
-      fi
-    '';
   };
 
 }

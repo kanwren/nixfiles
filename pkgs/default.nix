@@ -29,8 +29,8 @@ with rec {
 
 {
   imports = [
-    ./vim.nix
-    ./bash.nix
+    ./vim/default.nix
+    ./bash/default.nix
   ];
 
   environment = {
