@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./xserver.nix
+    ./x/xserver.nix
     ./compton.nix
   ];
 
@@ -15,5 +15,11 @@
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
+
+    # Show the NixOS manual on virtual console 8
+    nixosManual = {
+      showManual = true;
+      ttyNumber = 8;
+    };
   };
 }
