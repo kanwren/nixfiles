@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   home-manager = builtins.fetchGit {
@@ -11,13 +11,16 @@ in
 {
   imports =
     let
-      # Programs to enable/configure or manage dotfiles for
-      homeProgramConfigs = [
-        ./alacritty/default.nix
-        ./tmux/default.nix
-        ./zathura/default.nix
-        ./git/default.nix
-      ];
+      # Get all subdirectories in a directory
+      getDirs = dir:
+        builtins.map (x: dir + "/${x}")
+        (builtins.attrNames
+        (lib.filterAttrs (_: type: type == "directory")
+        (builtins.readDir dir)));
+      homeProgramConfigs =
+        builtins.filter builtins.pathExists
+        (builtins.map (d: d + "/default.nix")
+        (getDirs ./.));
     in [ home-manager ] ++ homeProgramConfigs;
 
   home-manager.users.nprin = {
