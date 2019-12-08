@@ -119,12 +119,13 @@ let
   ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
     case "$1" in
       ghc*)
-        args=''${*:2}
         ghc="$1"
+        shift
+        args="$*"
         ;;
       *)
-        args="$*"
         ghc="ghc865"
+        args="$*"
         ;;
     esac
     ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
