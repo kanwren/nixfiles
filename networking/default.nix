@@ -1,16 +1,15 @@
 { config, pkgs, ... }:
 
-let
-  importOr = path: default:
-    if builtins.pathExists path then import path else default;
-  secrets = importOr ../secrets.nix {};
-in
 {
   networking = {
     hostName = "nprin";
 
     networkmanager = {
       enable = true;
+    };
+
+    wireless = {
+      enable = false;
     };
 
     useDHCP = false;
