@@ -39,16 +39,36 @@ let
   '';
 
   bakScript = with pkgs; writeShellScriptBin "bak" ''
-    if [ $# -eq 1 ]; then
-      if [ -f "$1" ]; then
-        cp "$1" "$1.bak"
-        echo "Copied $1 to $1.bak"
+    if [ $# -ge 1 ]; then
+      if [ "$1" = "-u" ]; then
+        shift
+        for arg in "$@"; do
+          if [ -f "$arg" ]; then
+            case "$arg" in
+              *.bak)
+                mv "$arg" "''${arg%.*}"
+                echo "Moved $arg to ''${arg%.*}"
+                ;;
+              *)
+                >&2 echo "Error: $arg is not a .bak file"
+                ;;
+            esac
+          else
+             >&2 echo "Error: cannot find file $arg"
+          fi
+        done
       else
-         >&2 echo "error: cannot find file $1"
-         exit 1
+        for arg in "$@"; do
+          if [ -f "$arg" ]; then
+            cp "$arg" "$arg.bak"
+            echo "Copied $arg to $arg.bak"
+          else
+             >&2 echo "Error: cannot find file $arg"
+          fi
+        done
       fi
     else
-       >&2 echo "error: expected 1 argument, got $#"
+       >&2 echo "Usage: bak [-u] <file1> [ <file2>...]"
        exit 1
     fi
   '';
