@@ -1,4 +1,7 @@
 # Ignore nix build output
 result
 
+# This is platform specific, so local backups are a little more helpful
+hardware-configuration.nix
+
 secrets.nix
