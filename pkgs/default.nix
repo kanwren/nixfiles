@@ -4,8 +4,10 @@ with rec {
   scripts = import ./scripts.nix { inherit pkgs; };
 
   baseSystemPackages = with pkgs; [
+    # Nix stuff
     nix-prefetch-git
 
+    # CLI tools
     wget
     curl
     git
@@ -13,13 +15,18 @@ with rec {
     manpages
     xclip
     tldr
+    bc
     ag
-    tmux
-    alacritty
 
+    # Terminals and tooling
+    alacritty
+    tmux
+
+    # Media
     feh
     zathura
 
+    # Browsers
     firefox
   ];
 };

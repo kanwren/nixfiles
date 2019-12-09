@@ -40,6 +40,7 @@ in
         gist
         gitAndTools.hub
         jq
+        cloc
 
         # Images
         ffmpeg

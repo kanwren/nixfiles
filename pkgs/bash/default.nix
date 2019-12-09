@@ -2,7 +2,7 @@
 
 rec {
   environment = {
-    systemPackages = with pkgs; [ bash ];
+    systemPackages = with pkgs; [ bashInteractive ];
 
     interactiveShellInit = builtins.readFile ./bashrc;
   };
