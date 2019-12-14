@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  secrets = import ../../secrets.nix;
-in
 {
   home-manager.users.nprin = {
     programs.git = {
@@ -10,8 +7,8 @@ in
       enable = true;
       package = pkgs.gitAndTools.gitFull;
 
-      userName = secrets.gitUserName;
-      userEmail = secrets.gitUserEmail;
+      userName = "nprindle";
+      userEmail = "nprindle18@gmail.com";
 
       ignores = [
         "tags"
