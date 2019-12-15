@@ -14,7 +14,6 @@
     ./i18n/default.nix
     ./services/default.nix
     ./users/default.nix
-    ./programs/default.nix
     ./pkgs/default.nix
     ./networking/default.nix
     ./home/default.nix
