@@ -2,6 +2,7 @@
 
 {
   networking = {
+
     hostName = "nprin";
 
     networkmanager = {
@@ -21,5 +22,11 @@
       allowedTCPPorts = [ ];
       allowedUDPPorts = [ ];
     };
+
+    nameservers = [
+      "8.8.8.8"
+      "8.8.4.4"
+    ];
+
   };
 }
