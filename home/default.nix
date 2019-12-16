@@ -30,29 +30,42 @@ in
       #   and configuration can be done entirely in home-manager
       # - Write the configuration file and use home-manager to manage it
       packages = with pkgs; [
+        # CLI tools
+        ag
+        tldr
+        jq
+        cloc
+        exiftool
+        gist
+        gitAndTools.hub
+
+        # System monitoring
+        gotop
+        filelight
+
         # Development
         openjdk11
         nodejs
         nodePackages.typescript
         ghcid
 
-        # CLI tools
-        gist
-        gitAndTools.hub
-        jq
-        cloc
-
-        # Images
+        # Media
         ffmpeg
+        vlc
         scrot
         imagemagick
         gimp
+        inkscape
+
+        # Documents
+        libreoffice
 
         # Applications
         unstable.discord
         unstable.slack
         spotify
         firefox
+        musescore
         unstable.steam
       ];
     };

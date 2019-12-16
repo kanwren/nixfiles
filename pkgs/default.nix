@@ -6,6 +6,7 @@ with rec {
   baseSystemPackages = with pkgs; [
     # Nix stuff
     nix-prefetch-git
+    cachix
 
     # CLI tools
     wget
@@ -13,10 +14,17 @@ with rec {
     git
     killall
     manpages
-    xclip
-    tldr
+    whois
     bc
-    ag
+    tree
+    xclip
+
+    parted
+    gparted
+    ntfsprogs
+    mkpasswd
+    openssl
+    nmap
 
     # Terminals and tooling
     alacritty
