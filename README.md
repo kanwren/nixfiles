@@ -13,6 +13,8 @@ My NixOS configurations. Configs are split up across multiple directories:
     including window manager and compositor configs
 - `time`: Time and timezone settings
 - `users`: User and group configurations
+- `utils`: Defines various utility functions into `config.lib.utils`
 
-Additionally, other directories don't contain configuration, but other helpers:
+Additionally, other directories don't contain configuration, but Nix-related
+helpers:
 - `iso`: Derivations to build NixOS isos
