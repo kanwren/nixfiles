@@ -29,7 +29,10 @@
         '';
 
       extraPackages = with pkgs; [
+        # j4 is slightly snappier and can read .desktop files, but dmenu is
+        # still used to invoke bash commands
         dmenu
+        j4-dmenu-desktop
         i3status
         i3lock
         # Applets

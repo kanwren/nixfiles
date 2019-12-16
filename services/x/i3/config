@@ -66,7 +66,7 @@ bindsym $mod+Shift+i exec lock
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec j4-dmenu-desktop
 
 # change focus
 # Shifted to the Vim bindings instead of the default
