@@ -49,6 +49,9 @@ in
         nodePackages.typescript
         ghcid
 
+        # CS 2110
+        cs2110.complx-tools
+
         # Media
         ffmpeg
         vlc

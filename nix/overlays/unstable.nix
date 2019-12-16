@@ -1,3 +1,4 @@
+# Unstable nixpkgs channel
 self: super:
 
 let
