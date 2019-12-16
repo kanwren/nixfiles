@@ -53,6 +53,7 @@ in
         unstable.slack
         spotify
         firefox
+        unstable.steam
       ];
     };
   };
