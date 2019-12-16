@@ -63,6 +63,8 @@
         };
       };
 
+      lfs.enable = true;
+
     };
   };
 }
