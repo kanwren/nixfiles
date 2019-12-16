@@ -1,19 +1,23 @@
 { config, pkgs, ... }:
 
+let
+  myVim = with pkgs; vim_configurable.override {
+    python = python3;
+  };
+in
 {
   environment = {
-    systemPackages = with pkgs; [ vim_configurable ctags ];
+    systemPackages = with pkgs; [ myVim ctags ];
     shellAliases.vi = "vim";
-    variables.EDITOR = "vim";
-    variables.VISUAL = "vim";
+    variables = {
+      EDITOR = "vim";
+      VISUAL = "vim";
+    };
   };
 
-  # This is an option, but filetype support is managed by plugins in vim configs
-  # instead of by patching vim
-  # nixpkgs.config.vim = {
-  #   ftNixSupport = true;
-  #   pythonSupport = true;
-  # };
+  nixpkgs.config.vim = {
+    python = true;
+  };
 
   programs = {
     vim.defaultEditor = true;
