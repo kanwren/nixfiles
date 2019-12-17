@@ -2,7 +2,7 @@
 
 let
   inherit (config.lib) utils;
-  secrets = import ../secrets.nix;
+  secrets = utils.importOr ../secrets.nix {};
   networks = utils.attrChain [ "networks" "nmconns" ] {} secrets;
 in {
   networking = {
