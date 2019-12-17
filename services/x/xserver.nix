@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   services.xserver = {
@@ -24,7 +24,7 @@
       # Make sure the desktop background is loaded, if it exists
       extraSessionCommands =
         let bg = ./i3/desktop_bg.png;
-        in pkgs.lib.optionalString (builtins.pathExists bg) ''
+        in lib.optionalString (builtins.pathExists bg) ''
           ${pkgs.feh}/bin/feh --bg-fill ${builtins.toString bg}
         '';
 
