@@ -1,0 +1,30 @@
+owner = "nprindle"
+fullName = "nprindle"
+email = "nprindle18@gmail.com"
+
+license = "MIT"
+
+cabal = true
+stack = false
+
+github = true
+gitignore = [
+  "result",
+  "dist*/",
+  ".ghc*",
+  ".cabal*",
+  "*.config",
+]
+noUpload = true
+travis = false
+appveyor = false
+
+lib = true
+exe = true
+test = false
+bench = false
+
+ghc-options = [
+  "-Wall",
+  "-O2",
+]

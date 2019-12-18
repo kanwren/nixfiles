@@ -46,8 +46,6 @@ in
         # Development
         openjdk11
         nodejs
-        nodePackages.typescript
-        ghcid
 
         # CS 2110
         cs2110.complx-tools
