@@ -68,6 +68,10 @@ in
         firefox
         musescore
         unstable.steam
+
+        # Misc
+        # Plaintext accounting
+        haskellPackages.hledger
       ];
     };
   };
