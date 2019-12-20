@@ -9,6 +9,7 @@ My NixOS configurations. Configs are split up across multiple directories:
 - `networking`: Network and wireless settings
 - `nix`: Nixpkgs configuration and overlays
 - `pkgs`: System-wide packages, like bash and vim, and their configurations
+- `security`: Security-related configurations
 - `services`: Various daemons, user-session programs, and other services,
     including window manager and compositor configs
 - `time`: Time and timezone settings

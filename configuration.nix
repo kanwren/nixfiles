@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./boot/default.nix
+    ./security/default.nix
     ./nix/default.nix
     ./hardware/default.nix
     ./time/default.nix
