@@ -12,6 +12,7 @@
     ./services/default.nix
     ./users/default.nix
     ./pkgs/default.nix
+    ./virtualisation/default.nix
     ./networking/default.nix
     ./home/default.nix
     ./utils/default.nix

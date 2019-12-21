@@ -10,6 +10,7 @@
         "audio"
         "video"
         "networkmanager"
+        "docker"
       ];
 
       createHome = true;
