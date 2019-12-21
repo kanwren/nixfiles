@@ -10,13 +10,10 @@ in
     systemPackages = with pkgs; [ myVim ctags ];
     shellAliases.vi = "vim";
     variables = {
+      # Make vim the default editor
       EDITOR = "vim";
       VISUAL = "vim";
     };
-  };
-
-  nixpkgs.config.vim = {
-    python = true;
   };
 
   programs = {
