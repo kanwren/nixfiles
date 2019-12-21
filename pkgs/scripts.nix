@@ -73,6 +73,23 @@ let
     fi
   '';
 
+  # Shortcut script for managing the redshift systemd service
+  rsctlScript = pkgs.writeShellScriptBin "rsctl" ''
+    case "$1" in
+      start|stop|restart|status)
+        arg="$1"
+        ;;
+      *)
+        >&2 "Usage: rsctl <start|stop|restart|status>"
+        exit 1
+        ;;
+    esac
+
+    systemctl --user "$arg" redshift
+  '';
+
+  # Manually enable/disable a night mode by adjusting the gamma/brightness with
+  # xrandr
   nightScript = pkgs.writeShellScriptBin "night" ''
     configure_night_mode() {
       for disp in $(xrandr | grep " connected" | cut -f1 -d " "); do
@@ -96,6 +113,7 @@ let
     fi
   '';
 
+  # Manually set the screen brightness using xrandr
   # xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness 1
   brightScript = pkgs.writeShellScriptBin "bright" ''
     brightness() {
@@ -134,6 +152,7 @@ let
 in [
   extractScript
   bakScript
+  rsctlScript
   nightScript
   brightScript
   ghcWithPackagesScript
