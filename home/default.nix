@@ -69,6 +69,7 @@ in
         firefox
         musescore
         unstable.steam
+        unstable.wineUnstable
 
         # Misc
         # Plaintext accounting
