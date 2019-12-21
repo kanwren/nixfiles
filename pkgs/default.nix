@@ -9,6 +9,7 @@ with rec {
     cachix
 
     # CLI tools
+    binutils-unwrapped
     wget
     curl
     git

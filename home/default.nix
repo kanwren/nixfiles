@@ -42,6 +42,7 @@ in
         # System monitoring
         gotop
         filelight
+        neofetch
 
         # Development
         openjdk11
