@@ -19,14 +19,16 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      configFile = ./i3/config;
+      configFile = ./i3config;
 
       # Make sure the desktop background is loaded, if it exists
       extraSessionCommands =
-        let bg = ./i3/desktop_bg.png;
-        in lib.optionalString (builtins.pathExists bg) ''
-          ${pkgs.feh}/bin/feh --bg-fill ${builtins.toString bg}
-        '';
+      let
+        backgrounds = ../../desktop-backgrounds;
+        backgroundsPath = builtins.toString backgrounds;
+      in lib.optionalString (builtins.pathExists backgrounds) ''
+        ${pkgs.feh}/bin/feh --no-fehbg --bg-fill --randomize ${backgroundsPath}/*.png
+      '';
 
       extraPackages = with pkgs; [
         # j4 is slightly snappier and can read .desktop files, but dmenu is
