@@ -16,7 +16,7 @@ shopt -s histappend
 
 # Set colorful prompt
 case "$TERM" in
-  xterm-color|*-256color|*-256-color|alacritty) color_prompt=true ;;
+  xterm-color|*-256color|*-256-color|alacritty|xterm-kitty) color_prompt=true ;;
 esac
 
 if [ "$color_prompt" ]; then

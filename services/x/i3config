@@ -42,7 +42,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 
 # Custom bindings
 # start a terminal
-bindsym $mod+Return exec alacritty
+#bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 # Start chromium
 bindsym $mod+Shift+b exec firefox
 # Prompt to run bash command
