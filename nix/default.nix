@@ -4,6 +4,10 @@ let
   inherit (config.lib) utils;
 in
 {
+  imports = [
+    ./caches.nix
+  ];
+
   system.autoUpgrade.enable = false;
 
   nix = {
