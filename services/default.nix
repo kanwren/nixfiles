@@ -28,6 +28,8 @@
   # in user sessions.
   programs = {
 
+    nm-applet.enable = true;
+
     mtr.enable = true;
 
     gnupg.agent = {
