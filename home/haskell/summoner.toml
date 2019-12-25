@@ -3,11 +3,9 @@ fullName = "nprindle"
 email = "nprindle18@gmail.com"
 
 license = "MIT"
-
 cabal = true
 stack = false
 
-github = true
 gitignore = [
   "result",
   "dist*/",
@@ -15,9 +13,9 @@ gitignore = [
   ".cabal*",
   "*.config",
 ]
+
+github = true
 noUpload = true
-travis = false
-appveyor = false
 
 lib = true
 exe = true
