@@ -62,11 +62,15 @@ in
         # Documents
         libreoffice
 
+        # Browsers
+        firefox
+        chromium
+        unstable.torbrowser
+
         # Applications
         unstable.discord
         unstable.slack
         spotify
-        firefox
         musescore
         unstable.steam
         unstable.wineUnstable

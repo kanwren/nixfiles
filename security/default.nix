@@ -2,6 +2,7 @@
 
 {
   security = {
+
     sudo = {
       enable = true;
       wheelNeedsPassword = true;
@@ -10,5 +11,8 @@
         Defaults insults
       '';
     };
+
+    chromiumSuidSandbox.enable = true;
+
   };
 }
