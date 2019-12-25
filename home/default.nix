@@ -8,6 +8,15 @@ let
   } + "/nixos";
 in
 
+with rec {
+  sherlock = import (pkgs.fetchFromGitHub {
+    owner = "nprindle";
+    repo = "sherlock";
+    rev = "e7125a9cf9d4a95abc19c7046965fdb2e13ea62e";
+    sha256 = "1nabjp6hdajqvh6b58cbns2y94dr12a4wpjlj3bvbyc7q6ydpyk8";
+  }) { enableTor = true; };
+};
+
 {
   imports =
     let
@@ -51,6 +60,12 @@ in
         # CS 2110
         cs2110.complx-tools
 
+        # OSINT
+        sherlock
+
+        # Plaintext accounting
+        haskellPackages.hledger
+
         # Media
         ffmpeg
         vlc
@@ -74,10 +89,6 @@ in
         musescore
         unstable.steam
         unstable.wineUnstable
-
-        # Misc
-        # Plaintext accounting
-        haskellPackages.hledger
       ];
     };
   };
