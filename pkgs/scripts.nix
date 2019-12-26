@@ -149,6 +149,16 @@ let
     ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
   '';
 
+  # Start a hoogle server, usually in a nix-shell
+  hoogleServerScript = with pkgs; writeShellScriptBin "hoogleserver" ''
+    if [ -n "$1" ]; then
+      port="$1"
+    else
+      port="8080"
+    fi
+    hoogle server --port=8080 --local --haskell
+  '';
+
 in [
   extractScript
   bakScript
@@ -156,4 +166,5 @@ in [
   nightScript
   brightScript
   ghcWithPackagesScript
+  hoogleServerScript
 ]
