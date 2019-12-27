@@ -42,7 +42,6 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 
 # Custom bindings
 # start a terminal
-#bindsym $mod+Return exec alacritty
 bindsym $mod+Return exec kitty
 # Start chromium
 bindsym $mod+Shift+b exec firefox
@@ -52,8 +51,9 @@ bindsym $mod+b exec "bash -c 'dmenu -p \\"bash:\\" <&- | xargs -I {} bash -c \\"
 # i3 management
 # Run i3 commands on the fly
 bindsym $mod+i exec i3-input -f pango:monospace 12
-# Start i3lock
-bindsym $mod+Shift+i exec lock
+# Start betterlockscreen
+bindsym $mod+Shift+i exec betterlockscreen -l dimblur
+bindsym $mod+Shift+o exec betterlockscreen -s dimblur
 
 # kill focused window
 bindsym $mod+Shift+q kill

@@ -21,22 +21,22 @@
       package = pkgs.i3-gaps;
       configFile = ./i3config;
 
-      # Make sure the desktop background is loaded, if it exists
-      extraSessionCommands =
-      let
-        backgrounds = ../../desktop-backgrounds;
-        backgroundsPath = builtins.toString backgrounds;
-      in lib.optionalString (builtins.pathExists backgrounds) ''
-        ${pkgs.feh}/bin/feh --no-fehbg --bg-fill --randomize ${backgroundsPath}/*.png
+      # Set the desktop background to the current cached lock screen
+      # TODO: consider using `feh --no-fehbg --bg-fill --randomize ../../desktop-backgrounds/*.png`
+      # (or find a way to randomize betterlockscreen backgrounds)
+      extraSessionCommands = ''
+        ${pkgs.betterlockscreen}/bin/betterlockscreen -w
       '';
 
       extraPackages = with pkgs; [
+        # Menu/launcher
         # j4 is slightly snappier and can read .desktop files, but dmenu is
         # still used to invoke bash commands
-        dmenu
-        j4-dmenu-desktop
+        dmenu j4-dmenu-desktop
+        # Status bar
         i3status
-        i3lock
+        # Lock screen
+        i3lock betterlockscreen
         # Applets
         networkmanagerapplet
         blueman
