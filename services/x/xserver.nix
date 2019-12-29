@@ -40,6 +40,8 @@
         # Applets
         networkmanagerapplet
         blueman
+        # Media controls (pactl is provided by pulseaudio)
+        playerctl
       ];
     };
 
