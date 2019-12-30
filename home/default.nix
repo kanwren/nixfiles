@@ -12,8 +12,8 @@ with rec {
   sherlock = import (pkgs.fetchFromGitHub {
     owner = "nprindle";
     repo = "sherlock";
-    rev = "e7125a9cf9d4a95abc19c7046965fdb2e13ea62e";
-    sha256 = "1nabjp6hdajqvh6b58cbns2y94dr12a4wpjlj3bvbyc7q6ydpyk8";
+    rev = "bd11a777ae56ca93c82005365de58cb4e11cd887";
+    sha256 = "0jsnxr4m0ha7fkhkacpm88k0cwcfnmdsfmgwjzv8m7p3x6b3vwza";
   }) { enableTor = true; };
 };
 

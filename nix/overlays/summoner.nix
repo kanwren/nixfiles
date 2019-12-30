@@ -5,8 +5,8 @@ let
   summonerSrc = super.fetchFromGitHub {
     owner = "nprindle";
     repo = "summoner";
-    rev = "2d074a36b3e5d675f787c341e6927b8c0bb70e9a";
-    sha256 = "1cf32qwsakk7fhgaa6bmyfdn70dwnnnnkfhff2pvajp4xpg8hkpd";
+    rev = "8a6fccf2c95244ac5934b82f794562ce6cd765b4";
+    sha256 = "0p5cgn3k033iij577rrw77cpv3lfq1ag27qykh3134dy58dbrpyw";
   };
   summonerHaskellPkgs = import summonerSrc {};
 in {
