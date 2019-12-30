@@ -70,6 +70,10 @@ bindsym $mod+d exec j4-dmenu-desktop
 # take a screenshot
 bindsym $mod+Shift+s exec "scrot -e 'mv $f ~/Pictures/Screenshots && echo ~/Pictures/Screenshots/$f | xclip -rmlastnl -sel clip'"
 
+# Scratchpad
+bindsym $mod+Shift+BackSpace move scratchpad
+bindsym $mod+backslash scratchpad show
+
 # change focus
 # Shifted to the Vim bindings instead of the default
 bindsym $mod+h focus left
