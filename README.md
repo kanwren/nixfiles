@@ -1,13 +1,16 @@
 # nixos-configs
 
 My NixOS configurations. Configs are split up across multiple directories:
+
 - `boot`: Configuration of the bootloader and boot process
 - `hardware`: Enabling various hardware-dependent features
 - `home`: HomeManager configurations; contains user packages, dotfiles, and
-    other configurations
+  other configurations
 - `i18n`: Internationalization settings like locale and keymap
 - `networking`: Network and wireless settings
-- `nix`: Nixpkgs configuration and overlays
+- `nix`: Nix and nixpkgs configurations
+  - `nix/overlays`: Overlays for overriding packages in nixpkgs or introducing
+    new ones
 - `pkgs`: System-wide packages, like bash and vim, and their configurations
 - `security`: Security-related configurations
 - `services`: Various daemons, user-session programs, and other services,
@@ -19,5 +22,6 @@ My NixOS configurations. Configs are split up across multiple directories:
 
 Additionally, other directories don't contain configuration, but Nix-related
 helpers:
+
 - `iso`: Derivations to build NixOS isos
 
