@@ -20,3 +20,19 @@
 
   };
 }
+
+# For legacy boot, set
+#   loader.grub = {
+#     enable = true;
+#     version = 2;
+#     device = "/dev/sda";
+#   };
+# or:
+#   loader.grub = {
+#     enable = true;
+#     version = 2;
+#     efiSupport = true;
+#     efiInstallAsRemovable = true;
+#     device = "nodev"
+#   };
+
