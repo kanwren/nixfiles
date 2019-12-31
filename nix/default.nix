@@ -21,6 +21,11 @@ in
       "nprin"
       "root"
     ];
+
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   nixpkgs = {
