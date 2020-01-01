@@ -55,7 +55,8 @@ with rec {
 
         # Development
         openjdk11
-        nodejs
+        nodejs-12_x
+        nodePackages.node2nix
 
         # CS 2110
         cs2110.complx-tools

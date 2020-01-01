@@ -5,6 +5,7 @@ with rec {
 
   baseSystemPackages = with pkgs; [
     # Nix stuff
+    nix-universal-prefetch
     nix-prefetch-git
     cachix
 
