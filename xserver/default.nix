@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./fonts.nix
     ./compton.nix
     ./redshift.nix
   ];
@@ -54,12 +55,5 @@
 
   programs = {
     nm-applet.enable = true;
-  };
-
-  fonts = {
-    fonts = with pkgs; [
-      fira-code
-      fira-code-symbols
-    ];
   };
 }
