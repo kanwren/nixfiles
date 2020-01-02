@@ -29,6 +29,7 @@ with rec {
     nmap
 
     # Terminals and tooling
+    kitty
     alacritty
     tmux
 
