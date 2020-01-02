@@ -1,6 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
+  imports = [
+    ./compton.nix
+    ./redshift.nix
+  ];
+
   services.xserver = {
 
     enable = true;
@@ -19,7 +24,7 @@
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
-      configFile = ./i3config;
+      configFile = ./i3/i3config;
 
       # Set the desktop background to the current cached lock screen
       # TODO: consider using `feh --no-fehbg --bg-fill --randomize ../../desktop-backgrounds/*.png`
@@ -49,5 +54,12 @@
 
   programs = {
     nm-applet.enable = true;
+  };
+
+  fonts = {
+    fonts = with pkgs; [
+      fira-code
+      fira-code-symbols
+    ];
   };
 }

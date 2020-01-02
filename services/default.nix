@@ -1,12 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./x/xserver.nix
-    ./compton.nix
-    ./redshift.nix
-  ];
-
   services = {
     # Enable the OpenSSH daemon
     openssh.enable = true;
@@ -37,12 +31,5 @@
       enableSSHSupport = true;
     };
 
-  };
-
-  fonts = {
-    fonts = with pkgs; [
-      fira-code
-      fira-code-symbols
-    ];
   };
 }

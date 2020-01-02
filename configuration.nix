@@ -10,6 +10,7 @@
     ./time/default.nix
     ./i18n/default.nix
     ./services/default.nix
+    ./xserver/default.nix
     ./users/default.nix
     ./pkgs/default.nix
     ./virtualisation/default.nix

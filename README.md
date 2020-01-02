@@ -13,8 +13,9 @@ My NixOS configurations. Configs are split up across multiple directories:
     new ones
 - `pkgs`: System-wide packages, like bash and vim, and their configurations
 - `security`: Security-related configurations
-- `services`: Various daemons, user-session programs, and other services,
-    including window manager and compositor configs
+- `services`: Various daemons, user-session programs, and other services
+- `xserver`: Configurations for X, including the window manager, compositor,
+  and more
 - `time`: Time and timezone settings
 - `users`: User and group configurations
 - `utils`: Defines various utility functions into `config.lib.utils`
