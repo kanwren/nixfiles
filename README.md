@@ -18,7 +18,7 @@ My NixOS configurations. Configs are split up across multiple directories:
   and more
 - `time`: Time and timezone settings
 - `users`: User and group configurations
-- `utils`: Defines various utility functions into `config.lib.utils`
+- `utils`: Defines various utility functions
 - `virtualisation`: Manage virutalization services like Docker and VirtualBox
 
 Additionally, other directories don't contain configuration, but Nix-related

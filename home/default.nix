@@ -6,6 +6,7 @@ let
     rev = "dff5f07952e61da708dc8b348ea677414e992215";
     ref = "release-19.09";
   } + "/nixos";
+  utils = import ../utils { inherit lib; };
 in
 
 with rec {
@@ -20,16 +21,10 @@ with rec {
 {
   imports =
     let
-      # Get all subdirectories in a directory
-      getDirs = dir:
-        builtins.map (x: dir + "/${x}")
-        (builtins.attrNames
-        (lib.filterAttrs (_: type: type == "directory")
-        (builtins.readDir dir)));
       homeProgramConfigs =
         builtins.filter builtins.pathExists
         (builtins.map (d: d + "/default.nix")
-        (getDirs ./.));
+        (utils.getDirs ./.));
     in [ home-manager ] ++ homeProgramConfigs;
 
   home-manager.users.nprin = {

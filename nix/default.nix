@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  inherit (config.lib) utils;
+  utils = import ../utils { inherit lib; };
 in
 {
   imports = [

@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  inherit (config.lib) utils;
+  utils = import ../utils { inherit lib; };
   secrets = utils.importOr ../secrets.nix {};
-  networks = utils.attrChain [ "networks" "nmconns" ] {} secrets;
+  networks = lib.attrByPath [ "networks" "nmconns" ] {} secrets;
 in {
   networking = {
 
