@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 with rec {
   scripts = import ./scripts.nix { inherit pkgs; };
@@ -49,7 +49,10 @@ with rec {
   ];
 
   environment = {
-    systemPackages = baseSystemPackages ++ scripts;
+    systemPackages = lib.concatLists [
+      baseSystemPackages
+      scripts
+    ];
   };
 
 }

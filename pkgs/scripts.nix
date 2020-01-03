@@ -38,6 +38,16 @@ let
     fi
   '';
 
+  # Generate an alphanumeric password of a given length
+  getPasswordScript = with pkgs; writeShellScriptBin "getpass" ''
+    if [ -z "$1" ]; then
+      count=20
+    else
+      count="$1"
+    fi
+    ${openssl}/bin/openssl rand -base64 1000 | tr -cd '[:alnum:]' | head --bytes $count | ${xclip}/bin/xclip -sel clip
+  '';
+
   bakScript = with pkgs; writeShellScriptBin "bak" ''
     if [ $# -ge 1 ]; then
       if [ "$1" = "-u" ]; then
@@ -204,6 +214,7 @@ let
 
 in [
   extractScript
+  getPasswordScript
   bakScript
   rsctlScript
   nightScript
