@@ -84,8 +84,8 @@ with rec {
         unstable.slack
         spotify
         musescore
-        unstable.steam
-        unstable.wineUnstable
+        #unstable.steam
+        #unstable.wineUnstable
       ];
     };
   };
