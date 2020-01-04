@@ -65,6 +65,7 @@ with rec {
         # Media
         ffmpeg
         vlc
+        (asunder.override { mp3Support = true; oggSupport = true; })
         scrot
         imagemagick
         gimp
