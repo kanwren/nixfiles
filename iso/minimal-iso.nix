@@ -14,14 +14,13 @@ let
     configuration = { config, pkgs, ... }: {
       imports = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        # Provide a copy of the NixOS channel
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
       ];
       environment.systemPackages = with pkgs; [
         wget curl manpages git vim
+        networkmanager
       ];
-      networking = {
-        networkmanager.enable = true;
-        wireless.enable = false;
-      };
     };
 
   };
