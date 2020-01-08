@@ -54,7 +54,9 @@ with rec {
         nodePackages.node2nix
 
         # CS 2110
+        cs2110.CircuitSim
         cs2110.complx-tools
+        cs2110.cs2110docker
 
         # OSINT
         sherlock
