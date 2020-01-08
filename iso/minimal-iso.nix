@@ -11,7 +11,7 @@ let
 
     inherit system;
 
-    configuration = { config, pkgs, ... }: {
+    configuration = { config, pkgs, lib, ... }: {
       imports = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         # Provide a copy of the NixOS channel
@@ -21,6 +21,10 @@ let
         wget curl manpages git vim
         networkmanager
       ];
+      networking = {
+        networkmanager.enable = true;
+        wireless.enable = lib.mkForce false;
+      };
     };
 
   };
