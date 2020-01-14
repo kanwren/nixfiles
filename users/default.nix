@@ -1,21 +1,34 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  utils = import ../utils { inherit lib; };
+  secrets = utils.importOr ../secrets.nix {};
+in
 {
-  users.users = {
-    nprin = {
-      isNormalUser = true;
-      uid = 1000;
-      extraGroups = [
-        "wheel"
-        "audio"
-        "video"
-        "networkmanager"
-        "docker"
-      ];
+  users = {
+    mutableUsers = false;
+    users = {
 
-      createHome = true;
-      home = "/home/nprin";
-      shell = pkgs.bashInteractive;
+      nprin = {
+        name = "nprin";
+        initialHashedPassword =
+          let path = [ "users" "nprin" "hashedPassword" ];
+          in lib.attrByPath path null secrets;
+        isNormalUser = true;
+        uid = 1000;
+        extraGroups = [
+          "wheel"
+          "audio"
+          "video"
+          "networkmanager"
+          "docker"
+          "vboxusers"
+        ];
+        createHome = true;
+        home = "/home/nprin";
+        shell = pkgs.bashInteractive;
+      };
+
     };
   };
 }
