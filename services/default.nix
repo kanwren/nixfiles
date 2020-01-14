@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./onedrive.nix
+  ];
+
   services = {
     # Enable the OpenSSH daemon
     openssh.enable = true;
