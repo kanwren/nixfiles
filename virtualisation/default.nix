@@ -17,4 +17,8 @@
     };
 
   };
+
+  environment.systemPackages = with pkgs; [
+    vagrant
+  ];
 }
