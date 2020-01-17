@@ -82,8 +82,8 @@ with rec {
         unstable.torbrowser
 
         # Applications
-        unstable.discord
-        unstable.slack
+        discord
+        slack
         spotify
         musescore
         #unstable.steam

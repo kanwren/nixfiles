@@ -26,7 +26,7 @@ with rec {
     ntfsprogs
     mkpasswd
     openssl
-    nmap
+    nmap-graphical
 
     # Terminals and tooling
     kitty
