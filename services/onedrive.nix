@@ -3,6 +3,13 @@
 { pkgs, ... }:
 
 let
+  # TODO: ldc tests fail in the most recent stable version
+  pinned-pkgs = import (pkgs.fetchFromGitHub {
+    owner = "nixos";
+    repo = "nixpkgs";
+    rev = "cb7c51a27541df377e4a35f85d774bfc194e8b86";
+    sha256 = "0l9vmhyzvf614n9rq0kcz48f0l8l3fif6n8bihffd4j5l0jcgy6i";
+  }) {};
   onedrive = pkgs.stdenv.mkDerivation {
     name = "onedrive";
     src = pkgs.fetchFromGitHub {
@@ -11,7 +18,7 @@ let
       rev = "945251f7f2e95ae85001efb6eab85d6176bac75e";
       sha256 = "16iajb61b09gdqly85h6h7ap385ihk0az3mimkj277yc08rv68d0";
     };
-    buildInputs = with pkgs; [ dmd curl sqlite ];
+    buildInputs = with pinned-pkgs; [ dmd curl sqlite ];
     installPhase = ''
       mkdir -p "$out/bin"
       cp onedrive "$out/bin"
