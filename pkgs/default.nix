@@ -9,7 +9,7 @@ with rec {
     nix-prefetch-git
     cachix
 
-    # CLI tools
+    # Basic CLI tools
     binutils-unwrapped
     wget
     curl
@@ -21,23 +21,50 @@ with rec {
     tree
     xclip
 
+    # Filesystem tools
     parted
     gparted
     ntfsprogs
-    mkpasswd
-    openssl
-    nmap-graphical
 
-    # Terminals and tooling
+    # Crypto stuff
+    mkpasswd
+    gnupg
+    paperkey
+    openssl
+
+    # Pentesting
+    nmap-graphical
+    hashcat
+
+    # Terminal emulators and multiplexers
     kitty
     alacritty
     tmux
 
     # Media
+    # EXIF data
+    exiftool
+    # Data matrices
+    dmtx
+    # Images
     feh
+    scrot
+    imagemagick
+    gimp
+    inkscape
+    # PDFs
     zathura
+    # Multimedia
+    ffmpeg
+    vlc
+    # CD ripping
+    (asunder.override {
+      mp3Support = true;
+      oggSupport = true;
+    })
 
     # Browsers
+    w3m-nographics
     firefox
   ];
 };

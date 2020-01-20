@@ -13,8 +13,8 @@ with rec {
   sherlock = import (pkgs.fetchFromGitHub {
     owner = "nprindle";
     repo = "sherlock";
-    rev = "bd11a777ae56ca93c82005365de58cb4e11cd887";
-    sha256 = "0jsnxr4m0ha7fkhkacpm88k0cwcfnmdsfmgwjzv8m7p3x6b3vwza";
+    rev = "8ff5f358b3502e6d88d05d9fdb6c5d33e64fdd1f";
+    sha256 = "1sndy0lkw4f16mxb6z3liz0mfbp0w679nbv6m8q3chd37zas8206";
   }) { enableTor = true; };
 };
 
@@ -34,12 +34,11 @@ with rec {
       #   and configuration can be done entirely in home-manager
       # - Write the configuration file and use home-manager to manage it
       packages = with pkgs; [
-        # CLI tools
+        # Basic CLI tools
         ag
         tldr
         jq
         cloc
-        exiftool
         gist
         gitAndTools.hub
 
@@ -61,18 +60,6 @@ with rec {
         # OSINT
         sherlock
 
-        # Plaintext accounting
-        haskellPackages.hledger
-
-        # Media
-        ffmpeg
-        vlc
-        (asunder.override { mp3Support = true; oggSupport = true; })
-        scrot
-        imagemagick
-        gimp
-        inkscape
-
         # Documents
         libreoffice
 
@@ -87,7 +74,7 @@ with rec {
         spotify
         musescore
         #unstable.steam
-        #unstable.wineUnstable
+        wineUnstable
       ];
     };
   };
