@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 with rec {
   scripts = import ./scripts.nix { inherit pkgs; };

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   nord-tmux = pkgs.tmuxPlugins.mkDerivation {

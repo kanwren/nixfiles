@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   myVim = with pkgs; vim_configurable.override {
@@ -7,7 +7,7 @@ let
 in
 {
   environment = {
-    systemPackages = with pkgs; [ myVim ctags ];
+    systemPackages = [ myVim ] ++ (with pkgs; [ ctags ]);
     shellAliases.vi = "vim";
     variables = {
       # Make vim the default editor
