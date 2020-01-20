@@ -4,15 +4,22 @@ bind -m vi-insert "\C-l":clear-screen
 
 # Check update LINES and COLUMNS after each command based on window size
 shopt -s checkwinsize
+# Extend the globbing behavior
+shopt -s extglob
 # Use ** to match zero or more subdirectories
 shopt -s globstar
+# Check before closing terminal
+shopt -s checkjobs
+# Append to the history file, don't overwrite it
+shopt -s histappend
+# Store multiline commands in one history entry
+shopt -s cmdhist
 
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
-# Append to the history file, don't overwrite it
-shopt -s histappend
+HISTIGNORE="ls:cd:exit:history"
 
 # Set colorful prompt
 case "$TERM" in

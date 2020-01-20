@@ -70,6 +70,10 @@
         signByDefault = true;
       };
     };
+
+    programs.bash.sessionVariables = {
+      GPGKEY = "nprindle18@gmail.com";
+    };
   };
 }
 
