@@ -14,11 +14,6 @@
         "tags"
       ];
 
-      signing = {
-        key = "nprindle18@gmail.com";
-        signByDefault = true;
-      };
-
       aliases = {
         # Abbreviations for filling in options
         cane = "commit --amend --no-edit";
@@ -70,6 +65,10 @@
 
       lfs.enable = true;
 
+      signing = {
+        key = "nprindle18@gmail.com";
+        signByDefault = true;
+      };
     };
   };
 }
