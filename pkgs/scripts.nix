@@ -45,7 +45,9 @@ let
     else
       count="$1"
     fi
-    ${openssl}/bin/openssl rand -base64 1000 | tr -cd '[:alnum:]' | head --bytes $count | ${xclip}/bin/xclip -sel clip
+    # Make sure the last character is always a ! to satisfy common special
+    # character requirements
+    echo -n "$(${openssl}/bin/openssl rand -base64 1000 | tr -cd '[:alnum:]' | head --bytes $((count - 1)))!" | ${xclip}/bin/xclip -r -sel clip
   '';
 
   bakScript = with pkgs; writeShellScriptBin "bak" ''
