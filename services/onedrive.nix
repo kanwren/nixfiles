@@ -36,7 +36,7 @@ in
     serviceConfig = {
       Restart = "no";
     };
-    wantedBy = [ "default.target" ];
+    # wantedBy = [ "default.target" ];
 
     description = "OneDrive Free Client";
     documentation = [ "https://github.com/skilion/onedrive" ];
