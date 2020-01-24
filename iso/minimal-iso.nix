@@ -19,6 +19,7 @@ let
       ];
       environment.systemPackages = with pkgs; [
         wget curl manpages git vim
+        mkpasswd
         networkmanager
       ];
       networking = {
