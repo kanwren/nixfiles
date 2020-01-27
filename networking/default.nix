@@ -2,8 +2,7 @@
 
 let
   utils = import ../utils { inherit lib; };
-  secrets = utils.importOr ../secrets.nix {};
-  networks = lib.attrByPath [ "networks" "nmconns" ] {} secrets;
+  networks = utils.importOr ./networks.nix {};
 in {
   networking = {
 
@@ -17,9 +16,20 @@ in {
       enable = false;
     };
 
+    # Global useDHCP is deprecated
     useDHCP = false;
-    interfaces.eno1.useDHCP = true;
-    interfaces.wlo1.useDHCP = true;
+    interfaces =
+      let
+        ints =
+          builtins.filter (x: x != "")
+          (lib.splitString "\n"
+          (builtins.readFile ./interfaces.txt));
+        mkInterface = name: {
+          inherit name; value = { useDHCP = true; };
+        };
+      in lib.listToAttrs (builtins.map mkInterface ints);
+    # interfaces.eno1.useDHCP = true;
+    # interfaces.wlo1.useDHCP = true;
 
     firewall = {
       enable = true;
