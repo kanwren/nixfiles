@@ -18,6 +18,7 @@ with rec {
     manpages
     whois
     bc
+    units
     tree
     xclip
 
@@ -49,7 +50,7 @@ with rec {
     # Images
     feh
     scrot
-    imagemagick
+    imagemagick7
     gimp
     inkscape
     # PDFs
