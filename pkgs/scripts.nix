@@ -12,14 +12,14 @@ let
             *.tar.bz2)   ${gnutar}/bin/tar xvjf "$arg" ;;
             *.tar.gz)    ${gnutar}/bin/tar xvzf "$arg" ;;
             *.tar.xz)    ${gnutar}/bin/tar xvJf "$arg" ;;
-            *.lzma)      ${xz}/bin/lzma --format=lzma --decompress "$arg" ;;
-            *.bz2)       ${bzip2}/bin/bzip2 -d "$arg" ;;
-            *.rar)       ${unrar}/bin/unrar x -ad "$arg" ;;
-            *.gz)        ${gzip}/bin/gzip -d "$arg" ;;
             *.tar)       ${gnutar}/bin/tar xvf "$arg" ;;
             *.tbz2)      ${gnutar}/bin/tar xvjf "$arg" ;;
             *.tgz)       ${gnutar}/bin/tar xvzf "$arg" ;;
+            *.gz)        ${gzip}/bin/gzip -d "$arg" ;;
+            *.bz2)       ${bzip2}/bin/bzip2 -d "$arg" ;;
             *.zip)       ${unzip}/bin/unzip "$arg" ;;
+            *.lzma)      ${xz}/bin/lzma --format=lzma --decompress "$arg" ;;
+            *.rar)       ${unrar}/bin/unrar x -ad "$arg" ;;
             *.Z)         ${ncompress}/bin/uncompress "$arg" ;;
             *.7z)        ${p7zip}/bin/7z x "$arg" ;;
             *.xz)        ${xz}/bin/xz --decompress "$arg" ;;

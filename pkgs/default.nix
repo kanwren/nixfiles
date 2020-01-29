@@ -22,6 +22,17 @@ with rec {
     tree
     xclip
 
+    # Compression tools
+    gnutar
+    gzip
+    bzip2
+    unzip
+    xz
+    unrar
+    ncompress
+    p7zip
+    cabextract
+
     # Filesystem tools
     parted
     gparted
