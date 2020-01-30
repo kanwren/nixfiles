@@ -41,6 +41,10 @@ with rec {
         cloc
         gist
         gitAndTools.hub
+        shellcheck
+
+        # File explorers
+        ranger
 
         # System monitoring
         gotop

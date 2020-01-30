@@ -62,6 +62,8 @@ with rec {
     feh
     scrot
     imagemagick7
+    libwebp
+    gifsicle
     gimp
     inkscape
     # PDFs
