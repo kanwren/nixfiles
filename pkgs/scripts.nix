@@ -150,9 +150,9 @@ let
   hdmiScript = with pkgs; writeShellScriptBin "hdmi" ''
     set -e
 
-    if [ $# -ne 1 ]; then
-      >&2 echo "Error: wrong number of arguments"
-      >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>"
+    if [ $# -eq 0 ]; then
+      >&2 echo "Error: expected arguments"
+      >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>..."
       exit 1
     fi
 
@@ -174,19 +174,21 @@ let
       echo "Using $hdmi as HDMI display"
     fi
 
-    case "$1" in
-      on)         xrandr --output $hdmi --auto              ;;
-      left)       xrandr --output $hdmi --left-of  $primary ;;
-      right)      xrandr --output $hdmi --right-of $primary ;;
-      up|above)   xrandr --output $hdmi --above    $primary ;;
-      down|below) xrandr --output $hdmi --below    $primary ;;
-      mirror)     xrandr --output $hdmi --same-as  $primary ;;
-      off)        xrandr --output $hdmi --off               ;;
-      *)
-        >&2 echo "Unrecognized argument: $arg"
-        >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>"
-        ;;
-    esac
+    for arg in $*; do
+      case "$arg" in
+        on)         xrandr --output $hdmi --auto              ;;
+        left)       xrandr --output $hdmi --left-of  $primary ;;
+        right)      xrandr --output $hdmi --right-of $primary ;;
+        up|above)   xrandr --output $hdmi --above    $primary ;;
+        down|below) xrandr --output $hdmi --below    $primary ;;
+        mirror)     xrandr --output $hdmi --same-as  $primary ;;
+        off)        xrandr --output $hdmi --off               ;;
+        *)
+          >&2 echo "Unrecognized argument: $arg"
+          >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>"
+          ;;
+      esac
+    done
   '';
 
   ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
