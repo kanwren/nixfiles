@@ -1,7 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p bash
 
-cd ${0%/*}
+cd "${0%/*}" || exit 1
 
 if [ ! -f networking/interfaces.txt ]; then
   echo "Adding interfaces to networking/interfaces.txt..."
