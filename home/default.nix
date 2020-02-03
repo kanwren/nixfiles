@@ -16,6 +16,12 @@ with rec {
     rev = "8ff5f358b3502e6d88d05d9fdb6c5d33e64fdd1f";
     sha256 = "1sndy0lkw4f16mxb6z3liz0mfbp0w679nbv6m8q3chd37zas8206";
   }) { enableTor = true; };
+  infinisweep = import (pkgs.fetchFromGitHub {
+    owner = "basile-henry";
+    repo = "infinisweep";
+    rev = "5969f2ff96dbfe3212f342ca0818ea2908a631ac";
+    sha256 = "1lqvkfsz96df8i7628mjkm1az9rbmb5mibb2xlgxaf5px7lmr2qf";
+  }) {};
 };
 
 {
@@ -71,6 +77,9 @@ with rec {
         firefox
         chromium
         unstable.torbrowser
+
+        # Games
+        infinisweep
 
         # Applications
         discord
