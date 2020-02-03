@@ -76,6 +76,8 @@ with rec {
       mp3Support = true;
       oggSupport = true;
     })
+    # Recording
+    simplescreenrecorder
 
     # Browsers
     w3m-nographics
