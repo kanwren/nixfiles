@@ -9,8 +9,12 @@ with rec {
     nix-prefetch-git
     cachix
 
-    # Basic CLI tools
+    # Core utils
     binutils-unwrapped
+    usbutils
+    pciutils
+
+    # Basic CLI tools
     wget
     curl
     git
@@ -69,6 +73,7 @@ with rec {
     # PDFs
     zathura
     qpdf
+
     # Multimedia
     vlc
     ffmpeg
