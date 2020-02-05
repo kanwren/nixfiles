@@ -7,6 +7,12 @@
     ./redshift.nix
   ];
 
+  environment.systemPackages = with pkgs; [
+    xorg.xev
+    xorg.xmodmap
+    xdotool
+  ];
+
   services.xserver = {
 
     enable = true;
