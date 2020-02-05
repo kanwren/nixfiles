@@ -64,13 +64,14 @@ with rec {
     imagemagick7
     libwebp
     gifsicle
-    gimp
     inkscape
+    gimp
     # PDFs
     zathura
+    qpdf
     # Multimedia
-    ffmpeg
     vlc
+    ffmpeg
     # CD ripping
     (asunder.override {
       mp3Support = true;
