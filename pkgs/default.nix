@@ -33,9 +33,7 @@ with rec {
     unzip
     xz
     unrar
-    ncompress
     p7zip
-    cabextract
 
     # Filesystem tools
     parted
