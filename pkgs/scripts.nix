@@ -152,11 +152,11 @@ let
 
     if [ $# -eq 0 ]; then
       >&2 echo "Error: expected arguments"
-      >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>..."
+      >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|same|mirror|off>..."
       exit 1
     fi
 
-    primary="$(xrandr | grep primary | head -n 1 | cut -d' ' -f 1)"
+    primary="$(${xorg.xrandr}/bin/xrandr | grep primary | head -n 1 | cut -d' ' -f 1)"
 
     if [ -z "$primary" ]; then
       >&2 echo "Error: no primary display found"
@@ -165,7 +165,7 @@ let
       echo "Using $primary as primary display"
     fi
 
-    hdmi="$(xrandr | grep HDMI | head -n 1 | cut -d' ' -f 1)"
+    hdmi="$(${xorg.xrandr}/bin/xrandr | grep HDMI | head -n 1 | cut -d' ' -f 1)"
 
     if [ -z "$hdmi" ]; then
       >&2 echo "Error: no HDMI display found"
@@ -176,13 +176,13 @@ let
 
     for arg in $*; do
       case "$arg" in
-        on)         xrandr --output $hdmi --auto              ;;
-        left)       xrandr --output $hdmi --left-of  $primary ;;
-        right)      xrandr --output $hdmi --right-of $primary ;;
-        up|above)   xrandr --output $hdmi --above    $primary ;;
-        down|below) xrandr --output $hdmi --below    $primary ;;
-        mirror)     xrandr --output $hdmi --same-as  $primary ;;
-        off)        xrandr --output $hdmi --off               ;;
+        on)          ${xorg.xrandr}/bin/xrandr --output $hdmi --auto              ;;
+        left)        ${xorg.xrandr}/bin/xrandr --output $hdmi --left-of  $primary ;;
+        right)       ${xorg.xrandr}/bin/xrandr --output $hdmi --right-of $primary ;;
+        up|above)    ${xorg.xrandr}/bin/xrandr --output $hdmi --above    $primary ;;
+        down|below)  ${xorg.xrandr}/bin/xrandr --output $hdmi --below    $primary ;;
+        same|mirror) ${xorg.xrandr}/bin/xrandr --output $hdmi --same-as  $primary ;;
+        off)         ${xorg.xrandr}/bin/xrandr --output $hdmi --off               ;;
         *)
           >&2 echo "Unrecognized argument: $arg"
           >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>"
