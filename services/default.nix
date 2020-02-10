@@ -27,5 +27,10 @@
   programs = {
     nm-applet.enable = true;
     mtr.enable = true;
+
+    ssh = {
+      agentTimeout = null;
+      startAgent = true;
+    };
   };
 }
