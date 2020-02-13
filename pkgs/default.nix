@@ -21,10 +21,13 @@ with rec {
     killall
     manpages
     whois
-    bc
-    units
     tree
     xclip
+
+    # CLI math tools
+    bc
+    units
+    libqalculate
 
     # Compression tools
     gnutar
