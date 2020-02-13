@@ -10,6 +10,7 @@
   environment.systemPackages = with pkgs; [
     xorg.xev
     xorg.xmodmap
+    xorg.xdpyinfo
     xdotool
   ];
 

@@ -24,6 +24,13 @@ with rec {
     tree
     xclip
 
+    # System diagnostics
+    inxi
+    dmidecode
+    upower
+    hddtemp
+    glxinfo
+
     # CLI math tools
     bc
     units
