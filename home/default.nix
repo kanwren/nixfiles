@@ -10,12 +10,6 @@ let
 in
 
 with rec {
-  sherlock = import (pkgs.fetchFromGitHub {
-    owner = "nprindle";
-    repo = "sherlock";
-    rev = "8ff5f358b3502e6d88d05d9fdb6c5d33e64fdd1f";
-    sha256 = "1sndy0lkw4f16mxb6z3liz0mfbp0w679nbv6m8q3chd37zas8206";
-  }) { enableTor = true; };
   infinisweep = import (pkgs.fetchFromGitHub {
     owner = "basile-henry";
     repo = "infinisweep";
@@ -73,9 +67,6 @@ with rec {
         cs2110.CircuitSim
         cs2110.complx-tools
         cs2110.cs2110docker
-
-        # OSINT
-        sherlock
 
         # Documents
         libreoffice
