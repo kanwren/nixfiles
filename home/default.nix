@@ -74,6 +74,7 @@ with rec {
         # Browsers
         firefox
         chromium
+        qutebrowser
         unstable.torbrowser
 
         # Games
