@@ -81,6 +81,10 @@ with rec {
         infinisweep
         githug
 
+        # Jokes
+        sl
+        gti
+
         # Applications
         discord
         slack
