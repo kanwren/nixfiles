@@ -59,9 +59,14 @@ with rec {
         neofetch
 
         # Development
+        # Java
         openjdk11
+        # JavaScript
         nodejs-12_x
         nodePackages.node2nix
+        # Arduino
+        arduino
+        ino
 
         # CS 2110
         cs2110.CircuitSim
@@ -86,7 +91,7 @@ with rec {
         gti
 
         # Applications
-        discord
+        unstable.discord
         slack
         spotify
         musescore
