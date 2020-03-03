@@ -1,7 +1,11 @@
 { pkgs, lib, ... }:
 
 with rec {
+  # Scripts to be available globally
   scripts = import ./scripts.nix { inherit pkgs; };
+
+  # Custom-built packages
+  mons = import ./mons.nix { inherit pkgs; };
 
   baseSystemPackages = with pkgs; [
     # Nix stuff
@@ -23,6 +27,7 @@ with rec {
     whois
     tree
     xclip
+    mons
 
     # System diagnostics
     inxi

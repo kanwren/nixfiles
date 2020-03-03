@@ -146,51 +146,6 @@ let
     brightness "$1"
   '';
 
-  # Simple shortcut for projecting to a single HDMI output
-  hdmiScript = with pkgs; writeShellScriptBin "hdmi" ''
-    set -e
-
-    if [ $# -eq 0 ]; then
-      >&2 echo "Error: expected arguments"
-      >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|same|mirror|off>..."
-      exit 1
-    fi
-
-    primary="$(${xorg.xrandr}/bin/xrandr | grep primary | head -n 1 | cut -d' ' -f 1)"
-
-    if [ -z "$primary" ]; then
-      >&2 echo "Error: no primary display found"
-      exit 1
-    else
-      echo "Using $primary as primary display"
-    fi
-
-    hdmi="$(${xorg.xrandr}/bin/xrandr | grep HDMI | head -n 1 | cut -d' ' -f 1)"
-
-    if [ -z "$hdmi" ]; then
-      >&2 echo "Error: no HDMI display found"
-      exit 1
-    else
-      echo "Using $hdmi as HDMI display"
-    fi
-
-    for arg in $*; do
-      case "$arg" in
-        on)          ${xorg.xrandr}/bin/xrandr --output $hdmi --auto              ;;
-        left)        ${xorg.xrandr}/bin/xrandr --output $hdmi --left-of  $primary ;;
-        right)       ${xorg.xrandr}/bin/xrandr --output $hdmi --right-of $primary ;;
-        up|above)    ${xorg.xrandr}/bin/xrandr --output $hdmi --above    $primary ;;
-        down|below)  ${xorg.xrandr}/bin/xrandr --output $hdmi --below    $primary ;;
-        same|mirror) ${xorg.xrandr}/bin/xrandr --output $hdmi --same-as  $primary ;;
-        off)         ${xorg.xrandr}/bin/xrandr --output $hdmi --off               ;;
-        *)
-          >&2 echo "Unrecognized argument: $arg"
-          >&2 echo "Usage: hdmi <on|left|right|up|above|down|below|mirror|off>"
-          ;;
-      esac
-    done
-  '';
-
   ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
     case "$1" in
       ghc*)
@@ -223,7 +178,6 @@ in [
   rsctlScript
   nightScript
   brightScript
-  hdmiScript
   ghcWithPackagesScript
   hoogleServerScript
 ]
