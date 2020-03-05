@@ -1,11 +1,15 @@
 { pkgs, lib, ... }:
 
-with rec {
+let
+  utils = import ../utils { inherit lib; };
+in with rec {
   # Scripts to be available globally
   scripts = import ./scripts.nix { inherit pkgs; };
 
-  # Custom-built packages
-  mons = import ./mons.nix { inherit pkgs; };
+  # Custom-built packages, in the ./custom directory
+  customPackages =
+    builtins.map (x: import x { inherit pkgs; })
+    (utils.getFilesWith (name: type: lib.hasSuffix ".nix" name) ./custom);
 
   baseSystemPackages = with pkgs; [
     # Nix stuff
@@ -27,7 +31,6 @@ with rec {
     whois
     tree
     xclip
-    mons
 
     # System diagnostics
     inxi
@@ -113,6 +116,7 @@ with rec {
   environment = {
     systemPackages = lib.concatLists [
       baseSystemPackages
+      customPackages
       scripts
     ];
   };
