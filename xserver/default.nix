@@ -19,7 +19,10 @@
     enable = true;
 
     # Enable touchpad
-    libinput.enable = true;
+    libinput = {
+      enable = true;
+      naturalScrolling = true;
+    };
 
     layout = "us";
     xkbOptions = "caps:escape";
