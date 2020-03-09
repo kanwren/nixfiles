@@ -29,6 +29,7 @@ in with rec {
     killall
     manpages
     whois
+    dos2unix
     tree
     xclip
 
