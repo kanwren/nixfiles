@@ -33,6 +33,7 @@ in
         gist
         gitAndTools.hub
         shellcheck
+        woof
 
         # File explorers
         ranger
