@@ -8,7 +8,6 @@
     # inactiveOpacity = "0.9";
     opacityRules = [
       # Names can be determined using xprop
-      "85:class_g = 'Alacritty'"
       "85:class_g = 'kitty'"
     ];
 

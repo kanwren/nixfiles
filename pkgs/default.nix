@@ -71,7 +71,6 @@ in with rec {
 
     # Terminal emulators and multiplexers
     kitty
-    alacritty
     tmux
 
     # Media
