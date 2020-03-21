@@ -19,6 +19,10 @@ in
     in [ home-manager ] ++ homeProgramConfigs;
 
   home-manager.users.nprin = {
+    nixpkgs.config = {
+      allowUnfree = true;
+    };
+
     home = {
       # User-specific packages. If a program needs configuration, then either:
       # - Enable and configure it via home-manager, if the option is available
