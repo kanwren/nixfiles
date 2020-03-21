@@ -3,6 +3,7 @@
 let
   utils = import ../utils { inherit lib; };
   networks = utils.importOr ./networks.nix {};
+  readLines = path: builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile path));
 in {
   networking = {
 
@@ -18,18 +19,10 @@ in {
 
     # Global useDHCP is deprecated
     useDHCP = false;
+    # Obtain list of interfaces at /sys/class/net/*
     interfaces =
-      let
-        ints =
-          builtins.filter (x: x != "")
-          (lib.splitString "\n"
-          (builtins.readFile ./interfaces.txt));
-        mkInterface = name: {
-          inherit name; value = { useDHCP = true; };
-        };
-      in lib.listToAttrs (builtins.map mkInterface ints);
-    # interfaces.eno1.useDHCP = true;
-    # interfaces.wlo1.useDHCP = true;
+      let mkInterface = name: { inherit name; value = { useDHCP = true; }; };
+      in lib.listToAttrs (builtins.map mkInterface (readLines ./interfaces.txt));
 
     firewall = {
       enable = true;
