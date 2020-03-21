@@ -7,14 +7,14 @@ let
   nixpkgs-mozilla = super.fetchFromGitHub {
     owner = "mozilla";
     repo = "nixpkgs-mozilla";
-    rev = "09576806ab6ac6992f6797ecb5a5cb4b3097fba1";
-    sha256 = "1zm7011d6qhvp4lib56i16i99am9gy0sd2y3zl7six8r7wh2ihn3";
+    rev = "e912ed483e980dfb4666ae0ed17845c4220e5e7c";
+    sha256 = "08fvzb8w80bkkabc1iyhzd15f4sm7ra10jn32kfch5klgl0gj3j3";
   };
   rust-overlay = import "${nixpkgs-mozilla}/rust-overlay.nix";
   result = rust-overlay self super;
 in {
   rust = super.rust // {
     inherit (result) latest rustChannelOf rustChannelOfTargets rustChannels;
-    inherit (result.lib) rustLib;
+    lib = result.lib.rustLib;
   };
 }
