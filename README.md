@@ -38,8 +38,6 @@ These configurations assume several untracked files other than
   passwords
 - `networking/interfaces.txt`: A file with networking interfaces on each line.
   DHCP will be enabled for all of these
-- `networking/networks.nix`: An attr set of network names to NetworkManager
-  configurations, so they're available after cleaning `/etc`
 
 These can all be automatically created with `setup.sh`, and nix errors will
 specify the expected structure.

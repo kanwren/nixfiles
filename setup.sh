@@ -13,13 +13,6 @@ else
   echo "networking/interfaces.txt already exists, skipping..."
 fi
 
-if [ ! -f networking/networks.nix ]; then
-  echo "Initializing networking/networks.nix..."
-  echo "{}" > networking/networks.nix
-else
-  echo "networking/networks.nix already exists, skipping..."
-fi
-
 if [ ! -f secrets.nix ]; then
   echo "Initializing secrets.nix"
   echo "{}" > secrets.nix
