@@ -80,11 +80,11 @@ in
         gti
 
         # Applications
-        unstable.discord
+        discord
         slack
         spotify
         musescore
-        #unstable.steam
+        steam
         wineUnstable
       ];
     };
