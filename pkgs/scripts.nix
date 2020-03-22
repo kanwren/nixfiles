@@ -38,18 +38,6 @@ let
     fi
   '';
 
-  # Generate an alphanumeric password of a given length
-  getPasswordScript = with pkgs; writeShellScriptBin "getpass" ''
-    if [ -z "$1" ]; then
-      count=20
-    else
-      count="$1"
-    fi
-    # Make sure the last character is always a ! to satisfy common special
-    # character requirements
-    echo -n "$(${openssl}/bin/openssl rand -base64 1000 | tr -cd '[:alnum:]' | head --bytes $((count - 1)))!" | ${xclip}/bin/xclip -r -sel clip
-  '';
-
   bakScript = with pkgs; writeShellScriptBin "bak" ''
     if [ $# -ge 1 ]; then
       if [ "$1" = "-u" ]; then
@@ -125,27 +113,6 @@ let
     fi
   '';
 
-  # Manually set the screen brightness using xrandr
-  # xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness 1
-  brightScript = pkgs.writeShellScriptBin "bright" ''
-    brightness() {
-      if [[ -z $1 ]]; then
-        brightness 1
-      elif [[ "$1" =~ 0\.[2-9][0-9]*|1(\.0+)? ]]; then
-        echo "Brightness: $1"
-        for disp in $(xrandr | grep " connected" | cut -f1 -d " "); do
-          echo "Setting $disp..."
-          xrandr --output $disp --brightness $1
-        done
-      else
-        >&2 echo "Invalid brightness; enter a value between 0.2 and 1.0"
-        exit 1
-      fi
-    }
-
-    brightness "$1"
-  '';
-
   ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
     case "$1" in
       ghc*)
@@ -163,21 +130,14 @@ let
 
   # Start a hoogle server, usually in a nix-shell
   hoogleServerScript = with pkgs; writeShellScriptBin "hoogleserver" ''
-    if [ -n "$1" ]; then
-      port="$1"
-    else
-      port="8080"
-    fi
-    hoogle server --port=8080 --local --haskell
+    hoogle server --port=''${1:-8080} --local --haskell
   '';
 
 in [
   extractScript
-  getPasswordScript
   bakScript
   rsctlScript
   nightScript
-  brightScript
   ghcWithPackagesScript
   hoogleServerScript
 ]
