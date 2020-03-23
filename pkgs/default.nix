@@ -15,6 +15,8 @@ in with rec {
     # Nix stuff
     nix-universal-prefetch
     nix-prefetch-git
+    nix-prefetch-github
+    nix-prefetch-docker
     cachix
 
     # Core utils
