@@ -29,9 +29,12 @@ in with rec {
     killall
     manpages
     whois
-    dos2unix
     tree
+    dos2unix
     xclip
+    ag
+    tldr
+    linuxPackages.perf
 
     # System diagnostics
     inxi

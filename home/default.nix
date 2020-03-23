@@ -30,8 +30,6 @@ in
       # - Write the configuration file and use home-manager to manage it
       packages = with pkgs; [
         # Basic CLI tools
-        ag
-        tldr
         jq
         cloc
         gist
