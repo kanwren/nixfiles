@@ -37,6 +37,7 @@ in with rec {
     ag
     tldr
     linuxPackages.perf
+    entr
 
     # System diagnostics
     inxi
