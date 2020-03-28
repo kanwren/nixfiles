@@ -24,8 +24,6 @@
       powerOnBoot = true;
     };
 
-    brightnessctl.enable = true;
-
     trackpoint.enable = true;
   };
 }

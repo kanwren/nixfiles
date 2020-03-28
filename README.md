@@ -9,7 +9,8 @@ My NixOS configurations. Configs are split up across multiple directories:
   - `home/custom/`: Miscellaneous derivations for extra user packages
   - `home/<name>/`: HomeManager configurations for a specific program, or for
     a group of related programs
-- `i18n`: Internationalization settings like locale and keymap
+- `i18n`: Internationalization settings and console settings, like locale and
+  keymap
 - `networking`: Network and wireless settings
 - `nix`: Nix and nixpkgs configurations
   - `nix/overlays/`: Overlays for overriding packages in nixpkgs or introducing

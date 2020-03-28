@@ -67,7 +67,7 @@ in
         firefox
         chromium
         qutebrowser
-        unstable.torbrowser
+        torbrowser
 
         # Games
         fortune

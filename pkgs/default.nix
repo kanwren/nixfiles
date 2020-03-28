@@ -39,7 +39,8 @@ in with rec {
     linuxPackages.perf
     entr
 
-    # System diagnostics
+    # System stuff
+    brightnessctl
     inxi
     dmidecode
     upower

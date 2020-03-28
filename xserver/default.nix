@@ -28,7 +28,6 @@
     xkbOptions = "caps:escape";
 
     desktopManager = {
-      default = "none";
       xterm.enable = false;
     };
 
