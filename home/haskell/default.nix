@@ -7,7 +7,7 @@
       cabal-install
       ghcid
       haskellPackages.hasktags
-      (all-hies.selection { selector = p: { inherit (p) ghc865; }; })
+      (all-hies.selection { selector = p: { inherit (p) ghc865 ghc881; }; })
       # From summoner overlay
       haskellPackages.summoner
       haskellPackages.summoner-tui
