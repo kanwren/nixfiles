@@ -38,6 +38,7 @@ in with rec {
     tldr
     linuxPackages.perf
     entr
+    ctags
 
     # System stuff
     brightnessctl

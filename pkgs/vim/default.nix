@@ -7,7 +7,7 @@ let
 in
 {
   environment = {
-    systemPackages = [ myVim ] ++ (with pkgs; [ ctags ]);
+    systemPackages = [ myVim ];
     shellAliases.vi = "vim";
     variables = {
       # Make vim the default editor
