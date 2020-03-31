@@ -3,7 +3,7 @@
 {
   imports = [
     ./fonts.nix
-    ./compton.nix
+    ./picom.nix
     ./redshift.nix
   ];
 

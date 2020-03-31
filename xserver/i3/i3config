@@ -26,7 +26,7 @@ font pango:monospace 12
 # font, it doesn’t scale on retina/hidpi displays.
 
 # Window settings
-for_window [class=".*"] border pixel 1
+for_window [class=".*"] border pixel 3
 # Requires i3-gaps
 hide_edge_borders both
 gaps inner 10

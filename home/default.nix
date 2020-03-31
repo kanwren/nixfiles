@@ -82,7 +82,7 @@ in
         slack
         spotify
         musescore
-        steam
+        #steam
         wineUnstable
       ];
     };
