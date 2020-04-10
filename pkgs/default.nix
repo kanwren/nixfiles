@@ -18,6 +18,7 @@ in with rec {
     nix-prefetch-github
     nix-prefetch-docker
     cachix
+    patchelf
 
     # Core utils
     binutils-unwrapped
@@ -32,6 +33,7 @@ in with rec {
     manpages
     whois
     tree
+    file
     dos2unix
     xclip
     ag
