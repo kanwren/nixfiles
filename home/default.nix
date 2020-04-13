@@ -45,19 +45,8 @@ in
         filelight
         neofetch
 
-        # Development
-        # Java
-        openjdk11
-        # JavaScript
-        nodejs-12_x
-        nodePackages.node2nix
-        # Arduino
-        arduino
-        ino
-
         # CS 2110
         cs2110.CircuitSim
-        cs2110.complx-tools
         cs2110.cs2110docker
 
         # Documents
@@ -69,10 +58,6 @@ in
         qutebrowser
         torbrowser
 
-        # Games
-        fortune
-        rogue
-
         # Jokes
         sl
         gti
@@ -83,7 +68,7 @@ in
         spotify
         musescore
         #steam
-        wineUnstable
+        #wineUnstable
       ];
     };
   };
