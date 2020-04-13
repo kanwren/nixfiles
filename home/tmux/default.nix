@@ -3,6 +3,7 @@
 let
   nord-tmux = pkgs.tmuxPlugins.mkDerivation {
     pluginName = "nord-tmux";
+    version = "0.3.0";
     src = pkgs.fetchFromGitHub {
       owner = "arcticicestudio";
       repo = "nord-tmux";
