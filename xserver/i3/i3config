@@ -70,9 +70,13 @@ bindsym $mod+d exec j4-dmenu-desktop
 # take a screenshot
 bindsym Print exec "scrot -e '(mv $f ~/Pictures/Screenshots || true) && echo ~/Pictures/Screenshots/$f | xclip -rmlastnl -sel clip'"
 
-# open temporary vim session in scratchpad
+# open temporary terminal with vim session in scratchpad
 bindsym $mod+n exec "kitty --title scratch vim -c 'setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile'"
 for_window [class="^kitty$" title="^scratch$"] move scratchpad, scratchpad show
+
+# open floating graphical calculator session
+bindsym XF86Calculator exec qalculate-gtk
+for_window [class="^Qalculate-gtk$"] floating enable
 
 # Scratchpad
 bindsym $mod+Shift+BackSpace move scratchpad

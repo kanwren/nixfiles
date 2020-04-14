@@ -54,6 +54,8 @@ in with rec {
     bc
     units
     libqalculate
+    # graphical calculator
+    qalculate-gtk
 
     # Compression tools
     gnutar
