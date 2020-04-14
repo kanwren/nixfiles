@@ -68,7 +68,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec j4-dmenu-desktop
 
 # take a screenshot
-bindsym $mod+Shift+s exec "scrot -e '(mv $f ~/Pictures/Screenshots || true) && echo ~/Pictures/Screenshots/$f | xclip -rmlastnl -sel clip'"
+bindsym Print exec "scrot -e '(mv $f ~/Pictures/Screenshots || true) && echo ~/Pictures/Screenshots/$f | xclip -rmlastnl -sel clip'"
 
 # open temporary vim session in scratchpad
 bindsym $mod+n exec "kitty --title scratch vim -c 'setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile'"
