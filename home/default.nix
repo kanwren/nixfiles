@@ -37,9 +37,6 @@ in
         shellcheck
         woof
 
-        # File explorers
-        ranger
-
         # System monitoring
         gotop
         filelight
@@ -56,7 +53,6 @@ in
         firefox
         chromium
         qutebrowser
-        torbrowser
 
         # Jokes
         sl
@@ -67,8 +63,6 @@ in
         slack
         spotify
         musescore
-        #steam
-        #wineUnstable
       ];
     };
   };
