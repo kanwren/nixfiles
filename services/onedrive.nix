@@ -6,19 +6,17 @@ let
   onedrive = pkgs.stdenv.mkDerivation {
     name = "onedrive";
     src = pkgs.fetchFromGitHub {
-      owner = "skilion";
+      owner = "abraunegg";
       repo = "onedrive";
-      rev = "945251f7f2e95ae85001efb6eab85d6176bac75e";
-      sha256 = "16iajb61b09gdqly85h6h7ap385ihk0az3mimkj277yc08rv68d0";
+      rev = "2a7e48b823cca934b73f691490c7344c81362f14";
+      sha256 = "1d7biv32dnx70hwfh4rmfvjpfhzhb1p89nnqr9h8kvwkd9s4f9m6";
     };
+    nativeBuildInputs = with pkgs; [ pkgconfig ];
     buildInputs = with pkgs; [ dmd curl sqlite ];
     installPhase = ''
       mkdir -p "$out/bin"
       cp onedrive "$out/bin"
     '';
-    # This uses the .git directory for version information, so we inline the
-    # version instead
-    patches = [ ./inline-onedrive-version-v1.3.3.patch ];
   };
 in
 {
@@ -32,6 +30,6 @@ in
     # wantedBy = [ "default.target" ];
 
     description = "OneDrive Free Client";
-    documentation = [ "https://github.com/skilion/onedrive" ];
+    documentation = [ "https://github.com/abraunegg/onedrive" ];
   };
 }
