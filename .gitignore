@@ -9,8 +9,5 @@ hardware-configuration.nix
 
 secrets.nix
 
-# This should be a device-specific attribute set of network names to
-# networkmanager configurations
-networking/networks.nix
 # This should be a file with the name of each interface on a separate line
 networking/interfaces.txt
