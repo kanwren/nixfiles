@@ -3,8 +3,8 @@
 let
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
-    rev = "dff5f07952e61da708dc8b348ea677414e992215";
-    ref = "release-19.09";
+    rev = "3461ceebc01169f99362ab5cc62d26224e7886d9";
+    ref = "release-20.03";
   } + "/nixos";
   utils = import ../utils { inherit lib; };
 in
