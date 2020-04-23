@@ -13,11 +13,4 @@ else
   echo "networking/interfaces.txt already exists, skipping..."
 fi
 
-if [ ! -f secrets.nix ]; then
-  echo "Initializing secrets.nix"
-  echo "{}" > secrets.nix
-else
-  echo "secrets.nix already exists, skipping..."
-fi
-
 # vim: set ft=bash:
