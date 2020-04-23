@@ -1,34 +1,23 @@
-# Service to run OneDrive sync
-# Set up and authorize it by running `onedrive`
-{ pkgs, ... }:
+{ ... }:
 
 let
-  onedrive = pkgs.stdenv.mkDerivation {
-    name = "onedrive";
-    src = pkgs.fetchFromGitHub {
-      owner = "abraunegg";
-      repo = "onedrive";
-      rev = "2a7e48b823cca934b73f691490c7344c81362f14";
-      sha256 = "1d7biv32dnx70hwfh4rmfvjpfhzhb1p89nnqr9h8kvwkd9s4f9m6";
-    };
-    nativeBuildInputs = with pkgs; [ pkgconfig ];
-    buildInputs = with pkgs; [ dmd curl sqlite ];
-    installPhase = ''
-      mkdir -p "$out/bin"
-      cp onedrive "$out/bin"
-    '';
+  # ldc/dmd break a lot, so pin nixpkgs for reproducibility
+  fetchNixpkgs = { rev, sha256 }: builtins.fetchTarball {
+    url = "https://github.com/nixos/nixpkgs/archive/${rev}.tar.gz";
+    inherit sha256;
   };
-in
-{
-  environment.systemPackages = [ onedrive ];
-  # Service configuration is according to generated onedrive.service
+  pkgs = import (fetchNixpkgs {
+    rev = "c039152ba8619ecbddf743d182200f19a2514476";
+    sha256 = "0z3md7ccirs3855339x3immxw5ahs8wb4vp1is2xylwq8qkkss0s";
+  }) {};
+in {
+  environment.systemPackages = [ pkgs.onedrive ];
+
   systemd.user.services.onedrive-sync = {
-    script = "${onedrive}/bin/onedrive --monitor";
+    script = "${pkgs.onedrive}/bin/onedrive --monitor";
     serviceConfig = {
       Restart = "no";
     };
-    # wantedBy = [ "default.target" ];
-
     description = "OneDrive Free Client";
     documentation = [ "https://github.com/abraunegg/onedrive" ];
   };
