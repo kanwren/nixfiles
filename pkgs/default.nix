@@ -44,11 +44,6 @@ in with rec {
 
     # System stuff
     brightnessctl
-    inxi
-    dmidecode
-    upower
-    hddtemp
-    glxinfo
 
     # CLI math tools
     bc
@@ -61,6 +56,7 @@ in with rec {
     gnutar
     gzip
     bzip2
+    zip
     unzip
     xz
     unrar
@@ -79,7 +75,6 @@ in with rec {
 
     # Pentesting
     nmap-graphical
-    hashcat
 
     # Terminal emulators and multiplexers
     kitty
@@ -88,8 +83,6 @@ in with rec {
     # Media
     # EXIF data
     exiftool
-    # Data matrices
-    dmtx
     # Images
     feh
     scrot
