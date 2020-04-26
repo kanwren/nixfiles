@@ -19,6 +19,7 @@ in with rec {
     nix-prefetch-docker
     cachix
     patchelf
+    nix-index
 
     # Core utils
     binutils-unwrapped
