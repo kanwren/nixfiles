@@ -16,14 +16,13 @@
     };
 
     virtualbox.host = {
-      enable = true;
-      # enableExtensionPack = true;
+      enable = false;
     };
 
   };
 
   environment.systemPackages = with pkgs; [
-    vagrant
+    # vagrant
   ];
 
   # Enable qemu-based emulation of other platforms
