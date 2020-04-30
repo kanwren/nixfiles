@@ -20,6 +20,11 @@
       showManual = true;
       ttyNumber = 8;
     };
+
+    # Provided by ./onedrive.nix
+    onedrive = {
+      enable = true;
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are started
