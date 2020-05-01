@@ -1,7 +1,7 @@
 # Build with, e.g.:
-#   nix-build minimal-iso.nix
-# This will fill in nixpkgs and the current system by default, e.g.:
-#   nix-build minimal-iso.nix --arg nixpkgs "<nixpkgs>" --argstr system x86_64-linux
+#   nix-build aarch64-iso.nix
+# This will fill in nixpkgs by default, e.g.:
+#   nix-build minimal-iso.nix --arg nixpkgs "<nixpkgs>"
 { nixpkgs ? <nixpkgs>
 , system  ? "aarch64-linux"
 }:
