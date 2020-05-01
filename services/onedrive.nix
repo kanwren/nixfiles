@@ -26,18 +26,21 @@ in {
     environment.systemPackages = [ pkgs.onedrive ];
 
     systemd.user.services.onedrive-sync = {
-      wantedBy = [ "graphical-session.target" ];
+      description = "OneDrive Free Client";
+      documentation = [ "https://github.com/abraunegg/onedrive" ];
+
+      wantedBy = [ "default.target" ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+
       serviceConfig = {
-        Type = "simple";
         ExecStart = ''
-          ${pkgs.onedrive}/bin/onedrive --monitor --verbose --confdir=%h/.config/%i
+          ${pkgs.onedrive}/bin/onedrive --monitor --verbose --confdir=%h/.config/onedrive
         '';
         Restart = "on-failure";
         RestartSec = 3;
         RestartPreventExitStatus = 3;
       };
-      description = "OneDrive Free Client";
-      documentation = [ "https://github.com/abraunegg/onedrive" ];
     };
   };
 }
