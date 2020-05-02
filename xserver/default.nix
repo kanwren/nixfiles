@@ -4,6 +4,7 @@
   imports = [
     ./fonts.nix
     ./picom.nix
+    ./logind.nix
     ./redshift.nix
   ];
 
