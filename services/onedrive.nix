@@ -3,6 +3,9 @@
 let
   cfg = config.services.onedrive;
 
+  # Replicate a string 'n' times with spaces in between
+  replicateStr = n: str: builtins.concatStringsSep " " (builtins.genList (lib.const str) n);
+
   # ldc/dmd break a lot, so temporarily pin nixpkgs for reproducibility
   fetchNixpkgs = { rev, sha256 }: builtins.fetchTarball {
     url = "https://github.com/nixos/nixpkgs/archive/${rev}.tar.gz";
@@ -15,10 +18,18 @@ let
 
 in {
   options.services.onedrive = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Enable OneDrive service";
+    enable = lib.mkEnableOption "Enable OneDrive service";
+
+    monitorInterval = lib.mkOption {
+      type = lib.types.nullOr lib.types.int;
+      default = null;
+      description = "Number of seconds by which each sync operation is undertaken when idle under monitor mode";
+    };
+
+    verbosity = lib.mkOption {
+      type = lib.types.ints.between 0 2;
+      default = 1;
+      description = "The amount of detail to log";
     };
   };
 
@@ -35,7 +46,10 @@ in {
 
       serviceConfig = {
         ExecStart = ''
-          ${pkgs.onedrive}/bin/onedrive --monitor --verbose --confdir=%h/.config/onedrive
+          ${pkgs.onedrive}/bin/onedrive --monitor \
+          ${replicateStr cfg.verbosity " --verbose"} \
+          --confdir=%h/.config/onedrive \
+          ${lib.optionalString (cfg.monitorInterval != null) "--monitor-interval ${toString cfg.monitorInterval}"}
         '';
         Restart = "on-failure";
         RestartSec = 3;

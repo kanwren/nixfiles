@@ -24,6 +24,7 @@
     # Provided by ./onedrive.nix
     onedrive = {
       enable = true;
+      monitorInterval = 60;
     };
   };
 
