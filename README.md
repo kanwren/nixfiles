@@ -17,7 +17,6 @@ My NixOS configurations. Configs are split up across multiple directories:
     new ones
 - `pkgs`: System-wide packages, like bash and vim, and their configurations
   - `pkgs/scripts.nix`: Scripts to be available globally
-  - `pkgs/custom/`: Miscellaneous derivations for extra global packages
 - `security`: Security-related configurations
 - `services`: Various daemons, user-session programs, and other services
 - `xserver`: Configurations for X, including the window manager, compositor,

@@ -6,11 +6,6 @@ in with rec {
   # Scripts to be available globally
   scripts = import ./scripts.nix { inherit pkgs; };
 
-  # Custom-built packages, in the ./custom directory
-  customPackages =
-    builtins.map (x: import x { inherit pkgs; })
-    (utils.getFilesWith (name: type: lib.hasSuffix ".nix" name) ./custom);
-
   baseSystemPackages = with pkgs; [
     # Nix stuff
     nix-universal-prefetch
@@ -45,6 +40,7 @@ in with rec {
 
     # System stuff
     brightnessctl
+    mons
 
     # CLI math tools
     bc
@@ -122,7 +118,6 @@ in with rec {
   environment = {
     systemPackages = lib.concatLists [
       baseSystemPackages
-      customPackages
       scripts
     ];
   };
