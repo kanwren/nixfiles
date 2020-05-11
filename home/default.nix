@@ -61,8 +61,6 @@ in
         # Applications
         discord
         slack
-        spotify
-        musescore
       ];
     };
   };
