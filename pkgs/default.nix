@@ -57,7 +57,6 @@ in with rec {
     unzip
     xz
     unrar
-    p7zip
 
     # Filesystem tools
     parted
