@@ -1,10 +1,15 @@
 { pkgs, lib, ... }:
 
 let
-  home-manager = builtins.fetchGit {
-    url = "https://github.com/rycee/home-manager.git";
-    rev = "3461ceebc01169f99362ab5cc62d26224e7886d9";
-    ref = "release-20.03";
+  fetchGithubArchive = { owner, repo, rev, sha256 }: fetchTarball {
+    url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
+    inherit sha256;
+  };
+  home-manager = fetchGithubArchive {
+    owner = "rycee";
+    repo = "home-manager";
+    rev = "1ec45b11abdfbd92d608a6536d11e80bd648ec02";
+    sha256 = "15p4gwkm1cz06gfd0w5g36jlnn3bpx36v0m264zqmbkhd965j3v2";
   } + "/nixos";
   utils = import ../utils { inherit lib; };
 in
