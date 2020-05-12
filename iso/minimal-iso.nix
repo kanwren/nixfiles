@@ -21,10 +21,6 @@ let
         wget curl manpages git vim
         mkpasswd
       ];
-      networking = {
-        networkmanager.enable = true;
-        wireless.enable = lib.mkForce false;
-      };
     };
 
   };
