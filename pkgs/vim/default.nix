@@ -20,7 +20,7 @@ in
     vim.defaultEditor = true;
     bash.shellAliases = {
       vi = "vim";
-      svim = "sudo -E vim"; # or sudoedit
+      svim = "sudoedit";
     };
   };
 }

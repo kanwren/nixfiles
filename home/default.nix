@@ -45,7 +45,6 @@ in
         # System monitoring
         gotop
         filelight
-        neofetch
 
         # CS 2110
         cs2110.CircuitSim
@@ -56,12 +55,7 @@ in
 
         # Browsers
         firefox
-        chromium
         qutebrowser
-
-        # Jokes
-        sl
-        gti
 
         # Applications
         discord

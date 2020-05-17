@@ -60,17 +60,12 @@ in with rec {
 
     # Filesystem tools
     parted
-    gparted
     ntfsprogs
 
     # Crypto stuff
     mkpasswd
     gnupg
-    paperkey
     openssl
-
-    # Pentesting
-    nmap-graphical
 
     # Terminal emulators and multiplexers
     kitty
@@ -83,9 +78,6 @@ in with rec {
     feh
     scrot
     imagemagick7
-    libwebp
-    gifsicle
-    inkscape
     gimp
     # PDFs
     zathura
@@ -93,7 +85,6 @@ in with rec {
 
     # Multimedia
     vlc
-    ffmpeg
     # CD ripping
     (asunder.override {
       mp3Support = true;
@@ -103,7 +94,6 @@ in with rec {
     simplescreenrecorder
 
     # Browsers
-    w3m-nographics
     firefox
   ];
 };
