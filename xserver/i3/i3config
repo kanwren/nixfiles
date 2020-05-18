@@ -49,7 +49,7 @@ bindsym XF86AudioPrev exec playerctl previous
 # Custom bindings
 # start a terminal
 bindsym $mod+Return exec kitty
-# Start chromium
+# Start a browser
 bindsym $mod+Shift+b exec firefox
 # Prompt to run bash command
 bindsym $mod+b exec "bash -c 'dmenu -p \\"bash:\\" <&- | xargs -I {} bash -c \\"{}\\"'"

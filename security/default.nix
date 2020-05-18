@@ -12,7 +12,7 @@
       '';
     };
 
-    chromiumSuidSandbox.enable = true;
+    # chromiumSuidSandbox.enable = true;
 
   };
 }

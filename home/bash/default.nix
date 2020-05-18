@@ -26,7 +26,6 @@
         cleantex = "rm *.aux *.log *.fls *.fdb_latexmk || true";
         copylast = "fc -ln -1 | ${gawk}/bin/awk '{\$1=\$1}1' | ${xclip}/bin/xclip -sel clip";
         xc = "${xclip}/bin/xclip -sel clip";
-        fakesha256 = "head --bytes 10 /dev/urandom | ${coreutils}/bin/sha256sum -b | cut -d' ' -f 1";
         nrn = "${nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
       };
 

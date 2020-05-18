@@ -2,17 +2,6 @@
 
 # Various helper functions
 rec {
-  importOr = path: default:
-    if builtins.pathExists path
-      then import path
-      else default;
-
-  # Map key-value pairs of an attribute set
-  mapAttrPairs = f: attr:
-    builtins.listToAttrs
-    (builtins.map (n: f { name = n; value = builtins.getAttr n attr; })
-    (builtins.attrNames attr));
-
   # Get all subdirectories in a directory
   getDirs = dir:
     builtins.map (x: dir + "/${x}")
