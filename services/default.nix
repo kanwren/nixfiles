@@ -6,6 +6,9 @@
   ];
 
   services = {
+    # Enable lorri daemon for nix/direnv integration
+    lorri.enable = true;
+
     # Enable the OpenSSH daemon
     openssh.enable = true;
 
