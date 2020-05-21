@@ -38,12 +38,21 @@ let
       fi
     '';
 
+    # Print nix garbage collector roots that still exist
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
       for f in /nix/var/nix/gcroots/auto/*; do
         if [ -e "$f" ]; then
           readlink "$f"
         fi
       done
+    '';
+
+    # Output the git revision and sha256 of the current <nixpkgs>
+    pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
+      ${nix-prefetch-github}/bin/nix-prefetch-github nixos nixpkgs \
+        --no-prefetch \
+        --rev $(nix eval --raw '(builtins.readFile <nixpkgs/.git-revision>)') \
+        | ${jq}/bin/jq '.rev, .sha256'
     '';
 
     bakScript = with pkgs; writeShellScriptBin "bak" ''
