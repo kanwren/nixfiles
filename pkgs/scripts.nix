@@ -40,7 +40,9 @@ let
 
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
       for f in /nix/var/nix/gcroots/auto/*; do
-        readlink $f
+        if [ -e "$f" ]; then
+          readlink "$f"
+        fi
       done
     '';
 
