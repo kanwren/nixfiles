@@ -31,8 +31,8 @@
         s = "status";
         co = "checkout";
         # Utility
-        alias = ''"! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e \"s/ \\(.*\\)/ = \\1/\"; }; f"'';
-        ignore-io = ''"! f(){ join(){ local IFS=\",\"; echo \"$*\"; }; curl https://www.gitignore.io/api/$(join $*); }; f"'';
+        alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
+        ignore-io = ''! f(){ join(){ local IFS=","; echo "$*"; }; curl https://www.gitignore.io/api/$(join $*); }; f'';
         # Jokes
         praise = "blame";
         pansect = "bisect";
