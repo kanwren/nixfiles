@@ -40,10 +40,22 @@ let
 
     # Print nix garbage collector roots that still exist
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
+      echo "Auto roots:"
       for f in /nix/var/nix/gcroots/auto/*; do
         if [ -e "$f" ]; then
-          readlink "$f"
+          link="$(readlink "$f")"
+          echo "    $link"
         fi
+      done
+
+      for d in /nix/var/nix/gcroots/per-user/*; do
+        echo "Per-user roots: $d:"
+        for f in $d/*; do
+          if [ -e "$f" ]; then
+            link="$(readlink "$f")"
+            echo "    $link"
+          fi
+        done
       done
     '';
 
