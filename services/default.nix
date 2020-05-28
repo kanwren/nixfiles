@@ -1,8 +1,15 @@
-{ ... }:
+{ pkgs, ... }:
 
-{
+let
+  # Need to do this instead of using overlay to avoid infinite recursion
+  # See https://github.com/nix-community/nur#using-modules-overlays-or-library-functions-in-nixos
+  nur = import (builtins.fetchTarball {
+    url = "https://github.com/nix-community/NUR/archive/8ac25f6b5af24f829872c88fefbd6c434645a271.tar.gz";
+    sha256 = "0wzjmx9vwsc7sb6has5vzj7nrl4cm91l01hflldr82g0v3s99nsg";
+  }) { inherit pkgs; };
+in {
   imports = [
-    ./onedrive.nix
+    (nur.repos.nprindle.modules.onedrive)
   ];
 
   services = {
