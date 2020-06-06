@@ -66,6 +66,9 @@
         push = {
           default = "simple";
         };
+        advice = {
+          addEmptyPathspec = false;
+        };
       };
 
       lfs.enable = true;
