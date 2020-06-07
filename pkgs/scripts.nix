@@ -150,11 +150,26 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc865"
+          ghc="ghc883"
           args="$*"
           ;;
       esac
       ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
+    '';
+
+    ghcWithHoogleScript = with pkgs; writeShellScriptBin "gwh" ''
+      case "$1" in
+        ghc*)
+          ghc="$1"
+          shift
+          args="$*"
+          ;;
+        *)
+          ghc="ghc883"
+          args="$*"
+          ;;
+      esac
+      ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithHoogle (p: with p; [ $args ])"
     '';
 
     # Start a hoogle server, usually in a nix-shell
