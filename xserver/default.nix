@@ -28,6 +28,26 @@
     layout = "us";
     xkbOptions = "caps:escape";
 
+    displayManager = {
+      lightdm = {
+        greeters.gtk = {
+          enable = true;
+
+          clock-format = "%I:%M %p";
+
+          iconTheme = {
+            name = "Papirus-Adapta-Nokto";
+            package = pkgs.papirus-icon-theme;
+          };
+
+          theme = {
+            name = "Adapta-Nokto";
+            package = pkgs.adapta-gtk-theme;
+          };
+        };
+      };
+    };
+
     desktopManager = {
       xterm.enable = false;
     };
