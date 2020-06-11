@@ -2,6 +2,13 @@
 
 let
   cfg = config.programs.nushell;
+
+  # Convert a nix expression to a TOML file
+  nixToTomlFile = name: expr:
+    let json = pkgs.writeText "${name}-json" (builtins.toJSON expr);
+    in pkgs.runCommand "${name}-toml" {} ''
+      ${pkgs.remarshal}/bin/json2toml ${json} -o "$out"
+    '';
 in {
   options = {
     programs.nushell = {
@@ -32,12 +39,8 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.nushell ];
 
-    home.file.".config/nu/config.toml" = lib.mkIf (cfg.settings != {}) {
-      source =
-        let json = pkgs.writeText "nushell-config-json" (builtins.toJSON cfg.settings);
-        in pkgs.runCommand "nushell-config-toml" {} ''
-          ${pkgs.remarshal}/bin/json2toml ${json} -o "$out"
-        '';
-    };
+    # We still make an empty file if settings is '{}', since nu tries to touch
+    # the file, which would cause problems in the future
+    home.file.".config/nu/config.toml".source = nixToTomlFile "nushell-config" cfg.settings;
   };
 }
