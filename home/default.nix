@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   fetchGithubArchive = { owner, repo, rev, sha256 }: fetchTarball {
@@ -15,18 +15,16 @@ let
 in
 
 {
-  imports =
-    let
-      homeProgramConfigs =
-        builtins.filter builtins.pathExists
-        (builtins.map (d: d + "/default.nix")
-        (utils.getDirs ./.));
-    in [ home-manager ] ++ homeProgramConfigs;
+  imports = [ home-manager ];
 
   home-manager.users.nprin = {
-    nixpkgs.config = {
-      allowUnfree = true;
-    };
+    imports =
+      builtins.filter builtins.pathExists
+      (builtins.map (d: d + "/default.nix")
+      (utils.getDirs ./.));
+
+    # Use the same nixpkgs as nixos modules
+    nixpkgs = { inherit (config.nixpkgs) config overlays system; };
 
     home = {
       # User-specific packages. If a program needs configuration, then either:
