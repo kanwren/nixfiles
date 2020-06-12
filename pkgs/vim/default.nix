@@ -7,7 +7,10 @@ let
 in
 {
   environment = {
-    systemPackages = [ myVim ];
+    systemPackages = [
+      myVim
+      pkgs.rnix-lsp # nix lsp via rnix
+    ];
     shellAliases.vi = "vim";
     variables = {
       # Make vim the default editor
