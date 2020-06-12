@@ -1,16 +1,12 @@
 { pkgs, ... }:
 
 {
-  home-manager.users.nprin = {
+  home.packages = with pkgs; [
+    ghcid
+  ];
 
-    home.packages = with pkgs; [
-      ghcid
-    ];
-
-    home.file = {
-      ".ghc/ghci.conf".source = ./ghci.conf;
-    };
-
+  home.file = {
+    ".ghc/ghci.conf".source = ./ghci.conf;
   };
 }
 
