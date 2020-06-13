@@ -59,12 +59,18 @@ let
       done
     '';
 
-    # Output the git revision and sha256 of the current <nixpkgs>
+    # Output the git revision of the current <nixpkgs>
+    # If -s is passed, it will also fetch the sha256
     pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
-      ${nix-prefetch-github}/bin/nix-prefetch-github nixos nixpkgs \
-        --no-prefetch \
-        --rev $(nix eval --raw '(builtins.readFile <nixpkgs/.git-revision>)') \
-        | ${jq}/bin/jq '.rev, .sha256'
+      rev=$(nix eval --raw '(builtins.readFile <nixpkgs/.git-revision>)')
+      if [ "$1" = "-s" ]; then
+        ${nix-prefetch-github}/bin/nix-prefetch-github nixos nixpkgs \
+          --no-prefetch \
+          --rev "$rev" \
+          | ${jq}/bin/jq '.rev, .sha256'
+      else
+        echo "$rev"
+      fi
     '';
 
     bakScript = with pkgs; writeShellScriptBin "bak" ''
