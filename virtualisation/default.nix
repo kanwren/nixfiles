@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ./qemu.nix
-  ];
+  # imports = [
+  #   ./qemu.nix
+  # ];
 
   virtualisation = {
 
@@ -26,7 +26,7 @@
   ];
 
   # Enable qemu-based emulation of other platforms
-  qemu-user = {
-    aarch64 = true;
-  };
+  # qemu-user = {
+  #   aarch64 = true;
+  # };
 }

@@ -6,16 +6,16 @@ self: super:
 {
   nushell = super.rustPlatform.buildRustPackage rec {
     pname = "nushell";
-    version = "unstable-2020-06-11";
+    version = "unstable-2020-06-17";
 
     src = super.fetchFromGitHub {
       owner = pname;
       repo = pname;
-      rev = "a268e825aa9632b85732b19a6189b0672f3227fd";
-      sha256 = "0x5a7mjpa88war66qzd8mw3yf6a9yahj5c8bdzqib5s612md2998";
+      rev = "96d58094cf93962ae46729090bed057e478117f5";
+      sha256 = "0lbb161hknrrdfa2gald58b69yy630mig9ksdabdnnhkksv4262s";
     };
 
-    cargoSha256 = "09hsxkkgnp3q6ibvdvzjiplsalfq0g6166cadhsa4s30my3i0jgj";
+    cargoSha256 = "01klqdlviwsvd30yc88idmij4v0p3dq9p10qx376m4ghlb22bk9x";
 
     nativeBuildInputs = with self; [ pkg-config python3 ];
 
@@ -27,7 +27,6 @@ self: super:
 
     checkPhase = let inherit (super) lib; in ''
       runHook preCheck
-      echo "Running cargo cargo test ${lib.strings.concatStringsSep " " cargoTestFlags} -- ''${checkFlags} ''${checkFlagsArray+''${checkFlagsArray[@]}}"
       cargo test ${lib.strings.concatStringsSep " " cargoTestFlags} -- ''${checkFlags} ''${checkFlagsArray+"''${checkFlagsArray[@]}"}
       runHook postCheck
     '';
