@@ -29,6 +29,10 @@
     };
 
     initExtra = ''
+      # Set up 'h'
+      eval "$(${pkgs.h}/bin/h --setup ~/code)"
+      eval "$(${pkgs.h}/bin/up --setup)"
+
       set -o vi
       bind -m vi-insert "\C-l":clear-screen
     '';

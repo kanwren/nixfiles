@@ -40,6 +40,7 @@ in
         shellcheck
         woof
         bat
+        h
 
         # System monitoring
         gotop
