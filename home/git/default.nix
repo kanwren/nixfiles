@@ -65,6 +65,9 @@
       push = {
         default = "simple";
       };
+      pull = {
+        ff = "only";
+      };
       advice = {
         addEmptyPathspec = false;
       };
