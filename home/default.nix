@@ -39,6 +39,7 @@ in
         gitAndTools.hub
         shellcheck
         woof
+        bat
 
         # System monitoring
         gotop
