@@ -19,21 +19,4 @@
       };
     };
   };
-
-  systemd.user.services.ibus-daemon = {
-    description = "ibus-daemon";
-
-    wantedBy = [ "default.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-
-    serviceConfig = {
-      ExecStart = ''
-        ${config.i18n.inputMethod.package}/bin/ibus-daemon
-      '';
-      Restart = "on-failure";
-      RestartSec = 3;
-      RestartPreventExitStatus = 3;
-    };
-  };
 }
