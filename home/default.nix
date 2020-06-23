@@ -43,7 +43,7 @@ in
         h
 
         # System monitoring
-        gotop
+        ytop
         filelight
         xfce.thunar
 
