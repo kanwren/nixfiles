@@ -45,6 +45,7 @@ in
         # System monitoring
         gotop
         filelight
+        xfce.thunar
 
         # CS 2110
         cs2110.CircuitSim
