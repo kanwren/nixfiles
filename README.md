@@ -6,7 +6,6 @@ My NixOS configurations. Configs are split up across multiple directories:
 - `hardware`: Enabling various hardware-dependent features
 - `home`: HomeManager configurations; contains user packages, dotfiles, and
   other configurations
-  - `home/custom/`: Miscellaneous derivations for extra user packages
   - `home/<name>/`: HomeManager configurations for a specific program, or for
     a group of related programs
 - `i18n`: Internationalization settings and console settings, like locale and
@@ -24,21 +23,18 @@ My NixOS configurations. Configs are split up across multiple directories:
 - `time`: Time and timezone settings
 - `users`: User and group configurations
 - `utils`: Defines various utility functions
-- `virtualisation`: Manage virutalization services like Docker and VirtualBox
+- `virtualisation`: Manage virtualization services like Docker and VirtualBox
 
 Additionally, other directories don't contain configuration, but Nix-related
 helpers:
 
 - `iso`: Derivations to build NixOS isos
 
-These configurations assume several untracked files other than
+The configuration also assumes some untracked files other than
 `hardware-configuration.nix`:
 
-- `secrets.nix`: A nested attribute set containing things like hashed user
-  passwords
-- `networking/interfaces.txt`: A file with networking interfaces on each line.
-  DHCP will be enabled for all of these
+- `networking/interfaces.txt`: A file with networking interfaces for which to
+  enable DHCP. These are generally different for each computer.
 
-These can all be automatically created with `setup.sh`, and nix errors will
-specify the expected structure.
+These can be automatically created with `setup.sh`.
 
