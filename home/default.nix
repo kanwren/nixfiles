@@ -41,6 +41,7 @@ in
         woof
         bat
         h
+        pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
 
         # System monitoring
         ytop

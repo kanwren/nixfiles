@@ -11,8 +11,8 @@ let
   nurSrc = super.fetchFromGitHub {
     owner = "nix-community";
     repo = "NUR";
-    rev = "8ac25f6b5af24f829872c88fefbd6c434645a271";
-    sha256 = "0wzjmx9vwsc7sb6has5vzj7nrl4cm91l01hflldr82g0v3s99nsg";
+    rev = "1b9cbb063df148aa7677a1cfb31a4e49916b7c08";
+    sha256 = "03xb5ayqfnan9s38j4bykmnwp2708rqrqg7djl11x8z4rp2ssjqy";
   };
 in {
   nur = import nurSrc { pkgs = self; };
