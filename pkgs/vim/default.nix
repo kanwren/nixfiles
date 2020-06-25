@@ -20,7 +20,6 @@ in
   };
 
   programs = {
-    vim.defaultEditor = true;
     bash.shellAliases = {
       vi = "vim";
       svim = "sudoedit";
