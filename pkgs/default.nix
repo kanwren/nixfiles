@@ -4,7 +4,7 @@ let
   utils = import ../utils { inherit lib; };
 in with rec {
   # Scripts to be available globally
-  scripts = import ./scripts.nix { inherit pkgs; };
+  scripts = import ./scripts { inherit pkgs; };
 
   baseSystemPackages = with pkgs; [
     # Nix stuff

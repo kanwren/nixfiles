@@ -59,6 +59,8 @@ let
       done
     '';
 
+    lorriGcScript = pkgs.haskell.packages.ghc8101.callPackage ./lorri-gc {};
+
     # Output the git revision of the current <nixpkgs>
     # If -s is passed, it will also fetch the sha256
     pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
