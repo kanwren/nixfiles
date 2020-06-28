@@ -61,6 +61,10 @@ let
 
     lorriGcScript = pkgs.haskell.packages.ghc8101.callPackage ./lorri-gc {};
 
+    direnvAllowedScript = with pkgs; writeShellScriptBin "direnv-allowed" ''
+      cat ~/.local/share/direnv/allow/*
+    '';
+
     # Output the git revision of the current <nixpkgs>
     # If -s is passed, it will also fetch the sha256
     pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
