@@ -45,6 +45,8 @@
             package = pkgs.papirus-icon-theme;
           };
         };
+
+        background = ../desktop-backgrounds/forest.png;
       };
     };
 
