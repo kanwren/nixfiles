@@ -62,6 +62,7 @@ in
         # Applications
         discord
         slack
+        spotify
       ];
     };
   };
