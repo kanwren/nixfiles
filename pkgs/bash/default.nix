@@ -1,6 +1,14 @@
 { pkgs, ... }:
 
-rec {
+let
+  # Better ls colors than the default, call dircolors on it and eval
+  ls_colors = pkgs.fetchFromGitHub {
+    owner = "trapd00r";
+    repo = "LS_COLORS";
+    rev = "8256268e688d23892cab1785a8b0ea6e4353c3f4";
+    sha256 = "1zrb4niz26mk42s88d0az2r1j1cjn509fbg2p7iny6p0a0b3mp02";
+  } + "/LS_COLORS";
+in rec {
   programs.bash = {
     enableCompletion = true;
 
@@ -64,6 +72,9 @@ rec {
 
       # Enable direnv
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+
+      # Add some better ls colors
+      eval "$(${pkgs.coreutils}/bin/dircolors ${ls_colors})"
     '';
   };
 
