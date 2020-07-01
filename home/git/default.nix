@@ -31,7 +31,7 @@
       co = "checkout";
       # Utility
       alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-      ignore-io = ''! f(){ join(){ local IFS=","; echo "$*"; }; curl https://www.gitignore.io/api/$(join $*); }; f'';
+      ignore-io = ''! f(){ join(){ local IFS=","; echo "$*"; }; curl -sL https://www.toptal.com/developers/gitignore/api/$(join $*); }; f'';
       # Jokes
       praise = "blame";
       pansect = "bisect";
