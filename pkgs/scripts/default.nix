@@ -188,13 +188,5 @@ let
     hoogleServerScript = with pkgs; writeShellScriptBin "hoogleserver" ''
       hoogle server --port=''${1:-8080} --local --haskell
     '';
-
-    hackageGetCabalScript = with pkgs; writeShellScriptBin "hackage-get-cabal" ''
-      if [ $# -ne 1 ]; then
-        >&2 echo "Usage: hackage-get-cabal <package name>"
-        exit 1
-      fi
-      curl -s https://hackage.haskell.org/package/$1/$1.cabal
-    '';
   };
 in builtins.attrValues scripts
