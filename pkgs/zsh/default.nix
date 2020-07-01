@@ -22,8 +22,6 @@ in {
     };
 
     interactiveShellInit = ''
-      eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
@@ -39,7 +37,11 @@ in {
       theme = "bira";
       plugins = [
         "vi-mode"
+        "direnv"
         "git-prompt"
+        "colored-man-pages"
+        "cabal"
+        "docker"
       ];
     };
   };
