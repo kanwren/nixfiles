@@ -38,8 +38,12 @@ in {
       plugins = [
         "vi-mode"
         "direnv"
+        "fzf"
         "git-prompt"
+        "last-working-dir"
         "colored-man-pages"
+
+        # completion plugins
         "cabal"
         "docker"
       ];

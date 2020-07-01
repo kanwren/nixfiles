@@ -42,6 +42,7 @@ in
         bat
         h
         pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
+        fzf
 
         # System monitoring
         ytop
