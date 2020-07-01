@@ -33,6 +33,8 @@ in
       }
     ];
     extraConfig = ''
+      set -g default-shell ${pkgs.zsh}/bin/zsh
+
       # Set prefix to M-Space (shortcut doesn't support M-)
       unbind C-b
       set -g prefix M-Space

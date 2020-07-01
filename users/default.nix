@@ -20,7 +20,7 @@
         ];
         createHome = true;
         home = "/home/nprin";
-        shell = pkgs.bashInteractive;
+        shell = pkgs.zsh;
       };
 
     };

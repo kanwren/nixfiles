@@ -102,6 +102,7 @@ in with rec {
   imports = [
     ./vim/default.nix
     ./bash/default.nix
+    ./zsh/default.nix
   ];
 
   environment = {

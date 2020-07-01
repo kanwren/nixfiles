@@ -3,12 +3,12 @@
 let
   # Better ls colors than the default, call dircolors on it and eval
   ls_colors = pkgs.fetchFromGitHub {
-    owner = "trapd00r";
-    repo = "LS_COLORS";
-    rev = "8256268e688d23892cab1785a8b0ea6e4353c3f4";
-    sha256 = "1zrb4niz26mk42s88d0az2r1j1cjn509fbg2p7iny6p0a0b3mp02";
-  } + "/LS_COLORS";
-in rec {
+    owner = "arcticicestudio";
+    repo = "nord-dircolors";
+    rev = "addb3b427e008d23affc721450fde86f27566f1d";
+    sha256 = "0s7bd38269z4b9j6f90nscjkbdbh23z3mlg89fnk7ndyrpf5dqlj";
+  } + "/src/dir_colors";
+in {
   programs.bash = {
     enableCompletion = true;
 
@@ -30,10 +30,6 @@ in rec {
       ".8" = "cd ../../../../../../../..";
       ".9" = "cd ../../../../../../../../..";
     };
-  };
-
-  environment = {
-    systemPackages = with pkgs; [ bashInteractive direnv ];
 
     interactiveShellInit = ''
       set -o vi
@@ -76,6 +72,10 @@ in rec {
       # Add some better ls colors
       eval "$(${pkgs.coreutils}/bin/dircolors ${ls_colors})"
     '';
+  };
+
+  environment = {
+    systemPackages = with pkgs; [ direnv ];
   };
 
 }
