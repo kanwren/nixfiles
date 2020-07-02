@@ -20,7 +20,20 @@ in {
     openssh.enable = true;
 
     # Enable CUPS to print documents
-    printing.enable = true;
+    printing = {
+      enable = true;
+      browsing = true;
+      defaultShared = true;
+    };
+
+    avahi = {
+      enable = true;
+      publish = {
+        enable = true;
+        userServices = true;
+      };
+      nssmdns = true;
+    };
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
