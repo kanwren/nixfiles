@@ -29,7 +29,9 @@ in {
 
       setopt autocd extendedglob
       unsetopt beep
+
       bindkey -v
+      export KEYTIMEOUT=1
     '';
 
     shellAliases =

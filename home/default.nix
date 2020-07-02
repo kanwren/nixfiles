@@ -64,6 +64,7 @@ in
         discord
         slack
         spotify
+        spotify-tui
       ];
     };
   };
