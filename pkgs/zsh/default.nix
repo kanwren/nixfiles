@@ -7,6 +7,11 @@ let
     rev = "addb3b427e008d23affc721450fde86f27566f1d";
     sha256 = "0s7bd38269z4b9j6f90nscjkbdbh23z3mlg89fnk7ndyrpf5dqlj";
   } + "/src/dir_colors";
+  # Wrap nixpkgs.zsh-powerlevel10k so oh-my-zsh can find it
+  powerlevel10k-omz = pkgs.runCommand "link-zsh-powerlevel10k" {} ''
+    mkdir -p "$out/share/zsh/themes"
+    ln -s ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k "$out/share/zsh/themes/powerlevel10k"
+  '';
 in {
   programs.zsh = {
     enable = true;
@@ -22,6 +27,11 @@ in {
     };
 
     interactiveShellInit = ''
+      # Enable powerlevel10k instant prompt
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
@@ -32,7 +42,7 @@ in {
 
       bindkey -v
       export KEYTIMEOUT=1
-    '';
+    '' + builtins.readFile ./p10k.zsh;
 
     shellAliases =
       let
@@ -50,7 +60,7 @@ in {
 
     ohMyZsh = {
       enable = true;
-      theme = "bira";
+      theme = "powerlevel10k/powerlevel10k";
       plugins = [
         "vi-mode"
         "direnv"
@@ -63,6 +73,7 @@ in {
         "cabal"
         "docker"
       ];
+      customPkgs = [ powerlevel10k-omz ];
     };
   };
 
