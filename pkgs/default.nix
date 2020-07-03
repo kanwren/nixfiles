@@ -15,6 +15,7 @@ in with rec {
     cachix
     patchelf
     nix-index
+    niv
 
     # Core utils
     binutils-unwrapped

@@ -1,6 +1,7 @@
 { lib, ... }:
 
 let
+  sources = import ./sources.nix;
   utils = import ../utils { inherit lib; };
 in
 {
@@ -28,7 +29,9 @@ in
     '';
   };
 
-  nixpkgs = {
+  # Pin the system nixpkgs. Note that this causes nixpkgs.config and
+  # nixpkgs.overlays to be ignored.
+  nixpkgs.pkgs = import sources.nixpkgs {
     config = {
       allowUnfree = true;
       allowBroken = false;

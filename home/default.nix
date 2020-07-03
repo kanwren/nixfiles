@@ -23,8 +23,11 @@ in
       (builtins.map (d: d + "/default.nix")
       (utils.getDirs ./.));
 
-    # Use the same nixpkgs as nixos modules
-    nixpkgs = { inherit (config.nixpkgs) config overlays system; };
+    # Use the system nixpkgs for home-manager. Normally, we would say:
+    #   nixpkgs = { inherit (config.nixpkgs) config overlays system };
+    # But this doesn't work if you pin the system nixpkgs with
+    # config.nixpkgs.pkgs.
+    _module.args.pkgs = config.nixpkgs.pkgs;
 
     home = {
       # User-specific packages. If a program needs configuration, then either:
