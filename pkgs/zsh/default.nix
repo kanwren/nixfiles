@@ -27,10 +27,14 @@ in {
     };
 
     interactiveShellInit = ''
+      emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
+
       # Enable powerlevel10k instant prompt
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
+
+      emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
@@ -63,7 +67,6 @@ in {
       theme = "powerlevel10k/powerlevel10k";
       plugins = [
         "vi-mode"
-        "direnv"
         "fzf"
         "git-prompt"
         "last-working-dir"
