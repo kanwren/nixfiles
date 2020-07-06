@@ -2,7 +2,7 @@
 
 let
   sources = import ./sources.nix;
-  utils = import ../utils { inherit lib; };
+  utils = import ../common/utils.nix { inherit lib; };
 in
 {
   imports = [

@@ -7,13 +7,6 @@
 
 self: super:
 
-let
-  nurSrc = super.fetchFromGitHub {
-    owner = "nix-community";
-    repo = "NUR";
-    rev = "1b9cbb063df148aa7677a1cfb31a4e49916b7c08";
-    sha256 = "03xb5ayqfnan9s38j4bykmnwp2708rqrqg7djl11x8z4rp2ssjqy";
-  };
-in {
-  nur = import nurSrc { pkgs = self; };
+{
+  nur = import ../../common/nur.nix { pkgs = self; };
 }

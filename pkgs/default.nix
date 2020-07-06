@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  utils = import ../utils { inherit lib; };
+  utils = import ../common/utils.nix { inherit lib; };
 in with rec {
   # Scripts to be available globally
   scripts = import ./scripts { inherit pkgs; };

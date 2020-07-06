@@ -6,16 +6,16 @@ self: super:
 {
   nushell = super.rustPlatform.buildRustPackage rec {
     pname = "nushell";
-    version = "unstable-2020-06-20";
+    version = "unstable-2020-07-03";
 
     src = super.fetchFromGitHub {
       owner = pname;
       repo = pname;
-      rev = "853d7e712049c6a2fef98da06a9f274fcc84961c";
-      sha256 = "1r1m6z1rl7bicdz5lcg1srn151dy2ccj3f6m2i9zfcssq1dj1781";
+      rev = "eb02c773d04c051a769b0e6cc84001edc8937bae";
+      sha256 = "0w668c9r2xvg8j08n7zyzhzm7pzjiznxlk7gdfb8qvgzr1f37gd9";
     };
 
-    cargoSha256 = "186h5kbayhxvx6bmjmvdw4qmcyrb7jfb0gw3w6fhxdraszvbzg1z";
+    cargoSha256 = "0fvhc3bbbjwmzh02czkfjgx5g2x753k5zg420ix9r35hyrh28pnd";
 
     nativeBuildInputs = with self; [ pkg-config python3 ];
 

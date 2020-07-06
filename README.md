@@ -22,7 +22,7 @@ My NixOS configurations. Configs are split up across multiple directories:
   and more
 - `time`: Time and timezone settings
 - `users`: User and group configurations
-- `utils`: Defines various utility functions
+- `common`: Nix expressions used throughout the rest of the config
 - `virtualisation`: Manage virtualization services like Docker and VirtualBox
 
 Additionally, other directories don't contain configuration, but Nix-related

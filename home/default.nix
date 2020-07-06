@@ -11,7 +11,7 @@ let
     rev = "1ec45b11abdfbd92d608a6536d11e80bd648ec02";
     sha256 = "15p4gwkm1cz06gfd0w5g36jlnn3bpx36v0m264zqmbkhd965j3v2";
   } + "/nixos";
-  utils = import ../utils { inherit lib; };
+  utils = import ../common/utils.nix { inherit lib; };
 in
 
 {
