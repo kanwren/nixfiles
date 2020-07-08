@@ -38,6 +38,9 @@ let
       fi
     '';
 
+    # simple random number generator script
+    randomScript = pkgs.haskell.packages.ghc8101.callPackage ./random {};
+
     # Print nix garbage collector roots that still exist
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
       echo "/nix/var/nix/gcroots/auto:"
