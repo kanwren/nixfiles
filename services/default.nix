@@ -1,14 +1,6 @@
 { pkgs, ... }:
 
-let
-  # Need to do this instead of using overlay to avoid infinite recursion
-  # See https://github.com/nix-community/nur#using-modules-overlays-or-library-functions-in-nixos
-  nur = import ../common/nur.nix { inherit pkgs; };
-in {
-  imports = [
-    (nur.repos.nprindle.modules.onedrive)
-  ];
-
+{
   services = {
     # Enable lorri daemon for nix/direnv integration
     lorri.enable = true;
@@ -41,11 +33,7 @@ in {
       ttyNumber = 8;
     };
 
-    # Provided by ./onedrive.nix
-    onedrive = {
-      enable = true;
-      monitorInterval = 60;
-    };
+    onedrive.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are started
