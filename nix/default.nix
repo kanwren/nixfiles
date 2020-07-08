@@ -27,6 +27,8 @@ in
       keep-outputs = true
       keep-derivations = true
     '';
+
+    nixPath = [ "nixpkgs=${sources.nixpkgs}" ];
   };
 
   # Pin the system nixpkgs. Note that this causes nixpkgs.config and
