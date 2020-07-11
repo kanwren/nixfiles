@@ -28,7 +28,11 @@ in
       keep-derivations = true
     '';
 
-    nixPath = [ "nixpkgs=${sources.nixpkgs}" ];
+    nixPath = [
+      "nixpkgs=${sources.nixpkgs}"
+      "nixos-config=/etc/nixos/configuration.nix"
+      "/nix/var/nix/profiles/per-user/root/channels"
+    ];
   };
 
   # Pin the system nixpkgs. Note that this causes nixpkgs.config and
