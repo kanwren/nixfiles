@@ -7,6 +7,7 @@
 
 self: super:
 
-{
-  nur = import ../../common/nur.nix { pkgs = self; };
+let sources = import ../sources.nix;
+in {
+  nur = import sources.NUR { pkgs = self; };
 }
