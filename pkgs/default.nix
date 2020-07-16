@@ -19,6 +19,7 @@ in with rec {
 
     # Core utils
     binutils-unwrapped
+    moreutils
     usbutils
     pciutils
 
