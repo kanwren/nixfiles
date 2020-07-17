@@ -112,6 +112,10 @@ in with rec {
       baseSystemPackages
       scripts
     ];
+    homeBinInPath = true;
+    shellInit = ''
+      export PATH="$HOME/.cabal/bin:$PATH"
+    '';
   };
 
 }
