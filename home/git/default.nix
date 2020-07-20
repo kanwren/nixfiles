@@ -45,7 +45,7 @@
         helper = "manager";
       };
       core = {
-        editor = "vim";
+        editor = "nvim";
         autocrlf = false;
       };
       diff = {
