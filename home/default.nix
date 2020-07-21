@@ -46,6 +46,7 @@ in
         h
         pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
         fzf
+        cookiecutter
 
         # System monitoring
         ytop
