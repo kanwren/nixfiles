@@ -2,11 +2,13 @@
 
 {
   environment = {
-    systemPackages = [
-      (pkgs.neovim.override {
+    systemPackages = with pkgs; [
+      (neovim.override {
         viAlias = true;
         vimAlias = true;
       })
+      texlab
+      rnix-lsp
     ];
     variables = {
       # Make neovim the default editor
