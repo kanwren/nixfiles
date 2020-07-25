@@ -1,12 +1,6 @@
 { pkgs, ... }:
 
-let
-  # Need to import like this for modules to work
-  sources = import ../../nix/sources.nix;
-  nur = import sources.NUR { inherit pkgs; };
-in {
-  imports = [ nur.repos.nprindle.hm-modules.nushell ];
-
+{
   programs.nushell = {
     enable = true;
     settings = {
