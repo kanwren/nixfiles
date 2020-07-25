@@ -1,16 +1,8 @@
 { pkgs, lib, config, ... }:
 
 let
-  fetchGithubArchive = { owner, repo, rev, sha256 }: fetchTarball {
-    url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-    inherit sha256;
-  };
-  home-manager = fetchGithubArchive {
-    owner = "rycee";
-    repo = "home-manager";
-    rev = "1ec45b11abdfbd92d608a6536d11e80bd648ec02";
-    sha256 = "15p4gwkm1cz06gfd0w5g36jlnn3bpx36v0m264zqmbkhd965j3v2";
-  } + "/nixos";
+  sources = import ../nix/sources.nix;
+  home-manager = "${sources.home-manager}/nixos";
   utils = import ../common/utils.nix { inherit lib; };
 in
 
