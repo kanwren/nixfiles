@@ -1,12 +1,8 @@
 { pkgs, ... }:
 
 let
-  nord_dircolors = pkgs.fetchFromGitHub {
-    owner = "arcticicestudio";
-    repo = "nord-dircolors";
-    rev = "addb3b427e008d23affc721450fde86f27566f1d";
-    sha256 = "0s7bd38269z4b9j6f90nscjkbdbh23z3mlg89fnk7ndyrpf5dqlj";
-  } + "/src/dir_colors";
+  sources = import ../../nix/sources.nix;
+  nord-dircolors = sources.nord-dircolors + "/src/dir_colors";
   # Wrap nixpkgs.zsh-powerlevel10k so oh-my-zsh can find it
   powerlevel10k-omz = pkgs.runCommand "link-zsh-powerlevel10k" {} ''
     mkdir -p "$out/share/zsh/themes"
@@ -39,7 +35,7 @@ in {
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
-      eval "$(${pkgs.coreutils}/bin/dircolors ${nord_dircolors})"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors})"
 
       setopt autocd extendedglob
       unsetopt beep

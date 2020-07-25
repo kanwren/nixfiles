@@ -1,15 +1,11 @@
 { pkgs, ... }:
 
 let
+  sources = import ../../nix/sources.nix;
   nord-tmux = pkgs.tmuxPlugins.mkDerivation {
     pluginName = "nord-tmux";
     version = "0.3.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "arcticicestudio";
-      repo = "nord-tmux";
-      rev = "25c64f5fc4ff716fae7256d9a8f6af4724644edc";
-      sha256 = "14xhh49izvjw4ycwq5gx4if7a0bcnvgsf3irywc3qps6jjcf5ymk";
-    };
+    src = sources.nord-tmux;
     rtpFilePath = "nord.tmux";
   };
 in

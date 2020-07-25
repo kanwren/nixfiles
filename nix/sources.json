@@ -11,6 +11,30 @@
         "url": "https://github.com/nix-community/NUR/archive/25f8c5c40f970a29ccc12f18296a68a398d4adcb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "cs2110-nix": {
+        "branch": "master",
+        "description": "Nix derivations for tooling for CS 2110 at Georgia Tech",
+        "homepage": null,
+        "owner": "nprindle",
+        "repo": "cs2110-nix",
+        "rev": "db1ed707c5b3daf2b9c3142d2b143c4a70ebdefa",
+        "sha256": "073wd4n625aydcp290qgvsx8was9wm6gcq0mdk4kivywdg4vcd7n",
+        "type": "tarball",
+        "url": "https://github.com/nprindle/cs2110-nix/archive/db1ed707c5b3daf2b9c3142d2b143c4a70ebdefa.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "neovim": {
+        "branch": "master",
+        "description": "Vim-fork focused on extensibility and usability",
+        "homepage": "https://neovim.io",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "44cbf288ec4407c6fddf79b6b39041d5bbee940b",
+        "sha256": "0m19jm648f2gm0zx2faymbvm9wcqisznfk91s69rh04bajw0mybp",
+        "type": "tarball",
+        "url": "https://github.com/neovim/neovim/archive/44cbf288ec4407c6fddf79b6b39041d5bbee940b.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
@@ -33,6 +57,30 @@
         "sha256": "0b7y2nv5nj776zh9jwir8fq1qrgcqpaap05qxlxp9qfngw12k6ji",
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs-channels/archive/a5cc7d3197705f933d88e97c0c61849219ce76c1.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nord-dircolors": {
+        "branch": "develop",
+        "description": "An arctic, north-bluish clean and elegant dircolors theme.",
+        "homepage": "https://www.nordtheme.com/ports/dircolors",
+        "owner": "arcticicestudio",
+        "repo": "nord-dircolors",
+        "rev": "addb3b427e008d23affc721450fde86f27566f1d",
+        "sha256": "0s7bd38269z4b9j6f90nscjkbdbh23z3mlg89fnk7ndyrpf5dqlj",
+        "type": "tarball",
+        "url": "https://github.com/arcticicestudio/nord-dircolors/archive/addb3b427e008d23affc721450fde86f27566f1d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nord-tmux": {
+        "branch": "develop",
+        "description": "An arctic, north-bluish clean and elegant tmux color theme.",
+        "homepage": "https://www.nordtheme.com/ports/tmux",
+        "owner": "arcticicestudio",
+        "repo": "nord-tmux",
+        "rev": "25c64f5fc4ff716fae7256d9a8f6af4724644edc",
+        "sha256": "14xhh49izvjw4ycwq5gx4if7a0bcnvgsf3irywc3qps6jjcf5ymk",
+        "type": "tarball",
+        "url": "https://github.com/arcticicestudio/nord-tmux/archive/25c64f5fc4ff716fae7256d9a8f6af4724644edc.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

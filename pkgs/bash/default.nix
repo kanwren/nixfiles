@@ -2,12 +2,8 @@
 
 let
   # Better ls colors than the default, call dircolors on it and eval
-  ls_colors = pkgs.fetchFromGitHub {
-    owner = "arcticicestudio";
-    repo = "nord-dircolors";
-    rev = "addb3b427e008d23affc721450fde86f27566f1d";
-    sha256 = "0s7bd38269z4b9j6f90nscjkbdbh23z3mlg89fnk7ndyrpf5dqlj";
-  } + "/src/dir_colors";
+  sources = import ../../nix/sources.nix;
+  nord-dircolors = sources.nord-dircolors + "/src/dir_colors";
 in {
   programs.bash = {
     enableCompletion = true;
@@ -70,7 +66,7 @@ in {
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
 
       # Add some better ls colors
-      eval "$(${pkgs.coreutils}/bin/dircolors ${ls_colors})"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors})"
     '';
   };
 
