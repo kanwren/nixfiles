@@ -48,6 +48,10 @@ in
         fzf
         cookiecutter
 
+        # Development
+        nodejs-14_x
+        yarn
+
         # System monitoring
         ytop
         filelight
