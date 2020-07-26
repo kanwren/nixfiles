@@ -165,7 +165,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc883"
+          ghc="ghc8101"
           args="$*"
           ;;
       esac
@@ -180,7 +180,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc883"
+          ghc="ghc8101"
           args="$*"
           ;;
       esac
