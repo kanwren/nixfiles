@@ -56,6 +56,7 @@ in {
       in cdAliases // {
         nrn = "${pkgs.nix}/bin/nix repl '<nixpkgs>'";
         nrnn = "${pkgs.nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
+        ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";
       };
 
     ohMyZsh = {
