@@ -10,6 +10,9 @@
       rnix-lsp
       texlab
       clang-tools
+
+      # Provided by overlay
+      haskell-language-server
     ]) ++ (with pkgs.nodePackages; [
       typescript-language-server
       vscode-html-languageserver-bin
