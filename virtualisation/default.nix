@@ -1,12 +1,7 @@
 { pkgs, ... }:
 
 {
-  # imports = [
-  #   ./qemu.nix
-  # ];
-
   virtualisation = {
-
     docker = {
       enable = true;
       autoPrune = {
@@ -24,9 +19,4 @@
   environment.systemPackages = with pkgs; [
     vagrant
   ];
-
-  # Enable qemu-based emulation of other platforms
-  # qemu-user = {
-  #   aarch64 = true;
-  # };
 }
