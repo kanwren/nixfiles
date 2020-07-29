@@ -19,7 +19,11 @@ let
 in {
   haskell = super.haskell // {
     packages = super.haskell.packages // {
+      ghc864 = fixGhcWithHoogle super.haskell.packages.ghc864;
+      ghc865 = fixGhcWithHoogle super.haskell.packages.ghc865;
+      ghc882 = fixGhcWithHoogle super.haskell.packages.ghc882;
       ghc883 = fixGhcWithHoogle super.haskell.packages.ghc883;
+      ghc884 = fixGhcWithHoogle super.haskell.packages.ghc884;
       ghc8101 = fixGhcWithHoogle super.haskell.packages.ghc8101;
     };
   };
