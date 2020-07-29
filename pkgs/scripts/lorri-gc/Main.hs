@@ -4,6 +4,7 @@
 -- | Script for finding old lorri files and optionally removing them
 module Main (main) where
 
+import Control.Monad (unless)
 import Data.Char (isSpace)
 import Data.Foldable (traverse_)
 import Data.List (dropWhileEnd, isInfixOf, find)
@@ -59,6 +60,8 @@ findExtraFiles = do
 
 main :: IO ()
 main = do
+  let casWarning extraCasFiles = unless (null extraCasFiles) $ do
+        putStrLn "WARNING: this cannot detect all stale CAS files, only those that were made stale by this GC"
   args <- getArgs
   case args of
     ["-p"] -> do
@@ -67,10 +70,12 @@ main = do
       traverse_ (putStrLn . ("  " ++ )) extraGcRoots
       putStrLn "\nLorri CAS files to remove:"
       traverse_ (putStrLn . ("  " ++ )) extraCasFiles
+      casWarning extraCasFiles
     ["-r"] -> do
       (extraGcRoots, extraCasFiles) <- findExtraFiles
       let printAndRemove path = putStrLn path *> removePathForcibly path
       traverse_ printAndRemove extraGcRoots
       traverse_ printAndRemove extraCasFiles
+      casWarning extraCasFiles
     _ -> putStrLn "Usage: lorri-gc [-p|-r]"
 
