@@ -63,6 +63,7 @@ in
         # Applications
         discord
         slack
+        teams
         spotify
         spotify-tui
       ];
