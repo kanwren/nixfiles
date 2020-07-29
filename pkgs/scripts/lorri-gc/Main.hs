@@ -1,3 +1,4 @@
+{-# language ImportQualifiedPost #-}
 {-# language TypeApplications #-}
 
 -- | Script for finding old lorri files and optionally removing them
@@ -16,10 +17,10 @@ import System.FilePath ((</>), dropFileName)
 import Crypto.Hash (hash, MD5)
 
 import Data.ByteString (ByteString)
-import qualified Data.ByteString.Char8 as BC
+import Data.ByteString.Char8 qualified as BC
 
 import Data.Set (Set)
-import qualified Data.Set as S
+import Data.Set qualified as S
 
 trim :: String -> String
 trim = dropWhileEnd isSpace . dropWhile isSpace
@@ -53,7 +54,7 @@ findExtraFiles = do
   casFiles <- lorriCasFiles home
   extraCasFiles <- fmap catMaybes $ for casFiles $ \path -> do
     firstFewLines <- concat . take 3 . lines <$> readFile path
-    pure $ find (`isInfixOf` firstFewLines) extraHashes
+    pure $ path <$ find (`isInfixOf` firstFewLines) extraHashes
   pure (extraGcRoots, extraCasFiles)
 
 main :: IO ()
