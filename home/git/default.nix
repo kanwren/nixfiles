@@ -16,22 +16,39 @@
     aliases = {
       # Aliases for filling in options
       cane = "commit --amend --no-edit";
-      changed = "show --name-status --oneline";
-      root = "rev-parse --show-toplevel";
+      cm = "commit --message";
+      amend = "commit --amend";
+
+      cob = "checkout --branch";
+      detach = "checkout --detach";
+
       diffc = "diff --cached";
-      mkexec = "update-index --chmod=+x";
+      conflicts = "diff --name-status --diff-filter=U";
+
       rh = "reset --hard";
+
       ri = "rebase --interactive";
-      # `git log` aliases
-      cmp = "log --left-right --graph --oneline";
-      graph = "log --graph --oneline";
+
       ls = "log --oneline";
+      graph = "log --graph --oneline";
+      cmp = "log --left-right --graph --oneline";
+
+      changed = "show --name-status --oneline";
+
+      mkexec = "update-index --chmod=+x";
+
+      root = "rev-parse --show-toplevel";
+
       # Abbreviations for common commands
       s = "status";
+      b = "branch";
       co = "checkout";
+      r = "reset";
+
       # Utility
       alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
       ignore-io = ''! f(){ join(){ local IFS=","; echo "$*"; }; curl -sL https://www.toptal.com/developers/gitignore/api/$(join $*); }; f'';
+
       # Jokes
       praise = "blame";
       pansect = "bisect";
@@ -81,7 +98,7 @@
     };
   };
 
-  programs.bash.sessionVariables = {
+  home.sessionVariables = {
     GPGKEY = "nprindle18@gmail.com";
   };
 }
