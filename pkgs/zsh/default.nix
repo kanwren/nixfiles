@@ -54,6 +54,7 @@ in {
         # Alias ".2" to "cd ../..", ".3" to "cd ../../..", etc.
         cdAliases = builtins.listToAttrs (map mkCdAlias (range 2 9));
       in cdAliases // {
+        l = "${pkgs.exa}/bin/exa --git";
         nrn = "${pkgs.nix}/bin/nix repl '<nixpkgs>'";
         nrnn = "${pkgs.nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
         ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";

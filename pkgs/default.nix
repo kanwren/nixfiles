@@ -35,6 +35,7 @@ in with rec {
     dos2unix
     xclip
     ag
+    exa
     tldr
     linuxPackages.perf
     entr
