@@ -117,19 +117,27 @@ let
       fi
     '';
 
-    # Shortcut script for managing the redshift systemd service
-    rsctlScript = pkgs.writeShellScriptBin "rsctl" ''
-      case "$1" in
-        start|stop|restart|status)
-          arg="$1"
+    toggleScript = pkgs.writeShellScriptBin "toggle" ''
+      if [ $# -ne 1 ]; then
+        >&2 echo "Usage: toggle PROGRAM"
+        exit 1
+      fi
+      progname="$1"
+      status="$(systemctl --user is-active "$progname")"
+      case "$status" in
+        active)
+          systemctl --user stop "$progname"
+          echo "$progname has been toggled off"
+          ;;
+        inactive)
+          systemctl --user restart "$progname"
+          echo "$progname has been toggled on"
           ;;
         *)
-          >&2 "Usage: rsctl <start|stop|restart|status>"
+          >&2 echo "error: status is $status"
           exit 1
           ;;
       esac
-
-      systemctl --user "$arg" redshift
     '';
 
     # Manually enable/disable a night mode by adjusting the gamma/brightness with
