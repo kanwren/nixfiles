@@ -71,7 +71,7 @@ let
     # Output the git revision of the current <nixpkgs>
     # If -s is passed, it will also fetch the sha256
     pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
-      rev=$(nix eval --raw '(builtins.readFile <nixpkgs/.git-revision>)')
+      rev=$(nix eval --raw '(with import <nixpkgs> {}; lib.trivial.revisionWithDefault <nixpkgs>)')
       if [ "$1" = "-s" ]; then
         ${nix-prefetch-github}/bin/nix-prefetch-github nixos nixpkgs \
           --no-prefetch \
