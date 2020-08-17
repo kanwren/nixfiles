@@ -9,17 +9,9 @@
         dates = "weekly";
       };
     };
-
-    virtualbox.host = {
-      enable = true;
-    };
   };
 
   programs = {
     singularity.enable = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    vagrant
-  ];
 }
