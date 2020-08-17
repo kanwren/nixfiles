@@ -2,6 +2,11 @@
 
 # Various helper functions
 rec {
+  importOr = path: def:
+    if builtins.pathExists path
+      then import path
+      else def;
+
   # Get all subdirectories in a directory
   getDirs = dir:
     builtins.map (x: dir + "/${x}")

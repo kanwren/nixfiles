@@ -11,3 +11,6 @@ secrets.nix
 
 # This should be a file with the name of each interface on a separate line
 networking/interfaces.txt
+
+# This holds a username/password as well as a Slack bot token
+services/piazza-slackbot-settings.nix

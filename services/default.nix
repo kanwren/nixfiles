@@ -1,6 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-{
+let
+  utils = import ../common/utils.nix { inherit lib; };
+in {
+  imports = [
+    ./piazza-slackbot/default.nix
+  ];
+
   services = {
     # Enable lorri daemon for nix/direnv integration
     lorri.enable = true;
@@ -28,6 +34,10 @@
     blueman.enable = true;
 
     onedrive.enable = true;
+
+    piazza-slackbot = utils.importOr ./piazza-slackbot-settings.nix {} // {
+      enable = true;
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are started

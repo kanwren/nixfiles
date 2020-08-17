@@ -59,6 +59,18 @@
         "url": "https://github.com/nmattia/niv/archive/f73bf8d584148677b01859677a63191c31911eae.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "nix-std": {
+        "branch": "master",
+        "description": "no-nixpkgs standard library for the nix expression language",
+        "homepage": null,
+        "owner": "chessai",
+        "repo": "nix-std",
+        "rev": "1ea7e46efbd0ce738b27b3e450ebcb1d3571038e",
+        "sha256": "1mipd0wjfv65gn637dnj7vzaxkap93im6rhrqy0zr4kxn2ihfkp5",
+        "type": "tarball",
+        "url": "https://github.com/chessai/nix-std/archive/1ea7e46efbd0ce738b27b3e450ebcb1d3571038e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nixpkgs": {
         "branch": "nixos-unstable",
         "description": "A read-only mirror of NixOS/nixpkgs tracking the released channels. Send issues and PRs to",
