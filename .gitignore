@@ -1,5 +1,5 @@
 # Ignore nix build output
-result
+result*
 
 # Backups
 *.bak*
