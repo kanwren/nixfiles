@@ -45,6 +45,7 @@ in
     };
 
     # Import all the overlays in ./overlays
-    overlays = builtins.map import (utils.getFiles ./overlays);
+    overlays = builtins.map import
+      (utils.getFilesWith (name: _: lib.hasSuffix ".nix" name) ./overlays);
   };
 }
