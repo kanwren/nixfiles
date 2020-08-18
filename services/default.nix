@@ -30,6 +30,11 @@ in {
       nssmdns = true;
     };
 
+    mysql = {
+      enable = true;
+      package = pkgs.mysql;
+    };
+
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
 
