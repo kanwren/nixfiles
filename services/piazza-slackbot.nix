@@ -1,13 +1,12 @@
 { pkgs, lib, config, ... }:
 
 let
-  sources = import ../../nix/sources.nix;
-  std = import sources.nix-std;
-
-  piazza-slackbot = import ./piazza-slackbot.nix { inherit pkgs std; } {
+  sources = import ../nix/sources.nix;
+  piazza-slackbot = import sources.piazza-slackbot {
     inherit (cfg)
       piazza_id piazza_email piazza_password slack_token channel bot_name;
   };
+
   cfg = config.services.piazza-slackbot;
 in {
   options.services.piazza-slackbot = {

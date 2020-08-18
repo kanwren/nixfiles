@@ -4,7 +4,7 @@ let
   utils = import ../common/utils.nix { inherit lib; };
 in {
   imports = [
-    ./piazza-slackbot/default.nix
+    ./piazza-slackbot.nix
   ];
 
   services = {
