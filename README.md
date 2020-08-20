@@ -33,8 +33,9 @@ helpers:
 The configuration also assumes some untracked files other than
 `hardware-configuration.nix`:
 
+- `secrets.nix`: An attribute set containing passwords/keys that shouldn't be
+  tracked by git.
 - `networking/interfaces.txt`: A file with networking interfaces for which to
-  enable DHCP. These are generally different for each computer.
-
-These can be automatically created with `setup.sh`.
+  enable DHCP. These are generally different for each computer. `setup.sh` can
+  generate this file.
 

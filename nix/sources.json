@@ -101,10 +101,10 @@
         "homepage": "",
         "owner": "nprindle",
         "repo": "piazza-slackbot",
-        "rev": "d43c76f6e4b5147e0630152756488e616e943556",
-        "sha256": "1cd9kl8pl2cpg4akrpi9xg1wvpbv7qg0a7jay7s0pqi4g9ba7df0",
+        "rev": "513dd67d8c5b825e08b9e4bec5a3ee968147e0d4",
+        "sha256": "0hjw8rkp4hdv2pabmx2qzmidhvx10xj65mkicyzjdk53pdzmslhc",
         "type": "tarball",
-        "url": "https://github.com/nprindle/piazza-slackbot/archive/d43c76f6e4b5147e0630152756488e616e943556.tar.gz",
+        "url": "https://github.com/nprindle/piazza-slackbot/archive/513dd67d8c5b825e08b9e4bec5a3ee968147e0d4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

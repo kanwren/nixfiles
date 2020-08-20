@@ -2,9 +2,11 @@
 
 let
   utils = import ../common/utils.nix { inherit lib; };
+  sources = import ../nix/sources.nix;
+  secrets = import ../secrets.nix;
 in {
   imports = [
-    ./piazza-slackbot.nix
+    "${sources.piazza-slackbot}/module.nix"
   ];
 
   services = {
@@ -40,7 +42,7 @@ in {
 
     onedrive.enable = true;
 
-    piazza-slackbot = utils.importOr ./piazza-slackbot-settings.nix {} // {
+    piazza-slackbot = (secrets.piazza-slackbot or {}) // {
       enable = true;
     };
   };
