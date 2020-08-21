@@ -19,7 +19,7 @@
       cm = "commit --message";
       amend = "commit --amend";
 
-      cob = "checkout --branch";
+      cob = "checkout -b";
       detach = "checkout --detach";
 
       diffc = "diff --cached";
