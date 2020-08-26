@@ -54,6 +54,11 @@ bindsym Print exec "scrot -e '(mv $f ~/Pictures/Screenshots || true) && echo ~/P
 bindsym XF86Calculator exec qalculate-gtk
 for_window [class="^Qalculate-gtk$"] floating enable
 
+# Float Microsoft Teams notifications
+no_focus [title="Microsoft Teams Notification"]
+for_window [title="Microsoft Teams Notification"] floating enable
+
+
 # start lock screen
 bindsym $mod+Shift+i exec betterlockscreen -l dimblur
 bindsym $mod+Shift+o exec betterlockscreen -s dimblur
