@@ -32,6 +32,10 @@ in {
       nssmdns = true;
     };
 
+    jack = {
+      jackd.enable = true;
+    };
+
     mysql = {
       enable = true;
       package = pkgs.mysql;

@@ -17,6 +17,7 @@
           "networkmanager"
           "docker"
           "vboxusers"
+          "jackaudio"
         ];
         createHome = true;
         home = "/home/nprin";
