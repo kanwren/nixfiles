@@ -29,7 +29,7 @@ in
       packages = with pkgs; [
         # Basic CLI tools
         jq
-        cloc
+        tokei
         gist
         gitAndTools.hub
         shellcheck
