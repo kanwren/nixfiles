@@ -16,6 +16,7 @@ in with rec {
     patchelf
     nix-index
     niv
+    pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
 
     # Core utils
     binutils-unwrapped
@@ -23,7 +24,7 @@ in with rec {
     usbutils
     pciutils
 
-    # Basic CLI tools
+    # CLI tools
     wget
     curl
     git
@@ -34,12 +35,18 @@ in with rec {
     file
     dos2unix
     xclip
-    ag
-    exa
-    tldr
     linuxPackages.perf
-    entr
     ctags
+    tldr
+    entr
+    jq
+    # Alternatives to coreutils
+    ripgrep
+    fd
+    exa
+    fzf
+    dust
+    procs
 
     # System stuff
     brightnessctl

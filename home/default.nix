@@ -27,17 +27,13 @@ in
       #   and configuration can be done entirely in home-manager
       # - Write the configuration file and use home-manager to manage it
       packages = with pkgs; [
-        # Basic CLI tools
-        jq
-        tokei
+        # CLI tools
         gist
         gitAndTools.hub
         shellcheck
         woof
-        bat
+        tokei
         h
-        pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
-        fzf
         cookiecutter
 
         # Development
