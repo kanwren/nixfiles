@@ -42,6 +42,8 @@ in {
 
       bindkey -v
       export KEYTIMEOUT=1
+
+      export FZF_BASE="${pkgs.fzf}/share/fzf"
     '' + builtins.readFile ./p10k.zsh;
 
     shellAliases =
