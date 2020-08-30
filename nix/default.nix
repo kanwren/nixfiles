@@ -30,6 +30,7 @@ in
 
     nixPath = [
       "nixpkgs=${sources.nixpkgs}"
+      "nixos=${sources.nixpkgs}"
       "nixos-config=/etc/nixos/configuration.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
