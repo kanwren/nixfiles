@@ -33,7 +33,7 @@ in {
     };
 
     jack = {
-      jackd.enable = true;
+      # jackd.enable = true;
     };
 
     mysql = {
