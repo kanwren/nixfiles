@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "nprindle",
         "repo": "cs2110-nix",
-        "rev": "db1ed707c5b3daf2b9c3142d2b143c4a70ebdefa",
-        "sha256": "073wd4n625aydcp290qgvsx8was9wm6gcq0mdk4kivywdg4vcd7n",
+        "rev": "b89ccfac7de88e59e963e92f0d7508d537ddebc7",
+        "sha256": "128w6jlqh8mkpcs8y05wngddkax5zks8dmnaz95fm400nizgfb4x",
         "type": "tarball",
-        "url": "https://github.com/nprindle/cs2110-nix/archive/db1ed707c5b3daf2b9c3142d2b143c4a70ebdefa.tar.gz",
+        "url": "https://github.com/nprindle/cs2110-nix/archive/b89ccfac7de88e59e963e92f0d7508d537ddebc7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {

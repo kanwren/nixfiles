@@ -44,6 +44,10 @@ in {
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
 
+    gnome3 = {
+      gnome-keyring.enable = true;
+    };
+
     onedrive.enable = true;
 
     piazza-slackbot = (secrets.piazza-slackbot or {}) // {
