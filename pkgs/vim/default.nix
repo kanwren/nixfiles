@@ -10,6 +10,7 @@
       rnix-lsp
       texlab
       clang-tools
+      python3Packages.python-language-server
 
       # Provided by overlay
       haskell-language-server
