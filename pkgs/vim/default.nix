@@ -10,7 +10,6 @@
       rnix-lsp
       texlab
       clang-tools
-      python3Packages.python-language-server
 
       # Provided by overlay
       haskell-language-server
@@ -21,6 +20,10 @@
       bash-language-server
       yaml-language-server
       # TODO: vscode-json-languageserver
+    ]) ++ (with pkgs.python3Packages; [
+      python-language-server
+      pyls-mypy
+      pyls-isort
     ]);
     variables = {
       # Make neovim the default editor
