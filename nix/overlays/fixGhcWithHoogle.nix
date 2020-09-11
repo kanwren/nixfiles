@@ -25,6 +25,7 @@ in {
       ghc883 = fixGhcWithHoogle super.haskell.packages.ghc883;
       ghc884 = fixGhcWithHoogle super.haskell.packages.ghc884;
       ghc8101 = fixGhcWithHoogle super.haskell.packages.ghc8101;
+      ghc8102 = fixGhcWithHoogle super.haskell.packages.ghc8102;
     };
   };
 }

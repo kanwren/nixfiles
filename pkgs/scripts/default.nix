@@ -39,7 +39,7 @@ let
     '';
 
     # simple random number generator script
-    randomScript = pkgs.haskell.packages.ghc8101.callPackage ./random {};
+    randomScript = pkgs.haskell.packages.ghc8102.callPackage ./random {};
 
     # Print nix garbage collector roots that still exist
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
@@ -62,7 +62,7 @@ let
       done
     '';
 
-    lorriGcScript = pkgs.haskell.packages.ghc8101.callPackage ./lorri-gc {};
+    lorriGcScript = pkgs.haskell.packages.ghc8102.callPackage ./lorri-gc {};
 
     direnvAllowedScript = with pkgs; writeShellScriptBin "direnv-allowed" ''
       cat ~/.local/share/direnv/allow/*
@@ -173,7 +173,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc8101"
+          ghc="ghc8102"
           args="$*"
           ;;
       esac
@@ -188,7 +188,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc8101"
+          ghc="ghc8102"
           args="$*"
           ;;
       esac
