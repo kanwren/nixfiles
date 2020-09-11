@@ -21,9 +21,9 @@
       yaml-language-server
       # TODO: vscode-json-languageserver
     ]) ++ (with pkgs.python3Packages; [
-      python-language-server
-      pyls-mypy
-      pyls-isort
+      (python-language-server.overridePythonAttrs { doCheck = false; })
+      # pyls-mypy
+      # pyls-isort
     ]);
     variables = {
       # Make neovim the default editor
