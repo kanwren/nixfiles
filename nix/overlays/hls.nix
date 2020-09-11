@@ -1,7 +1,7 @@
 self: super:
 
 let
-  hlsVersion = "0.3.0";
+  hlsVersion = "0.4.0";
 
   hls-ghc-executable = { ghcVersion, sha256 }: {
     execName = "haskell-language-server-${ghcVersion}";
@@ -12,15 +12,16 @@ let
   hls-wrapper = {
     execName = "haskell-language-server-wrapper";
     url = "https://github.com/haskell/haskell-language-server/releases/download/${hlsVersion}/haskell-language-server-wrapper-Linux.gz";
-    sha256 = "1fi9ahimckhgbnw3szyvbxnjis1lpszl3dxyxav064nxi0pi9y6m";
+    sha256 = "026hmd6c8ilf7p5h3rk63ywd358hm0xbmniplnkdfilgri3j26sm";
   };
   hls-executables = [ hls-wrapper ] ++ builtins.map hls-ghc-executable [
-    { ghcVersion = "8.6.4";  sha256 = "1q3vq2gdb3zsmxab1fmq4s7f7p4r3kdzn709aqf83hhfx18sn1rj"; }
-    { ghcVersion = "8.6.5";  sha256 = "0cwfl77w04c6ixi7gshn8n0vi2v5klw3rsp9qnwrh6qk0zrj5wbd"; }
-    { ghcVersion = "8.8.2";  sha256 = "061k9vzryskfbfyxv5lp3ci0bif4k609ajk0cmyvxdyrhkhnfyjn"; }
-    { ghcVersion = "8.8.3";  sha256 = "0dk47bdaf4qg8ax55abasvaghlczhhh3mqa368n23pysy8rvlp4m"; }
-    { ghcVersion = "8.8.4";  sha256 = "1d4lwb8jkwcrzd472n3k16s51qchqg2rq2gw324mzf5z9xsq7plk"; }
-    { ghcVersion = "8.10.1"; sha256 = "04vqak02fnm01pqaqr49b18ckay0g3sdlkb468giyyjphflgjg8h"; }
+    { ghcVersion = "8.6.4"; sha256 = "0fhzm9190mgya08mcjz9zrd34p1s3k1a1l9dzxpxm7ij9b43n333"; }
+    { ghcVersion = "8.6.5"; sha256 = "0d4lwfy3ywrmz5qppzq11khk9n9744zrmgp5nl618dcl5di1w0aa"; }
+    { ghcVersion = "8.8.2"; sha256 = "1q68gvz9pjzfwsssa6w2qqxx7x6lxqnlvn8wm89g2z64ga5ayay2"; }
+    { ghcVersion = "8.8.3"; sha256 = "1ii7ad3kbl27nfyrvwqb5ban09vdap2y56gyd8gbs3g6zjrphx81"; }
+    { ghcVersion = "8.8.4"; sha256 = "0df1l8clrch19dsz8dxr2y7qzdm6c71jwik28l5sl5p1qzngiv47"; }
+    { ghcVersion = "8.10.1"; sha256 = "0ldsxq02mzxhp11690ajqn0yfw3m115057bgxza9336ahdfxni7m"; }
+    { ghcVersion = "8.10.2"; sha256 = "14dzs78s8rns04rhw0g87c4jkvhnfindz8gkj7aw2ygd4hw9ayyk"; }
   ];
 
   fetchHls = executables:
