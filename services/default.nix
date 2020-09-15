@@ -51,7 +51,7 @@ in {
     onedrive.enable = true;
 
     piazza-slackbot = (secrets.piazza-slackbot or {}) // {
-      enable = true;
+      enable = false;
     };
   };
 
