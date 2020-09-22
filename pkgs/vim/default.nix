@@ -7,6 +7,8 @@
         viAlias = true;
         vimAlias = true;
       })
+      xxd
+
       rnix-lsp
       texlab
       clang-tools
