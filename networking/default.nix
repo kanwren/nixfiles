@@ -19,9 +19,10 @@ in
     # Global useDHCP is deprecated
     useDHCP = false;
     # Obtain list of interfaces at /sys/class/net/*
-    interfaces =
-      let mkInterface = name: { inherit name; value = { useDHCP = true; }; };
-      in lib.listToAttrs (builtins.map mkInterface (readLines ./interfaces.txt));
+    interfaces = {
+      eno1.useDHCP = true;
+      wlo1.useDHCP = true;
+    };
 
     firewall = {
       enable = true;
