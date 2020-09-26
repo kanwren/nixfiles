@@ -4,9 +4,6 @@ result*
 # Backups
 *.bak*
 
-# This is platform specific, so local backups are a little more helpful
-hardware-configuration.nix
-
 secrets.nix
 
 # This should be a file with the name of each interface on a separate line
