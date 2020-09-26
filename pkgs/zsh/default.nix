@@ -63,7 +63,6 @@ in {
         # coreutils alternatives aliases
         ls = "${pkgs.exa}/bin/exa --git";
         cat = "${pkgs.bat}/bin/bat";
-        ps = "${pkgs.procs}/bin/procs";
       };
 
     ohMyZsh = {
