@@ -19,8 +19,6 @@ in {
     # Enable CUPS to print documents
     printing = {
       enable = true;
-      browsing = true;
-      defaultShared = true;
     };
 
     avahi = {
