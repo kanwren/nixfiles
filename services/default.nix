@@ -1,14 +1,6 @@
 { pkgs, lib, ... }:
 
-let
-  utils = import ../common/utils.nix { inherit lib; };
-  sources = import ../nix/sources.nix;
-  secrets = import ../secrets.nix;
-in {
-  imports = [
-    "${sources.piazza-slackbot}/module.nix"
-  ];
-
+{
   services = {
     # Enable lorri daemon for nix/direnv integration
     lorri.enable = true;
@@ -47,10 +39,6 @@ in {
     };
 
     onedrive.enable = true;
-
-    piazza-slackbot = (secrets.piazza-slackbot or {}) // {
-      enable = false;
-    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are started

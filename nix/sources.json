@@ -94,17 +94,5 @@
         "type": "tarball",
         "url": "https://github.com/arcticicestudio/nord-tmux/archive/25c64f5fc4ff716fae7256d9a8f6af4724644edc.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "piazza-slackbot": {
-        "branch": "master",
-        "description": "A simple bot that sends Slack notifications when new posts are added to a Piazza page.",
-        "homepage": "",
-        "owner": "nprindle",
-        "repo": "piazza-slackbot",
-        "rev": "0fceb0a6ef656b8e2545cdbffe35f9441ffe2f03",
-        "sha256": "08f2x3bdnd0zpai0fqsg5d17cihjjwjj1763vp28b6bbsw6rd346",
-        "type": "tarball",
-        "url": "https://github.com/nprindle/piazza-slackbot/archive/0fceb0a6ef656b8e2545cdbffe35f9441ffe2f03.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
