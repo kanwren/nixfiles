@@ -17,6 +17,8 @@ in with rec {
     nix-index
     niv
     pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
+    pkgs.nur.repos.xe.pridecat
+    fortune
 
     # Core utils
     binutils-unwrapped
