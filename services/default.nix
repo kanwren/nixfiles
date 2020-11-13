@@ -29,6 +29,16 @@
     mysql = {
       enable = true;
       package = pkgs.mysql;
+      settings = {
+        mysql = {
+          default-character-set = "utf8mb4";
+        };
+        mysqld = {
+          character-set-server = "utf8mb4";
+          collation-server = "utf8mb4_unicode_ci";
+          lower_case_table_names = 1;
+        };
+      };
     };
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
