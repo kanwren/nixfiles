@@ -26,8 +26,8 @@ in
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 631 ];
-      allowedUDPPorts = [ 631 ];
+      allowedTCPPorts = [ 631 8000 8080 ];
+      allowedUDPPorts = [ 631 8000 8080 ];
     };
 
     nameservers = [

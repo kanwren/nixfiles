@@ -25,6 +25,7 @@ in with rec {
     moreutils
     usbutils
     pciutils
+    zlib
 
     # CLI tools
     wget

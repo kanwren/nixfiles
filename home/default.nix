@@ -41,7 +41,7 @@ in
         yarn
 
         # System monitoring
-        ytop
+        gotop
         filelight
         xfce.thunar
 
