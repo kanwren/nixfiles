@@ -41,10 +41,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "27b811dc1f69a31924ddcd3c0a3cbbe138923c96",
-        "sha256": "1jijznwkg8bf4c6008lps0zkk9hkaq8b2rmffrfxs95400r9ydmq",
+        "rev": "0798ad3a3a071db1b647df5aecd7698ed9aff7d9",
+        "sha256": "0imc1lfjzmslyhqq6wbz025llnsc3sggklcw45fqg9vwjxrmj833",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/27b811dc1f69a31924ddcd3c0a3cbbe138923c96.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/0798ad3a3a071db1b647df5aecd7698ed9aff7d9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
