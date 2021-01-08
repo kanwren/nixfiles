@@ -3,7 +3,7 @@
 {
   networking = {
 
-    hostName = "nprin-tufa17";
+    hostName = "hecate";
 
     networkmanager.enable = true;
     wireless.enable = false;

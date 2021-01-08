@@ -15,12 +15,6 @@
     xdotool
   ];
 
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    intelBusId = "PCI:1:0:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
   services.xserver = {
     enable = true;
 
@@ -54,7 +48,7 @@
           };
         };
 
-        background = ../desktop-backgrounds/forest.png;
+        background = ../../desktop-backgrounds/forest.png;
       };
     };
 
