@@ -1,10 +1,8 @@
+{ nord-dircolors }:
+
 { pkgs, ... }:
 
-let
-  # Better ls colors than the default, call dircolors on it and eval
-  sources = import ../../nix/sources.nix;
-  nord-dircolors = sources.nord-dircolors + "/src/dir_colors";
-in {
+{
   programs.bash = {
     enableCompletion = true;
 
@@ -66,7 +64,7 @@ in {
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
 
       # Add some better ls colors
-      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors})"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors}/src/dir_colors)"
     '';
   };
 

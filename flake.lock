@@ -1,0 +1,115 @@
+{
+  "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1610050408,
+        "narHash": "sha256-WYgqfK10n6gTrqULUe2JSH/BbyhAP4lipb/6Js6lBv8=",
+        "owner": "rycee",
+        "repo": "home-manager",
+        "rev": "cf5dad76c1ee452224da39f13129c4ff84351a5c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "neovim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609964264,
+        "narHash": "sha256-JuRK3Aci/HsKzAsj8tQm2d/Rq2v+gqInrwfYG3pv/uc=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "fe1ebea33914df137fdded98872fe38fa8470384",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neovim",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1609866355,
+        "narHash": "sha256-TMzb8nMePC4OusDde+xv8AIgbNYuFku/dlLkPO/hifM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d9dba88d08a9cdf483c3d45f0d7220cf97a4ce64",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nord-dircolors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606638347,
+        "narHash": "sha256-6A3h1R1+kZbCwouUshvRpUL3fVkkDuHCD+bz8Jbq4M0=",
+        "owner": "arcticicestudio",
+        "repo": "nord-dircolors",
+        "rev": "35166d328992213194d7d02cd034e39da962f19e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arcticicestudio",
+        "repo": "nord-dircolors",
+        "type": "github"
+      }
+    },
+    "nord-tmux": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1598381672,
+        "narHash": "sha256-ihh0wgH4SjceaHtwcV7OyM11lnNhTCWTOS4MbBdmJ1E=",
+        "owner": "arcticicestudio",
+        "repo": "nord-tmux",
+        "rev": "4e2dc2a5065f5e8e67366700f803c733682e8f8c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arcticicestudio",
+        "repo": "nord-tmux",
+        "type": "github"
+      }
+    },
+    "nur": {
+      "locked": {
+        "lastModified": 1610079095,
+        "narHash": "sha256-qNm93rQAiAvxNUJA8xHtPn9+MY62Os0GuXBSMCp/VpI=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "0ba69cbbe5ed15f170917daf3cf8200785271092",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "neovim": "neovim",
+        "nixpkgs": "nixpkgs",
+        "nord-dircolors": "nord-dircolors",
+        "nord-tmux": "nord-tmux",
+        "nur": "nur"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

@@ -1,8 +1,8 @@
+{ nord-dircolors }:
+
 { pkgs, ... }:
 
 let
-  sources = import ../../nix/sources.nix;
-  nord-dircolors = sources.nord-dircolors + "/src/dir_colors";
   # Wrap nixpkgs.zsh-powerlevel10k so oh-my-zsh can find it
   powerlevel10k-omz = pkgs.runCommand "link-zsh-powerlevel10k" {} ''
     mkdir -p "$out/share/zsh/themes"
@@ -35,7 +35,7 @@ in {
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
-      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors})"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors}/src/dir_colors)"
 
       setopt autocd extendedglob
       unsetopt beep
@@ -56,8 +56,6 @@ in {
         # Alias ".2" to "cd ../..", ".3" to "cd ../../..", etc.
         cdAliases = builtins.listToAttrs (map mkCdAlias (range 2 9));
       in cdAliases // {
-        nrn = "${pkgs.nix}/bin/nix repl '<nixpkgs>'";
-        nrnn = "${pkgs.nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
         ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";
 
         # coreutils alternatives aliases

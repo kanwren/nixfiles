@@ -68,20 +68,6 @@ let
       cat ~/.local/share/direnv/allow/*
     '';
 
-    # Output the git revision of the current <nixpkgs>
-    # If -s is passed, it will also fetch the sha256
-    pinNixpkgsScript = with pkgs; writeShellScriptBin "nixpkgs-pin" ''
-      rev=$(nix eval --raw '(with import <nixpkgs> {}; lib.trivial.revisionWithDefault <nixpkgs>)')
-      if [ "$1" = "-s" ]; then
-        ${nix-prefetch-github}/bin/nix-prefetch-github nixos nixpkgs \
-          --no-prefetch \
-          --rev "$rev" \
-          | ${jq}/bin/jq '.rev, .sha256'
-      else
-        echo "$rev"
-      fi
-    '';
-
     bakScript = with pkgs; writeShellScriptBin "bak" ''
       if [ $# -ge 1 ]; then
         if [ "$1" = "-u" ]; then

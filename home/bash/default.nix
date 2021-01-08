@@ -25,8 +25,6 @@
       cleantex = "rm *.aux *.log *.fls *.fdb_latexmk || true";
       copylast = "fc -ln -1 | ${gawk}/bin/awk '{\$1=\$1}1' | ${xclip}/bin/xclip -sel clip";
       xc = "${xclip}/bin/xclip -sel clip";
-      nrn = "${nix}/bin/nix repl '<nixpkgs>'";
-      nrnn = "${nix}/bin/nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
     };
 
     initExtra = ''

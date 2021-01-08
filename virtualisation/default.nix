@@ -10,8 +10,4 @@
       };
     };
   };
-
-  programs = {
-    singularity.enable = true;
-  };
 }

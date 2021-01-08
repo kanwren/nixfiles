@@ -1,17 +1,24 @@
-{ lib, ... }:
+{ neovim }:
 
-let
-  sources = import ./sources.nix;
-  utils = import ../common/utils.nix { inherit lib; };
-in
+{ lib, pkgs, ... }:
+
 {
   imports = [
     ./caches.nix
+    (import ./overlays { inherit neovim; })
   ];
 
   system.autoUpgrade.enable = false;
 
   nix = {
+    package = pkgs.nixFlakes;
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
+
     gc = {
       automatic = true;
       dates = "weekly";
@@ -22,31 +29,7 @@ in
       "nprin"
       "root"
     ];
-
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-    '';
-
-    nixPath = [
-      "nixpkgs=${sources.nixpkgs}"
-      "nixos=${sources.nixpkgs}"
-      "nixos-config=/etc/nixos/configuration.nix"
-      "/nix/var/nix/profiles/per-user/root/channels"
-    ];
   };
 
-  # Pin the system nixpkgs. Note that this causes nixpkgs.config and
-  # nixpkgs.overlays to be ignored.
-  nixpkgs.pkgs = import sources.nixpkgs {
-    config = {
-      allowUnfree = true;
-      allowBroken = false;
-      allowUnsupportedSystem = false;
-    };
-
-    # Import all the overlays in ./overlays
-    overlays = builtins.map import
-      (utils.getFilesWith (name: _: lib.hasSuffix ".nix" name) ./overlays);
-  };
+  nixpkgs.config.allowUnfree = true;
 }

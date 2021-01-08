@@ -1,33 +1,24 @@
-{ lib, ... }:
+{ ... }:
 
-let
-  readLines = path: builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile path));
-in
 {
   networking = {
 
-    hostName = "nprin";
+    hostName = "nprin-tufa17";
 
-    networkmanager = {
-      enable = true;
-    };
+    networkmanager.enable = true;
+    wireless.enable = false;
 
-    wireless = {
-      enable = false;
-    };
-
-    # Global useDHCP is deprecated
     useDHCP = false;
     # Obtain list of interfaces at /sys/class/net/*
     interfaces = {
-      eno1.useDHCP = true;
-      wlo1.useDHCP = true;
+      enp2s0.useDHCP = true;
+      wlp3s0.useDHCP = true;
     };
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 631 8000 8080 ];
-      allowedUDPPorts = [ 631 8000 8080 ];
+      allowedTCPPorts = [ 631 ];
+      allowedUDPPorts = [ 631 ];
     };
 
     nameservers = [

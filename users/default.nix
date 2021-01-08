@@ -4,10 +4,8 @@
   users = {
     mutableUsers = true;
     users = {
-
       nprin = {
-        name = "nprin";
-        initialPassword = "pass";
+        initialPassword = "setup";
         isNormalUser = true;
         uid = 1000;
         extraGroups = [
@@ -17,13 +15,10 @@
           "networkmanager"
           "docker"
           "vboxusers"
-          "jackaudio"
         ];
         createHome = true;
-        home = "/home/nprin";
         shell = pkgs.zsh;
       };
-
     };
   };
 }

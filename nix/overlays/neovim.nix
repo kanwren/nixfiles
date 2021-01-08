@@ -1,7 +1,8 @@
+{ neovim }:
+
 self: super:
 
 let
-  sources = import ../sources.nix;
   tree-sitter-0-17-3 = (import (super.fetchFromGitHub {
     owner = "NixOS";
     repo = "nixpkgs";
@@ -10,7 +11,7 @@ let
   }) {}).tree-sitter;
 in {
   neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
-    src = sources.neovim;
+    src = neovim;
     buildInputs = (old.buildInputs or []) ++ [tree-sitter-0-17-3];
   });
 }

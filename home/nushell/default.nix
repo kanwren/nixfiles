@@ -2,14 +2,13 @@
 
 {
   programs.nushell = {
-    enable = true;
+    # TODO: update nushell configs for much newer version
+    enable = false;
     settings = {
       edit_mode = "vi";
       key_timeout = 0;
       pivot_mode = "never";
-      startup = [
-        ''alias nrn [] { ${pkgs.nix}/bin/nix repl '\<nixpkgs\>' '\<nixpkgs/nixos\>' }''
-      ];
+      startup = [];
     };
   };
 }

@@ -92,14 +92,14 @@
 
     lfs.enable = true;
 
-    signing = {
-      key = "nprindle18@gmail.com";
-      signByDefault = true;
-    };
+    # signing = {
+    #   key = "nprindle18@gmail.com";
+    #   signByDefault = true;
+    # };
   };
 
-  home.sessionVariables = {
-    GPGKEY = "nprindle18@gmail.com";
-  };
+  # home.sessionVariables = {
+  #   GPGKEY = "nprindle18@gmail.com";
+  # };
 }
 

@@ -1,8 +1,8 @@
+{ nord-dircolors }:
+
 { pkgs, lib, ... }:
 
-let
-  utils = import ../common/utils.nix { inherit lib; };
-in with rec {
+with rec {
   # Scripts to be available globally
   scripts = import ./scripts { inherit pkgs; };
 
@@ -114,8 +114,8 @@ in with rec {
 {
   imports = [
     ./vim/default.nix
-    ./bash/default.nix
-    ./zsh/default.nix
+    (import ./bash/default.nix { inherit nord-dircolors; })
+    (import ./zsh/default.nix { inherit nord-dircolors; })
   ];
 
   environment = {

@@ -13,17 +13,16 @@
       texlab
       clang-tools
 
-      # Provided by overlay
       haskell-language-server
     ]) ++ (with pkgs.nodePackages; [
-      typescript-language-server
-      vscode-html-languageserver-bin
-      vscode-css-languageserver-bin
-      bash-language-server
-      yaml-language-server
+      # typescript-language-server
+      # vscode-html-languageserver-bin
+      # vscode-css-languageserver-bin
+      # bash-language-server
+      # yaml-language-server
       # TODO: vscode-json-languageserver
     ]) ++ (with pkgs.python3Packages; [
-      (python-language-server.overridePythonAttrs { doCheck = false; })
+      # (python-language-server.overridePythonAttrs { doCheck = false; })
       # pyls-mypy
       # pyls-isort
     ]);

@@ -1,11 +1,12 @@
+{ nord-tmux }:
+
 { pkgs, ... }:
 
 let
-  sources = import ../../nix/sources.nix;
-  nord-tmux = pkgs.tmuxPlugins.mkDerivation {
+  nord-tmux-plugin = pkgs.tmuxPlugins.mkDerivation {
     pluginName = "nord-tmux";
     version = "0.3.0";
-    src = sources.nord-tmux;
+    src = nord-tmux;
     rtpFilePath = "nord.tmux";
   };
 in
@@ -22,7 +23,7 @@ in
     historyLimit = 10000;
     plugins = with pkgs; [
       {
-        plugin = nord-tmux;
+        plugin = nord-tmux-plugin;
         extraConfig = ''
           set -g @nord_tmux_no_patched_font "1"
         '';
