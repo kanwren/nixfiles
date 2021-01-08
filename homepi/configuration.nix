@@ -9,7 +9,7 @@
     (import ./home-assistant.nix { inherit nix-cron; })
   ];
 
-  sops.defaultSopsFile = ../secrets/secrets.yaml;
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
 
   boot = {
     loader = {
@@ -80,7 +80,6 @@
       vim
       libraspberrypi
       git
-      gnupg
     ];
     variables = {
       EDITOR = "vim";
@@ -92,6 +91,14 @@
     openssh = {
       enable = true;
       permitRootLogin = "yes";
+    };
+  };
+
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "curses";
     };
   };
 
