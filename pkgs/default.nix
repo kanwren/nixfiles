@@ -48,8 +48,6 @@ with rec {
     fd
     exa
     fzf
-    dust
-    procs
 
     # System stuff
     brightnessctl
