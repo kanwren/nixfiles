@@ -15,9 +15,16 @@
     xdotool
   ];
 
-  services.xserver = {
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    intelBusId = "PCI:1:0:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
 
+  services.xserver = {
     enable = true;
+
+    videoDrivers = [ "modesetting" "amdgpu" "radeon" "nvidia" ];
 
     # Enable touchpad
     libinput = {
@@ -30,6 +37,7 @@
 
     displayManager = {
       lightdm = {
+        enable = true;
         greeters.gtk = {
           enable = true;
 
