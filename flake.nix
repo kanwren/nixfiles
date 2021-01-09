@@ -45,6 +45,9 @@
           nur.flake = nur;
           home-manager.flake = home-manager;
         };
+        nix.nixPath = [
+          "nixpkgs=${nixpkgs}"
+        ];
       };
       addOverlays = {
         nixpkgs.overlays = [
@@ -88,7 +91,7 @@
         packages.minimal-iso = (nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             ({ pkgs, ... }: {
               networking.wireless.enable = true;
               environment.systemPackages = with pkgs; with pkgs.unixtools; [
