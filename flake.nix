@@ -53,7 +53,7 @@
       };
     in {
       nixosConfigurations = {
-        hecate = nixpkgs.lib.nixosSystem {
+        hecate = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           modules = [
             (import ./hecate/configuration.nix { inherit neovim nord-dircolors nord-tmux; })

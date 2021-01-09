@@ -4,7 +4,7 @@
 
 {
   nixpkgs.overlays = [
-    # (import ./neovim.nix { inherit neovim; })
+    (import ./neovim.nix { inherit neovim; })
     (import ./sudo.nix)
   ];
 }
