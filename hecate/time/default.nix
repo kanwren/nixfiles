@@ -3,7 +3,7 @@
 {
   time = {
     timeZone = "America/New_York";
-    hardwareClockInLocalTime = false;
+    hardwareClockInLocalTime = true;
   };
 
   location.provider = "geoclue2";
