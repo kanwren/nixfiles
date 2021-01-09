@@ -1,10 +1,2 @@
 # Ignore nix build output
 result*
-
-# Backups
-*.bak*
-
-secrets.nix
-
-# This should be a file with the name of each interface on a separate line
-networking/interfaces.txt
