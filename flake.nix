@@ -87,20 +87,6 @@
             "./secrets/keys/users"
           ];
         };
-
-        packages.minimal-iso = (nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            ({ pkgs, ... }: {
-              networking.wireless.enable = true;
-              environment.systemPackages = with pkgs; with pkgs.unixtools; [
-                wget curl manpages git vim parted
-                fdisk fsck hostname ifconfig killall nettools ping ps whereis umount
-              ];
-            })
-          ];
-        }).config.system.build.isoImage;
       }
     );
 }
