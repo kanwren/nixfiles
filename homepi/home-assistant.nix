@@ -10,7 +10,15 @@ let
 in
 
 {
-  sops.secrets.duck-dns-token = {};
+  sops.secrets = {
+    duck-dns-token = {};
+    "google-home-service-account.json" = {
+      owner = config.users.extraUsers.hass.name;
+      group = config.users.extraUsers.hass.group;
+      path = "/var/lib/hass/service-account.json";
+    };
+  };
+  users.extraUsers.hass.extraGroups = [ "keys" ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
