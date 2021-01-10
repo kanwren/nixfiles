@@ -26,12 +26,6 @@ let
       done
     '';
 
-    lorriGcScript = pkgs.haskell.packages.ghc8102.callPackage ./lorri-gc {};
-
-    direnvAllowedScript = with pkgs; writeShellScriptBin "direnv-allowed" ''
-      cat ~/.local/share/direnv/allow/*
-    '';
-
     bakScript = with pkgs; writeShellScriptBin "bak" ''
       if [ $# -ge 1 ]; then
         if [ "$1" = "-u" ]; then
@@ -88,31 +82,6 @@ let
           exit 1
           ;;
       esac
-    '';
-
-    # Manually enable/disable a night mode by adjusting the gamma/brightness with
-    # xrandr
-    nightScript = pkgs.writeShellScriptBin "night" ''
-      configure_night_mode() {
-        for disp in $(xrandr | grep " connected" | cut -f1 -d " "); do
-          echo "Configuring $disp..."
-          xrandr --output $disp --gamma $1 --brightness $2
-        done
-      }
-
-      if [ "$1" = "off" ]; then
-        echo "Night mode off"
-        configure_night_mode 1:1:1 1.0
-      elif [[ "$1" =~ 0\.[2-9][0-9]*|1(\.0+)? ]]; then
-        echo "Night mode on"
-        configure_night_mode 1:1:0.5 "$1"
-      elif [ -z "$1" ]; then
-        echo "Night mode on"
-        configure_night_mode 1:1:0.5 0.7
-      else
-        >&2 echo "Usage: night [<off|0.2-1.0>]"
-        exit 1
-      fi
     '';
 
     ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''

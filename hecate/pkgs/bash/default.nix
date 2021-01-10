@@ -60,17 +60,9 @@
         PS1='\u@\h:\w\$ '
       fi
 
-      # Enable direnv
-      eval "$(${pkgs.direnv}/bin/direnv hook bash)"
-
       # Add some better ls colors
       eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors}/src/dir_colors)"
     '';
   };
-
-  environment = {
-    systemPackages = with pkgs; [ direnv ];
-  };
-
 }
 
