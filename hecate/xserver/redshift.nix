@@ -6,6 +6,7 @@
 
   services.redshift = {
     enable = true;
+    executable = "/bin/redshift-gtk";
     brightness = {
       day = "1";
       night = "0.6";
