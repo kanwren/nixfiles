@@ -15,7 +15,7 @@
     nix-cron.url = github:nprindle/nix-cron;
     nix-cron.inputs.nixpkgs.follows = "nixpkgs";
 
-    # cs2110-nix.url = github:nprindle/cs2110-nix;
+    cs2110-nix.url = github:nprindle/cs2110-nix;
 
     neovim.url = github:neovim/neovim;
     neovim.flake = false;
@@ -34,7 +34,7 @@
     , sops-nix
     , nix-cron
     , nur, home-manager
-    # , cs2110-nix
+    , cs2110-nix
     , neovim
     , nord-dircolors, nord-tmux
     }:
@@ -49,11 +49,6 @@
           "nixpkgs=${nixpkgs}"
         ];
       };
-      addOverlays = {
-        nixpkgs.overlays = [
-          nur.overlay
-        ];
-      };
     in {
       nixosConfigurations = {
         hecate = nixpkgs.lib.nixosSystem rec {
@@ -61,7 +56,12 @@
           modules = [
             (import ./hecate/configuration.nix { inherit neovim nord-dircolors nord-tmux; })
             pinFlakes
-            addOverlays
+            {
+              nixpkgs.overlays = [
+                nur.overlay
+                cs2110-nix.overlay.${system}
+              ];
+            }
             home-manager.nixosModules.home-manager
           ];
         };

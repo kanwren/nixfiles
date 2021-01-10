@@ -1,6 +1,40 @@
 {
   "nodes": {
+    "cs2110-nix": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1610268501,
+        "narHash": "sha256-yuqFRmbyaBTJiBHGlrjCxGfUcx8kFga00Vh0mGfK91c=",
+        "owner": "nprindle",
+        "repo": "cs2110-nix",
+        "rev": "cc0c3849bce8217adfbee7b84e45f75481d4eb11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nprindle",
+        "repo": "cs2110-nix",
+        "type": "github"
+      }
+    },
     "flake-utils": {
+      "locked": {
+        "lastModified": 1610051610,
+        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
       "locked": {
         "lastModified": 1610051610,
         "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
@@ -75,6 +109,19 @@
       "locked": {
         "lastModified": 1610041835,
         "narHash": "sha256-WXWaMt8W746JDgLls4g3AfCuKbcQUNL/YjikJIgsCGQ=",
+        "path": "/nix/store/n7knsc9fmc36y3k3xd939dnyy3nfidw4-source",
+        "rev": "f211631c1cb3e94828c7650b5d12c1e5a89e0e16",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1610041835,
+        "narHash": "sha256-WXWaMt8W746JDgLls4g3AfCuKbcQUNL/YjikJIgsCGQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "f211631c1cb3e94828c7650b5d12c1e5a89e0e16",
@@ -136,11 +183,12 @@
     },
     "root": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "cs2110-nix": "cs2110-nix",
+        "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "neovim": "neovim",
         "nix-cron": "nix-cron",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nord-dircolors": "nord-dircolors",
         "nord-tmux": "nord-tmux",
         "nur": "nur",
