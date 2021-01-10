@@ -43,6 +43,7 @@ with rec {
     tldr
     entr
     jq
+    unar
     # Alternatives to coreutils
     ripgrep
     fd
