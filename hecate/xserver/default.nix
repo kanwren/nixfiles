@@ -66,9 +66,7 @@
 
       extraPackages = with pkgs; [
         # Menu/launcher
-        # j4 is slightly snappier and can read .desktop files, but dmenu is
-        # still used to invoke bash commands
-        dmenu j4-dmenu-desktop
+        rofi
         # Status bar
         i3status
         # Lock screen

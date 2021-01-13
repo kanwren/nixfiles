@@ -19,6 +19,7 @@
         (import ./tmux { inherit nord-tmux; })
         ./zathura
         ./direnv
+        ./rofi
       ];
 
       home = {

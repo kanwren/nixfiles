@@ -41,7 +41,7 @@ bindsym $mod+Return exec kitty
 # Start a browser
 bindsym $mod+Shift+b exec firefox
 # prompt to run bash command
-bindsym $mod+b exec "bash -c 'dmenu -p \\"bash:\\" <&- | xargs -I {} bash -c \\"{}\\"'"
+bindsym $mod+b exec "rofi -show run"
 
 # open temporary terminal with vim session in scratchpad
 bindsym $mod+n exec "kitty --title scratch vim -c 'setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile'"
@@ -72,7 +72,7 @@ bindsym $mod+i exec i3-input -f pango:monospace 12
 bindsym $mod+Shift+q kill
 
 # start program launcher
-bindsym $mod+d exec j4-dmenu-desktop
+bindsym $mod+d exec "rofi -show drun"
 
 # Scratchpad
 bindsym $mod+Shift+BackSpace move scratchpad
