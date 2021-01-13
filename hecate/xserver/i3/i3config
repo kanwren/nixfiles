@@ -36,19 +36,31 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+# start lock screen
+bindsym $mod+Shift+i exec betterlockscreen -l dimblur
+bindsym $mod+Shift+o exec betterlockscreen -s dimblur
+
 # start a terminal
 bindsym $mod+Return exec kitty
-# Start a browser
+# start a browser
 bindsym $mod+Shift+b exec firefox
-# prompt to run bash command
-bindsym $mod+b exec "rofi -show run"
+
+# start program launcher
+bindsym $mod+Shift+Return exec "rofi -modi drun,run,ssh -show drun -fuzzy"
+# switch windows
+bindsym $mod+Shift+w exec "rofi -show window"
+
+# open a file browser
+bindsym $mod+Shift+f exec thunar
+for_window [class="^Thunar$"] floating enable
 
 # open temporary terminal with vim session in scratchpad
 bindsym $mod+n exec "kitty --title scratch vim -c 'setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile'"
 for_window [class="^kitty$" title="^scratch$"] move scratchpad, scratchpad show
 
 # take a screenshot
-bindsym Print exec "scrot -e '(mv $f ~/Pictures/Screenshots || true) && echo ~/Pictures/Screenshots/$f | xclip -rmlastnl -sel clip'"
+bindsym Print exec scrot
+bindsym Shift+Print exec "scrot -s"
 
 # open floating graphical calculator session
 bindsym XF86Calculator exec qalculate-gtk
@@ -58,11 +70,6 @@ for_window [class="^Qalculate-gtk$"] floating enable
 no_focus [title="Microsoft Teams Notification"]
 for_window [title="Microsoft Teams Notification"] floating enable
 
-
-# start lock screen
-bindsym $mod+Shift+i exec betterlockscreen -l dimblur
-bindsym $mod+Shift+o exec betterlockscreen -s dimblur
-
 # i3 management
 
 # Run i3 commands on the fly
@@ -71,8 +78,6 @@ bindsym $mod+i exec i3-input -f pango:monospace 12
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-bindsym $mod+d exec "rofi -show drun"
 
 # Scratchpad
 bindsym $mod+Shift+BackSpace move scratchpad
