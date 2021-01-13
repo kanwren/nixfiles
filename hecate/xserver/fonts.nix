@@ -3,9 +3,7 @@
 {
   fonts = {
     fonts = with pkgs; [
-      fira-mono
-      fira-code
-      fira-code-symbols
+      (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
     ];
   };
 }

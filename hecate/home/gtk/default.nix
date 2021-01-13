@@ -5,7 +5,6 @@
     enable = true;
     font = {
       name = "Fira Mono";
-      package = pkgs.fira-mono;
     };
     theme = {
       name = "Nordic";
