@@ -1,10 +1,10 @@
-{ neovim }:
+deps:
 
 { ... }:
 
 {
   nixpkgs.overlays = [
-    (import ./neovim.nix { inherit neovim; })
+    (import ./neovim.nix deps)
     (import ./sudo.nix)
   ];
 }

@@ -1,4 +1,4 @@
-{ nord-dircolors }:
+{ nord-dircolors, ... }:
 
 { pkgs, ... }:
 

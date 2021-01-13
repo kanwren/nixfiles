@@ -1,4 +1,4 @@
-{ neovim, nord-dircolors, nord-tmux }:
+deps:
 
 { ... }:
 
@@ -7,17 +7,17 @@
     ./hardware-configuration.nix
     ./boot
     ./security
-    (import ./nix { inherit neovim; })
+    (import ./nix deps)
     ./hardware
     ./time
     ./i18n
     ./services
     ./xserver
     ./users
-    (import ./pkgs { inherit nord-dircolors; })
+    (import ./pkgs deps)
     ./virtualisation
     ./networking
-    (import ./home { inherit nord-tmux; })
+    (import ./home deps)
   ];
 
   system.stateVersion = "20.09";

@@ -1,4 +1,4 @@
-{ nord-tmux }:
+{ nord-tmux, ... }:
 
 { pkgs, ... }:
 

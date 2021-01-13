@@ -1,4 +1,4 @@
-{ nord-dircolors }:
+deps:
 
 { pkgs, lib, ... }:
 
@@ -113,8 +113,8 @@ with rec {
 {
   imports = [
     ./vim/default.nix
-    (import ./bash/default.nix { inherit nord-dircolors; })
-    (import ./zsh/default.nix { inherit nord-dircolors; })
+    (import ./bash/default.nix deps)
+    (import ./zsh/default.nix deps)
   ];
 
   environment = {

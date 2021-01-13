@@ -1,11 +1,11 @@
-{ neovim }:
+deps:
 
 { lib, pkgs, ... }:
 
 {
   imports = [
     ./caches.nix
-    (import ./overlays { inherit neovim; })
+    (import ./overlays deps)
   ];
 
   system.autoUpgrade.enable = false;

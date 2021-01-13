@@ -1,4 +1,4 @@
-{ nord-tmux }:
+deps:
 
 { pkgs, lib, config, ... }:
 
@@ -16,7 +16,7 @@
         ./haskell
         ./kitty
         ./nushell
-        (import ./tmux { inherit nord-tmux; })
+        (import ./tmux deps)
         ./zathura
         ./direnv
         ./rofi
