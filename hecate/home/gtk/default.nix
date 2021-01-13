@@ -4,7 +4,7 @@
   gtk = {
     enable = true;
     font = {
-      name = "Fira Mono";
+      name = "FiraCode Nerd Font Mono";
     };
     theme = {
       name = "Nordic";

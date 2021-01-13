@@ -23,7 +23,7 @@
         frame_width = 2;
         word_wrap = true;
         follow = "mouse";
-        font = "Fira Mono";
+        font = "FiraCode Nerd Font Mono";
         markup = "full";
         format = "%s\n%b";
       };
