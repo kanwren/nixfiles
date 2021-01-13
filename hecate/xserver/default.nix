@@ -48,7 +48,7 @@
           };
         };
 
-        background = ../../desktop-backgrounds/forest.png;
+        background = ../../desktop-backgrounds/alien-moon.png;
       };
     };
 
