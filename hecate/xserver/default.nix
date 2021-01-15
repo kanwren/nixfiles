@@ -18,7 +18,7 @@
   services.xserver = {
     enable = true;
 
-    videoDrivers = [ "modesetting" "amdgpu" "radeon" "nvidia" ];
+    videoDrivers = [ "modesetting" "nvidia" "radeon" "amdgpu" ];
 
     # Enable touchpad
     libinput = {
