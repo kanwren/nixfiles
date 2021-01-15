@@ -65,6 +65,9 @@
         editor = "nvim";
         autocrlf = false;
       };
+      init = {
+        defaultBranch = "main";
+      };
       diff = {
         tool = "vimdiff";
       };
