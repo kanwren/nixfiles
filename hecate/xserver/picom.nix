@@ -3,6 +3,17 @@
 {
   services.picom = {
     enable = true;
+    vSync = true;
+    backend = "glx";
+    experimentalBackends = true;
+
+    settings = {
+      blur = {
+        method = "gaussian";
+        size = 10;
+        deviation = 5.0;
+      };
+    };
 
     # activeOpacity = "0.85";
     # inactiveOpacity = "0.9";
