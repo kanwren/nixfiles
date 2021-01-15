@@ -30,6 +30,8 @@
       powerOnBoot = true;
     };
 
+    acpilight.enable = true;
+
     trackpoint.enable = true;
   };
 }
