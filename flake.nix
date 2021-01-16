@@ -103,6 +103,10 @@
             "./secrets/keys/users"
           ];
         };
+
+        hm-modules = {
+          xcompose = import ./hm-modules/xcompose.nix;
+        };
       }
     );
 }

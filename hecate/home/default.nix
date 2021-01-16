@@ -8,6 +8,8 @@ deps:
     useUserPackages = true;
     users.nprin = {
       imports = [
+        ../../hm-modules/xcompose.nix
+
         ./bash
         ./dunst
         ./firefox
@@ -20,6 +22,7 @@ deps:
         ./zathura
         ./direnv
         ./rofi
+        ./xserver
       ];
 
       home = {
