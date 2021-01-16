@@ -1,3 +1,5 @@
+{ nlib }:
+
 { config, lib, pkgs, ... }:
 
 with lib;
@@ -7,8 +9,6 @@ let
 
   wrap = x: "<" + x + ">";
   renderMapping = { keys, result }: "<Multi_key> ${concatMapStringsSep " " wrap keys} : \"${result}\"";
-
-  nlib = import ../lib { inherit lib; };
 in
 {
   options = {

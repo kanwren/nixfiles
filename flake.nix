@@ -68,6 +68,7 @@
           modules = [
             (import ./hecate/configuration.nix {
               inherit neovim nord-dircolors nord-tmux;
+              inherit (self.hmModules) xcompose;
             })
             pinFlakes
             {
@@ -90,6 +91,10 @@
         };
       };
 
+      hmModules = {
+        xcompose = import ./hm-modules/xcompose.nix { nlib = self.lib; };
+      };
+
       lib = import ./lib { inherit (nixpkgs) lib; };
     } // flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
@@ -102,10 +107,6 @@
           sopsPGPKeyDirs = [
             "./secrets/keys/users"
           ];
-        };
-
-        hm-modules = {
-          xcompose = import ./hm-modules/xcompose.nix;
         };
       }
     );

@@ -1,4 +1,4 @@
-deps:
+{ xcompose, ... }@deps:
 
 { pkgs, lib, config, ... }:
 
@@ -8,7 +8,7 @@ deps:
     useUserPackages = true;
     users.nprin = {
       imports = [
-        ../../hm-modules/xcompose.nix
+        deps.xcompose
 
         ./bash
         ./dunst
