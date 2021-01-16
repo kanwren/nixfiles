@@ -8,7 +8,13 @@ let
   cfg = config.xserver.xcompose;
 
   wrap = x: "<" + x + ">";
-  renderMapping = { keys, result }: "<Multi_key> ${concatMapStringsSep " " wrap keys} : \"${result}\"";
+  renderMapping = { keys, result }:
+    let
+      mappings = concatMapStringsSep " " wrap keys;
+      res = lib.escape ["\""] result;
+    in "<Multi_key> ${mappings} : \"${res}\"";
+
+  singleLineString = types.addCheck types.str (s: !lib.strings.hasInfix "\n" s);
 in
 {
   options = {
@@ -24,7 +30,7 @@ in
       mappings = mkOption {
         type = types.listOf (nlib.types.object false {
           keys = nlib.types.required (types.listOf types.str);
-          result = nlib.types.required (types.str);
+          result = nlib.types.required singleLineString;
         });
         default = [];
         description = ''
