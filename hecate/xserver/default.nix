@@ -27,7 +27,7 @@
     };
 
     layout = "us";
-    xkbOptions = "caps:escape";
+    xkbOptions = "caps:escape,compose:ralt";
 
     displayManager = {
       lightdm = {
