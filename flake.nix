@@ -89,6 +89,8 @@
           ];
         };
       };
+
+      lib = import ./lib { inherit (nixpkgs) lib; };
     } // flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
