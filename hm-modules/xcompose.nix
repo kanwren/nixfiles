@@ -11,7 +11,7 @@ let
   renderMapping = { keys, result }:
     let
       mappings = concatMapStringsSep " " wrap keys;
-      res = lib.escape ["\""] result;
+      res = lib.escape [ "\"" "\\" ] result;
     in "<Multi_key> ${mappings} : \"${res}\"";
 
   singleLineString = types.addCheck types.str (s: !lib.strings.hasInfix "\n" s);
