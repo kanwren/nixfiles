@@ -47,7 +47,7 @@ bindsym $mod+Shift+o exec betterlockscreen -s dimblur
 # start a terminal
 bindsym $mod+Return exec kitty
 # start a browser
-bindsym $mod+Shift+b exec firefox
+bindsym $mod+b exec firefox
 
 # start program launcher
 bindsym $mod+Shift+Return exec "rofi -modi drun,run,ssh -show drun -fuzzy"

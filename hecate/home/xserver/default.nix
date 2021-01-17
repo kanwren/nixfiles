@@ -36,9 +36,10 @@ in {
       { keys = toKeys "~-"; result = "～"; }
       { keys = toKeys "-~"; result = "～"; }
       # Math
-      { keys = toKeys "<>";      result = "⋄"; }
-      { keys = toKeys "<_>";     result = "↔"; }
+      { keys = toKeys "<_>";     result = "↔"; } # Note: breaks "<_" -> "≤"
       { keys = toKeys "==";      result = "⇔"; }
+      { keys = toKeys "<=";      result = "⇐"; } # Normally "<=" would become "≤", but we can use the synonym "_<" instead
+      { keys = toKeys "--o";     result = "⊸"; }
       { keys = toKeys "/_=";     result = "≢"; }
       { keys = toKeys "(-";      result = "∈"; }
       { keys = toKeys "/(-";     result = "∉"; }
@@ -49,9 +50,9 @@ in {
       { keys = toKeys ")C";      result = "⊃"; }
       { keys = toKeys "/)C";     result = "⊅"; }
       { keys = toKeys "(_";      result = "⊆"; }
-      { keys = toKeys "/(_";     result = "⊆"; }
+      { keys = toKeys "/(_";     result = "⊈"; }
       { keys = toKeys ")_";      result = "⊇"; }
-      { keys = toKeys "/)_";     result = "⊇"; }
+      { keys = toKeys "/)_";     result = "⊉"; }
       { keys = toKeys ")U";      result = "⋂"; }
       { keys = toKeys "(U";      result = "⋃"; }
       { keys = toKeys "forall";  result = "∀"; }
@@ -60,8 +61,10 @@ in {
       { keys = toKeys "_|_";     result = "⊥"; }
       { keys = toKeys "|-";      result = "⊢"; }
       { keys = toKeys "()";      result = "∘"; }
-      { keys = toKeys "<*>";     result = "⊛"; }
-      { keys = toKeys "<+>";     result = "⊕"; }
+      { keys = toKeys "0+";      result = "⊕"; }
+      { keys = toKeys "0x";      result = "⊗"; }
+      { keys = toKeys "0*";      result = "⊛"; } # Breaks "0*" -> "°", but can use the synonym "oo" instead
+      { keys = toKeys "0.";      result = "⊙"; }
       { keys = toKeys "&&";      result = "∧"; }
       { keys = toKeys "||";      result = "∨"; }
       # Emoticons
