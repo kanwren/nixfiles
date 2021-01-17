@@ -19,6 +19,9 @@ let
     "," = "comma";
     "|" = "bar";
     "~" = "asciitilde";
+    "*" = "asterisk";
+    "+" = "plus";
+    "&" = "ampersand";
   };
   common = letters // numbers // symbols;
   toKeys = str: builtins.map (x: common.${x}) (lib.stringToCharacters str);
@@ -57,6 +60,10 @@ in {
       { keys = toKeys "_|_";     result = "⊥"; }
       { keys = toKeys "|-";      result = "⊢"; }
       { keys = toKeys "()";      result = "∘"; }
+      { keys = toKeys "<*>";     result = "⊛"; }
+      { keys = toKeys "<+>";     result = "⊕"; }
+      { keys = toKeys "&&";      result = "∧"; }
+      { keys = toKeys "||";      result = "∨"; }
       # Emoticons
       { keys = toKeys "SHRUG"; result = ''¯\_(ツ)_/¯''; }
       { keys = toKeys "SQUID"; result = ''くコ:彡''; }
