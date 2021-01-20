@@ -14,7 +14,7 @@
 { pkgs, lib, ... }:
 
 let
-  my-vim = vim_configurable.customize {
+  my-vim = pkgs.vim_configurable.customize {
     name = "vim";
     vimrcConfig = {
       packages.vim-package-group.start = with pkgs.vimPlugins; [ vim-nix vim-surround ];
