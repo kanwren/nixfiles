@@ -25,6 +25,13 @@ gaps outer 10
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# keybindings for switching keyboard layouts
+bindsym $mod+Control+1 exec setxkbmap -layout us
+bindsym $mod+Control+2 exec setxkbmap -variant dvorak
+bindsym $mod+Control+3 exec setxkbmap -variant dvp
+bindsym $mod+Control+4 exec setxkbmap -variant dvorak-l
+bindsym $mod+Control+5 exec setxkbmap -variant dvorak-r
+
 # volume controls (requires pulseaudio)
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5% # Increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ -5% # Decrease sound volume
