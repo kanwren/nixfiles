@@ -13,8 +13,6 @@ let
       mappings = concatMapStringsSep " " wrap keys;
       res = lib.escape [ "\"" "\\" ] result;
     in "<Multi_key> ${mappings} : \"${res}\"";
-
-  singleLineString = types.addCheck types.str (s: !lib.strings.hasInfix "\n" s);
 in
 {
   options = {
@@ -30,7 +28,7 @@ in
       mappings = mkOption {
         type = types.listOf (nlib.types.object false {
           keys = nlib.types.required (types.listOf types.str);
-          result = nlib.types.required singleLineString;
+          result = nlib.types.required (types.strMatching "[^\n]*");
         });
         default = [];
         description = ''
@@ -41,7 +39,7 @@ in
       };
 
       extraConfig = mkOption {
-        type = types.str;
+        type = types.lines;
         default = "";
         description = "Extra configuration appended to ~/.XCompose";
       };
