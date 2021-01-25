@@ -73,6 +73,7 @@
         # Applets
         networkmanagerapplet
         blueman
+        mate.mate-media
         # Media controls (pactl is provided by pulseaudio)
         playerctl
       ];
