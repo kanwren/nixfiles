@@ -18,12 +18,12 @@
       # typescript-language-server
       # vscode-html-languageserver-bin
       # vscode-css-languageserver-bin
-      # bash-language-server
+      bash-language-server
       # yaml-language-server
       # TODO: vscode-json-languageserver
     ]) ++ (with pkgs.python3Packages; [
-      # (python-language-server.overridePythonAttrs { doCheck = false; })
-      # pyls-mypy
+      python-language-server
+      pyls-mypy
       # pyls-isort
     ]);
     variables = {
