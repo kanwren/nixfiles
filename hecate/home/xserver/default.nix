@@ -69,6 +69,7 @@ in {
       { keys = toKeys "||";      result = "∨"; }
       # Emoticons
       { keys = toKeys "SHRUG"; result = ''¯\_(ツ)_/¯''; }
+      { keys = toKeys "MSHRUG"; result = ''¯\\\_(ツ)\_/¯''; } # shrug suitably escaped for markdown
       { keys = toKeys "SQUID"; result = ''くコ:彡''; }
     ];
   };
