@@ -45,16 +45,16 @@ in {
       { keys = toKeys "/(-";     result = "∉"; }
       { keys = toKeys ")-";      result = "∋"; }
       { keys = toKeys "/)-";     result = "∌"; }
-      { keys = toKeys "(C";      result = "⊂"; }
-      { keys = toKeys "/(C";     result = "⊄"; }
-      { keys = toKeys ")C";      result = "⊃"; }
-      { keys = toKeys "/)C";     result = "⊅"; }
+      { keys = toKeys "C(";      result = "⊂"; }
+      { keys = toKeys "/C(";     result = "⊄"; }
+      { keys = toKeys "C)";      result = "⊃"; }
+      { keys = toKeys "/C)";     result = "⊅"; }
       { keys = toKeys "(_";      result = "⊆"; }
       { keys = toKeys "/(_";     result = "⊈"; }
       { keys = toKeys ")_";      result = "⊇"; }
       { keys = toKeys "/)_";     result = "⊉"; }
-      { keys = toKeys ")U";      result = "⋂"; }
-      { keys = toKeys "(U";      result = "⋃"; }
+      { keys = toKeys ")N";      result = "⋂"; }
+      { keys = toKeys ")U";      result = "⋃"; }
       { keys = toKeys "forall";  result = "∀"; }
       { keys = toKeys "exists";  result = "∃"; }
       { keys = toKeys "/exists"; result = "∄"; }
@@ -65,11 +65,12 @@ in {
       { keys = toKeys "0x";      result = "⊗"; }
       { keys = toKeys "0*";      result = "⊛"; } # Breaks "0*" -> "°", but can use the synonym "oo" instead
       { keys = toKeys "0.";      result = "⊙"; }
+      { keys = toKeys "0-";      result = "⊖"; }
       { keys = toKeys "&&";      result = "∧"; }
       { keys = toKeys "||";      result = "∨"; }
       # Emoticons
       { keys = toKeys "SHRUG"; result = ''¯\_(ツ)_/¯''; }
-      { keys = toKeys "MSHRUG"; result = ''¯\\\_(ツ)\_/¯''; } # shrug suitably escaped for markdown
+      { keys = toKeys "MSHRUG"; result = ''¯\\\_(ツ)\_/¯''; } # shrug suitably escaped for use markdown
       { keys = toKeys "SQUID"; result = ''くコ:彡''; }
     ];
   };
