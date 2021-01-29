@@ -21,7 +21,7 @@
     # Enable touchpad
     libinput = {
       enable = true;
-      naturalScrolling = true;
+      touchpad.naturalScrolling = true;
     };
 
     layout = "us";

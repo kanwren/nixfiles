@@ -1,17 +1,23 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
-    nur.url = github:nix-community/NUR;
+    nur = {
+      url = github:nix-community/NUR;
+    };
 
     home-manager = {
       url = github:rycee/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = github:NixOS/nixos-hardware;
+    nixos-hardware = {
+      url = github:NixOS/nixos-hardware;
+    };
 
-    flake-utils.url = github:numtide/flake-utils;
+    flake-utils = {
+      url = github:numtide/flake-utils;
+    };
 
     sops-nix = {
       url = github:Mic92/sops-nix;
@@ -23,7 +29,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cs2110-nix.url = github:nprindle/cs2110-nix;
+    cs2110-nix = {
+      url = github:nprindle/cs2110-nix;
+    };
 
     neovim = {
       url = github:neovim/neovim;
