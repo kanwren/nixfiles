@@ -24,6 +24,11 @@
 
       diffc = "diff --cached";
       conflicts = "diff --name-status --diff-filter=U";
+      # diff with filter
+      difff = "diff --diff-filter";
+      # diff file names only; for example, "git diffno --diff-filter=U | xargs vim"
+      diffno = "diff --name-only";
+      diffnof = "diff --name-only --diff-filter";
 
       rh = "reset --hard";
 

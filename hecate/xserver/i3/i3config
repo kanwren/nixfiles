@@ -66,10 +66,6 @@ bindsym $mod+Shift+w exec "rofi -show window"
 bindsym $mod+Shift+f exec thunar
 for_window [class="^Thunar$"] floating enable
 
-# open temporary terminal with vim session in scratchpad
-bindsym $mod+n exec "kitty --title scratch vim -c 'setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile'"
-for_window [class="^kitty$" title="^scratch$"] move scratchpad, scratchpad show
-
 # take a screenshot
 bindsym Print exec scrot
 bindsym Shift+Print exec "scrot -s"
