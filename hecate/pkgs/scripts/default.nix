@@ -61,6 +61,22 @@ let
       fi
     '';
 
+    nosleepScript = pkgs.writeShellScriptBin "nosleep" ''
+      if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+        >&2 echo "Usage: nosleep [seconds]"
+        exit
+      fi
+
+      delay="$${1:-59}"
+
+      while :; do
+        ${pkgs.xdotool}/bin/xdotool mousemove_relative -- 1 0
+        sleep "$delay"
+        ${pkgs.xdotool}/bin/xdotool mousemove_relative -- -1 0
+        sleep "$delay"
+      done
+    '';
+
     toggleScript = pkgs.writeShellScriptBin "toggle" ''
       if [ $# -ne 1 ]; then
         >&2 echo "Usage: toggle PROGRAM"
