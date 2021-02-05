@@ -22,6 +22,7 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
+      package = pkgs.bluezFull;
     };
 
     acpilight.enable = true;
