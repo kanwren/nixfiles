@@ -1,5 +1,4 @@
-# Disable clippy, but keep menu
-set-option global ui_options ncurses_assistant=none
+set-option global ui_options ncurses_assistant=cat ncurses_enable_mouse=false
 
 colorscheme desertex
 
@@ -16,19 +15,19 @@ add-highlighter global/ dynregex '%reg{/}' 0:+u
 hook global WinCreate ^[^*]+$ %{ add-highlighter window/ number-lines -relative -hlcursor -min-digits 2 }
 
 # Default indent settings
-set global tabstop 4
-set global indentwidth 4
-set global aligntab
+set-option global tabstop 4
+set-option global indentwidth 4
+set-option global aligntab false
 
 # Enable editor config
 hook global BufOpenFile .* %{ editorconfig-load }
 hook global BufNewFile .* %{ editorconfig-load }
 
 # Improve default behavior of 'x' and 'X'
-def -params 1 extend-line-down %{
+define-command -params 1 extend-line-down %{
     exec "<a-:>%arg{1}X"
 }
-def -params 1 extend-line-up %{
+define-command -params 1 extend-line-up %{
     exec "<a-:><a-;>%arg{1}K<a-;>"
     try %{
         exec -draft ';<a-K>\n<ret>'
@@ -59,21 +58,38 @@ map global normal = ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>
 map global user -docstring 'increment selection' <plus>  ':exec "<lt>a-i>na+1<lt>esc>|bc<lt>ret>"<ret>'
 map global user -docstring 'decrement selection' <minus> ':exec "<lt>a-i>na-1<lt>esc>|bc<lt>ret>"<ret>'
 
+# Adjust indent on the fly
+define-command -params 1 adjust-indentation %{
+    set-option buffer tabstop "%arg{1}"
+    set-option buffer indentwidth "%arg{1}"
+}
+map global user -docstring 'adjust indent' i ':prompt indent: %{adjust-indentation "%val{text}"}<ret>'
+
 # Language-specific options
 hook global WinSetOption filetype=haskell %{
     ctags-enable-autoinfo
     hook global InsertChar \t %{ exec -draft -itersel h@ }
-    set global tabstop 2
-    set global indentwidth 2
+}
+hook global WinSetOption filetype=(nix|haskell) %{
+    adjust-indentation 2
 }
 
 # Plugin config
-map global normal <c-p> ': fzf-mode<CR>'
+# smarttab.kak
+hook global WinSetOption filetype=.* %{
+    expandtab
+}
+# fzf.kak
+require-module fzf
+map global normal <c-p> ': fzf-mode<ret>'
+map global normal <c-g> ': fzf-vcs-mode<ret>g'
 
 # LSP config
-eval %sh{kak-lsp --kakoune -s $kak_session}
+evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
 hook global WinSetOption filetype=(haskell|typescript|python|sh|bash|tex) %{
   lsp-enable-window
   lsp-auto-hover-enable
 }
 map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
+# Python
+set-option global lsp_server_configuration pyls.plugins.pydocstyle.enabled=false pyls.plugins.pycodestyle.enable=true pyls.plugins.pycodestyle.ignore=["E111","E501","E302","W391"]
