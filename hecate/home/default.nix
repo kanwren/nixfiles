@@ -23,6 +23,7 @@
         ./direnv
         ./rofi
         ./xserver
+        ./kakoune
       ];
 
       home = {

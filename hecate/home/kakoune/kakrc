@@ -1,0 +1,75 @@
+# Disable clippy, but keep menu
+set-option global ui_options ncurses_assistant=none
+
+colorscheme desertex
+
+add-highlighter global/ show-matching
+
+set-option global grepcmd 'rg --column'
+set-face global search +bi
+add-highlighter global/ dynregex '%reg{/}' 0:+u
+
+# Add color column
+# add-highlighter global/ column '%opt{autowrap_column}' default,white
+
+# Relative line numbering
+hook global WinCreate ^[^*]+$ %{ add-highlighter window/ number-lines -relative -hlcursor -min-digits 2 }
+
+# Default indent settings
+set global tabstop 4
+set global indentwidth 4
+
+# Enable editor config
+hook global BufOpenFile .* %{ editorconfig-load }
+hook global BufNewFile .* %{ editorconfig-load }
+
+# Improve default behavior of 'x' and 'X'
+def -params 1 extend-line-down %{
+    exec "<a-:>%arg{1}X"
+}
+def -params 1 extend-line-up %{
+    exec "<a-:><a-;>%arg{1}K<a-;>"
+    try %{
+        exec -draft ';<a-K>\n<ret>'
+        exec X
+    }
+    exec '<a-;><a-X>'
+}
+map global normal x ':extend-line-down %val{count}<ret>'
+map global normal X ':extend-line-up %val{count}<ret>'
+
+# Mappings
+evaluate-commands %sh{
+    printf "map global user -docstring 'evaluate' e 'y:<c-r>\"<ret>'"
+}
+
+# System clipboard handling
+evaluate-commands %sh{
+    copy="xclip -sel clip -i"
+    paste="xclip -sel clip -o"
+    printf "map global user -docstring 'paste (after) from clipboard' p '!%s<ret>'\n" "$paste"
+    printf "map global user -docstring 'paste (before) from clipboard' P '<a-!>%s<ret>'\n" "$paste"
+    printf "map global user -docstring 'yank to clipboard' y '<a-|>%s<ret>:echo -markup %%{{Information}copied selection to X11 clipboard}<ret>'\n" "$copy"
+    printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
+}
+
+# Math/increment/decrement
+map global normal = ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
+map global user -docstring 'increment selection' <plus>  ':exec "<lt>a-i>ws-?\d+<lt>ret>a+1<lt>esc>|bc<lt>ret>"<ret>'
+map global user -docstring 'decrement selection' <minus> ':exec "<lt>a-i>ws-?\d+<lt>ret>a-1<lt>esc>|bc<lt>ret>"<ret>'
+
+# Language-specific options
+hook global WinSetOption filetype=haskell %{
+    ctags-enable-autoinfo
+    hook global InsertChar \t %{ exec -draft -itersel h@ }
+    set global tabstop 2
+    set global indentwidth 2
+}
+
+# LSP config
+eval %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(haskell|typescript|python|sh|bash|tex) %{
+  lsp-enable-window
+  lsp-auto-hover-enable
+}
+map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
