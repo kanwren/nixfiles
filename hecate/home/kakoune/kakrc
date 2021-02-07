@@ -18,6 +18,7 @@ hook global WinCreate ^[^*]+$ %{ add-highlighter window/ number-lines -relative 
 # Default indent settings
 set global tabstop 4
 set global indentwidth 4
+set global aligntab
 
 # Enable editor config
 hook global BufOpenFile .* %{ editorconfig-load }
@@ -47,16 +48,16 @@ evaluate-commands %sh{
 evaluate-commands %sh{
     copy="xclip -sel clip -i"
     paste="xclip -sel clip -o"
-    printf "map global user -docstring 'paste (after) from clipboard' p '!%s<ret>'\n" "$paste"
-    printf "map global user -docstring 'paste (before) from clipboard' P '<a-!>%s<ret>'\n" "$paste"
+    printf "map global user -docstring 'paste (before) from clipboard' P '!%s<ret>'\n" "$paste"
+    printf "map global user -docstring 'paste (after) from clipboard' p '<a-!>%s<ret>'\n" "$paste"
     printf "map global user -docstring 'yank to clipboard' y '<a-|>%s<ret>:echo -markup %%{{Information}copied selection to X11 clipboard}<ret>'\n" "$copy"
     printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
 }
 
 # Math/increment/decrement
 map global normal = ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
-map global user -docstring 'increment selection' <plus>  ':exec "<lt>a-i>ws-?\d+<lt>ret>a+1<lt>esc>|bc<lt>ret>"<ret>'
-map global user -docstring 'decrement selection' <minus> ':exec "<lt>a-i>ws-?\d+<lt>ret>a-1<lt>esc>|bc<lt>ret>"<ret>'
+map global user -docstring 'increment selection' <plus>  ':exec "<lt>a-i>na+1<lt>esc>|bc<lt>ret>"<ret>'
+map global user -docstring 'decrement selection' <minus> ':exec "<lt>a-i>na-1<lt>esc>|bc<lt>ret>"<ret>'
 
 # Language-specific options
 hook global WinSetOption filetype=haskell %{
@@ -65,6 +66,9 @@ hook global WinSetOption filetype=haskell %{
     set global tabstop 2
     set global indentwidth 2
 }
+
+# Plugin config
+map global normal <c-p> ': fzf-mode<CR>'
 
 # LSP config
 eval %sh{kak-lsp --kakoune -s $kak_session}
