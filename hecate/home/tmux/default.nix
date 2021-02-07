@@ -52,6 +52,10 @@ in
       bind k select-pane -U
       bind l select-pane -R
 
+      # Flip orientation of current pane with the pane before it
+      bind M-J move-pane -t '.-'
+      bind M-L move-pane -h -t '.-'
+
       # Clipboard integration with xclip
       bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
     '';
