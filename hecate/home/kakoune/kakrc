@@ -2,22 +2,33 @@ set-option global ui_options ncurses_assistant=cat ncurses_enable_mouse=false
 
 colorscheme desertex
 
-add-highlighter global/ show-matching
-
-set-option global grepcmd 'rg --column'
 set-face global search +bi
-add-highlighter global/ dynregex '%reg{/}' 0:+u
 
-# Add color column
-# add-highlighter global/ column '%opt{autowrap_column}' default,white
+# Highlighters
 
 # Relative line numbering
-hook global WinCreate ^[^*]+$ %{ add-highlighter window/ number-lines -relative -hlcursor -min-digits 2 }
+add-highlighter global/numbers number-lines -relative -hlcursor -min-digits 2
+# Show matching pairs
+add-highlighter global/matching show-matching
+# Underline search matches
+add-highlighter global/search-results dynregex '%reg{/}' 0:+u
+# Show whitespaces
+add-highlighter global/show-whitespaces show-whitespaces -tab ">" -tabpad "-" -lf " " -nbsp "⋅" -spc " "
+# Trailing whitespace
+add-highlighter global/trailing-whitespace regex \h+$ 0:Error
+# Color columns (one for comments, one for code)
+add-highlighter global/colorcolumn-autowrap column '%opt{autowrap_column}' default,rgb:303030
+add-highlighter global/colorcolumn-code     column 120                     default,rgb:303030
+
+set-option global grepcmd 'rg -L --hidden --with-filename --column'
 
 # Default indent settings
 set-option global tabstop 4
 set-option global indentwidth 4
 set-option global aligntab false
+
+# Scrolloff
+set-option global scrolloff 1,3
 
 # Enable editor config
 hook global BufOpenFile .* %{ editorconfig-load }
@@ -39,26 +50,29 @@ map global normal x ':extend-line-down %val{count}<ret>'
 map global normal X ':extend-line-up %val{count}<ret>'
 
 # Mappings
-evaluate-commands %sh{
-    printf "map global user -docstring 'evaluate' e 'y:<c-r>\"<ret>'"
-}
+
+# Comments
+map global normal -docstring 'comment line' "#" ': comment-line<ret>'
+map global normal -docstring 'comment block' "<a-#>" ': comment-block<ret>'
+
+# Selectors
+map global user -docstring 'select trailing whitespace' <tab> 's\h+$<ret>'
+
+# Evaluate command in selection
+map global user -docstring 'evaluate' e %{ y:<c-r>"<ret> }
 
 # System clipboard handling
-evaluate-commands %sh{
-    copy="xclip -sel clip -i"
-    paste="xclip -sel clip -o"
-    printf "map global user -docstring 'paste (before) from clipboard' P '!%s<ret>'\n" "$paste"
-    printf "map global user -docstring 'paste (after) from clipboard' p '<a-!>%s<ret>'\n" "$paste"
-    printf "map global user -docstring 'yank to clipboard' y '<a-|>%s<ret>:echo -markup %%{{Information}copied selection to X11 clipboard}<ret>'\n" "$copy"
-    printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
-}
+map global user -docstring 'yank to clipboard' y '<a-|>xclip -sel clip -i<ret>:echo -markup %{{Information}copied selection to X11 clipboard}<ret>'
+map global user -docstring 'paste (before) from clipboard' P '!xclip -sel clip -o<ret>'
+map global user -docstring 'paste (after) from clipboard' p '<a-!>xclip -sel clip -o<ret>'
+map global user -docstring 'replace from clipboard' R '|xclip -sel clip -o<ret>'
 
-# Math/increment/decrement
+# Math, increment/decrement
 map global normal = ':prompt math: %{exec "a%val{text}<lt>esc>|bc<lt>ret>"}<ret>'
 map global user -docstring 'increment selection' <plus>  ':exec "<lt>a-i>na+1<lt>esc>|bc<lt>ret>"<ret>'
 map global user -docstring 'decrement selection' <minus> ':exec "<lt>a-i>na-1<lt>esc>|bc<lt>ret>"<ret>'
 
-# Adjust indent on the fly
+# Adjust indent
 define-command -params 1 adjust-indentation %{
     set-option buffer tabstop "%arg{1}"
     set-option buffer indentwidth "%arg{1}"
@@ -75,20 +89,30 @@ hook global WinSetOption filetype=(nix|haskell) %{
 }
 
 # Plugin config
+
 # smarttab.kak
-hook global WinSetOption filetype=.* %{
-    expandtab
-}
+hook global WinSetOption filetype=.* %{ expandtab }
+
 # fzf.kak
 require-module fzf
 map global normal <c-p> ': fzf-mode<ret>'
 map global normal <c-g> ': fzf-vcs-mode<ret>g'
 
+# kakoune-readline
+hook global WinCreate .* readline-enable
+
+# case.kak
+map global normal '`' ': enter-user-mode case<ret>'
+
+# kakoune-mirror
+map global normal "'" ': enter-user-mode -lock mirror<ret>'
+
 # LSP config
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
 hook global WinSetOption filetype=(haskell|typescript|python|sh|bash|tex) %{
-  lsp-enable-window
-  lsp-auto-hover-enable
+    lsp-enable-window
+    set global lsp_hover_anchor true
+    set-option global lsp_show_hover_format 'printf ''%s\n%s'' "${lsp_diagnostics}" "${lsp_info}"'
 }
 map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
 # Python
