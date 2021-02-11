@@ -3,7 +3,7 @@
 let
   scripts = {
     # simple random number generator script
-    randomScript = pkgs.haskell.packages.ghc8102.callPackage ./random {};
+    randomScript = pkgs.haskell.packages.ghc8103.callPackage ./random {};
 
     # Print nix garbage collector roots that still exist
     gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
@@ -108,7 +108,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc8102"
+          ghc="ghc8103"
           args="$*"
           ;;
       esac
@@ -123,7 +123,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc8102"
+          ghc="ghc8103"
           args="$*"
           ;;
       esac
