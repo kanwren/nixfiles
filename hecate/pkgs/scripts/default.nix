@@ -1,12 +1,38 @@
 { pkgs }:
 
 let
+  haskellScript = { name, contents, libraries ? (_: []) }: pkgs.writers.writeHaskellBin name {
+    ghc = pkgs.haskell.packages.ghc8103.ghc;
+    ghcArgs = [ "-O2" ];
+    libraries = libraries (pkgs.haskell.packages.ghc8103);
+  } (if builtins.isString contents then contents else builtins.readFile contents);
+
   scripts = {
     # simple random number generator script
-    randomScript = pkgs.haskell.packages.ghc8103.callPackage ./random {};
+    random = haskellScript {
+      name = "random";
+      libraries = p: with p; [ splitmix optparse-applicative ];
+      contents = ./Random.hs;
+    };
+
+    # script for generating truth tables from boolean expressions
+    truthtable = haskellScript {
+      name = "truthtable" ;
+      libraries = p: with p; [ megaparsec containers text ];
+      contents = ./TruthTable.hs;
+    };
+
+    # convenience script to wrap 'docker run' for running autograders
+    autograde = with pkgs;
+      let s = writeShellScript "autograde" (builtins.readFile ./autograde.sh);
+      in runCommand "autograde-patch" { buildInputs = [ docker ]; } ''
+        mkdir -p "$out"/bin
+        cp "${s}" "$out"/bin/autograde
+        substituteAllInPlace "$out"/bin/autograde
+      '';
 
     # Print nix garbage collector roots that still exist
-    gcrootsScript = with pkgs; writeShellScriptBin "nix-gcroots" ''
+    gcroots = with pkgs; writeShellScriptBin "nix-gcroots" ''
       echo "/nix/var/nix/gcroots/auto:"
       for f in /nix/var/nix/gcroots/auto/*; do
         if [ -e "$f" ]; then
@@ -26,7 +52,7 @@ let
       done
     '';
 
-    bakScript = with pkgs; writeShellScriptBin "bak" ''
+    bak = with pkgs; writeShellScriptBin "bak" ''
       if [ $# -ge 1 ]; then
         if [ "$1" = "-u" ]; then
           shift
@@ -61,7 +87,7 @@ let
       fi
     '';
 
-    nosleepScript = pkgs.writeShellScriptBin "nosleep" ''
+    nosleep = pkgs.writeShellScriptBin "nosleep" ''
       if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
         >&2 echo "Usage: nosleep [seconds]"
         exit
@@ -77,7 +103,7 @@ let
       done
     '';
 
-    toggleScript = pkgs.writeShellScriptBin "toggle" ''
+    toggle = pkgs.writeShellScriptBin "toggle" ''
       if [ $# -ne 1 ]; then
         >&2 echo "Usage: toggle PROGRAM"
         exit 1
@@ -100,7 +126,7 @@ let
       esac
     '';
 
-    ghcWithPackagesScript = with pkgs; writeShellScriptBin "gwp" ''
+    ghcWithPackages = with pkgs; writeShellScriptBin "gwp" ''
       case "$1" in
         ghc*)
           ghc="$1"
@@ -115,7 +141,7 @@ let
       ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
     '';
 
-    ghcWithHoogleScript = with pkgs; writeShellScriptBin "gwh" ''
+    ghcWithHoogle = with pkgs; writeShellScriptBin "gwh" ''
       case "$1" in
         ghc*)
           ghc="$1"
@@ -131,7 +157,7 @@ let
     '';
 
     # Start a hoogle server, usually in a nix-shell
-    hoogleServerScript = with pkgs; writeShellScriptBin "hoogleserver" ''
+    hoogleServer = with pkgs; writeShellScriptBin "hoogleserver" ''
       hoogle server --port=''${1:-8080} --local --haskell
     '';
   };
