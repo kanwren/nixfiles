@@ -151,21 +151,6 @@ let
       ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
     '';
 
-    ghcWithHoogle = with pkgs; writeShellScriptBin "gwh" ''
-      case "$1" in
-        ghc*)
-          ghc="$1"
-          shift
-          args="$*"
-          ;;
-        *)
-          ghc="ghc8103"
-          args="$*"
-          ;;
-      esac
-      ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithHoogle (p: with p; [ $args ])"
-    '';
-
     # Start a hoogle server, usually in a nix-shell
     hoogleServer = with pkgs; writeShellScriptBin "hoogleserver" ''
       hoogle server --port=''${1:-8080} --local --haskell
