@@ -1,41 +1,37 @@
 {-# language DerivingVia #-}
 {-# language ImportQualifiedPost #-}
 {-# language LambdaCase #-}
-{-# language OverloadedStrings #-}
 {-# language TupleSections #-}
 
 import Control.Applicative (Alternative((<|>)))
 import Control.Arrow (ArrowChoice(left))
-import Control.Monad (forever)
-import Data.Foldable (foldl')
+import Data.Char (isSpace)
 import Data.Functor (($>))
+import Data.List
 import Data.List.NonEmpty (NonEmpty((:|)))
 import Data.List.NonEmpty qualified as NE
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
 import Data.Set (Set)
 import Data.Set qualified as Set
-import Data.Text (Text)
-import Data.Text qualified as Text
-import Data.Text.IO qualified as Text.IO
 import Data.Void (Void)
-import System.IO (utf8, hSetEncoding, stdout, hFlush)
+import System.Console.Haskeline qualified as H
 import Text.Megaparsec qualified as M
 import Text.Megaparsec.Char qualified as MC
 import Text.Megaparsec.Char.Lexer qualified as MCL
 
-type Parser = M.Parsec Void Text
-newtype Name = Name { getName :: Text }
-  deriving (Eq, Show, Ord) via Text
+type Parser = M.Parsec Void String
+newtype Name = Name { getName :: String }
+  deriving (Eq, Ord) via String
 
 lexeme :: Parser a -> Parser a
 lexeme = MCL.lexeme MC.hspace
 
-symbol :: Text -> Parser Text
+symbol :: String -> Parser String
 symbol = MCL.symbol MC.hspace
 
 name :: Parser Name
-name = fmap (Name . Text.pack) $ (:) <$> MC.letterChar <*> M.many MC.numberChar
+name = fmap Name $ (:) <$> MC.letterChar <*> M.many MC.numberChar
 
 data Expr
   = Var Name
@@ -57,7 +53,7 @@ expression = expr
     factor = negatable $ (Var <$> name) <|> M.between (symbol "(") (symbol ")") (lexeme expr)
     term = And <$> M.some (lexeme factor)
 
-evalExpr :: Map Name Bool -> Expr -> Either Text Bool
+evalExpr :: Map Name Bool -> Expr -> Either String Bool
 evalExpr assignments = go
   where
     go = \case
@@ -68,8 +64,8 @@ evalExpr assignments = go
       And es -> and <$> traverse go es
       Or es -> or <$> traverse go es
 
-parseExpression :: Text -> Either Text (Set Name, Map Name Bool -> Either Text Bool)
-parseExpression = left (Text.pack . M.errorBundlePretty) . fmap (\e -> (getVars e, flip evalExpr e)) .  M.runParser expression "expression"
+parseExpression :: String -> Either String (Set Name, Map Name Bool -> Either String Bool)
+parseExpression = left M.errorBundlePretty . fmap (\e -> (getVars e, flip evalExpr e)) .  M.runParser expression "expression"
   where
     getVars :: Expr -> Set Name
     getVars = \case
@@ -78,7 +74,7 @@ parseExpression = left (Text.pack . M.errorBundlePretty) . fmap (\e -> (getVars 
       And es -> foldl' Set.union Set.empty $ map getVars es
       Or es -> foldl' Set.union Set.empty $ map getVars es
 
-runExpr :: Set Name -> (Map Name Bool -> Either Text Bool) -> Either Text ([Name], [([Bool], Bool)])
+runExpr :: Set Name -> (Map Name Bool -> Either String Bool) -> Either String ([Name], [([Bool], Bool)])
 runExpr names func =
   let headers = Set.toAscList names
       assignments = sequence $ sequence . (,[False, True]) <$> headers
@@ -86,34 +82,39 @@ runExpr names func =
       results = traverse func (Map.fromList <$> assignments)
   in (headers,) . zip varValues <$> results
 
-renderTable :: NonEmpty Name -> [([Bool], Bool)] -> Text
-renderTable headers rows = Text.unlines $ renderHeaders : renderBar : map renderRow rows
+renderTable :: NonEmpty Name -> [([Bool], Bool)] -> String
+renderTable headers rows = unlines $ renderHeaders : renderBar : map renderRow rows
   where
     renderRow (row, res) = leftPart <> " │ " <> renderBool res
       where
         renderBool b = if b then "1" else "0"
         renderItem (Name h) b =
           let b' = renderBool b
-          in b' <> Text.replicate (max 0 (Text.length h - 1)) " "
-        leftPart = Text.unwords $ zipWith renderItem (NE.toList headers) row
-    renderHeaders = Text.unwords (map renderHeader (NE.toList headers)) <> " │ " <> "res"
-      where renderHeader (Name h) = if Text.null h then " " else h
-    renderBar = Text.replicate (totalHeaderWidth + 1) "─" <> "┼────"
+          in b' <> replicate (max 0 (length h - 1)) ' '
+        leftPart = unwords $ zipWith renderItem (NE.toList headers) row
+    renderHeaders = unwords (map renderHeader (NE.toList headers)) <> " │ " <> "res"
+      where renderHeader (Name h) = if null h then " " else h
+    renderBar = replicate (totalHeaderWidth + 1) '─' <> "┼────"
       where
-        headerWidth = max 1 . Text.length . getName
+        headerWidth = max 1 . length . getName
         totalHeaderWidth = NE.length headers - 1 + foldl' (+) 0 (NE.map headerWidth headers)
 
 main :: IO ()
-main = do
-  hSetEncoding stdout utf8
-  forever $ do
-    putStr "> " *> hFlush stdout
-    l <- getLine
-    Text.IO.putStrLn $ either id id $ do
-      (names, table) <- uncurry runExpr =<< parseExpression (Text.pack l)
+main = H.runInputT H.defaultSettings loop
+  where
+    trim = dropWhile isSpace . dropWhileEnd isSpace
+    prompt = fmap trim <$> H.getInputLine "> "
+    handle input = H.outputStrLn $ either id id $ do
+      (names, table) <- uncurry runExpr =<< parseExpression input
       case NE.nonEmpty names of
         Nothing -> Left "No variable names found in expression"
         Just headers -> pure $ renderTable headers table
+    loop = prompt >>= \case
+      Nothing -> pure ()
+      Just input
+        | input == "" -> loop
+        | input == ":q" || input == ":quit" -> pure ()
+        | otherwise -> handle input *> loop
 
 -- vim: set ft=haskell:
 

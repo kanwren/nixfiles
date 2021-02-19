@@ -18,7 +18,7 @@ let
     # script for generating truth tables from boolean expressions
     truthtable = haskellScript {
       name = "truthtable" ;
-      libraries = p: with p; [ megaparsec containers text ];
+      libraries = p: with p; [ megaparsec haskeline containers ];
       contents = ./TruthTable.hs;
     };
 
