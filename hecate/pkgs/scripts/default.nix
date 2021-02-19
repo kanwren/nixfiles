@@ -22,14 +22,20 @@ let
       contents = ./TruthTable.hs;
     };
 
-    # convenience script to wrap 'docker run' for running autograders
-    autograde = with pkgs;
-      let s = writeShellScript "autograde" (builtins.readFile ./autograde.sh);
-      in runCommand "autograde-patch" { buildInputs = [ docker ]; } ''
-        mkdir -p "$out"/bin
-        cp "${s}" "$out"/bin/autograde
-        substituteAllInPlace "$out"/bin/autograde
-      '';
+    # convenience script to wrap 'docker run' for running CS2110 autograders
+    autograde = with pkgs; runCommand "autograde-patch" {} ''
+      install -D "${writeShellScript "autograde" (builtins.readFile ./autograde.sh)}" "$out"/bin/autograde
+      substituteInPlace "$out"/bin/autograde \
+        --subst-var-by docker "${docker}"
+    '';
+
+    # utility to uncorrupt CircuitSim files
+    uncorrupt = with pkgs; runCommand "uncorrupt-patch" {} ''
+      install -D "${writeShellScript "uncorrupt" (builtins.readFile ./uncorrupt.sh)}" "$out"/bin/uncorrupt
+      substituteAllInPlace "$out"/bin/uncorrupt \
+        --subst-var-by jq "${coreutils}" \
+        --subst-var-by jq "${jq}"
+    '';
 
     # Print nix garbage collector roots that still exist
     gcroots = with pkgs; writeShellScriptBin "nix-gcroots" ''
