@@ -24,16 +24,20 @@ let
 
     # convenience script to wrap 'docker run' for running CS2110 autograders
     autograde = with pkgs; runCommand "autograde-patch" {} ''
-      install -D "${writeShellScript "autograde" (builtins.readFile ./autograde.sh)}" "$out"/bin/autograde
+      install -D \
+        "${writeShellScript "autograde" (builtins.readFile ./autograde.sh)}" \
+        "$out"/bin/autograde
       substituteInPlace "$out"/bin/autograde \
         --subst-var-by docker "${docker}"
     '';
 
     # utility to uncorrupt CircuitSim files
     uncorrupt = with pkgs; runCommand "uncorrupt-patch" {} ''
-      install -D "${writeShellScript "uncorrupt" (builtins.readFile ./uncorrupt.sh)}" "$out"/bin/uncorrupt
-      substituteAllInPlace "$out"/bin/uncorrupt \
-        --subst-var-by jq "${coreutils}" \
+      install -D \
+        "${writeShellScript "uncorrupt" (builtins.readFile ./uncorrupt.sh)}" \
+        "$out"/bin/uncorrupt
+      substituteInPlace "$out"/bin/uncorrupt \
+        --subst-var-by coreutils "${coreutils}" \
         --subst-var-by jq "${jq}"
     '';
 
