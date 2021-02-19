@@ -103,7 +103,7 @@ let
         exit
       fi
 
-      delay="$${1:-59}"
+      delay="''${1:-59}"
 
       while :; do
         ${pkgs.xdotool}/bin/xdotool mousemove_relative -- 1 0
