@@ -21,7 +21,7 @@ OPTIONS:
 ARGS:
     <IMAGE>
             Autograder image to run. If the image name contains a '/', will run that image
-            literally. Otherwise, will automatically detect the current semester and run the image
+            literally. Otherwise, will automatically detect the semester and run the container
             'gtcs2110/<IMAGE>-<semester>:latest'.
     [DIR]
             The directory to run the autograder on, bound to /autograder/submission. Defaults to
@@ -46,7 +46,10 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-args=$(getopt -o ih --long interactive,help -- "$@")
+if ! args=$(getopt -o ih --long interactive,help -n autograde -- "$@"); then
+  print_usage
+  exit 1
+fi
 eval set -- "$args"
 
 interactive="false"
@@ -64,10 +67,7 @@ for opt; do
       shift
       break
       ;;
-    *)
-      >&2 echo "Unknown option: $arg"
-      exit 1
-      ;;
+    *) exit 1 ;;
   esac
 done
 

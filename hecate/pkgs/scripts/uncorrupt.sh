@@ -38,15 +38,12 @@ if [ $# -eq 0 ]; then
   exit 0
 fi
 
-args=$(getopt -o afh --long append,force,help -- "$@")
-eval set -- "$args"
-
-if [ "$1" = "-a" ] || [ "$1" = "--append" ]; then
-  mode="append"
-  shift
-else
-  mode="overwrite"
+if ! args=$(getopt -o afh --long append,force,help -n uncorrupt -- "$@"); then
+  print_usage
+  exit 1
 fi
+
+eval set -- "$args"
 
 mode="overwrite"
 for opt; do
@@ -67,15 +64,11 @@ for opt; do
       shift
       break
       ;;
-    *)
-      >&2 echo "Unknown option: $opt"
-      print_usage
-      exit 1
-      ;;
+    *) exit 1 ;;
   esac
 done
 
-if [ "$#" -eq 0 ]; then
+if [ $# -eq 0 ]; then
   >&2 echo -e "Error: No files given\n"
   print_usage
   exit 1
@@ -153,3 +146,4 @@ for ((n=1; n <= $#; n += 1)); do
   echo "Modifying file..."
   echo "$new_json" > "$file"
 done
+
