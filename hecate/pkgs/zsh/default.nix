@@ -43,6 +43,9 @@ in {
       bindkey -v
       export KEYTIMEOUT=1
 
+      # Edit current command line with "gi"
+      bindkey -M vicmd gi edit-command-line
+
       export FZF_BASE="${pkgs.fzf}/share/fzf"
     '' + builtins.readFile ./p10k.zsh;
 
@@ -70,8 +73,11 @@ in {
         "vi-mode"
         "fzf"
         "git-prompt"
+        "git"
         "last-working-dir"
         "colored-man-pages"
+        "command-not-found"
+        "copybuffer"
 
         # completion plugins
         "cabal"
