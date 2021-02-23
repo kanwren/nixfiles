@@ -54,6 +54,7 @@
           # CS 2110
           cs2110.CircuitSim
           cs2110.cs2110docker
+          cs2110.complx
 
           # Documents
           libreoffice
