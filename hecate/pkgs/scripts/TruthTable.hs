@@ -48,14 +48,14 @@ expression = expr
       pure $ if i then Not p' else p'
 
     expr, factor, term :: Parser Expr
-    expr = Or <$> lexeme term `M.sepBy1` symbol "+"
+    expr = Or <$> lexeme term `M.sepBy1` lexeme (MC.char '+' M.<|> MC.char '|')
     factor = negatable $ M.choice
       [ MC.string "0" $> Lit False
       , MC.string "1" $> Lit True
       , Var <$> name
       , M.between (symbol "(") (symbol ")") (lexeme expr)
       ]
-    term = And <$> M.some (lexeme factor)
+    term = And <$> lexeme factor `M.sepBy1` M.optional (lexeme (MC.char '*' M.<|> MC.char '&'))
 
 line :: Parser (Expr, Expr)
 line = (,) <$> expression <*> M.option (Lit False) (symbol ";" *> expression)
