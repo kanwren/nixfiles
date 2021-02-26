@@ -3,12 +3,10 @@
 {-# language LambdaCase #-}
 {-# language TupleSections #-}
 
-import Control.Applicative (Alternative((<|>)))
-import Control.Arrow (ArrowChoice(left))
 import Data.Char (isSpace)
 import Data.Functor (($>))
 import Data.List
-import Data.List.NonEmpty (NonEmpty((:|)))
+import Data.List.NonEmpty (NonEmpty)
 import Data.List.NonEmpty qualified as NE
 import Data.Map.Strict (Map)
 import Data.Map.Strict qualified as Map
@@ -38,6 +36,7 @@ data Expr
   | Not Expr
   | And [Expr]
   | Or [Expr]
+  | Lit Bool
 
 expression :: Parser Expr
 expression = expr
@@ -50,8 +49,16 @@ expression = expr
 
     expr, factor, term :: Parser Expr
     expr = Or <$> lexeme term `M.sepBy1` symbol "+"
-    factor = negatable $ (Var <$> name) <|> M.between (symbol "(") (symbol ")") (lexeme expr)
+    factor = negatable $ M.choice
+      [ MC.string "0" $> Lit False
+      , MC.string "1" $> Lit True
+      , Var <$> name
+      , M.between (symbol "(") (symbol ")") (lexeme expr)
+      ]
     term = And <$> M.some (lexeme factor)
+
+line :: Parser (Expr, Expr)
+line = (,) <$> expression <*> M.option (Lit False) (symbol ";" *> expression)
 
 evalExpr :: Map Name Bool -> Expr -> Either String Bool
 evalExpr assignments = go
@@ -63,9 +70,19 @@ evalExpr assignments = go
       Not e -> not <$> go e
       And es -> and <$> traverse go es
       Or es -> or <$> traverse go es
+      Lit b -> pure b
 
-parseExpression :: String -> Either String (Set Name, Map Name Bool -> Either String Bool)
-parseExpression = left M.errorBundlePretty . fmap (\e -> (getVars e, flip evalExpr e)) .  M.runParser expression "expression"
+evalLine :: Map Name Bool -> (Expr, Expr) -> Either String (Maybe Bool)
+evalLine assignments (expr, dontCares) = do
+  dontCare <- evalExpr assignments dontCares
+  if dontCare
+  then pure Nothing
+  else Just <$> evalExpr assignments expr
+
+parseLine :: String -> Either String (Set Name, Map Name Bool -> Either String (Maybe Bool))
+parseLine input = case M.runParser (line <* M.eof) "expression" input of
+    Left e -> Left $ M.errorBundlePretty e
+    Right (expr, dontCares) -> Right (getVars expr `Set.union` getVars dontCares, flip evalLine (expr, dontCares))
   where
     getVars :: Expr -> Set Name
     getVars = \case
@@ -73,8 +90,9 @@ parseExpression = left M.errorBundlePretty . fmap (\e -> (getVars e, flip evalEx
       Not e -> getVars e
       And es -> foldl' Set.union Set.empty $ map getVars es
       Or es -> foldl' Set.union Set.empty $ map getVars es
+      Lit _ -> mempty
 
-runExpr :: Set Name -> (Map Name Bool -> Either String Bool) -> Either String ([Name], [([Bool], Bool)])
+runExpr :: Set Name -> (Map Name Bool -> Either String (Maybe Bool)) -> Either String ([Name], [([Bool], Maybe Bool)])
 runExpr names func =
   let headers = Set.toAscList names
       assignments = sequence $ sequence . (,[False, True]) <$> headers
@@ -82,12 +100,13 @@ runExpr names func =
       results = traverse func (Map.fromList <$> assignments)
   in (headers,) . zip varValues <$> results
 
-renderTable :: NonEmpty Name -> [([Bool], Bool)] -> String
+renderTable :: NonEmpty Name -> [([Bool], Maybe Bool)] -> String
 renderTable headers rows = unlines $ renderHeaders : renderBar : map renderRow rows
   where
-    renderRow (row, res) = leftPart <> " │ " <> renderBool res
+    renderBool b = if b then "1" else "0"
+    renderOutput = maybe "X" renderBool
+    renderRow (row, res) = leftPart <> " │ " <> renderOutput res
       where
-        renderBool b = if b then "1" else "0"
         renderItem (Name h) b =
           let b' = renderBool b
           in b' <> replicate (max 0 (length h - 1)) ' '
@@ -105,7 +124,7 @@ main = H.runInputT H.defaultSettings loop
     trim = dropWhile isSpace . dropWhileEnd isSpace
     prompt = fmap trim <$> H.getInputLine "> "
     handle input = H.outputStrLn $ either id id $ do
-      (names, table) <- uncurry runExpr =<< parseExpression input
+      (names, table) <- uncurry runExpr =<< parseLine input
       case NE.nonEmpty names of
         Nothing -> Left "No variable names found in expression"
         Just headers -> pure $ renderTable headers table
@@ -115,6 +134,4 @@ main = H.runInputT H.defaultSettings loop
         | input == "" -> loop
         | input == ":q" || input == ":quit" -> pure ()
         | otherwise -> handle input *> loop
-
--- vim: set ft=haskell:
 

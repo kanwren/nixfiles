@@ -1,7 +1,6 @@
 {-# language RecordWildCards #-}
 
 import Data.List (genericTake, unfoldr)
-import System.Environment (getArgs)
 import qualified System.Random.SplitMix as SM
 import Options.Applicative
 

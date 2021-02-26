@@ -3,7 +3,7 @@
 let
   haskellScript = { name, contents, libraries ? (_: []) }: pkgs.writers.writeHaskellBin name {
     ghc = pkgs.haskell.packages.ghc8103.ghc;
-    ghcArgs = [ "-O2" ];
+    ghcArgs = [ "-O2" "-Wall" "-Werror" ];
     libraries = libraries (pkgs.haskell.packages.ghc8103);
   } (if builtins.isString contents then contents else builtins.readFile contents);
 
