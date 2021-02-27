@@ -15,14 +15,17 @@ OPTIONS:
     -i, --interactive
             Drop into an interactive shell in the running container, instead of running
             '/autograder/run_local' automatically.
+    -s, --shorthand
+            Interpret the image name as shorthand (default).
+    -l, --literal
+            Interpret the image name literally instead of as shorthand.
     -h, --help
             Show this help text.
 
 ARGS:
     <IMAGE>
-            Autograder image to run. If the image name contains a '/', will run that image
-            literally. Otherwise, will automatically detect the semester and run the container
-            'gtcs2110/<IMAGE>-<semester>:latest'.
+            Autograder image to run. Unless '-l' is passed, the image name will be treated as
+            shorthand and expanded to 'gtcs2110/<IMAGE>-<semester>:latest'.
     [DIR]
             The directory to run the autograder on, bound to /autograder/submission. Defaults to
             the current directory.
@@ -30,7 +33,7 @@ ARGS:
 EXAMPLES
     $ autograde hw01
     $ autograde hw03 ./solution
-    $ autograde gtcs2110/hw03-spring21:latest ./solution
+    $ autograde -l gtcs2110/hw03-spring21:latest ./solution
 EOF
 
 print_usage() {
@@ -46,13 +49,14 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-if ! args=$(getopt -o ih --long interactive,help -n autograde -- "$@"); then
+if ! args=$(getopt -o islh --long interactive,shorthand,literal,help -n autograde -- "$@"); then
   print_usage
   exit 1
 fi
 eval set -- "$args"
 
 interactive="false"
+imageNameType=""
 for opt; do
   case "$opt" in
     -i|--interactive)
@@ -63,6 +67,24 @@ for opt; do
       print_help_text
       exit 0
       ;;
+    -l|--literal)
+      if [ "$imageNameType" = "shorthand" ]; then
+        >&2 echo "Error: cannot specify both shorthand and literal image name types"
+        print_usage
+        exit 1
+      fi
+      imageNameType="literal"
+      shift
+      ;;
+    -s|--shorthand)
+      if [ "$imageNameType" = "literal" ]; then
+        >&2 echo "Error: cannot specify both shorthand and literal image name types"
+        print_usage
+        exit 1
+      fi
+      imageNameType="shorthand"
+      shift
+      ;;
     --)
       shift
       break
@@ -70,6 +92,8 @@ for opt; do
     *) exit 1 ;;
   esac
 done
+
+imageNameType="${imageNameType:-shorthand}"
 
 get_semester() {
   day="$(date "+%j")"
@@ -87,13 +111,16 @@ get_semester() {
   return 0
 }
 
-if [[ "$1" =~ "/" ]]; then
+if [ "$imageNameType" = "literal" ]; then
   imageName="$1"
-else
+elif [ "$imageNameType" = "shorthand" ]; then
   if ! season="$(get_semester)"; then
     >&2 echo "Could not automatically determine season"
   fi
   imageName="gtcs2110/$1-spring21:latest"
+else
+  >&2 echo "Error: invalid image name type: $imageNameType"
+  exit 1
 fi
 >&2 echo "Using $imageName"
 
