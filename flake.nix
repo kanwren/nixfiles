@@ -103,6 +103,8 @@
                     nvidiaBusId = "PCI:1:0:0";
                   };
                 }
+                # Auto-generated hardware configuration
+                ./hecate/hardware-configuration.nix
               ];
               # the main configuration
               mainModule = import ./hecate/configuration.nix {

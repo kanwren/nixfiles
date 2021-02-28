@@ -4,7 +4,6 @@ deps:
 
 {
   imports = [
-    ./hardware-configuration.nix
     ./boot
     ./security
     (import ./nix deps)
