@@ -97,6 +97,7 @@ with rec {
 
     # Multimedia
     vlc
+    mpv
     # CD ripping
     (asunder.override {
       mp3Support = true;
