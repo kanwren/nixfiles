@@ -26,8 +26,7 @@
 
     layout = "us";
     xkbVariant = "dvp";
-    # xkbOptions = "caps:escape,compose:ralt";
-    xkbOptions = "caps:escape";
+    xkbOptions = "caps:escape,compose:ralt";
 
     displayManager = {
       lightdm = {
