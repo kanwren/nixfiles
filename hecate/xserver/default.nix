@@ -37,8 +37,8 @@
           clock-format = "%I:%M %p";
 
           theme = {
-            name = "Nordic";
-            package = pkgs.nordic;
+            name = "Materia-dark";
+            package = pkgs.materia-theme;
           };
 
           iconTheme = {
