@@ -58,7 +58,14 @@
           # CS 2110
           cs2110.CircuitSim
           cs2110.cs2110docker
-          cs2110.complx
+          # Complx looks terrible with anything other than the default theme, so
+          # we just remove XDG_DATA_DIRS
+          (runCommand "remove-complx-gtk" { buildInputs = [ makeWrapper ]; } ''
+            mkdir -p "$out"/bin
+            cp -r "${cs2110.complx}"/bin/* "$out"/bin
+            cp -r "${cs2110.complx}"/lib "${cs2110.complx}"/share "$out"
+            wrapProgram "$out"/bin/complx --unset XDG_DATA_DIRS
+          '')
 
           # Documents
           libreoffice
