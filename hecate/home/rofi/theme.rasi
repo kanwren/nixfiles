@@ -1,137 +1,123 @@
-/**
- * Nordic rofi theme
- * Adapted by undiabler <undiabler@gmail.com>
- * Modified by nprindle
- *
- * Nord Color palette imported from https://www.nordtheme.com/
- *
- */
-
 configuration {
-    font: "FiraCode Nerd Font 12";
-    width: 40;
-    line-margin: 10;
-    lines: 7;
-    columns: 2;
+    font: "FiraCode Nerd Font 10";
+    show-icons:          true;
+	icon-theme:          "hicolor";
+    drun-display-format: "{name}";
+    disable-history:     false;
+    fullscreen:          false;
+	hide-scrollbar:      true;
+	sidebar-mode:        false;
 
     display-ssh:    " [ssh]";
     display-run:    " [run]";
     display-drun:   "異 [drun]";
     display-window: " [window]";
     display-combi:  " [combi]";
-    show-icons: true;
 }
 
 * {
-    nord0: #2e3440;
-    nord1: #3b4252;
-    nord2: #434c5e;
-    nord3: #4c566a;
-
-    nord4: #d8dee9;
-    nord5: #e5e9f0;
-    nord6: #eceff4;
-
-    nord7: #8fbcbb;
-    nord8: #88c0d0;
-    nord9: #81a1c1;
-    nord10: #5e81ac;
-    nord11: #bf616a;
-
-    nord12: #d08770;
-    nord13: #ebcb8b;
-    nord14: #a3be8c;
-    nord15: #b48ead;
-
-    foreground: @nord9;
-    backlight: #ccffeedd;
-    background-color: transparent;
-
-    highlight: underline bold #eceff4;
-
-    transparent: rgba(46,52,64,0);
+  al: #00000000;
+  bg: #000000ff;
+  se: #101010ff;
+  fg: #FFFFFFff;
+  ac: #df80dfff;
 }
 
 window {
-    location: center;
-    anchor: center;
-    transparency: "screenshot";
-    padding: 0px;
-    border: 0px;
-    border-radius: 6px;
-
-    background-color: @transparent;
-    spacing: 0;
-    children: [mainbox];
-    orientation: horizontal;
-}
-
-mainbox {
-    spacing: 0;
-    children: [ inputbar, message, listview ];
-}
-
-message {
-    color: @nord0;
-    padding: 5;
-    border-color: @foreground;
-    border: 0px 2px 2px 2px;
-    background-color: @nord7;
-}
-
-inputbar {
-    color: @nord6;
-    padding: 11px;
-    background-color: #3b4252;
-
-    border: 1px;
-    border-radius: 6px 6px 0px 0px;
-    border-color: @nord10;
-}
-
-entry, prompt, case-indicator {
-    text-font: inherit;
-    text-color: inherit;
+    transparency:     "real";
+    background-color: @bg;
+    text-color:       @fg;
+	border:           0px;
+	border-color:     @ac;
+    border-radius:    0px;
+	width:            35%;
+    location:         center;
+    x-offset:         0;
+    y-offset:         0;
 }
 
 prompt {
-    margin: 0px 0.3em 0em 0em ;
+    enabled:          true;
+	padding:          1% 0.75% 1% 0.75%;
+	background-color: @ac;
+	text-color:       @fg;
+	font:             "FiraCode Nerd Font 11";
+}
+
+textbox-prompt-colon {
+	padding:          1% 0% 1% 0%;
+	background-color: @se;
+	text-color:       @fg;
+	expand:           false;
+	str:              " :: ";
+}
+
+entry {
+    background-color:  @al;
+    text-color:        @fg;
+    placeholder-color: @fg;
+    expand:            true;
+    horizontal-align:  0;
+    placeholder:       "Search...";
+	padding:           1.15% 0.5% 1% 0.5%;
+    blink:             true;
+}
+
+inputbar {
+	children:         [ prompt, entry ];
+    background-color: @se;
+    text-color:       @fg;
+    expand:           false;
+	border:           0% 0% 0% 0%;
+    border-radius:    0px;
+	border-color:     @ac;
 }
 
 listview {
-    padding: 8px;
-    border-radius: 0px 0px 6px 6px;
-    border-color: @nord10;
-    border: 0px 1px 1px 1px;
-    background-color: rgba(46,52,64,0.9);
-    dynamic: false;
+    background-color: @al;
+    padding:          0px;
+    columns:          2;
+    lines:            7;
+    spacing:          1%;
+    cycle:            false;
+    dynamic:          true;
+    layout:           vertical;
+}
+
+mainbox {
+    background-color: @al;
+	border:           0% 0% 0% 0%;
+    border-radius:    0% 0% 0% 0%;
+	border-color:     @ac;
+    children:         [ inputbar, listview ];
+    spacing:          2%;
+    padding:          2% 1% 2% 1%;
 }
 
 element {
-    padding: 3px;
-    vertical-align: 0.5;
-    border-radius: 4px;
-    background-color: transparent;
-    color: @foreground;
-    text-color: rgb(216, 222, 233);
+    background-color: @se;
+    text-color:       @fg;
+    orientation:      horizontal;
+    border-radius:    0%;
+    padding:          0% 0.0% 0% 0.5%;
 }
 
-element selected.normal {
-    background-color: @nord7;
-    text-color: #2e3440;
+element-icon {
+    size:   24px;
+    border: 0px;
 }
 
-button {
-    padding: 6px;
-    color: @foreground;
-    horizontal-align: 0.5;
-
-    border: 2px 0px 2px 2px;
-    border-radius: 4px 0px 0px 4px;
-    border-color: @foreground;
+element-text {
+    expand:           true;
+    horizontal-align: 0;
+    vertical-align:   0.5;
+    margin:           0% 0.25% 0% 0.25%;
 }
 
-button selected normal {
-    border: 2px 0px 2px 2px;
-    border-color: @foreground;
+element selected {
+    background-color: @se;
+    text-color:       @ac;
+	border:           0% 0% 0% 0.3%;
+    border-radius:    0px;
+    border-color:     @ac;
 }
