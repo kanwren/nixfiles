@@ -66,6 +66,9 @@ in {
         # coreutils alternatives aliases
         ls = "${pkgs.exa}/bin/exa --git";
         cat = "${pkgs.bat}/bin/bat";
+
+        # normalize path by resolving symlinks
+        norm = ''cd "$(readlink -f .)"'';
       };
 
     ohMyZsh = {
