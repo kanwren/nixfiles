@@ -41,10 +41,11 @@
           woof          # quickly serve files locally over http
           tokei         # count lines of code
           h             # quick directory jumping
-          jo            # easy json generation for the command line
           cookiecutter  # generate projects from templates
+          jo            # easy json generation for the command line
           httpie        # command-line REST API client
           insomnia      # graphical REST API client
+          ranger        # console file manager
 
           # Development
           nodejs-14_x
