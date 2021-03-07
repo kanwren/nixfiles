@@ -57,10 +57,13 @@ in {
         };
         range = start: end: builtins.genList (x: x + start) (end - start + 1);
         # Alias ".2" to "cd ../..", ".3" to "cd ../../..", etc.
-        # ".1" is still needed even with zsh's autocd, since "cd .." might work
-        # where ".." doesn't, e.g. if your current directory no longer exists
-        cdAliases = builtins.listToAttrs (map mkCdAlias (range 1 9));
-      in cdAliases // {
+        # ".1"/".." is still needed even with zsh's autocd, since "cd .." works
+        # even if your current directory no longer exists
+        cdAliases = map mkCdAlias (range 1 9) ++ [{
+          name = "..";
+          value = "cd ..";
+        }];
+      in builtins.listToAttrs cdAliases // {
         ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";
 
         # coreutils alternatives aliases
