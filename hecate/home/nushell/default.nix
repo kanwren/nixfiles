@@ -2,12 +2,14 @@
 
 {
   programs.nushell = {
-    # TODO: update nushell configs for much newer version
-    enable = false;
+    enable = true;
     settings = {
-      edit_mode = "vi";
       key_timeout = 0;
       pivot_mode = "never";
+      line_editor = {
+        edit_mode = "vi";
+      };
+      prompt = "echo $(${pkgs.starship}/bin/starship prompt)";
       startup = [];
     };
   };
