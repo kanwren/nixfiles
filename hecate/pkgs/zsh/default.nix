@@ -3,11 +3,40 @@
 { pkgs, ... }:
 
 let
-  # Wrap nixpkgs.zsh-powerlevel10k so oh-my-zsh can find it
-  powerlevel10k-omz = pkgs.runCommand "link-zsh-powerlevel10k" {} ''
-    mkdir -p "$out/share/zsh/themes"
-    ln -s ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k "$out/share/zsh/themes/powerlevel10k"
+  toTOML = name: value: pkgs.runCommand name {
+    buildInputs = [ pkgs.remarshal ];
+    preferLocalBuild = true;
+    allowSubstitutes = false;
+  } ''
+    remarshal -if json -of toml \
+      < "${pkgs.writeText "${name}-json" (builtins.toJSON value)}" \
+      > "$out"
   '';
+
+  starship-config =
+    let style = s: v: "[${v}](${s})";
+    in toTOML "starship.toml" {
+      git_status =
+        let withCount = v: "${v}\${count}";
+        in {
+          format = "([\\[$ahead_behind$all_status\\]]($style) )";
+          all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked";
+          ahead = style "bold bright-green" (withCount "⇡");
+          behind = style "bold bright-green" (withCount "⇣");
+          diverged = style "bold bright-green" ("⇡$ahead_count⇣$behind_count");
+          stashed = style "bold bright-blue" (withCount "\\$");
+          staged = style "bold yellow" (withCount "+");
+          modified = style "bold yellow" (withCount "!");
+          deleted = style "bold yellow" (withCount "✘");
+          renamed = style "bold yellow" (withCount "»");
+          untracked = style "bold bright-red" (withCount "?");
+          conflicted = style "bold bright-red" (withCount "≠");
+        };
+      git_commit = {
+        tag_disabled = false;
+        tag_symbol = "";
+      };
+    };
 in {
   programs.zsh = {
     enable = true;
@@ -23,19 +52,20 @@ in {
     };
 
     interactiveShellInit = ''
+      # direnv
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
-
-      # Enable powerlevel10k instant prompt
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
+      # h
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
+      # dircolors
       eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors}/src/dir_colors)"
+
+      # starship
+      export STARSHIP_CONFIG="${starship-config}"
+      eval "$(${pkgs.starship}/bin/starship init zsh)"
 
       setopt autocd extendedglob
       unsetopt beep
@@ -47,7 +77,7 @@ in {
       bindkey -M vicmd gi edit-command-line
 
       export FZF_BASE="${pkgs.fzf}/share/fzf"
-    '' + builtins.readFile ./p10k.zsh;
+    '';
 
     shellAliases =
       let
@@ -76,11 +106,9 @@ in {
 
     ohMyZsh = {
       enable = true;
-      theme = "powerlevel10k/powerlevel10k";
       plugins = [
         "vi-mode"
         "fzf"
-        "git-prompt"
         "git"
         "last-working-dir"
         "colored-man-pages"
@@ -91,7 +119,6 @@ in {
         "cabal"
         "docker"
       ];
-      customPkgs = [ powerlevel10k-omz ];
     };
   };
 
