@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1614129109,
-        "narHash": "sha256-c5VHD0OgoNCrFJ8d47d9RzWA66qz2LUR2M7Xymz5kFI=",
+        "lastModified": 1615443443,
+        "narHash": "sha256-doaJZgiamdJpkHg9zF+v70omtbSAlRHM/c/dKVQhJl4=",
         "owner": "nprindle",
         "repo": "cs2110-nix",
-        "rev": "0c1baed2369a5237deffc2374ebeb8cc0d0b4efc",
+        "rev": "b0d1e907cfab96b5a930bad45bee2e0e6ff4f190",
         "type": "github"
       },
       "original": {
