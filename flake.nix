@@ -120,13 +120,11 @@
               otherModules = [
                 home-manager.nixosModules.home-manager
               ];
-            in nixpkgs.lib.concatLists [
+            in nixpkgs.lib.flatten [
               defaultModules
               hardwareModules
-              [
-                mainModule
-                addOverlays
-              ]
+              mainModule
+              addOverlays
               otherModules
             ];
         };
@@ -139,9 +137,9 @@
               otherModules = [
                 sops-nix.nixosModules.sops
               ];
-            in nixpkgs.lib.concatLists [
+            in nixpkgs.lib.flatten [
               defaultModules
-              [ mainModule ]
+              mainModule
               otherModules
             ];
         };
