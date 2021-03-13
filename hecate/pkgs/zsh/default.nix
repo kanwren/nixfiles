@@ -132,6 +132,10 @@ in {
         "command-not-found"
         "copybuffer"
 
+        # navigation
+        "z"
+        "wd"
+
         # completion plugins
         "cabal"
         "docker"
