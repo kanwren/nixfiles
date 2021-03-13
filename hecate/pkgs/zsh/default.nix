@@ -77,6 +77,23 @@ in {
       bindkey -M vicmd gi edit-command-line
 
       export FZF_BASE="${pkgs.fzf}/share/fzf"
+
+      # See github:spwhitt/nix-zsh-completions/issues/32
+      function _nix() {
+        local ifs_bk="$IFS"
+        local input=("''${(Q)words[@]}")
+        IFS=$'\n'$'\t'
+        local res=($(NIX_GET_COMPLETIONS=$((CURRENT - 1)) "$input[@]"))
+        IFS="$ifs_bk"
+        local tpe="$res[1]"
+        local suggestions=(''${res:1})
+        if [[ "$tpe" == filenames ]]; then
+          compadd -fa suggestions
+        else
+          compadd -a suggestions
+        fi
+      }
+      compdef _nix nix
     '';
 
     shellAliases =
