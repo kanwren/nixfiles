@@ -14,13 +14,16 @@
       clang-tools
 
       haskell-language-server
+
+      # For building some plugins
+      yarn
     ]) ++ (with pkgs.nodePackages; [
-      # typescript-language-server
-      # vscode-html-languageserver-bin
-      # vscode-css-languageserver-bin
+      typescript-language-server
+      vscode-html-languageserver-bin
+      vscode-css-languageserver-bin
       bash-language-server
-      # yaml-language-server
-      # TODO: vscode-json-languageserver
+      yaml-language-server
+      vscode-json-languageserver-bin
     ]) ++ (with pkgs.python3Packages; [
       python-language-server
       pyls-mypy
