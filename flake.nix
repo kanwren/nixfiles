@@ -110,6 +110,7 @@
               mainModule = import ./hecate/configuration.nix {
                 inherit neovim nord-dircolors nord-tmux;
                 inherit (self.hmModules) xcompose;
+                nlib = self.lib;
               };
               addOverlays = {
                 nixpkgs.overlays = [

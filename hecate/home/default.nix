@@ -14,6 +14,7 @@
         ./dunst
         ./firefox
         ./git
+        (import ./gpg-agent deps)
         ./gtk
         ./haskell
         ./kitty
