@@ -157,6 +157,7 @@
           nativeBuildInputs = [
             sops-nix.packages.${system}.sops-pgp-hook
             sops-nix.packages.${system}.ssh-to-pgp
+            sops-nix.packages.${system}.sops-init-gpg-key
           ];
           sopsPGPKeyDirs = [
             "./secrets/keys/users"
