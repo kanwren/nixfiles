@@ -3,11 +3,7 @@
 { pkgs, ... }:
 
 let
-  toTOML = name: value: pkgs.runCommand name {
-    buildInputs = [ pkgs.remarshal ];
-    preferLocalBuild = true;
-    allowSubstitutes = false;
-  } ''
+  toTOML = name: value: pkgs.runCommandLocal name { buildInputs = [ pkgs.remarshal ]; } ''
     remarshal -if json -of toml \
       < "${pkgs.writeText "${name}-json" (builtins.toJSON value)}" \
       > "$out"

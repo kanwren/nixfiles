@@ -5,7 +5,6 @@ deps:
 {
   imports = [
     ./caches.nix
-    (import ./overlays deps)
   ];
 
   system.autoUpgrade.enable = false;
@@ -28,5 +27,9 @@ deps:
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = builtins.map (x: import x deps)
+      (lib.filesystem.listFilesRecursive ./overlays);
+  };
 }

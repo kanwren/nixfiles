@@ -23,7 +23,7 @@ let
     };
 
     # convenience script to wrap 'docker run' for running CS2110 autograders
-    autograde = with pkgs; runCommand "autograde-patch" {} ''
+    autograde = with pkgs; runCommandLocal "autograde-patch" {} ''
       install -D \
         "${writeShellScript "autograde" (builtins.readFile ./autograde.sh)}" \
         "$out"/bin/autograde
@@ -32,7 +32,7 @@ let
     '';
 
     # utility to uncorrupt CircuitSim files
-    uncorrupt = with pkgs; runCommand "uncorrupt-patch" {} ''
+    uncorrupt = with pkgs; runCommandLocal "uncorrupt-patch" {} ''
       install -D \
         "${writeShellScript "uncorrupt" (builtins.readFile ./uncorrupt.sh)}" \
         "$out"/bin/uncorrupt

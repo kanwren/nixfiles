@@ -12,7 +12,7 @@ in
     enableSshSupport = true;
     pinentryFlavor = "curses";
 
-    defaultCacheTtl = time.units time.seconds (time.weeks 1);
+    defaultCacheTtl = time.unitsOf time.seconds (time.weeks 1);
     defaultCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;
     maxCacheTtl = config.services.gpg-agent.defaultCacheTtl;
     maxCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;
