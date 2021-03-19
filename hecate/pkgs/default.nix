@@ -8,23 +8,16 @@ with rec {
 
   baseSystemPackages = with pkgs; [
     # Nix stuff
-    nix-universal-prefetch
-    nix-prefetch-git
-    nix-prefetch-github
-    nix-prefetch-docker
     cachix
     patchelf
     nix-index
-    niv
-    pkgs.nur.repos.xe.comma # TODO: remove this once it's in nixpkgs
-    pkgs.nur.repos.xe.pridecat
-    fortune
 
     # Core utils
     binutils-unwrapped
     moreutils
     usbutils
     pciutils
+    dnsutils
     zlib
 
     # CLI tools
@@ -58,8 +51,7 @@ with rec {
     bc
     units
     libqalculate
-    # graphical calculator
-    qalculate-gtk
+    qalculate-gtk # graphical calculator
 
     # Compression tools
     gnutar
@@ -84,27 +76,20 @@ with rec {
     tmux
 
     # Media
-    # EXIF data
-    exiftool
-    # Images
-    feh
-    scrot
-    imagemagick7
-    gimp
-    # PDFs
-    zathura
-    qpdf
-
-    # Multimedia
-    vlc
-    mpv
-    # CD ripping
-    (asunder.override {
+    exiftool              # EXIF data
+    feh                   # image viewer
+    scrot                 # screenshot tool
+    imagemagick7          # image manipulation tools
+    gimp                  # image editor
+    zathura               # PDF viewer
+    qpdf                  # PDF manipulation tool
+    vlc                   # multimedia viewer
+    mpv                   # multimedia viewer
+    (asunder.override {   # CD ripping
       mp3Support = true;
       oggSupport = true;
     })
-    # Recording
-    simplescreenrecorder
+    simplescreenrecorder  # screen recording
 
     # Browsers
     firefox

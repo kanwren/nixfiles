@@ -47,6 +47,7 @@
           httpie        # command-line REST API client
           insomnia      # graphical REST API client
           ranger        # console file manager
+          pkgs.nur.repos.xe.pridecat
 
           # Development
           nodejs-14_x
