@@ -17,7 +17,8 @@
       gnome-keyring.enable = true;
     };
 
-    onedrive.enable = true;
+    # TODO: re-enable once ldc is unbroken
+    # onedrive.enable = true;
   };
 
   programs = {

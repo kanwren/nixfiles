@@ -3,7 +3,7 @@
 { pkgs, ... }:
 
 let
-  nord-tmux-plugin = pkgs.tmuxPlugins.mkDerivation {
+  nord-tmux-plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "nord-tmux";
     version = "0.3.0";
     src = nord-tmux;

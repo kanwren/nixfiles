@@ -2,9 +2,9 @@
 
 let
   haskellScript = { name, contents, libraries ? (_: []) }: pkgs.writers.writeHaskellBin name {
-    ghc = pkgs.haskell.packages.ghc8103.ghc;
+    ghc = pkgs.haskell.packages.ghc8104.ghc;
     ghcArgs = [ "-O2" "-Wall" "-Werror" ];
-    libraries = libraries (pkgs.haskell.packages.ghc8103);
+    libraries = libraries (pkgs.haskell.packages.ghc8104);
   } (if builtins.isString contents then contents else builtins.readFile contents);
 
   scripts = {
@@ -189,7 +189,7 @@ let
           args="$*"
           ;;
         *)
-          ghc="ghc8103"
+          ghc="ghc8104"
           args="$*"
           ;;
       esac
