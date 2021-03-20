@@ -29,7 +29,7 @@
 
       home = {
         # Tries to use <nixpkgs> if version is lower then 20.09 when using flakes
-        stateVersion = "21.03";
+        stateVersion = "21.05";
 
         # User-specific packages. If a program needs configuration, then either:
         # - Enable and configure it via home-manager, if the option is available
