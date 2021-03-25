@@ -86,26 +86,27 @@
           "nixpkgs=${nixpkgs}"
         ];
       };
+      # by default, we want to use and pin flakes on every machine
       defaultModules = [
         useFlakes
         pinFlakes
       ];
     in {
       nixosConfigurations = {
+        # main dev laptop
         hecate = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           modules =
             let
+              # extra args to pass to imported modules
               args = {
                 inputs = {
-                  inherit
-                    neovim
-                    nord-dircolors
-                    nord-tmux;
+                  inherit neovim nord-dircolors nord-tmux;
                 };
                 inherit (self) hmModules;
                 nlib = self.lib;
               };
+              # modules for configuring hecate hardware
               hardwareModules = with nixos-hardware.nixosModules; [
                 common-pc-laptop
                 common-pc-laptop-ssd
@@ -123,12 +124,14 @@
               ];
               # the main configuration
               mainModule = import ./hecate/configuration.nix;
+              # extra overlays from the inputs
               addOverlays = {
                 nixpkgs.overlays = [
                   nur.overlay
                   cs2110-nix.overlay.${system}
                 ];
               };
+              # extra modules from the inputs
               otherModules = [
                 home-manager.nixosModules.home-manager
               ];
@@ -142,16 +145,18 @@
             ];
         };
 
+        # raspberry pi for home-assistant
         homepi = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules =
             let
+              # extra args to pass to imported modules
               args = {
-                inputs = {
-                  inherit nix-cron;
-                };
+                inputs = { inherit nix-cron; };
               };
+              # the main configuration
               mainModule = import ./homepi/configuration.nix;
+              # extra modules from the inputs
               otherModules = [
                 sops-nix.nixosModules.sops
               ];
@@ -164,14 +169,18 @@
         };
       };
 
+      # home-manager modules
       hmModules = {
         xcompose = import ./hm-modules/xcompose.nix { nlib = self.lib; };
       };
 
+      # custom lib functions
       lib = import ./lib { inherit (nixpkgs) lib; };
     } // flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
+        # shell for working with sops
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
             sops-nix.packages.${system}.sops-pgp-hook
