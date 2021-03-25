@@ -3,15 +3,10 @@
 { pkgs, ... }:
 
 let
-  toTOML = name: value: pkgs.runCommandLocal name { buildInputs = [ pkgs.remarshal ]; } ''
-    remarshal -if json -of toml \
-      < "${pkgs.writeText "${name}-json" (builtins.toJSON value)}" \
-      > "$out"
-  '';
-
+  toml = pkgs.formats.toml {};
   starship-config =
     let style = s: v: "[${v}](${s})";
-    in toTOML "starship.toml" {
+    in toml.generate "starship.toml" {
       git_status =
         let withCount = v: "${v}\${count}";
         in {
