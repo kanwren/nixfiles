@@ -62,6 +62,11 @@
     , nord-dircolors, nord-tmux
     }:
     let
+      # Module to pass extra arguments to modules
+      passArgs = args: {
+        config._module.args = args;
+      };
+      # Module to enable nix flakes
       useFlakes = { pkgs, ... }: {
         nix = {
           package = pkgs.nixFlakes;
@@ -89,19 +94,18 @@
       nixosConfigurations = {
         hecate = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
-          specialArgs = {
-            inputs = {
-              inherit
-                nix-cron
-                neovim
-                nord-dircolors
-                nord-tmux;
-            };
-            inherit (self) hmModules;
-            nlib = self.lib;
-          };
           modules =
             let
+              args = {
+                inputs = {
+                  inherit
+                    neovim
+                    nord-dircolors
+                    nord-tmux;
+                };
+                inherit (self) hmModules;
+                nlib = self.lib;
+              };
               hardwareModules = with nixos-hardware.nixosModules; [
                 common-pc-laptop
                 common-pc-laptop-ssd
@@ -129,6 +133,7 @@
                 home-manager.nixosModules.home-manager
               ];
             in nixpkgs.lib.flatten [
+              (passArgs args)
               defaultModules
               hardwareModules
               mainModule
@@ -139,18 +144,19 @@
 
         homepi = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          specialArgs = {
-            inputs = {
-              inherit nix-cron;
-            };
-          };
           modules =
             let
+              args = {
+                inputs = {
+                  inherit nix-cron;
+                };
+              };
               mainModule = import ./homepi/configuration.nix;
               otherModules = [
                 sops-nix.nixosModules.sops
               ];
             in nixpkgs.lib.flatten [
+              (passArgs args)
               defaultModules
               mainModule
               otherModules
