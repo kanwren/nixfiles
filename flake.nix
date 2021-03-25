@@ -84,6 +84,7 @@
         };
         nix.nixPath = [
           "nixpkgs=${nixpkgs}"
+          "nur=${nur}"
         ];
       };
       # by default, we want to use and pin flakes on every machine
