@@ -1,12 +1,13 @@
-{ nord-tmux, ... }:
-
-{ pkgs, ... }:
+{ pkgs
+, inputs
+, ...
+}:
 
 let
   nord-tmux-plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "nord-tmux";
     version = "0.3.0";
-    src = nord-tmux;
+    src = inputs.nord-tmux;
     rtpFilePath = "nord.tmux";
   };
 in

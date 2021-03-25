@@ -1,12 +1,12 @@
-{ nix-cron
+{ config, pkgs, lib
+, inputs
+, ...
 }:
-
-{ config, pkgs, lib, ... }:
 
 let
   subdomain = "rarer";
   url = "${subdomain}.duckdns.org";
-  inherit (nix-cron.lib) cron;
+  inherit (inputs.nix-cron.lib) cron;
 in
 
 {

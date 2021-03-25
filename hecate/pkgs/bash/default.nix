@@ -1,6 +1,7 @@
-{ nord-dircolors, ... }:
-
-{ pkgs, ... }:
+{ pkgs
+, inputs
+, ...
+}:
 
 {
   programs.bash = {
@@ -63,7 +64,7 @@
       fi
 
       # Add some better ls colors
-      eval "$(${pkgs.coreutils}/bin/dircolors ${nord-dircolors}/src/dir_colors)"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${inputs.nord-dircolors}/src/dir_colors)"
     '';
   };
 }

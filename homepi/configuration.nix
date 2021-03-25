@@ -1,12 +1,9 @@
-{ nix-cron
-}:
-
 { config, pkgs, lib, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    (import ./home-assistant.nix { inherit nix-cron; })
+    ./home-assistant.nix
   ];
 
   sops.gnupgHome = "/var/lib/sops";

@@ -1,6 +1,4 @@
-{ nlib, ... }:
-
-{ config, pkgs, ... }:
+{ config, pkgs, nlib, ... }:
 
 let
   inherit (nlib) time;

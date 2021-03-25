@@ -1,5 +1,3 @@
-deps:
-
 { pkgs, lib, ... }:
 
 with rec {
@@ -99,8 +97,8 @@ with rec {
 {
   imports = [
     ./vim/default.nix
-    (import ./bash/default.nix deps)
-    (import ./zsh/default.nix deps)
+    ./bash/default.nix
+    ./zsh/default.nix
   ];
 
   environment = {

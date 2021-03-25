@@ -1,22 +1,18 @@
-deps:
-
-{ ... }:
-
 {
   imports = [
     ./boot
     ./security
-    (import ./nix deps)
+    ./nix
     ./hardware
     ./time
     ./i18n
     ./services
     ./xserver
     ./users
-    (import ./pkgs deps)
+    ./pkgs
     ./virtualisation
     ./networking
-    (import ./home deps)
+    ./home
   ];
 
   system.stateVersion = "21.05";

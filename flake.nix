@@ -89,6 +89,17 @@
       nixosConfigurations = {
         hecate = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
+          specialArgs = {
+            inputs = {
+              inherit
+                nix-cron
+                neovim
+                nord-dircolors
+                nord-tmux;
+            };
+            inherit (self) hmModules;
+            nlib = self.lib;
+          };
           modules =
             let
               hardwareModules = with nixos-hardware.nixosModules; [
@@ -107,11 +118,7 @@
                 ./hecate/hardware-configuration.nix
               ];
               # the main configuration
-              mainModule = import ./hecate/configuration.nix {
-                inherit neovim nord-dircolors nord-tmux;
-                inherit (self.hmModules) xcompose;
-                nlib = self.lib;
-              };
+              mainModule = import ./hecate/configuration.nix;
               addOverlays = {
                 nixpkgs.overlays = [
                   nur.overlay
@@ -132,9 +139,14 @@
 
         homepi = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
+          specialArgs = {
+            inputs = {
+              inherit nix-cron;
+            };
+          };
           modules =
             let
-              mainModule = import ./homepi/configuration.nix { inherit nix-cron; };
+              mainModule = import ./homepi/configuration.nix;
               otherModules = [
                 sops-nix.nixosModules.sops
               ];

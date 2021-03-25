@@ -1,6 +1,6 @@
-{ xcompose, ... }@deps:
-
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config
+, hmModules, inputs, nlib, ...
+}:
 
 {
   home-manager = {
@@ -8,24 +8,28 @@
     useUserPackages = true;
     users.nprin = {
       imports = [
-        deps.xcompose
+        hmModules.xcompose
 
         ./bash
         ./dunst
         ./firefox
         ./git
-        (import ./gpg-agent deps)
+        ./gpg-agent
         ./gtk
         ./haskell
         ./kitty
         ./nushell
-        (import ./tmux deps)
+        ./tmux
         ./zathura
         ./direnv
         ./rofi
         ./xserver
         ./kakoune
       ];
+
+      _module.args = {
+        inherit inputs nlib;
+      };
 
       home = {
         # Tries to use <nixpkgs> if version is lower then 20.09 when using flakes
