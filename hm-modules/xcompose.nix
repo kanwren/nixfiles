@@ -8,10 +8,10 @@ let
   cfg = config.xserver.xcompose;
 
   wrap = x: "<" + x + ">";
-  renderMapping = { keys, result }:
+  renderMapping = { from, to }:
     let
-      mappings = concatMapStringsSep " " wrap keys;
-      res = lib.escape [ "\"" "\\" ] result;
+      mappings = concatMapStringsSep " " wrap from;
+      res = lib.escape [ "\"" "\\" ] to;
     in "<Multi_key> ${mappings} : \"${res}\"";
 in
 {
@@ -27,8 +27,8 @@ in
 
       mappings = mkOption {
         type = types.listOf (nlib.types.object false {
-          keys = nlib.types.required (types.listOf types.str);
-          result = nlib.types.required (types.strMatching "[^\n]*");
+          from = nlib.types.required (types.listOf types.str);
+          to = nlib.types.required (types.strMatching "[^\n]*");
         });
         default = [];
         description = ''
@@ -54,5 +54,35 @@ in
 
       ${cfg.extraConfig}
     '';
+
+    lib.xcompose =
+      let
+        idPairs = xs: lib.listToAttrs (builtins.map (x: { name = x; value = x; }) xs);
+        numbers = idPairs (builtins.map builtins.toString (lib.range 0 9));
+        letters = idPairs (lib.stringToCharacters "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        symbols = {
+          "-" = "minus";
+          " " = "space";
+          "<" = "less";
+          ">" = "greater";
+          "=" = "equal";
+          "_" = "underscore";
+          "(" = "parenleft";
+          ")" = "parenright";
+          "/" = "slash";
+          "\\" = "backslash";
+          "." = "period";
+          "," = "comma";
+          "|" = "bar";
+          "~" = "asciitilde";
+          "*" = "asterisk";
+          "+" = "plus";
+          "&" = "ampersand";
+        };
+        common = letters // numbers // symbols;
+        toKeys = str: builtins.map (x: common.${x}) (lib.stringToCharacters str);
+      in {
+        inherit toKeys;
+      };
   };
 }
