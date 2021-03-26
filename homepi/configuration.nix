@@ -22,7 +22,10 @@
 
   networking = {
     hostName = "homepi";
-    wireless.enable = true;
+    wireless = {
+      enable = true;
+      interfaces = [ "wlan0" ];
+    };
     useDHCP = false;
     interfaces = {
       eth0.useDHCP = true;
