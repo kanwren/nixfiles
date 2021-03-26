@@ -105,9 +105,10 @@ in {
       in builtins.listToAttrs cdAliases // {
         ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";
 
-        # coreutils alternatives aliases
+        # aliases for alternate utilities
         ls = "${pkgs.exa}/bin/exa --git";
         cat = "${pkgs.bat}/bin/bat";
+        ping = "${pkgs.prettyping}/bin/prettyping";
 
         # normalize path by resolving symlinks
         norm = ''cd "$(readlink -f .)"'';
