@@ -9,5 +9,6 @@
         dates = "weekly";
       };
     };
+    podman.enable = true;
   };
 }
