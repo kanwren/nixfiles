@@ -109,6 +109,7 @@ in {
         ls = "${pkgs.exa}/bin/exa --git";
         cat = "${pkgs.bat}/bin/bat";
         ping = "${pkgs.prettyping}/bin/prettyping";
+        clip = "${pkgs.xclip}/bin/xclip -sel clip";
 
         # normalize path by resolving symlinks
         norm = ''cd "$(readlink -f .)"'';
