@@ -8,6 +8,13 @@ let
   } (if builtins.isString contents then contents else builtins.readFile contents);
 
   scripts = {
+    # serve directories/files over HTTP
+    serve = haskellScript {
+      name = "serve";
+      libraries = p: with p; [ warp wai-extra wai-middleware-static lucid optparse-applicative ];
+      contents = ./Serve.hs;
+    };
+
     # simple random number generator script
     random = haskellScript {
       name = "random";
