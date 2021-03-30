@@ -31,6 +31,7 @@
 
     cs2110-nix = {
       url = "github:nprindle/cs2110-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     neovim = {
