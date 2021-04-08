@@ -11,20 +11,21 @@
         hmModules.xcompose
 
         ./bash
+        ./direnv
         ./dunst
         ./firefox
         ./git
         ./gpg-agent
         ./gtk
         ./haskell
+        ./kakoune
         ./kitty
         ./nushell
-        ./tmux
-        ./zathura
-        ./direnv
         ./rofi
+        ./tmux
+        ./vscode
         ./xserver
-        ./kakoune
+        ./zathura
       ];
 
       _module.args = {
