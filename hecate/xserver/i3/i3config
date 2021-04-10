@@ -29,13 +29,6 @@ mouse_warping none
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# keybindings for switching keyboard layouts
-bindsym $mod+Control+1 exec setxkbmap -layout us
-bindsym $mod+Control+2 exec setxkbmap -variant dvorak
-bindsym $mod+Control+3 exec setxkbmap -variant dvp
-bindsym $mod+Control+4 exec setxkbmap -variant dvorak-l
-bindsym $mod+Control+5 exec setxkbmap -variant dvorak-r
-
 # volume controls (requires pulseaudio)
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5% # Increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ -5% # Decrease sound volume
@@ -174,6 +167,7 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 bindsym $mod+Tab workspace back_and_forth
 
+# move container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -185,12 +179,25 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+# move container to workspace and switch to it
+bindsym $mod+Control+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Control+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Control+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Control+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Control+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Control+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Control+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Control+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Control+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Control+Shift+0 move container to workspace $ws10; workspace $ws10
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 in-place
 bindsym $mod+Shift+r restart
 
 # resize floating window (can also $mod+rclick drag)
+bindsym $mod+r mode "resize"
 mode "resize" {
     bindsym h resize shrink width 10 px or 3 ppt
     bindsym j resize grow height 10 px or 3 ppt
@@ -205,7 +212,17 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+Control+Shift+k mode "xkbmap"
+mode "xkbmap" {
+    # keybindings for switching keyboard layouts
+    bindsym 1 exec setxkbmap -layout  us;       mode "default"
+    bindsym 2 exec setxkbmap -variant dvorak;   mode "default"
+    bindsym 3 exec setxkbmap -variant dvp;      mode "default"
+    bindsym 4 exec setxkbmap -variant dvorak-l; mode "default"
+    bindsym 5 exec setxkbmap -variant dvorak-r; mode "default"
+
+    bindsym Escape mode "default"
+}
 
 bar {
     status_command i3status
