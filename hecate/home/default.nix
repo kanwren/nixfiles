@@ -85,6 +85,7 @@
           slack
           teams
           spotify
+          thunderbird
         ];
       };
     };
