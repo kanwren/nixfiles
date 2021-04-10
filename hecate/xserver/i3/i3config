@@ -86,6 +86,8 @@ bindsym $mod+i exec i3-input -f pango:monospace 12
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# mouse controls
+bindsym --whole-window $mod+button2 floating toggle
 
 # change focus (shifted to the vim bindings instead of the default j/k/l/;)
 bindsym $mod+h focus left
