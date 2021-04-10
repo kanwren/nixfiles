@@ -23,9 +23,6 @@ hide_edge_borders both
 gaps inner 10
 gaps outer 10
 
-# Don't warp mouse when changing outputs
-mouse_warping none
-
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
