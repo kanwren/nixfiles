@@ -87,10 +87,6 @@ bindsym $mod+i exec i3-input -f pango:monospace 12
 bindsym $mod+Shift+q kill
 
 
-# Scratchpad
-bindsym $mod+Shift+BackSpace move scratchpad
-bindsym $mod+backslash scratchpad show
-
 # change focus (shifted to the vim bindings instead of the default j/k/l/;)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -114,12 +110,18 @@ bindsym $mod+Right workspace next
 
 # make a horizontal split (windows split vertically)
 bindsym $mod+Shift+minus split v
-
 # make a vertical split (windows split horizontally)
 bindsym $mod+Shift+backslash split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+
+# scratchpad
+bindsym $mod+Shift+BackSpace move scratchpad
+bindsym $mod+backslash scratchpad show
+
+# toggle sticky on window
+bindsym $mod+y sticky toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -128,7 +130,6 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling/floating
 bindsym $mod+Shift+space floating toggle
-
 # change focus between tiling/floating windows
 bindsym $mod+space focus mode_toggle
 
