@@ -23,6 +23,9 @@ hide_edge_borders both
 gaps inner 10
 gaps outer 10
 
+# Don't warp mouse when changing outputs
+mouse_warping none
+
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -139,6 +142,12 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+p focus parent
 # focus the child container
 bindsym $mod+Shift+p focus child
+
+# vim-like marks
+# read 1 character and mark the current window with this character
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'mark: '
+# read 1 character and go to the window with the character
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
 
 # define names for default workspaces for which we configure key bindings later on.
 set $ws1 "1"
