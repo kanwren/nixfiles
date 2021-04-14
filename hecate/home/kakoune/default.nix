@@ -12,6 +12,7 @@ in {
       inputs.kakounePlugins.kak-smartindent
       inputs.kakounePlugins.kak-readline
       inputs.kakounePlugins.kak-mirror
+      inputs.kakounePlugins.kakoune-themes
     ];
   };
 }

@@ -1,7 +1,5 @@
 set-option global ui_options ncurses_assistant=cat ncurses_enable_mouse=false
 
-colorscheme desertex
-
 set-face global search +bi
 
 # Highlighters
@@ -117,3 +115,6 @@ hook global WinSetOption filetype=(haskell|typescript|python|sh|bash|tex) %{
 map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
 # Python
 set-option global lsp_server_configuration pyls.plugins.pydocstyle.enabled=false pyls.plugins.pycodestyle.enable=true pyls.plugins.pycodestyle.ignore=["E111","E501","E302","W391"]
+
+colorscheme one-dark
+
