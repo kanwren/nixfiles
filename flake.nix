@@ -104,6 +104,7 @@
               args = {
                 inputs = {
                   inherit neovim nord-dircolors nord-tmux;
+                  inherit (self.packages.${system}) kakounePlugins;
                 };
                 inherit (self) hmModules;
                 nlib = self.lib;
@@ -193,6 +194,8 @@
             "./secrets/keys/users"
           ];
         };
+
+        packages = pkgs.callPackage ./pkgs {};
       }
     );
 }
