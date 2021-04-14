@@ -30,23 +30,22 @@ let
     };
 
     # convenience script to wrap 'docker run' for running CS2110 autograders
-    autograde = with pkgs; runCommandLocal "autograde-patch" {} ''
-      install -D \
-        "${writeShellScript "autograde" (builtins.readFile ./autograde.sh)}" \
-        "$out"/bin/autograde
-      substituteInPlace "$out"/bin/autograde \
-        --subst-var-by docker "${docker}"
-    '';
+    autograde = pkgs.substituteAll {
+      name = "autograde";
+      src = ./autograde.sh;
+      inherit (pkgs) docker;
+      dir = "bin";
+      isExecutable = true;
+    };
 
     # utility to uncorrupt CircuitSim files
-    uncorrupt = with pkgs; runCommandLocal "uncorrupt-patch" {} ''
-      install -D \
-        "${writeShellScript "uncorrupt" (builtins.readFile ./uncorrupt.sh)}" \
-        "$out"/bin/uncorrupt
-      substituteInPlace "$out"/bin/uncorrupt \
-        --subst-var-by coreutils "${coreutils}" \
-        --subst-var-by jq "${jq}"
-    '';
+    uncorrupt = pkgs.substituteAll {
+      name = "uncorrupt";
+      src = ./uncorrupt.sh;
+      inherit (pkgs) coreutils jq;
+      dir = "bin";
+      isExecutable = true;
+    };
 
     # utility to view the revision history of a CircuitSim file
     csrh = pkgs.writeShellScriptBin "csrh" ''
