@@ -25,7 +25,7 @@
         follow = "mouse";
         font = "FiraCode Nerd Font Mono";
         markup = "full";
-        format = "%s\n%b";
+        format = "%s\\n%b";
       };
       urgency_low = {
         background = "#000000";
