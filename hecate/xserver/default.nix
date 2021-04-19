@@ -25,7 +25,6 @@
     };
 
     layout = "us";
-    xkbVariant = "dvp";
     xkbOptions = "caps:escape,compose:ralt";
 
     displayManager = {
