@@ -3,19 +3,24 @@
 {
   environment = {
     systemPackages = (with pkgs; [
+      # core
       (neovim.override {
         viAlias = true;
         vimAlias = true;
       })
       xxd
 
+      # for plugins
+      fzf
+      code-minimap
+
+      # LSP
       rnix-lsp
       texlab
       clang-tools
-
       haskell-language-server
 
-      # For building some plugins
+      # for building some plugins
       yarn
     ]) ++ (with pkgs.nodePackages; [
       typescript-language-server
