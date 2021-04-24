@@ -55,6 +55,9 @@
           pkgs.nur.repos.xe.pridecat
 
           # Development
+          stdenv.cc
+          stdenv.cc.cc.man
+          rustup
           nodejs-14_x
 
           # System monitoring
