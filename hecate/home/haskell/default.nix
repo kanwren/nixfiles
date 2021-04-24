@@ -5,6 +5,7 @@
     cabal-install
     ghcid
     haskell.compiler.ghc8104
+    stylish-haskell
   ];
 
   home.file = {
