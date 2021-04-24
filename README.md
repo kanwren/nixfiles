@@ -7,8 +7,6 @@ My NixOS configurations :snowflake:
 - `flake.nix`: Flakes for each configuration, outputs for libs and modules, and
     a dev shell for working with secrets. Some modules, overlays, and settings
     are applied in here.
-- `hecate/`: Configurations for my main laptop. See below for more details.
-- `homepi/`: Configurations for my Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
 - `hm-modules/`: Custom home-manager modules
 - `lib/`: Custom library functions used throughout the configs. Usually seen imported as `nlib`.
 - `installer/`: Custom minimal installer configuration.
@@ -17,7 +15,12 @@ My NixOS configurations :snowflake:
     [nixos-generators](https://github.com/nix-community/nixos-generators)
 - `secrets/`: Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
 
-### hecate
+### Hosts
+
+- `hecate`: My main laptop
+- `homepi`: My Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
+
+#### hecate
 
 The bulk of the configuration is for my main laptop `hecate`:
 
@@ -46,4 +49,29 @@ The bulk of the configuration is for my main laptop `hecate`:
 - `virtualisation/`: Configurations for programs used for containerization and
   virtualization (docker, podman, etc.)
 - `xserver/`: Graphical configurations (display manager, window manager, fonts, applets, etc.)
+
+### sops-nix
+
+When editing sops files, keys in `secrets/keys/users` should automatically be
+picked up when using the dev shell. To use a specific key for a file, set
+`SOPS_PGP_FP` to the key's fingerprint.
+
+To generate a PGP key for a new machine named `$HOSTNAME`:
+
+```
+# Drop into shell with sops-nix tools
+$ sudo nix develop
+
+# Generate the key
+$ sops-init-gpg-key --hostname $HOSTNAME --gpghome /var/lib/sops
+
+# Put generated key in secrets/keys/users/$HOSTNAME.asc
+```
+
+To import an existing armored private key `$HOSTNAME.asc`:
+
+```
+$ sudo nix develop
+$ GNUPGHOME=/var/lib/sops gpg --import $HOSTNAME.asc
+```
 
