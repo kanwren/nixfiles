@@ -19,6 +19,7 @@
       texlab
       clang-tools
       haskell-language-server
+      rust-analyzer
 
       # for building some plugins
       yarn
