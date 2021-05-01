@@ -11,8 +11,9 @@ let
       git_status =
         let withCount = v: "${v}\${count}";
         in {
-          format = "([\\[$ahead_behind$all_status\\]]($style) )";
-          all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked";
+          format = "([\\[$ahead_behind$conflicted$stashed$deleted$renamed$modified$staged$untracked\\]]($style) )";
+          # Note: all_status doesn't work anymore, inlined above
+          # all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked";
           ahead = style "bold bright-green" (withCount "⇡");
           behind = style "bold bright-green" (withCount "⇣");
           diverged = style "bold bright-green" ("⇡$ahead_count⇣$behind_count");
