@@ -1,5 +1,5 @@
 { pkgs, lib, config
-, hmModules, inputs, nlib, ...
+, hmModules, inputs, nlib, npkgs, ...
 }:
 
 {
@@ -29,7 +29,7 @@
       ];
 
       _module.args = {
-        inherit inputs nlib;
+        inherit inputs nlib npkgs;
       };
 
       home = {

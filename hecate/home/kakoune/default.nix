@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, npkgs, ... }:
 
 let
 in {
@@ -9,10 +9,10 @@ in {
       kak-lsp
       kakounePlugins.kak-fzf
       kakounePlugins.case-kak
-      inputs.kakounePlugins.kak-smartindent
-      inputs.kakounePlugins.kak-readline
-      inputs.kakounePlugins.kak-mirror
-      inputs.kakounePlugins.kakoune-themes
+      npkgs.kakounePlugins.kak-smartindent
+      npkgs.kakounePlugins.kak-readline
+      npkgs.kakounePlugins.kak-mirror
+      npkgs.kakounePlugins.kakoune-themes
     ];
   };
 }

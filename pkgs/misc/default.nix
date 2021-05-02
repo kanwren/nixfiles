@@ -8,4 +8,8 @@
     kak-smartindent = pkgs.callPackage ./kak-smartindent {};
     kakoune-themes = pkgs.callPackage ./kakoune-themes {};
   };
+
+  zshPlugins = {
+    zsh-vi-mode = pkgs.callPackage ./zsh-vi-mode {};
+  };
 }

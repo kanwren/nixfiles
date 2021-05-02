@@ -3,5 +3,6 @@
 
 {
   inherit (pkgs.callPackage ./misc {})
-    kakounePlugins;
+    kakounePlugins
+    zshPlugins;
 }

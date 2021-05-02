@@ -1,5 +1,5 @@
 { pkgs
-, inputs
+, inputs, npkgs
 , ...
 }:
 
@@ -66,9 +66,6 @@ in {
       bindkey -v
       export KEYTIMEOUT=1
 
-      # Edit current command line with "gi"
-      bindkey -M vicmd gi edit-command-line
-
       export FZF_BASE="${pkgs.fzf}/share/fzf"
 
       # See github:spwhitt/nix-zsh-completions/issues/32
@@ -119,7 +116,8 @@ in {
     ohMyZsh = {
       enable = true;
       plugins = [
-        "vi-mode"
+        "zsh-vi-mode" # "vi-mode"
+
         "fzf"
         "git"
         "last-working-dir"
@@ -134,6 +132,9 @@ in {
         # completion plugins
         "cabal"
         "docker"
+      ];
+      customPkgs = [
+        npkgs.zshPlugins.zsh-vi-mode
       ];
     };
   };

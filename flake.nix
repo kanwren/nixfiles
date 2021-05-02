@@ -104,8 +104,8 @@
               args = {
                 inputs = {
                   inherit neovim nord-dircolors nord-tmux;
-                  inherit (self.packages.${system}) kakounePlugins;
                 };
+                npkgs = self.packages.${system};
                 inherit (self) hmModules;
                 nlib = self.lib;
               };
