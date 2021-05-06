@@ -84,6 +84,12 @@ in {
         fi
       }
       compdef _nix nix
+
+      # Fix fzf not being loaded with zsh-vi-mode
+      # See https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+      function zvm_after_init() {
+        source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
+      }
     '';
 
     shellAliases =
