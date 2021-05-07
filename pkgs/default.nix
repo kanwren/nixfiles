@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {}
 }:
 
-{
-  inherit (pkgs.callPackage ./misc {})
-    kakounePlugins
-    zshPlugins;
-}
+pkgs.lib.foldl' (pkgs.lib.mergeAttrsNoOverride {}) {} [
+  (pkgs.callPackage ./development {})
+  (pkgs.callPackage ./misc {})
+]
+
