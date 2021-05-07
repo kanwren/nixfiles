@@ -97,9 +97,15 @@ imageNameType="${imageNameType:-shorthand}"
 
 get_semester() {
   day="$(date "+%j")"
-  if [ "$day" -ge 0 ] && [ "$day" -le 120 ]; then
+  if [ "$day" -ge 0 ] && [ "$day" -le 129 ]; then
+    if [ "$day" -ge 121 ]; then
+      >&2 echo "Warning: could not automatically determine season"
+    fi
     season="spring"
-  elif [ "$day" -ge 130 ] && [ "$day" -le 220 ]; then
+  elif [ "$day" -ge 130 ] && [ "$day" -le 229 ]; then
+    if [ "$day" -ge 221 ]; then
+      >&2 echo "Warning: could not automatically determine season"
+    fi
     season="summer"
   elif [ "$day" -ge 230 ] && [ "$day" -le 366 ]; then
     season="fall"
