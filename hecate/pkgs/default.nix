@@ -1,8 +1,12 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib
+, npkgs, nlib
+, ...
+}:
 
 with rec {
   # Scripts to be available globally
-  scripts = import ./scripts { inherit pkgs; };
+  # All scripts should be custom packages
+  scripts = nlib.attrsets.recursiveDerivations npkgs.scripts;
 
   baseSystemPackages = with pkgs; [
     # Nix stuff
