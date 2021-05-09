@@ -6,7 +6,6 @@
 let
   subdomain = "rarer";
   url = "${subdomain}.duckdns.org";
-  inherit (inputs.nix-cron.lib) cron;
 in
 
 {
@@ -78,21 +77,11 @@ in
     };
   };
 
-  services.cron = {
+  services.duckdns = {
     enable = true;
-    systemCronJobs =
-      let
-        updateDuckIp = pkgs.writeShellScript "update-duck-ip" ''
-          token="$(</run/secrets/duck-dns-token)"
-          url="https://www.duckdns.org/update?domains=${subdomain}&token=$token&verbose=true&ip="
-          echo url="$url" | curl -k -o /tmp/duck.log -K - >/dev/null 2>&1
-        '';
-        updateJob = cron.systemJob {
-          time = { minute = cron.every 5; };
-          user = "root";
-          commandFile = updateDuckIp;
-        };
-      in [ updateJob ];
+    inherit subdomain;
+    tokenPath = "/run/secrets/duck-dns-token";
+    time = with inputs.nix-cron.lib.cron; { minute = every 5; };
   };
 }
 

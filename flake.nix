@@ -164,6 +164,7 @@
               # extra modules from the inputs
               otherModules = [
                 sops-nix.nixosModules.sops
+                self.modules.duckdns
               ];
             in nixpkgs.lib.flatten [
               (passArgs args)
@@ -177,6 +178,11 @@
       # home-manager modules
       hmModules = {
         xcompose = import ./hm-modules/xcompose.nix { nlib = self.lib; };
+      };
+
+      # NixOS modules
+      modules = {
+        duckdns = import ./modules/duckdns.nix { inherit nix-cron; };
       };
 
       # custom lib functions
