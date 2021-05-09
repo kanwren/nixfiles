@@ -195,7 +195,7 @@
           ];
         };
 
-        packages = pkgs.callPackage ./pkgs {};
+        packages = import ./pkgs { inherit pkgs; };
       }
     );
 }
