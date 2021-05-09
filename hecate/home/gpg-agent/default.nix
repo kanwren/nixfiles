@@ -1,7 +1,7 @@
-{ config, pkgs, nlib, ... }:
+{ config, pkgs, custom, ... }:
 
 let
-  inherit (nlib) time;
+  inherit (custom.lib) time;
 in
 
 {

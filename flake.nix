@@ -105,9 +105,11 @@
                 inputs = {
                   inherit neovim nord-dircolors nord-tmux;
                 };
-                npkgs = self.packages.${system};
-                inherit (self) hmModules;
-                nlib = self.lib;
+                custom = {
+                  pkgs = self.packages.${system};
+                  inherit (self) hmModules;
+                  inherit (self) lib;
+                };
               };
               # modules for configuring hecate hardware
               hardwareModules = with nixos-hardware.nixosModules; [

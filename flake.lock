@@ -94,11 +94,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1609135152,
-        "narHash": "sha256-63yZrbYhM+xnGv382tBAcpK8Wtinc76S/rKyyJx97sI=",
+        "lastModified": 1620578716,
+        "narHash": "sha256-v+FC0RBEODyWg9JEVuyWnseXfkdlDZAppW23v7CKHoE=",
         "owner": "nprindle",
         "repo": "nix-cron",
-        "rev": "1d9bc15390aac5deedfa839c45ecbedc62809e69",
+        "rev": "8eae3285008591d6540b669a2789a2cf4022d882",
         "type": "github"
       },
       "original": {

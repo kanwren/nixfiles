@@ -1,12 +1,12 @@
 { pkgs, lib
-, npkgs, nlib
+, custom
 , ...
 }:
 
 with rec {
   # Scripts to be available globally
   # All scripts should be custom packages
-  scripts = nlib.attrsets.recursiveDerivations npkgs.scripts;
+  scripts = custom.lib.attrsets.recursiveDerivations custom.pkgs.scripts;
 
   baseSystemPackages = with pkgs; [
     # Nix stuff

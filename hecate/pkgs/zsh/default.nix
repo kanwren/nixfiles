@@ -1,5 +1,5 @@
 { pkgs
-, inputs, npkgs
+, inputs, custom
 , ...
 }:
 
@@ -140,7 +140,7 @@ in {
         "docker"
       ];
       customPkgs = [
-        npkgs.zshPlugins.zsh-vi-mode
+        custom.pkgs.zshPlugins.zsh-vi-mode
         (pkgs.runCommand "zsh-nix-shell" {} ''
           mkdir -p "$out"/share/zsh/plugins
           cp -r ${pkgs.zsh-nix-shell}/share/zsh-nix-shell "$out"/share/zsh/plugins/nix-shell

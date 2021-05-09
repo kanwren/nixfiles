@@ -1,5 +1,6 @@
 { pkgs, lib, config
-, hmModules, inputs, nlib, npkgs, ...
+, custom, inputs
+, ...
 }:
 
 {
@@ -8,7 +9,7 @@
     useUserPackages = true;
     users.nprin = {
       imports = [
-        hmModules.xcompose
+        custom.hmModules.xcompose
 
         ./bash
         ./direnv
@@ -29,7 +30,7 @@
       ];
 
       _module.args = {
-        inherit inputs nlib npkgs;
+        inherit inputs custom;
       };
 
       home = {
