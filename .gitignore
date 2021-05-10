@@ -1,2 +1,4 @@
 # Ignore nix build output
 result*
+
+.direnv/
