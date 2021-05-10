@@ -134,6 +134,7 @@
                 nixpkgs.overlays = [
                   nur.overlay
                   cs2110-nix.overlay.${system}
+                  self.overlays.neovim-overlay
                 ];
               };
               # extra modules from the inputs
@@ -173,6 +174,11 @@
               otherModules
             ];
         };
+      };
+
+      # Nixpkgs overlays
+      overlays = {
+        neovim-overlay = import ./overlays/neovim.nix { inherit neovim; };
       };
 
       # NixOS modules

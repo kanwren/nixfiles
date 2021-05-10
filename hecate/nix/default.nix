@@ -1,7 +1,4 @@
-{ lib, pkgs
-, inputs
-, ...
-}:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -30,7 +27,5 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = builtins.map (x: import x inputs)
-      (lib.filesystem.listFilesRecursive ./overlays);
   };
 }
