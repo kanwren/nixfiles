@@ -1,7 +1,8 @@
 { pkgs, custom, ... }:
 
 let
-in {
+in
+{
   programs.kakoune = {
     enable = true;
     extraConfig = builtins.readFile ./kakrc;

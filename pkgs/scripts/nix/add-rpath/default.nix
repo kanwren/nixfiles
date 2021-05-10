@@ -1,4 +1,5 @@
-{ writeShellScriptBin, patchelf
+{ writeShellScriptBin
+, patchelf
 , addmeta
 }:
 
@@ -38,7 +39,8 @@ let
       ${patchelf}/bin/patchelf --set-rpath "$new_rpath" "$f"
     done
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Append a path to the rpath of an executable";
 }
 

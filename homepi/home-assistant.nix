@@ -1,4 +1,6 @@
-{ config, pkgs, lib
+{ config
+, pkgs
+, lib
 , inputs
 , ...
 }:
@@ -10,7 +12,7 @@ in
 
 {
   sops.secrets = {
-    duck-dns-token = {};
+    duck-dns-token = { };
     "google-home-service-account.json" = {
       format = "binary";
       sopsFile = ./secrets/google-home-service-account.keytab;

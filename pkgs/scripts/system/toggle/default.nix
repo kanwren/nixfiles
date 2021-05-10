@@ -25,7 +25,8 @@ let
         ;;
     esac
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Brute-force toggling of systemd services";
 }
 

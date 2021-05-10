@@ -1,4 +1,5 @@
-{ writeShellScriptBin, firefox
+{ writeShellScriptBin
+, firefox
 , addmeta
 }:
 
@@ -34,7 +35,8 @@ let
 
     ${firefox}/bin/firefox -profile "$profile_path" "$@"
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Hack to get firefox to open like chrome's --app";
 }
 

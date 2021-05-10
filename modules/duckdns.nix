@@ -79,7 +79,8 @@ in
             user = "root";
             commandFile = updateDuckIp;
           };
-        in [ updateJob ];
+        in
+        [ updateJob ];
     };
   };
 }

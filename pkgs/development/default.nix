@@ -1,5 +1,5 @@
 { pkgs }:
 
 {
-  spim = pkgs.callPackage ./spim {};
+  spim = pkgs.callPackage ./spim { };
 }

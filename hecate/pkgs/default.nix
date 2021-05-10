@@ -1,4 +1,5 @@
-{ pkgs, lib
+{ pkgs
+, lib
 , custom
 , ...
 }:
@@ -78,20 +79,21 @@ with rec {
     tmux
 
     # Media
-    exiftool              # EXIF data
-    feh                   # image viewer
-    scrot                 # screenshot tool
-    imagemagick7          # image manipulation tools
-    gimp                  # image editor
-    zathura               # PDF viewer
-    qpdf                  # PDF manipulation tool
-    vlc                   # multimedia viewer
-    mpv                   # multimedia viewer
-    (asunder.override {   # CD ripping
+    exiftool # EXIF data
+    feh # image viewer
+    scrot # screenshot tool
+    imagemagick7 # image manipulation tools
+    gimp # image editor
+    zathura # PDF viewer
+    qpdf # PDF manipulation tool
+    vlc # multimedia viewer
+    mpv # multimedia viewer
+    (asunder.override {
+      # CD ripping
       mp3Support = true;
       oggSupport = true;
     })
-    simplescreenrecorder  # screen recording
+    simplescreenrecorder # screen recording
 
     # Browsers
     firefox

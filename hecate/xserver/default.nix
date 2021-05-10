@@ -68,7 +68,8 @@
         # Status bar
         i3status
         # Lock screen
-        i3lock betterlockscreen
+        i3lock
+        betterlockscreen
         # Applets
         networkmanagerapplet
         blueman

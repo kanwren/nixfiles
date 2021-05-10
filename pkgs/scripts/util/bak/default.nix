@@ -37,7 +37,8 @@ let
       exit 1
     fi
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Copy a file to make a backup";
 }
 

@@ -10,7 +10,7 @@
         edit_mode = "vi";
       };
       prompt = "echo $(${pkgs.starship}/bin/starship prompt)";
-      startup = [];
+      startup = [ ];
     };
   };
 }

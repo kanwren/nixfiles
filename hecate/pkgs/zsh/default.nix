@@ -1,16 +1,19 @@
 { pkgs
-, inputs, custom
+, inputs
+, custom
 , ...
 }:
 
 let
-  toml = pkgs.formats.toml {};
+  toml = pkgs.formats.toml { };
   starship-config =
     let style = s: v: "[${v}](${s})";
-    in toml.generate "starship.toml" {
+    in
+    toml.generate "starship.toml" {
       git_status =
         let withCount = v: "${v}\${count}";
-        in {
+        in
+        {
           format = "([\\[$ahead_behind$conflicted$stashed$deleted$renamed$modified$staged$untracked\\]]($style) )";
           # Note: all_status doesn't work anymore, inlined above
           # all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked";
@@ -30,7 +33,8 @@ let
         tag_symbol = "";
       };
     };
-in {
+in
+{
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -106,7 +110,8 @@ in {
           name = "..";
           value = "cd ..";
         }];
-      in builtins.listToAttrs cdAliases // {
+      in
+      builtins.listToAttrs cdAliases // {
         ndone = "${pkgs.libnotify}/bin/notify-send 'Command finished'";
 
         # aliases for alternate utilities
@@ -141,7 +146,7 @@ in {
       ];
       customPkgs = [
         custom.pkgs.zshPlugins.zsh-vi-mode
-        (pkgs.runCommand "zsh-nix-shell" {} ''
+        (pkgs.runCommand "zsh-nix-shell" { } ''
           mkdir -p "$out"/share/zsh/plugins
           cp -r ${pkgs.zsh-nix-shell}/share/zsh-nix-shell "$out"/share/zsh/plugins/nix-shell
         '')

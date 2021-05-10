@@ -39,7 +39,8 @@ let
     # Fix name from being "-"
     name = "comma";
   });
-in addmeta script {
+in
+addmeta script {
   description = "Shorthand for running commands via nix shell";
 }
 

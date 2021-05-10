@@ -1,5 +1,8 @@
-{ pkgs, lib, config
-, custom, inputs
+{ pkgs
+, lib
+, config
+, custom
+, inputs
 , ...
 }:
 
@@ -43,16 +46,16 @@
         # - Write the configuration file and use home-manager to manage it
         packages = with pkgs; [
           # CLI tools
-          gist          # GitHub gists
-          shellcheck    # check shell scripts
-          woof          # quickly serve files locally over http
-          tokei         # count lines of code
-          h             # quick directory jumping
-          cookiecutter  # generate projects from templates
-          jo            # easy json generation for the command line
-          httpie        # command-line REST API client
-          insomnia      # graphical REST API client
-          ranger        # console file manager
+          gist # GitHub gists
+          shellcheck # check shell scripts
+          woof # quickly serve files locally over http
+          tokei # count lines of code
+          h # quick directory jumping
+          cookiecutter # generate projects from templates
+          jo # easy json generation for the command line
+          httpie # command-line REST API client
+          insomnia # graphical REST API client
+          ranger # console file manager
           pkgs.nur.repos.xe.pridecat
 
           # Development

@@ -1,4 +1,5 @@
-{ writeShellScriptBin, xdotool
+{ writeShellScriptBin
+, xdotool
 , addmeta
 }:
 
@@ -18,7 +19,8 @@ let
       sleep "$delay"
     done
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Keep screen awake by moving the mouse every so often";
 }
 

@@ -1,5 +1,10 @@
-{ stdenv, lib, fetchFromGitHub
-, gnumake, musl, bison, flex
+{ stdenv
+, lib
+, fetchFromGitHub
+, gnumake
+, musl
+, bison
+, flex
 }:
 
 stdenv.mkDerivation {

@@ -22,7 +22,8 @@ let
       done
     done
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Print nix garbage collector roots that still exist";
 }
 

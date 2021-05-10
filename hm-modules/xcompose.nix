@@ -12,7 +12,8 @@ let
     let
       mappings = concatMapStringsSep " " wrap from;
       res = lib.escape [ "\"" "\\" ] to;
-    in "<Multi_key> ${mappings} : \"${res}\"";
+    in
+    "<Multi_key> ${mappings} : \"${res}\"";
 in
 {
   options = {
@@ -30,7 +31,7 @@ in
           from = nlib.types.required (types.listOf types.str);
           to = nlib.types.required (types.strMatching "[^\n]*");
         });
-        default = [];
+        default = [ ];
         description = ''
           A list of pairs mapping keys inputted to the desired result.
           For example, '{ keys = [ "0" "0" ]; result = "°"; }' would generate
@@ -81,7 +82,8 @@ in
         };
         common = letters // numbers // symbols;
         toKeys = str: builtins.map (x: common.${x}) (lib.stringToCharacters str);
-      in {
+      in
+      {
         inherit toKeys;
       };
   };

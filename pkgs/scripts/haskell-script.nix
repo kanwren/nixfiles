@@ -1,6 +1,6 @@
 { ghcVersion ? "8104", writers, haskell, ... }@args:
 
-{ name, contents, libraries ? (_: []) }:
+{ name, contents, libraries ? (_: [ ]) }:
 
 let
   source =
@@ -13,5 +13,6 @@ let
     ghcArgs = [ "-O2" "-Wall" "-Werror" ];
     libraries = libraries packages;
   } // builtins.removeAttrs args [ "ghcVersion" "writers" "haskell" ];
-in writers.writeHaskellBin name haskellArgs source
+in
+writers.writeHaskellBin name haskellArgs source
 

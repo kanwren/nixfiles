@@ -1,4 +1,5 @@
-{ writeShellScriptBin, nix
+{ writeShellScriptBin
+, nix
 , addmeta
 }:
 
@@ -17,7 +18,8 @@ let
     esac
     ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
   '';
-in addmeta script {
+in
+addmeta script {
   description = "Wrapper for entering a nix shell with haskell packages";
 }
 

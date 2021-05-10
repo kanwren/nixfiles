@@ -8,9 +8,10 @@ rec {
       strictIsAttrs = a: builtins.isAttrs a && !lib.isDerivation a;
       go = as:
         if !strictIsAttrs as
-        then [as]
+        then [ as ]
         else builtins.concatMap go (builtins.attrValues as);
-    in go;
+    in
+    go;
 
   # Return a list of all derivations in an attrset recursively, expanding every
   # non-derivation attrset

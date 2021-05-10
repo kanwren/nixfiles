@@ -7,7 +7,7 @@
   ];
 
   sops.gnupgHome = "/var/lib/sops";
-  sops.sshKeyPaths = [];
+  sops.sshKeyPaths = [ ];
   sops.defaultSopsFile = ./secrets/secrets.yaml;
 
   boot = {

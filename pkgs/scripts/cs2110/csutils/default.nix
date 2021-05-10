@@ -1,5 +1,7 @@
-{ writeShellScriptBin, substituteAll
-, coreutils, jq
+{ writeShellScriptBin
+, substituteAll
+, coreutils
+, jq
 , addmeta
 }:
 
@@ -58,7 +60,8 @@
 
         "${jq}/bin/jq" -f "${./circuitsim-history.jq}" "$1"
       '';
-    in addmeta script {
+    in
+    addmeta script {
       description = "Utility to view the revision history of a CircuitSim file";
     };
 }
