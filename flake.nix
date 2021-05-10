@@ -198,6 +198,14 @@
 
       # custom lib functions
       lib = import ./lib { inherit (nixpkgs) lib; };
+
+      # custom templates
+      templates = {
+        latex = {
+          path = ./templates/latex;
+          description = "A basic LaTeX project";
+        };
+      };
     } // flake-utils.lib.eachDefaultSystem (system: (
       let
         pkgs = nixpkgs.legacyPackages.${system};
