@@ -1,6 +1,9 @@
 { pkgs ? import <nixpkgs> {}
 }:
 
+let
+  inherit (pkgs) lib;
+in
 {
   inherit (pkgs.callPackage ./development {})
     spim;
@@ -9,6 +12,6 @@
     kakounePlugins
     zshPlugins;
 
-  scripts = pkgs.callPackage ./scripts {};
+  scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts {});
 }
 

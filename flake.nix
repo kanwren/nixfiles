@@ -106,7 +106,7 @@
                   inherit neovim nord-dircolors nord-tmux;
                 };
                 custom = {
-                  pkgs = self.packages.${system};
+                  pkgs = self.legacyPackages.${system};
                   inherit (self) hmModules;
                   inherit (self) lib;
                 };
@@ -203,7 +203,11 @@
           ];
         };
 
-        packages = import ./pkgs { inherit pkgs; };
+        # traditional nested packages
+        legacyPackages = import ./pkgs { inherit pkgs; };
+
+        # flattened packages for flake
+        packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
       }
     );
 }

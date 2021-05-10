@@ -2,6 +2,7 @@
 }:
 
 let
+  inherit (pkgs) lib;
   haskellScript = pkgs.callPackage ./haskell-script.nix {};
   addmeta = p: meta: p.overrideAttrs (old: {
     meta = (old.meta or {}) // meta;
@@ -28,6 +29,6 @@ in
 
   # cs2110
   autograde = pkgs.callPackage ./cs2110/autograde {};
-  csutils = pkgs.callPackage ./cs2110/csutils { inherit addmeta; };
+  csutils = lib.recurseIntoAttrs (pkgs.callPackage ./cs2110/csutils { inherit addmeta; });
 }
 
