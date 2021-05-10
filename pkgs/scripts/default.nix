@@ -12,7 +12,6 @@ in
 {
   # util
   bak = pkgs.callPackage ./util/bak { inherit addmeta; };
-  random = pkgs.callPackage ./util/random { inherit haskellScript addmeta; };
   serve = pkgs.callPackage ./util/serve { inherit haskellScript addmeta; };
   truthtable = pkgs.callPackage ./util/truthtable { inherit haskellScript addmeta; };
 
