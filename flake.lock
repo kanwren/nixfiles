@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1620263213,
-        "narHash": "sha256-mMhVHDPYmNRhEblTAYBwHU1E9UoPQHuY9LS1lfm14io=",
+        "lastModified": 1620615182,
+        "narHash": "sha256-79Rh/Ly/53UP6YVblxkFesSbnSKqlpns4MMc+H4ukes=",
         "owner": "nprindle",
         "repo": "cs2110-nix",
-        "rev": "f9953659caa9253662d23f8b49667a085205d97a",
+        "rev": "2c3e01983098f624c76870e030f3054a2247943c",
         "type": "github"
       },
       "original": {

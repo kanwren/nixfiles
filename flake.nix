@@ -133,7 +133,7 @@
               addOverlays = {
                 nixpkgs.overlays = [
                   nur.overlay
-                  cs2110-nix.overlay.${system}
+                  cs2110-nix.overlay
                   self.overlays.neovim-overlay
                 ];
               };
