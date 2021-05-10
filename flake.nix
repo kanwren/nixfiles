@@ -57,10 +57,12 @@
     , flake-utils
     , sops-nix
     , nix-cron
-    , nur, home-manager
+    , nur
+    , home-manager
     , cs2110-nix
     , neovim
-    , nord-dircolors, nord-tmux
+    , nord-dircolors
+    , nord-tmux
     }:
     let
       # Module to pass extra arguments to modules
@@ -93,7 +95,8 @@
         useFlakes
         pinFlakes
       ];
-    in {
+    in
+    {
       nixosConfigurations = {
         # main dev laptop
         hecate = nixpkgs.lib.nixosSystem rec {
@@ -141,7 +144,8 @@
               otherModules = [
                 home-manager.nixosModules.home-manager
               ];
-            in nixpkgs.lib.flatten [
+            in
+            nixpkgs.lib.flatten [
               (passArgs args)
               defaultModules
               hardwareModules
@@ -167,7 +171,8 @@
                 sops-nix.nixosModules.sops
                 self.nixosModules.duckdns
               ];
-            in nixpkgs.lib.flatten [
+            in
+            nixpkgs.lib.flatten [
               (passArgs args)
               defaultModules
               mainModule
@@ -193,13 +198,17 @@
 
       # custom lib functions
       lib = import ./lib { inherit (nixpkgs) lib; };
-    } // flake-utils.lib.eachDefaultSystem (system:
+    } // flake-utils.lib.eachDefaultSystem (system: (
       let
         pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        # shell for working with sops
+      in
+      {
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
+            # formatting
+            pkgs.lefthook
+            pkgs.nixpkgs-fmt
+            # sops-nix
             sops-nix.packages.${system}.sops-pgp-hook
             sops-nix.packages.${system}.ssh-to-pgp
             sops-nix.packages.${system}.sops-init-gpg-key
@@ -215,5 +224,5 @@
         # flattened packages for flake
         packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
       }
-    );
+    ));
 }

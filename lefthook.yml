@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    formatting:
+      files: git diff --staged --name-only
+      glob: "*.nix"
+      run: nixpkgs-fmt --check {all_files}
