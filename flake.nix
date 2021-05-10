@@ -227,7 +227,7 @@
         };
 
         # traditional nested packages
-        legacyPackages = import ./pkgs { inherit pkgs; };
+        legacyPackages = import ./pkgs { inherit pkgs nur; };
 
         # flattened packages for flake
         packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
