@@ -114,7 +114,7 @@ with rec {
     ];
     homeBinInPath = true;
     shellInit = ''
-      export PATH="$HOME/.cabal/bin:$PATH"
+      export PATH="$HOME/.cabal/bin''${PATH:+:''${PATH}}"
     '';
   };
 

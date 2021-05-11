@@ -1,4 +1,4 @@
-PATH="@coreutils@/bin:@jq@/bin:${PATH:+:${PATH}}"
+PATH="@coreutils@/bin:@jq@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail
 

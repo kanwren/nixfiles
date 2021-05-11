@@ -1,4 +1,4 @@
-PATH="@jq@/bin:${PATH:+:${PATH}}"
+PATH="@jq@/bin:@getopt@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail
 

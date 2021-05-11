@@ -1,4 +1,4 @@
-PATH="@docker@/bin:${PATH:+:${PATH}}"
+PATH="@docker@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail
 
