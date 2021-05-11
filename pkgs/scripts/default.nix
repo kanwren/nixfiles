@@ -29,5 +29,9 @@ in
   # cs2110
   autograde = pkgs.callPackage ./cs2110/autograde { };
   csutils = lib.recurseIntoAttrs (pkgs.callPackage ./cs2110/csutils { inherit addmeta; });
+
+  # haskell
+  ghcWithPackages = pkgs.callPackage ./haskell/ghcWithPackages { inherit addmeta; };
+  hoogleServer = pkgs.callPackage ./haskell/hoogleServer { inherit addmeta; };
 }
 

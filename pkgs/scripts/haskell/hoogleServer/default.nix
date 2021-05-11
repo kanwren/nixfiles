@@ -1,4 +1,5 @@
 { writeShellScriptBin
+, addmeta
 }:
 
 let
