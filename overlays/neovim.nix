@@ -1,11 +1,11 @@
 { neovim, ... }:
 
-self: super:
+final: prev:
 
 {
-  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
+  neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (old: {
     src = neovim;
-    buildInputs = (old.buildInputs or [ ]) ++ [ super.tree-sitter ];
+    buildInputs = (old.buildInputs or [ ]) ++ [ prev.tree-sitter ];
   });
 }
 
