@@ -1,3 +1,4 @@
+#! @runtimeShell@
 PATH="@coreutils@/bin:@jq@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail

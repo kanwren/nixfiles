@@ -1,4 +1,5 @@
 { writeShellScriptBin
+, unixtools
 , patchelf
 , addmeta
 }:
@@ -8,7 +9,7 @@ let
     set -euo pipefail
 
     print_usage() { >&2 echo "Usage: add-rpath [-a|--append] <path> <files...>"; }
-    if ! args=$(getopt -o ah --long append,help -n csrh -- "$@"); then
+    if ! args=$(${unixtools.getopt}/bin/getopt -o ah --long append,help -n csrh -- "$@"); then
       print_usage; exit 1
     fi
     eval set -- "$args"

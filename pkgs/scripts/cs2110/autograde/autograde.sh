@@ -1,3 +1,4 @@
+#! @runtimeShell@
 PATH="@docker@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail
