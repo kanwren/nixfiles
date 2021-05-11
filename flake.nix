@@ -19,6 +19,10 @@
       url = "github:numtide/flake-utils";
     };
 
+    nix-bundle = {
+      url = "github:matthewbauer/nix-bundle";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +59,7 @@
     , nixpkgs
     , nixos-hardware
     , flake-utils
+    , nix-bundle
     , sops-nix
     , nix-cron
     , nur
@@ -206,6 +211,28 @@
           description = "A basic LaTeX project";
         };
       };
+
+      # nix-bundle shim to bundle programs with names other than the default
+      # See https://github.com/matthewbauer/nix-bundle/issues/74
+      defaultBundler = { program, system }:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          bundle = import nix-bundle { nixpkgs = pkgs; };
+          envProg = builtins.getEnv "PROGRAM";
+          prog =
+            if envProg == "" then
+              builtins.trace "Warning: PROGRAM not set; defaulting to '${program}'. Did you forget to set PROGRAM or --impure?" program
+            else
+              "${builtins.dirOf program}/${envProg}";
+          script = pkgs.writeScript "startup" ''
+            #!/bin/sh
+            .${bundle.nix-user-chroot}/bin/nix-user-chroot -n ./nix -- "${prog}"
+          '';
+        in
+        bundle.makebootstrap {
+          targets = [ script ];
+          startup = ".${builtins.unsafeDiscardStringContext script} '\"$@\"'";
+        };
     } // flake-utils.lib.eachDefaultSystem (system: (
       let
         pkgs = nixpkgs.legacyPackages.${system};

@@ -87,6 +87,24 @@
         "type": "github"
       }
     },
+    "nix-bundle": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1611183327,
+        "narHash": "sha256-3HN8pNxH8v+37z9L1Hr6WeyliOEDiN8F2eqAC1ICONM=",
+        "owner": "matthewbauer",
+        "repo": "nix-bundle",
+        "rev": "8e396533ef8f3e8a769037476824d668409b4a74",
+        "type": "github"
+      },
+      "original": {
+        "owner": "matthewbauer",
+        "repo": "nix-bundle",
+        "type": "github"
+      }
+    },
     "nix-cron": {
       "inputs": {
         "nixpkgs": [
@@ -123,6 +141,21 @@
       }
     },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1620055814,
+        "narHash": "sha256-8LEHoYSJiL901bTMVatq+rf8y7QtWuZhwwpKE2fyaRY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1db42b7fe3878f3f5f7a4f2dc210772fd080e205",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.03-small",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1620374106,
         "narHash": "sha256-1v3hj48aGu6pQZEW/nC/JIi+S1oUL3pJwCAyi4GLXNQ=",
@@ -191,9 +224,10 @@
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "neovim": "neovim",
+        "nix-bundle": "nix-bundle",
         "nix-cron": "nix-cron",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nord-dircolors": "nord-dircolors",
         "nord-tmux": "nord-tmux",
         "nur": "nur",
