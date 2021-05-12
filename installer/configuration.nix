@@ -26,6 +26,13 @@
       permitRootLogin = "yes";
     };
   };
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "curses";
+    };
+  };
   users.users.root.password = "nixos";
   environment = {
     variables.EDITOR = "vim";
