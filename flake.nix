@@ -22,6 +22,10 @@
       url = "github:nprindle/cs2110-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gytis = {
+      url = "github:gytis-ivaskevicius/nixfiles";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Sources
     neovim-git = {
@@ -49,6 +53,7 @@
     , nur
     , home-manager
     , cs2110-nix
+    , gytis
     , ...
     }@inputs:
     let
@@ -122,6 +127,7 @@
                 nixpkgs.overlays = [
                   nur.overlay
                   cs2110-nix.overlay
+                  gytis.overlay
                   self.overlays.neovim-overlay
                 ];
               };
