@@ -7,8 +7,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "anhsirk0";
     repo = "kakoune-themes";
-    rev = "58e18355fd94434314da7be2db81df72a7805218";
-    sha256 = "sha256-ITir5QPhY0gJAj8+YO8I1K+vTSwdbvaP39khY5CRpG0=";
+    rev = "4e80b493ac58d96d55bc0650c96d1c782c1f3f04";
+    sha256 = "sha256-9T9EoYgDq8xxXd5ihpPJPoy5EvigwmGAmyPKHzfdmyI=";
   };
   installPhase = ''
     target="$out"/share/kak

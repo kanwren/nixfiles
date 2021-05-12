@@ -76,10 +76,6 @@
     ];
   };
 
-  nixpkgs = {
-    overlays = builtins.map import (lib.filesystem.listFilesRecursive ./overlays);
-  };
-
   environment = {
     systemPackages = with pkgs; [
       vim

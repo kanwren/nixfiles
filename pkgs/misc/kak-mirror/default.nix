@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     owner = "Delapouite";
     repo = "kakoune-mirror";
     rev = "5710635f440bcca914d55ff2ec1bfcba9efe0f15";
-    sha256 = "0fd65clx9p6sslrl3l25m8l9ihl2mqrvvmmkjqr3bgk16vip3jds";
+    sha256 = "sha256-uslx4zZhvjUylrPWvTOugsKYKKpF0EEz1drc1Ckrpjk=";
   };
   installPhase = ''
     mkdir -p "$out"/share/kak/autoload/plugins/mirror

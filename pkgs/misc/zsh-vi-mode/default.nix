@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "jeffreytse";
     repo = "zsh-vi-mode";
     rev = "v${version}";
-    sha256 = "13ack8bxa92mg1dp2q2n3j1fhc6pnv7dv7wm2sjcxnx6nf9i3766";
+    sha256 = "sha256-xpwRk7Om286kFpWf3c621zDoghxWYHFbeFUk1ReaTI0=";
   };
 
   installPhase = ''

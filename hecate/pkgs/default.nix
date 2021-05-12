@@ -14,6 +14,7 @@ with rec {
     cachix
     patchelf
     nix-index
+    nix-prefetch-git
 
     # Core utils
     binutils-unwrapped

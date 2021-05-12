@@ -7,8 +7,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "andreyorst";
     repo = "smarttab.kak";
-    rev = "6e3264df7a9a786961e634d5ae8fb117ca86ef0a";
-    sha256 = "00r9i4v6aiy6yabf22y27idl2cvjivdfwn21aypxr0d849rfg6q8";
+    rev = "1dd3f33c4f65da5c13aee5d44b2e77399595830f";
+    sha256 = "sha256-4kEXeYKJrEIzJ+aEP/zTUjtWcRbbKm5Levbe9w6ZiTw=";
   };
   installPhase = ''
     mkdir -p "$out"/share/kak/autoload/plugins/smartindent

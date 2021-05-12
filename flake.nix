@@ -176,11 +176,17 @@
                 sops-nix.nixosModules.sops
                 self.nixosModules.duckdns
               ];
+              addOverlays = {
+                nixpkgs.overlays = [
+                  self.overlays.raspi-firmware-overlay
+                ];
+              };
             in
             nixpkgs.lib.flatten [
               (passArgs args)
               defaultModules
               mainModule
+              addOverlays
               otherModules
             ];
         };
@@ -189,6 +195,7 @@
       # Nixpkgs overlays
       overlays = {
         neovim-overlay = import ./overlays/neovim.nix { inherit neovim; };
+        raspi-firmware-overlay = import ./overlays/firmwareLinuxNonfree.nix;
       };
 
       # NixOS modules
