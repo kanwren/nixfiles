@@ -7,7 +7,7 @@ let
   nord-tmux-plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "nord-tmux";
     version = "0.3.0";
-    src = inputs.nord-tmux;
+    src = inputs.nord-tmux-git;
     rtpFilePath = "nord.tmux";
   };
 in

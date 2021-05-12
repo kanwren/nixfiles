@@ -64,7 +64,7 @@
       fi
 
       # Add some better ls colors
-      eval "$(${pkgs.coreutils}/bin/dircolors ${inputs.nord-dircolors}/src/dir_colors)"
+      eval "$(${pkgs.coreutils}/bin/dircolors ${inputs.nord-dircolors-git}/src/dir_colors)"
     '';
   };
 }

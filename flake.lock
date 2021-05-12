@@ -71,14 +71,14 @@
         "type": "github"
       }
     },
-    "neovim": {
+    "neovim-git": {
       "flake": false,
       "locked": {
-        "lastModified": 1620492871,
-        "narHash": "sha256-+gBnRA2OKXtgxgDYwIrC3riAbpDWtJ1zeL26J8y+dx8=",
+        "lastModified": 1620779525,
+        "narHash": "sha256-k4ePrffhuZoSDqZMOMHx1Rb/ehd6cjvJvc/Wh9Wr8Rg=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "f8173df4d7ecec239629921736340d3f4d1dcfd4",
+        "rev": "61aefaf2993c0b55f6123ba4b0bd41b1caf1fcd3",
         "type": "github"
       },
       "original": {
@@ -171,7 +171,7 @@
         "type": "github"
       }
     },
-    "nord-dircolors": {
+    "nord-dircolors-git": {
       "flake": false,
       "locked": {
         "lastModified": 1606638347,
@@ -187,7 +187,7 @@
         "type": "github"
       }
     },
-    "nord-tmux": {
+    "nord-tmux-git": {
       "flake": false,
       "locked": {
         "lastModified": 1598381672,
@@ -223,13 +223,13 @@
         "cs2110-nix": "cs2110-nix",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "neovim": "neovim",
+        "neovim-git": "neovim-git",
         "nix-bundle": "nix-bundle",
         "nix-cron": "nix-cron",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nord-dircolors": "nord-dircolors",
-        "nord-tmux": "nord-tmux",
+        "nord-dircolors-git": "nord-dircolors-git",
+        "nord-tmux-git": "nord-tmux-git",
         "nur": "nur",
         "sops-nix": "sops-nix"
       }

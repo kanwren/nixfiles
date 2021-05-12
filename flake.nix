@@ -1,54 +1,38 @@
 {
   inputs = {
+    # Flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    nur = {
-      url = "github:nix-community/NUR";
-    };
-
+    nur. url = "github:nix-community/NUR";
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
-
-    nix-bundle = {
-      url = "github:matthewbauer/nix-bundle";
-    };
-
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    flake-utils.url = "github:numtide/flake-utils";
+    nix-bundle.url = "github:matthewbauer/nix-bundle";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-cron = {
       url = "github:nprindle/nix-cron";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     cs2110-nix = {
       url = "github:nprindle/cs2110-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim = {
+    # Sources
+    neovim-git = {
       url = "github:neovim/neovim";
       flake = false;
     };
-
-    nord-dircolors = {
+    nord-dircolors-git = {
       url = "github:arcticicestudio/nord-dircolors";
       flake = false;
     };
-
-    nord-tmux = {
+    nord-tmux-git = {
       url = "github:arcticicestudio/nord-tmux";
       flake = false;
     };
@@ -65,10 +49,8 @@
     , nur
     , home-manager
     , cs2110-nix
-    , neovim
-    , nord-dircolors
-    , nord-tmux
-    }:
+    , ...
+    }@inputs:
     let
       # Module to pass extra arguments to modules
       passArgs = args: {
@@ -110,9 +92,7 @@
             let
               # extra args to pass to imported modules
               args = {
-                inputs = {
-                  inherit neovim nord-dircolors nord-tmux;
-                };
+                inherit inputs;
                 custom = {
                   pkgs = self.legacyPackages.${system};
                   inherit (self) hmModules;
@@ -167,7 +147,7 @@
             let
               # extra args to pass to imported modules
               args = {
-                inputs = { inherit nix-cron; };
+                inherit inputs;
               };
               # the main configuration
               mainModule = import ./homepi/configuration.nix;
@@ -194,7 +174,7 @@
 
       # Nixpkgs overlays
       overlays = {
-        neovim-overlay = import ./overlays/neovim.nix { inherit neovim; };
+        neovim-overlay = import ./overlays/neovim.nix { inherit inputs; };
         raspi-firmware-overlay = import ./overlays/firmwareLinuxNonfree.nix;
       };
 

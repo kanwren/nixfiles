@@ -1,10 +1,10 @@
-{ neovim, ... }:
+{ inputs, ... }:
 
 final: prev:
 
 {
   neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (old: {
-    src = neovim;
+    src = inputs.neovim-git;
     buildInputs = (old.buildInputs or [ ]) ++ [ prev.tree-sitter ];
   });
 }
