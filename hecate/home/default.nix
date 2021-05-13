@@ -81,7 +81,6 @@
           firefox
 
           # Applications
-          discord
           lightcord # from gytis' overlay
           slack
           teams

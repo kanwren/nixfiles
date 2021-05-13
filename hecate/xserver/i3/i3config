@@ -140,7 +140,7 @@ bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'mark: '
 bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
 
 # automatic marks
-for_window [class="^discord$"] mark d
+for_window [class="^lightcord$"] mark d
 for_window [class="^Spotify$"] mark s
 
 # define names for default workspaces for which we configure key bindings later on.
@@ -231,7 +231,7 @@ mode "quicklaunch" {
     bindsym v exec kitty vim;                                        mode "default"
     bindsym b exec firefox;                                          mode "default"
     bindsym k exec firefox-app https://trello.com/b/xitLgASa/kanban; mode "default"
-    bindsym d exec Discord;                                          mode "default"
+    bindsym d exec lightcord;                                        mode "default"
     bindsym s exec spotify;                                          mode "default"
     bindsym Escape mode "default"
 }
