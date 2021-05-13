@@ -220,7 +220,7 @@
                 "${builtins.dirOf program}/${envProg}";
             script = pkgs.writeScript "startup" ''
               #!/bin/sh
-              .${bundle.nix-user-chroot}/bin/nix-user-chroot -n ./nix -- "${prog}"
+              .${bundle.nix-user-chroot}/bin/nix-user-chroot -n ./nix -- "${prog}" "$@"
             '';
           in
           bundle.makebootstrap {
