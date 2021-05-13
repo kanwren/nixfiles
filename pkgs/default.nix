@@ -16,6 +16,9 @@ in
     kakounePlugins
     zshPlugins;
 
+  inherit (pkgs.callPackage ./tools { })
+    carbon-now;
+
   scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });
 }
 
