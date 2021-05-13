@@ -1,6 +1,6 @@
-# nixos-configs
+# nixfiles
 
-My NixOS configurations :snowflake:
+My NixOS configurations and other Nix files :snowflake:
 
 ### Overview
 
@@ -10,7 +10,9 @@ My NixOS configurations :snowflake:
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake. Usually seen imported as `custom.pkgs` when used in configs.
 - [`lib/`](lib/): Custom library functions used throughout the configs and exported from flake. Usually seen imported as `custom.lib` or `nlib`.
 - [`installer/`](installer/): Minimal installer configuration. `installer/configuration.nix` contains instructions for building installer ISOs/SD images using [nixos-generators](https://github.com/nix-community/nixos-generators)
+- `overlays/`: Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
+- `templates/`: Nix flake templates, as used by `nix flake new`
 
 ### Hosts
 
