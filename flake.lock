@@ -275,6 +275,26 @@
         "type": "github"
       }
     },
+    "nixos-generators": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1619331923,
+        "narHash": "sha256-tfnk/RreuoSkYuHoY3fDHqXX7FfWsFG0Odh9GeLYLC8=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "7e14cf7ef52343ca39b48542d7f80e0982eaccdb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1619336929,
@@ -445,6 +465,7 @@
         "neovim-git": "neovim-git",
         "nix-bundle": "nix-bundle",
         "nix-cron": "nix-cron",
+        "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nord-dircolors-git": "nord-dircolors-git",
