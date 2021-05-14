@@ -255,6 +255,13 @@
 
         # flattened packages for flake
         packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
+
+        apps = {
+          carbon-now = {
+            type = "app";
+            program = "${self.packages.${system}.carbon-now-cli}/bin/carbon-now";
+          };
+        };
       }
     ));
 }

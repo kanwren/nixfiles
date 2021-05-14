@@ -17,7 +17,7 @@ in
     zshPlugins;
 
   inherit (pkgs.callPackage ./tools { })
-    carbon-now;
+    carbon-now-cli;
 
   scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });
 }

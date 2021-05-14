@@ -1,7 +1,7 @@
 { pkgs }:
 
 {
-  carbon-now = pkgs.callPackage ./carbon-now {
+  carbon-now-cli = pkgs.callPackage ./carbon-now-cli {
     nodejs = pkgs.nodejs-14_x;
   };
 }
