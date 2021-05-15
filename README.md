@@ -11,7 +11,7 @@ My NixOS configurations and other Nix files :snowflake:
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake. Usually seen imported as `custom.pkgs` when used in configs.
 - [`lib/`](lib/): Custom library functions used throughout the configs and exported from flake. Usually seen imported as `custom.lib` or `nlib`.
-- [`installer/`](installer/): Minimal installer configuration. `installer/configuration.nix` contains instructions for building installer ISOs/SD images using [nixos-generators](https://github.com/nix-community/nixos-generators)
+- [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
 - `overlays/`: Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
 - `templates/`: Nix flake templates, as used by `nix flake new`
@@ -45,6 +45,29 @@ The bulk of the configuration is for my main laptop `hecate`:
 - [`users/`](users/): Set up all the users and groups
 - [`virtualisation/`](virtualisation/): Configurations for programs used for containerization and virtualization (docker, podman, etc.)
 - [`xserver/`](xserver/): Graphical configurations (display manager, window manager, fonts, applets, etc.)
+
+### `installer`
+
+`installer/` contains a custom installer configuration. This can be built
+manually via [nixos-generators](https://github.com/nix-community/nixos-generators).
+For example, if building on an `x86_64-linux` system:
+
+```
+# x86_64-linux installer iso
+$ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
+    -f install-iso -c installer/configuration.nix
+
+# aarch64-linux installer sd image (requires 'boot.binfmt.emulatedSystems = [ "aarch64-linux" ];')
+$ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
+    -f sd-aarch64-installer --system aarch64-linux -c installer/configuration.nix
+```
+
+Alternatively, `legacyPackages` exports derivations to do this automatically:
+
+```
+$ nix build 'github:nprindle/nixfiles#legacyPackages.x86_64-linux.installer.install-iso'
+$ nix build 'github:nprindle/nixfiles#legacyPackages.aarch64-linux.installer.sd-aarch64-installer'
+```
 
 ### sops-nix
 
