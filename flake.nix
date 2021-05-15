@@ -2,7 +2,7 @@
   inputs = {
     # Flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nur. url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR";
     home-manager = {
       url = "github:rycee/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

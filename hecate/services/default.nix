@@ -13,7 +13,7 @@
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
 
-    gnome3 = {
+    gnome = {
       gnome-keyring.enable = true;
     };
 
