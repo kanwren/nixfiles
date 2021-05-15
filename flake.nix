@@ -26,6 +26,14 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    naersk = {
+      url = "github:nmattia/naersk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     gytis = {
       url = "github:gytis-ivaskevicius/nixfiles";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,6 +66,8 @@
     , home-manager
     , cs2110-nix
     , nixos-generators
+    , naersk
+    , fenix
     , gytis
     , ...
     }@inputs:
@@ -260,14 +270,23 @@
           };
 
           # traditional nested packages
-          legacyPackages = import ./pkgs { inherit pkgs nur; } // {
-            # custom installers via nixos-generators; we explicitly do not
-            # recurseIntoAttrs to prevent them being put in 'packages'
-            installer = import ./installer/installers.nix {
-              inherit nixpkgs system nixos-generators;
-              inherit (nixpkgs) lib;
-            };
-          };
+          legacyPackages =
+            let
+              base = import ./pkgs {
+                inherit pkgs nur;
+                fenix = fenix.packages.${system};
+                naersk = naersk.lib.${system};
+              };
+              installers = {
+                # custom installers via nixos-generators; we explicitly do not
+                # recurseIntoAttrs to prevent them being put in 'packages'
+                installer = import ./installer/installers.nix {
+                  inherit nixpkgs system nixos-generators;
+                  inherit (nixpkgs) lib;
+                };
+              };
+            in
+            base // installers;
 
           # flattened packages for flake
           packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
@@ -276,6 +295,10 @@
             carbon-now = {
               type = "app";
               program = "${self.packages.${system}.carbon-now-cli}/bin/carbon-now";
+            };
+            nix-autobahn = {
+              type = "app";
+              program = "${self.packages.${system}.nix-autobahn}/bin/nix-autobahn";
             };
           };
         }

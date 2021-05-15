@@ -37,6 +37,28 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "naersk": "naersk",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1621046791,
+        "narHash": "sha256-kSyaZCo2aECwS3c7eXhknXvR+XQigjxBlaRYhfVH2uc=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "fffd864ad08ed95fcb66554513fa07a5f3d626b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1614513358,
@@ -195,6 +217,46 @@
       "original": {
         "owner": "Lightcord",
         "repo": "Lightcord",
+        "type": "github"
+      }
+    },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1620316130,
+        "narHash": "sha256-sU0VS5oJS1FsHsZsLELAXc7G2eIelVuucRw+q5B1x9k=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "a3f40fe42cc6d267ff7518fa3199e99ff1444ac4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmattia",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
+    "naersk_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1620316130,
+        "narHash": "sha256-sU0VS5oJS1FsHsZsLELAXc7G2eIelVuucRw+q5B1x9k=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "a3f40fe42cc6d267ff7518fa3199e99ff1444ac4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmattia",
+        "repo": "naersk",
         "type": "github"
       }
     },
@@ -459,9 +521,11 @@
     "root": {
       "inputs": {
         "cs2110-nix": "cs2110-nix",
+        "fenix": "fenix",
         "flake-utils": "flake-utils_2",
         "gytis": "gytis",
         "home-manager": "home-manager_2",
+        "naersk": "naersk_2",
         "neovim-git": "neovim-git",
         "nix-bundle": "nix-bundle",
         "nix-cron": "nix-cron",
@@ -472,6 +536,23 @@
         "nord-tmux-git": "nord-tmux-git",
         "nur": "nur_2",
         "sops-nix": "sops-nix"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1621033839,
+        "narHash": "sha256-QLKsmo7toh3VNW4H6Sng4m8tG2xXBQhS6fW2ZPtpOgc=",
+        "owner": "rust-analyzer",
+        "repo": "rust-analyzer",
+        "rev": "87ef340c19ae5ac73fc9b1cd37909d9d8ad53d09",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-analyzer",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "sops-nix": {
