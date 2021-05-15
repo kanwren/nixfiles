@@ -18,6 +18,7 @@
         ./direnv
         ./dunst
         ./firefox
+        ./flameshot
         ./git
         ./gpg-agent
         ./gtk

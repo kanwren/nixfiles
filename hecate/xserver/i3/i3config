@@ -60,8 +60,7 @@ bindsym $mod+Shift+f exec thunar
 for_window [class="^Thunar$"] floating enable
 
 # take a screenshot
-bindsym Print exec scrot
-bindsym Shift+Print exec "scrot -s"
+bindsym Print exec flameshot gui
 
 # open floating graphical calculator session
 bindsym XF86Calculator exec qalculate-gtk
