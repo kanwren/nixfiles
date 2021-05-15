@@ -17,4 +17,8 @@ rec {
   # non-derivation attrset
   recursiveDerivations = as:
     builtins.filter lib.isDerivation (recursiveValues as);
+
+  # Combine a list of attribute sets with a right-biased merge. If two attribute
+  # sets share a key, their values are merged recursively.
+  recursiveMergeAttrs = lib.foldl' lib.recursiveUpdate { };
 }

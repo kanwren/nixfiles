@@ -62,7 +62,8 @@
     , ...
     }@inputs:
     let
-      recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
+      # custom library
+      nlib = import ./lib { inherit (nixpkgs) lib; };
       # Module to pass extra arguments to modules
       passArgs = args: {
         config._module.args = args;
@@ -94,7 +95,7 @@
         pinFlakes
       ];
     in
-    recursiveMergeAttrs [
+    nlib.attrsets.recursiveMergeAttrs [
       {
         nixosConfigurations = {
           # main dev laptop
@@ -198,11 +199,11 @@
 
         # home-manager modules
         hmModules = {
-          xcompose = import ./hm-modules/xcompose.nix { nlib = self.lib; };
+          xcompose = import ./hm-modules/xcompose.nix { inherit nlib; };
         };
 
         # custom lib functions
-        lib = import ./lib { inherit (nixpkgs) lib; };
+        lib = nlib;
 
         # custom templates
         templates = {
