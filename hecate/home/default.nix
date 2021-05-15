@@ -47,7 +47,8 @@
         # - Write the configuration file and use home-manager to manage it
         packages = with pkgs; [
           # CLI tools
-          gist # GitHub gists
+          gitAndTools.gist # GitHub gists
+          gitAndTools.gh # GitHub CLI
           shellcheck # check shell scripts
           woof # quickly serve files locally over http
           tokei # count lines of code
