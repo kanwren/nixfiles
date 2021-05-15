@@ -1,7 +1,5 @@
 { pkgs ? import <nixpkgs> { }
 , nur
-, naersk
-, fenix
 }:
 
 let
@@ -30,8 +28,6 @@ in
   carbon-now-cli = pkgs.callPackage ./tools/carbon-now-cli {
     nodejs = pkgs.nodejs-14_x;
   };
-
-  nix-autobahn = pkgs.callPackage ./tools/nix-autobahn { inherit naersk fenix; };
 
   # scripts
   scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });

@@ -299,6 +299,31 @@
         "type": "github"
       }
     },
+    "nix-autobahn": {
+      "inputs": {
+        "fenix": "fenix",
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "naersk": "naersk_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1621064935,
+        "narHash": "sha256-xnVaWh8z59l2dYkcNWTN1qfBSZYlzlKa0dqQGtZIAfI=",
+        "owner": "nprindle",
+        "repo": "nix-autobahn",
+        "rev": "4c8e04192b8ef59fe27574d4000d9bb93fdc045b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nprindle",
+        "repo": "nix-autobahn",
+        "type": "github"
+      }
+    },
     "nix-bundle": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -521,12 +546,11 @@
     "root": {
       "inputs": {
         "cs2110-nix": "cs2110-nix",
-        "fenix": "fenix",
         "flake-utils": "flake-utils_2",
         "gytis": "gytis",
         "home-manager": "home-manager_2",
-        "naersk": "naersk_2",
         "neovim-git": "neovim-git",
+        "nix-autobahn": "nix-autobahn",
         "nix-bundle": "nix-bundle",
         "nix-cron": "nix-cron",
         "nixos-generators": "nixos-generators",
