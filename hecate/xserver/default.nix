@@ -70,6 +70,8 @@
         # Lock screen
         i3lock
         betterlockscreen
+        # Clipboard manager
+        copyq
         # Applets
         networkmanagerapplet
         blueman

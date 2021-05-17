@@ -5,6 +5,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 exec --no-startup-id compton
+exec --no-startup-id copyq
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id mate-volume-control-status-icon
@@ -69,6 +70,10 @@ for_window [class="^Qalculate-gtk$"] floating enable
 # Float Microsoft Teams notifications
 no_focus [title="Microsoft Teams Notification"]
 for_window [title="Microsoft Teams Notification"] floating enable
+
+# copyq and main window floating
+bindsym $mod+n exec copyq show
+for_window [class="^copyq$"] floating enable
 
 # i3 management
 
