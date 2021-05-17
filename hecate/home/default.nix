@@ -14,23 +14,23 @@
       imports = [
         custom.hmModules.xcompose
 
-        ./bash
-        ./direnv
-        ./dunst
-        ./firefox
-        ./flameshot
-        ./git
-        ./gpg-agent
-        ./gtk
-        ./haskell
-        ./kakoune
-        ./kitty
-        ./nushell
-        ./rofi
-        ./tmux
-        ./vscode
-        ./xserver
-        ./zathura
+        ../../home/bash
+        ../../home/direnv
+        ../../home/dunst
+        ../../home/firefox
+        ../../home/flameshot
+        ../../home/git
+        ../../home/gpg-agent
+        ../../home/gtk
+        ../../home/haskell
+        ../../home/kakoune
+        ../../home/kitty
+        ../../home/nushell
+        ../../home/rofi
+        ../../home/tmux
+        ../../home/vscode
+        ../../home/xserver
+        ../../home/zathura
       ];
 
       _module.args = {
