@@ -1,5 +1,4 @@
 { writeShellScriptBin
-, nix
 , addmeta
 }:
 
@@ -16,7 +15,7 @@ let
         args="$*"
         ;;
     esac
-    ${nix}/bin/nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
+    nix-shell -p "haskell.packages.$ghc.ghcWithPackages (p: with p; [ $args ])"
   '';
 in
 addmeta script {
