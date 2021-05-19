@@ -37,6 +37,14 @@
       url = "github:gytis-ivaskevicius/nixfiles";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    naersk = {
+      url = github:nmattia/naersk;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fenix = {
+      url = github:nix-community/fenix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Sources
     neovim-git = {
@@ -63,6 +71,8 @@
     , nix-cron
     , nur
     , home-manager
+    , naersk
+    , fenix
     , cs2110-nix
     , nixos-generators
     , nix-autobahn
@@ -272,6 +282,8 @@
             let
               base = import ./pkgs {
                 inherit pkgs nur;
+                naersk = naersk.lib.${system};
+                fenix = fenix.packages.${system};
               };
               installers = {
                 # custom installers via nixos-generators; we explicitly do not
