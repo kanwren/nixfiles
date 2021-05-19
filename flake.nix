@@ -304,6 +304,10 @@
               type = "app";
               program = "${self.packages.${system}.carbon-now-cli}/bin/carbon-now";
             };
+            rust-script = {
+              type = "app";
+              program = "${self.packages.${system}.rust-script}/bin/rust-script";
+            };
           };
         }
       )))
