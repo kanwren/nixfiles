@@ -7,15 +7,15 @@ SRC = $(glob *.tex)
 all: $(DOCNAME).pdf
 
 $(DOCNAME).pdf: $(MAIN) $(SRC)
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(MAIN)
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -jobname="$(DOCNAME)" -use-make "$(MAIN)"
 
 .PHONY: watch
 watch: $(MAIN) $(SRC)
-	latexmk -pvc -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(MAIN)
+	latexmk -pvc -pdf -pdflatex="pdflatex -interaction=nonstopmode" -jobname="$(DOCNAME)" -use-make "$(MAIN)"
 
 .PHONY: clean
 clean:
-	latexmk -CA
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -jobname="$(DOCNAME)" -use-make "$(MAIN)" -CA
 
 .PHONY: install
 install:
