@@ -122,9 +122,9 @@ if [ "$imageNameType" = "literal" ]; then
   imageName="$1"
 elif [ "$imageNameType" = "shorthand" ]; then
   if ! season="$(get_semester)"; then
-    >&2 echo "Could not automatically determine season"
+    exit 1
   fi
-  imageName="gtcs2110/$1-spring21:latest"
+  imageName="gtcs2110/$1-$season:latest"
 else
   >&2 echo "Error: invalid image name type: $imageNameType"
   exit 1
