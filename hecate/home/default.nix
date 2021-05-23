@@ -53,17 +53,13 @@
           woof # quickly serve files locally over http
           tokei # count lines of code
           h # quick directory jumping
-          cookiecutter # generate projects from templates
           jo # easy json generation for the command line
           httpie # command-line REST API client
-          insomnia # graphical REST API client
-          ranger # console file manager
 
           # Development
           stdenv.cc
           stdenv.cc.cc.man
           rustup
-          nodejs-14_x
 
           # System monitoring
           gotop
@@ -76,18 +72,14 @@
           # Old complx looks bad with dark GTK theme
           (cs2110.complx.override { disableGTK = true; })
 
-          # Documents
-          libreoffice
-
-          # Browsers
-          firefox
-
           # Applications
-          lightcord # from gytis' overlay
+          firefox
+          libreoffice
+          lightcord # from gytis
           slack
           teams
           spotify
-          thunderbird
+          insomnia # graphical REST API client
         ];
       };
     };

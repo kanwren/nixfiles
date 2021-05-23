@@ -40,7 +40,6 @@ with rec {
     tldr
     entr
     jq
-    unar
     # Alternatives to coreutils
     ripgrep
     fd
@@ -53,7 +52,6 @@ with rec {
 
     # CLI math tools
     bc
-    units
     libqalculate
     qalculate-gtk # graphical calculator
 
@@ -65,9 +63,9 @@ with rec {
     unzip
     xz
     unrar
+    unar
 
     # Filesystem tools
-    parted
     ntfsprogs
 
     # Crypto stuff
@@ -82,7 +80,6 @@ with rec {
     # Media
     exiftool # EXIF data
     feh # image viewer
-    scrot # screenshot tool
     imagemagick7 # image manipulation tools
     gimp # image editor
     zathura # PDF viewer
