@@ -2,6 +2,7 @@
 , fenix
 , fetchFromGitHub
 , pkgsStatic
+, lib
 }:
 
 let
@@ -27,4 +28,9 @@ naersk-lib.buildPackage {
   nativeBuildInputs = [ pkgsStatic.stdenv.cc ];
   CARGO_BUILD_TARGET = "x86_64-unknown-linux-musl";
   CARGO_BUILD_RUSTFLAGS = "-C target-feature=+crt-static";
+
+  meta = {
+    description = "Run Rust files and expressions as scripts without any setup or compilation step";
+    licenses = with lib.licenses; [ mit asl20 ];
+  };
 }
