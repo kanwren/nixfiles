@@ -220,12 +220,13 @@ mode "resize" {
 bindsym $mod+Control+Shift+k mode "xkbmap"
 mode "xkbmap" {
     # keybindings for switching keyboard layouts
-    bindsym 1 exec setxkbmap -layout  us;       mode "default"
-    bindsym 2 exec setxkbmap -variant dvorak;   mode "default"
-    bindsym 3 exec setxkbmap -variant dvp;      mode "default"
-    bindsym 4 exec setxkbmap -variant dvorak-l; mode "default"
-    bindsym 5 exec setxkbmap -variant dvorak-r; mode "default"
-    bindsym 6 exec setxkbmap -variant colemak;  mode "default"
+    bindsym 1 exec "setxkbmap -layout  us";                                         mode "default"
+    bindsym 2 exec "setxkbmap -variant dvorak";                                     mode "default"
+    bindsym 3 exec "setxkbmap -variant dvp";                                        mode "default"
+    bindsym 4 exec "setxkbmap -variant dvorak-l";                                   mode "default"
+    bindsym 5 exec "setxkbmap -variant dvorak-r";                                   mode "default"
+    bindsym 6 exec "setxkbmap -variant colemak";                                    mode "default"
+    bindsym 7 exec "setxkbmap -layout us,apl -variant ,dyalog -option grp:switch";  mode "default"
 
     bindsym Escape mode "default"
 }
