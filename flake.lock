@@ -39,7 +39,9 @@
     },
     "fenix": {
       "inputs": {
-        "naersk": "naersk",
+        "naersk": [
+          "naersk"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -61,7 +63,9 @@
     },
     "fenix_2": {
       "inputs": {
-        "naersk": "naersk_3",
+        "naersk": [
+          "naersk"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -282,46 +286,6 @@
         "type": "github"
       }
     },
-    "naersk_3": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1620316130,
-        "narHash": "sha256-sU0VS5oJS1FsHsZsLELAXc7G2eIelVuucRw+q5B1x9k=",
-        "owner": "nmattia",
-        "repo": "naersk",
-        "rev": "a3f40fe42cc6d267ff7518fa3199e99ff1444ac4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nmattia",
-        "repo": "naersk",
-        "type": "github"
-      }
-    },
-    "naersk_4": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1620316130,
-        "narHash": "sha256-sU0VS5oJS1FsHsZsLELAXc7G2eIelVuucRw+q5B1x9k=",
-        "owner": "nmattia",
-        "repo": "naersk",
-        "rev": "a3f40fe42cc6d267ff7518fa3199e99ff1444ac4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nmattia",
-        "repo": "naersk",
-        "type": "github"
-      }
-    },
     "neovim": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -367,7 +331,7 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "naersk": "naersk_4",
+        "naersk": "naersk_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -612,7 +576,7 @@
         "flake-utils": "flake-utils_2",
         "gytis": "gytis",
         "home-manager": "home-manager_2",
-        "naersk": "naersk_2",
+        "naersk": "naersk",
         "neovim-git": "neovim-git",
         "nix-autobahn": "nix-autobahn",
         "nix-bundle": "nix-bundle",
