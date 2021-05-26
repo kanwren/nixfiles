@@ -48,12 +48,12 @@
         naersk.follows = "naersk";
       };
     };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Sources
-    neovim-git = {
-      url = "github:neovim/neovim";
-      flake = false;
-    };
     nord-dircolors-git = {
       url = "github:arcticicestudio/nord-dircolors";
       flake = false;
@@ -80,6 +80,7 @@
     , nixos-generators
     , nix-autobahn
     , gytis
+    , neovim-nightly-overlay
     , ...
     }@inputs:
     let
@@ -157,7 +158,7 @@
                     nur.overlay
                     cs2110-nix.overlay
                     gytis.overlay
-                    self.overlays.neovim-overlay
+                    neovim-nightly-overlay.overlay
                   ];
                 };
                 # extra modules from the inputs
