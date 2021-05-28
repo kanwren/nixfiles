@@ -210,7 +210,6 @@
 
         # Nixpkgs overlays
         overlays = {
-          neovim-overlay = import ./overlays/neovim.nix { inherit inputs; };
           raspi-firmware-overlay = import ./overlays/firmwareLinuxNonfree.nix;
         };
 
