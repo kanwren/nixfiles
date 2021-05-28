@@ -74,7 +74,6 @@
 
           # Applications
           firefox
-          chromium
           libreoffice
           lightcord # from gytis
           slack
