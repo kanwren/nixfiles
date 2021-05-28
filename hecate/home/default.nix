@@ -57,9 +57,18 @@
           httpie # command-line REST API client
 
           # Development
+          # C
           stdenv.cc
           stdenv.cc.cc.man
+          # Rust
           rustup
+          cargo-cache
+          cargo-edit
+          cargo-expand
+          cargo-feature
+          cargo-inspect
+          cargo-valgrind
+          cargo-watch
 
           # System monitoring
           gotop
