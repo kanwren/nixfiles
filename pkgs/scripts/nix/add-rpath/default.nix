@@ -15,8 +15,8 @@ let
     eval set -- "$args"
 
     appendType="prepend"
-    for opt; do
-      case "$opt" in
+    while :; do
+      case "$1" in
         -h|--help) print_usage; exit 0 ;;
         -a|--append) appendType="append"; shift; break ;;
         --) shift; break ;;

@@ -58,8 +58,8 @@ eval set -- "$args"
 
 interactive="false"
 imageNameType=""
-for opt; do
-  case "$opt" in
+while :; do
+  case "$1" in
     -i|--interactive)
       interactive="true"
       shift
