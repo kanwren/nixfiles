@@ -41,7 +41,15 @@ def check_block_hash: .index as $ix | .value.current_block_hash as $hash | $spli
 
 def check_block_hashes: map(check_block_hash) | combine_results;
 
-def all_checks: [check_first_block, check_pairs, check_block_hashes] | combine_results;
+def check_file_hash: .[-1].index as $ix | .[-1].value.file_data_hash as $hash
+    | if $hash == $file_data_hash then
+        { success: true }
+    else
+        { success: false, msg: "Hash mismatch: expected file data hash \($file_data_hash) at index \($ix), but got hash \($hash)\n" }
+    end
+;
+
+def all_checks: [check_first_block, check_pairs, check_block_hashes, check_file_hash] | combine_results;
 
 def report_errors: if .success then empty else .msg | halt_error(1) end;
 

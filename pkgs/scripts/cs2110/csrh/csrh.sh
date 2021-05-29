@@ -13,7 +13,7 @@ invoke_main() {
   usage_text=""
   define usage_text <<'EOF'
 USAGE:
-    csrh [view|check|fix] ARGS...
+    csrh [view|check|fix|file-hash] ARGS...
 
 OPTIONS:
     -h, --help
@@ -41,6 +41,9 @@ EOF
       ;;
     fix)
       invoke_fix "$@"
+      ;;
+    file-hash)
+      invoke_file_hash "$@"
       ;;
     *)
       >&2 echo "Error: no such subcommand $arg"
@@ -98,20 +101,64 @@ compute_hashes() {
   join_by ":" "${hashes[@]}"
 }
 
-invoke_check() {
-  description="Check the integriry of CircuitSim revision histories"
+invoke_file_hash() {
+  description="Compute the hash of CircuitSim file data"
 
   usage_text=""
   define usage_text <<'EOF'
 USAGE:
-    csrh check <FILE>...
+    csrh file-hash <FILE>
 
 OPTIONS:
     -h, --help
             Show this help text
 
 ARGS:
-    <FILE>...
+    <FILE>
+            CircuitSim file to hash
+EOF
+
+  if ! args=$(getopt -o h --long help -n "csrh file-hash" -- "$@"); then
+    print_usage; exit 1
+  fi
+  eval set -- "$args"
+
+  for opt; do
+    case "$opt" in
+      -h|--help) print_help; exit 0 ;;
+      --) shift; break ;;
+      *) exit 1 ;;
+    esac
+  done
+
+  if [ $# -eq 0 ]; then
+    print_help; exit 0
+  elif [ $# -ne 1 ]; then
+    >&2 echo "Error: expected input file"; print_usage; exit 1
+  fi
+
+  file="$1"
+  # sha256 the circuit data. Note that this relies on 2-space indentation.
+  # TODO: library JSON data is prepended to the circuit data. We leave it null
+  # here, but it would be nice to handle it.
+  file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
+  echo "$file_data_hash"
+}
+
+invoke_check() {
+  description="Check the integriry of CircuitSim revision histories"
+
+  usage_text=""
+  define usage_text <<'EOF'
+USAGE:
+    csrh check <FILE>
+
+OPTIONS:
+    -h, --help
+            Show this help text
+
+ARGS:
+    <FILE>
             CircuitSim file to check
 EOF
 
@@ -137,6 +184,7 @@ EOF
   file="$1"
 
   current_history="$(invoke_view "$file")"
+  file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
 
   if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
     >&2 echo "Error: This does not look like a CircuitSim file"
@@ -145,7 +193,10 @@ EOF
 
   block_hashes="$(compute_hashes "$current_history")"
 
-  if jq -f @circuitsimCheckHistoryScript@ --arg hashes "$block_hashes" <(echo "$current_history"); then
+  if jq -f @circuitsimCheckHistoryScript@ \
+      --arg hashes "$block_hashes" \
+      --arg file_data_hash "$file_data_hash" \
+      <(echo "$current_history"); then
     echo "OK"
   else
     exit "$?"
@@ -158,7 +209,8 @@ invoke_fix() {
   usage_text=""
   define usage_text <<'EOF'
 USAGE:
-    csrh fix [-a|--append] [-f|--force] <FILE>...
+    csrh fix [-a|--append] [-f|--force] (--timestamp TIMESTAMP) (--file-hash SHA256)
+             [--random-file-hash] <FILE>
 
 OPTIONS:
     -a, --append
@@ -166,12 +218,20 @@ OPTIONS:
             revision signature if there are none.
     -f, --force
             Overwrite existing revision signatures with a new one.
+    --timestamp TIMESTAMP
+            Provide the timestamp to use in the new signature. Defaults to the current time.
+            Expected format is a time in milliseconds, as given by "date +%s%3N".
+    --file-hash SHA256
+            Provide the file hash to use in the new signature. Defaults to the actual computed hash
+            of the file data.
+    --random-file-hash
+            Use a random file hash in the new signature.
     -h, --help
             Show this help text
 
 ARGS:
-    <FILE>...
-            File(s) to fix
+    <FILE>
+            File to fix
 EOF
 
   if [ $# -eq 0 ]; then
@@ -179,7 +239,7 @@ EOF
     exit 0
   fi
 
-  if ! args=$(getopt -o afh --long append,force,help -n "csrh fix" -- "$@"); then
+  if ! args=$(getopt -o afh --long append,force,timestamp:,file-hash:,random-file-hash,help -n "csrh fix" -- "$@"); then
     print_usage
     exit 1
   fi
@@ -188,15 +248,46 @@ EOF
 
   mode="overwrite"
   force="false"
+  provided_timestamp=""
+  provided_file_hash=""
+  random_file_hash="false"
   for opt; do
     case "$opt" in
       -a|--append)
         mode="append"
-        shift
         ;;
       -f|--force)
         force="true"
+        ;;
+      --timestamp)
         shift
+        if [[ ! "$1" =~ ^[0-9]+$ ]]; then
+          >&2 echo "Error: provided timestamp is not valid"
+          exit 1
+        fi
+        provided_timestamp="$1"
+        ;;
+      --file-hash)
+        if [ -n "$provided_file_hash" ]; then
+          >&2 echo "Error: file hash already provided"
+          exit 1
+        fi
+        shift
+        if [[ ! "$1" =~ ^[0-9a-f]{64}$ ]]; then
+          >&2 echo "Error: provided file hash is not valid for SHA-256"
+          exit 1
+        fi
+        provided_file_hash="$1"
+        ;;
+      --random-file-hash)
+        if [ -n "$provided_file_hash" ]; then
+          >&2 echo "Error: file hash already provided"
+          exit 1
+        fi
+        set +e
+        provided_file_hash="$(fold -w 256 /dev/urandom | head -n 1 | sha256sum | awk '{print $1}')"
+        set -e
+        random_file_hash="true"
         ;;
       -h|--help)
         print_help
@@ -208,6 +299,7 @@ EOF
         ;;
       *) exit 1 ;;
     esac
+    shift
   done
 
   if [ $# -eq 0 ]; then
@@ -216,92 +308,97 @@ EOF
     exit 1
   fi
 
-  for ((n=1; n <= $#; n += 1)); do
-    if [ "$n" -gt 1 ]; then
-      echo ""
+  file="$1"
+  echo "Uncorrupting $file..."
+
+  echo "Checking file integrity..."
+  if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
+    >&2 echo "Error: This does not look like a CircuitSim file"
+    exit 1
+  fi
+
+  # Get the last element .revisionSignature if present
+  previous_signature="$(jq '.revisionSignatures | if (length == 0) then "" else .[-1] end' "$file" -r)"
+  echo "Previous signature: $previous_signature"
+
+  if [ -n "$previous_signature" ]; then
+    # Error out if trying to overwrite an existing revision signature without -f
+    if [ "$mode" != "append" ] && [ "$force" != "true" ]; then
+      >&2 echo -e "Error: found previous revision signature. Check its integrity with \"csrh check\" or use --force to overwrite."
+      exit 1
     fi
 
-    file="${!n}"
-    echo "Uncorrupting $file..."
-
-    echo "Checking file integrity..."
-    if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
-      >&2 echo "Error: This does not look like a CircuitSim file"
-      continue
-    fi
-
-    # Get the last element .revisionSignature if present
-    previous_signature="$(jq '.revisionSignatures | if (length == 0) then "" else .[-1] end' "$file" -r)"
-    echo "Previous signature: $previous_signature"
-
-    if [ -n "$previous_signature" ]; then
-      # Error out if trying to overwrite an existing revision signature without -f
-      if [ "$mode" != "append" ] && [ "$force" != "true" ]; then
-        >&2 echo -e "Error: found previous revision signature. Check its integrity with \"csrh check\" or use --force to overwrite."
-        continue
-      fi
-
-      # Error out if revision history is corrupted and not using -f
-      if ! check_result="$(invoke_check "$file" 2>&1)"; then
-        if [ "$force" = "true" ]; then
-          >&2 echo "Warning: revision history is corrupted."
-          >&2 echo "$check_result"
-        else
-          >&2 echo "Error: revision history is corrupted (run \"csrh check\" for details). Use --force to append anyway."
-          continue
-        fi
+    # Error out if revision history is corrupted and not using -f
+    if ! check_result="$(invoke_check "$file" 2>&1)"; then
+      if [ "$force" = "true" ]; then
+        >&2 echo "Warning: revision history is corrupted."
+        >&2 echo "$check_result"
+      else
+        >&2 echo "Error: revision history is corrupted (run \"csrh check\" for details). Use --force to append anyway."
+        exit 1
       fi
     fi
+  fi
 
-    # The previous hash is the second field of the decoded signature
-    previous_hash="$(echo -n "$previous_signature" | base64 -d | cut -d$'\t' -f2)"
-    echo "Previous hash: $previous_hash"
+  # The previous hash is the second field of the decoded signature
+  previous_hash="$(echo -n "$previous_signature" | base64 -d | cut -d$'\t' -f2)"
+  echo "Previous hash: $previous_hash"
 
-    # clear hash if overwriting with force
-    if [ "$mode" != "append" ]; then
-      previous_hash=""
+  # clear hash if overwriting with force
+  if [ "$mode" != "append" ]; then
+    previous_hash=""
+  fi
+
+  if [ -n "$provided_file_hash" ]; then
+    file_data_hash="$provided_file_hash"
+    if [ "$random_file_hash" = "true" ]; then
+      echo "File data hash (random): $file_data_hash"
+    else
+      echo "File data hash (provided): $file_data_hash"
     fi
-
-    # sha256 the circuit data. Note that this relies on 2-space indentation.
-    # TODO: library JSON data is prepended to the circuit data. We leave it null
-    # here, but it would be nice to handle it.
-    file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
+  else
+    file_data_hash="$(invoke_file_hash "$file")"
     echo "File data hash: $file_data_hash"
+  fi
 
-    # A timestamp like outputted by System.getCurrentTimeMillis()
+  # A timestamp like outputted by System.getCurrentTimeMillis()
+  if [ -n "$provided_timestamp" ]; then
+    timestamp="$provided_timestamp"
+    echo "Timestamp (provided): $timestamp"
+  else
     timestamp="$(date "+%s%3N")"
     echo "Timestamp: $timestamp"
+  fi
 
-    # For copy-paste checking. This can be left empty.
-    copied_blocks=""
-    echo "Copied blocks: $copied_blocks"
+  # For copy-paste checking. This can be left empty.
+  copied_blocks=""
+  echo "Copied blocks: $copied_blocks"
 
-    # Hashes the previous hash and current file data along with the time to get
-    # the new hash
-    current_hash="$(echo -n "$previous_hash$file_data_hash$timestamp" | sha256sum | awk '{print $1}')"
-    echo "Current hash: $current_hash"
+  # Hashes the previous hash and current file data along with the time to get
+  # the new hash
+  current_hash="$(echo -n "$previous_hash$file_data_hash$timestamp$copied_blocks" | sha256sum | awk '{print $1}')"
+  echo "Current hash: $current_hash"
 
-    # The full revision signature block, before encoding
-    block="$(printf "%s\t%s\t%s\t%s%s" \
-      "$previous_hash" \
-      "$current_hash" \
-      "$timestamp" \
-      "$file_data_hash" \
-      "$copied_blocks")"
-    echo "New revision signature block: $block"
+  # The full revision signature block, before encoding
+  block="$(printf "%s\t%s\t%s\t%s%s" \
+    "$previous_hash" \
+    "$current_hash" \
+    "$timestamp" \
+    "$file_data_hash" \
+    "$copied_blocks")"
+  echo "New revision signature block: $block"
 
-    encoded_block="$(echo -n "$block" | base64 -w0 | sed 's/=/\\u003d/g')"
-    echo "Encoded block: $encoded_block"
+  encoded_block="$(echo -n "$block" | base64 -w0 | sed 's/=/\\u003d/g')"
+  echo "Encoded block: $encoded_block"
 
-    if [ "$mode" = "append" ]; then
-      new_json="$(jq ".revisionSignatures |= . + [\"$encoded_block\"]" "$file" --indent 2)"
-    else
-      new_json="$(jq ".revisionSignatures = [\"$encoded_block\"]" "$file" --indent 2)"
-    fi
+  if [ "$mode" = "append" ]; then
+    new_json="$(jq ".revisionSignatures |= . + [\"$encoded_block\"]" "$file" --indent 2)"
+  else
+    new_json="$(jq ".revisionSignatures = [\"$encoded_block\"]" "$file" --indent 2)"
+  fi
 
-    echo "Modifying file..."
-    echo "$new_json" > "$file"
-  done
+  echo "Modifying file..."
+  echo "$new_json" > "$file"
 }
 
 invoke_main "$@"
