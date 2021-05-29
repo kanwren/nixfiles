@@ -56,9 +56,11 @@ invoke_view() {
   usage_text=""
   define usage_text <<'EOF'
 USAGE:
-    csrh view <FILE>
+    csrh view [-v|--verbose] <FILE>
 
 OPTIONS:
+    -v, --verbose
+            Increase verbosity and show raw information
     -h, --help
             Show this help text
 
@@ -67,17 +69,20 @@ ARGS:
             CircuitSim file to view
 EOF
 
-  if ! args=$(getopt -o h --long help -n "csrh view" -- "$@"); then
+  if ! args=$(getopt -o vh --long verbose,help -n "csrh view" -- "$@"); then
     print_usage; exit 1
   fi
   eval set -- "$args"
 
-  for opt; do
-    case "$opt" in
+  verbose="false"
+  while :; do
+    case "$1" in
+      -v|--verbose) verbose="true" ;;
       -h|--help) print_help; exit 0 ;;
       --) shift; break ;;
       *) exit 1 ;;
     esac
+    shift
   done
 
   if [ $# -eq 0 ]; then
@@ -86,13 +91,14 @@ EOF
     >&2 echo "Error: expected input file"; print_usage; exit 1
   fi
 
-  jq -f @circuitsimViewHistoryScript@ "$1"
+  jq -f @circuitsimViewHistoryScript@ "$1" --argjson verbose "$verbose"
 }
 
 compute_hashes() {
+  # Note: requires invoke_view --verbose
   current_history="$1"
   declare -a hashes
-  hash_inputs="$(echo "$current_history" | jq -r '.[] | .previous_block_hash + .file_data_hash + .timestamp_raw + (.copied_signatures | map(.start_signature, .middle_signature, .end_signature) | join("\t"))')"
+  hash_inputs="$(echo "$current_history" | jq -r '.[] | .previous_block_hash + .file_data_hash + .timestamp_raw + (.copied_signatures | map(.start_signature, .middle_signature, .end_signature | .signature | "\t" + .) | add)')"
   while IFS= read -r hash_input; do
     if [ -n "$hash_input" ]; then
       hashes+=("$(echo -n "$hash_input" | sha256sum | awk '{print $1}')")
@@ -123,8 +129,8 @@ EOF
   fi
   eval set -- "$args"
 
-  for opt; do
-    case "$opt" in
+  while :; do
+    case "$1" in
       -h|--help) print_help; exit 0 ;;
       --) shift; break ;;
       *) exit 1 ;;
@@ -167,8 +173,8 @@ EOF
   fi
   eval set -- "$args"
 
-  for opt; do
-    case "$opt" in
+  while :; do
+    case "$1" in
       -h|--help) print_help; exit 0 ;;
       --) shift; break ;;
       *) exit 1 ;;
@@ -183,7 +189,7 @@ EOF
 
   file="$1"
 
-  current_history="$(invoke_view "$file")"
+  current_history="$(invoke_view --verbose "$file")"
   file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
 
   if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
@@ -251,8 +257,8 @@ EOF
   provided_timestamp=""
   provided_file_hash=""
   random_file_hash="false"
-  for opt; do
-    case "$opt" in
+  while :; do
+    case "$1" in
       -a|--append)
         mode="append"
         ;;
@@ -260,6 +266,10 @@ EOF
         force="true"
         ;;
       --timestamp)
+        if [ -n "$provided_timestamp" ]; then
+          >&2 echo "Error: timestamp already provided"
+          exit 1
+        fi
         shift
         if [[ ! "$1" =~ ^[0-9]+$ ]]; then
           >&2 echo "Error: provided timestamp is not valid"
