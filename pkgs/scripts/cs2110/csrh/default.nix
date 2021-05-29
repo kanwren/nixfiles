@@ -11,7 +11,8 @@ substituteAll {
   src = ./csrh.sh;
   inherit runtimeShell coreutils jq;
   inherit (unixtools) getopt;
-  circuitsimHistoryScript = ./circuitsim-history.jq;
+  circuitsimViewHistoryScript = ./circuitsim-view-history.jq;
+  circuitsimCheckHistoryScript = ./circuitsim-check-history.jq;
   dir = "bin";
   isExecutable = true;
   description = "Utility to manage the revision history of a CircuitSim file";

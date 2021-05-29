@@ -14,7 +14,8 @@ def decodeSignature: @base64d / "\t";
 def extractBlock: {
     previous_block_hash: .[0],
     current_block_hash: .[1],
-    time_stamp: .[2] | millisToDate,
+    timestamp_raw: .[2],
+    timestamp: .[2] | millisToDate,
     file_data_hash: .[3],
 };
 

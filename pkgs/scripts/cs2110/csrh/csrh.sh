@@ -4,6 +4,7 @@ PATH="@coreutils@/bin:@jq@/bin:@getopt@/bin${PATH:+:${PATH}}"
 set -euo pipefail
 
 define() { IFS=$'\n' read -r -d '' "${1}" || true; }
+join_by() { local IFS="$1"; shift; echo "$*"; }
 print_help() { >&2 echo -e "$description\n\n$usage_text"; }
 print_usage() { >&2 echo "$usage_text"; }
 
@@ -47,11 +48,6 @@ EOF
   esac
 }
 
-invoke_check() {
-  >&2 echo "Error: unimplemented"
-  exit 1
-}
-
 invoke_view() {
   description="View CircuitSim revision history"
   usage_text=""
@@ -87,7 +83,73 @@ EOF
     >&2 echo "Error: expected input file"; print_usage; exit 1
   fi
 
-  jq -f @circuitsimHistoryScript@ "$1"
+  jq -f @circuitsimViewHistoryScript@ "$1"
+}
+
+compute_hashes() {
+  current_history="$1"
+  declare -a hashes
+  hash_inputs="$(echo "$current_history" | jq -r '.[] | .previous_block_hash + .file_data_hash + .timestamp_raw + (.copied_signatures | map(.start_signature, .middle_signature, .end_signature) | join("\t"))')"
+  while IFS= read -r hash_input; do
+    if [ -n "$hash_input" ]; then
+      hashes+=("$(echo -n "$hash_input" | sha256sum | awk '{print $1}')")
+    fi
+  done <<< "$hash_inputs"
+  join_by ":" "${hashes[@]}"
+}
+
+invoke_check() {
+  description="Check the integriry of CircuitSim revision histories"
+
+  usage_text=""
+  define usage_text <<'EOF'
+USAGE:
+    csrh check <FILE>...
+
+OPTIONS:
+    -h, --help
+            Show this help text
+
+ARGS:
+    <FILE>...
+            CircuitSim file to check
+EOF
+
+  if ! args=$(getopt -o h --long help -n "csrh check" -- "$@"); then
+    print_usage; exit 1
+  fi
+  eval set -- "$args"
+
+  for opt; do
+    case "$opt" in
+      -h|--help) print_help; exit 0 ;;
+      --) shift; break ;;
+      *) exit 1 ;;
+    esac
+  done
+
+  if [ $# -eq 0 ]; then
+    print_help; exit 0
+  elif [ $# -ne 1 ]; then
+    >&2 echo "Error: expected input file"; print_usage; exit 1
+  fi
+
+  file="$1"
+
+  current_history="$(invoke_view "$file")"
+
+  if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
+    >&2 echo "Error: This does not look like a CircuitSim file"
+    exit 1
+  fi
+
+  block_hashes="$(compute_hashes "$current_history")"
+
+  if jq -f @circuitsimCheckHistoryScript@ --arg hashes "$block_hashes" <(echo "$current_history"); then
+    echo "OK"
+  else
+    exit "$?"
+  fi
 }
 
 invoke_fix() {
@@ -129,7 +191,6 @@ EOF
   for opt; do
     case "$opt" in
       -a|--append)
-        checkmode "append"
         mode="append"
         shift
         ;;
@@ -173,25 +234,15 @@ EOF
     previous_signature="$(jq '.revisionSignatures | if (length == 0) then "" else .[-1] end' "$file" -r)"
     echo "Previous signature: $previous_signature"
 
-    # The previous hash is the second field of the decoded signature
-    previous_hash="$(echo -n "$previous_signature" | base64 -d | cut -d$'\t' -f2)"
-    echo "Previous hash: $previous_hash"
-
-    discarded_hash=""
-    if [ -n "$previous_hash" ] && [ "$mode" != "append" ]; then
+    if [ -n "$previous_signature" ]; then
       # Error out if trying to overwrite an existing revision signature without -f
-      if [ "$mode" != "append" ]; then
-        if [ "$force" = "true" ]; then
-          discarded_hash="$previous_hash"
-          previous_hash=""
-        else
-          >&2 echo -e "Error: found previous revision signature. Check its integrity with \"csrh check\" or use --force to overwrite."
-          continue
-        fi
+      if [ "$mode" != "append" ] && [ "$force" != "true" ]; then
+        >&2 echo -e "Error: found previous revision signature. Check its integrity with \"csrh check\" or use --force to overwrite."
+        continue
       fi
 
       # Error out if revision history is corrupted and not using -f
-      if ! check_result="$(invoke_check "$file")"; then
+      if ! check_result="$(invoke_check "$file" 2>&1)"; then
         if [ "$force" = "true" ]; then
           >&2 echo "Warning: revision history is corrupted."
           >&2 echo "$check_result"
@@ -200,6 +251,15 @@ EOF
           continue
         fi
       fi
+    fi
+
+    # The previous hash is the second field of the decoded signature
+    previous_hash="$(echo -n "$previous_signature" | base64 -d | cut -d$'\t' -f2)"
+    echo "Previous hash: $previous_hash"
+
+    # clear hash if overwriting with force
+    if [ "$mode" != "append" ]; then
+      previous_hash=""
     fi
 
     # sha256 the circuit data. Note that this relies on 2-space indentation.
