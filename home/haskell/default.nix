@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     cabal-install
     ghcid
-    haskell.compiler.ghc8104
+    haskell.compiler.ghc901
   ];
 
   home.file = {

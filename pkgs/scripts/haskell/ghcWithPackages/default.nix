@@ -11,7 +11,7 @@ let
         args="$*"
         ;;
       *)
-        ghc="ghc8104"
+        ghc="ghc901"
         args="$*"
         ;;
     esac
