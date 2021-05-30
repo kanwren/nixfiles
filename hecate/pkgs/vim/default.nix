@@ -1,14 +1,17 @@
 { pkgs, lib, ... }:
 
+let
+  my-nvim = pkgs.neovim.override {
+    viAlias = true;
+    vimAlias = true;
+  };
+in
 {
   environment = {
     systemPackages = lib.concatLists [
       (with pkgs; [
         # core
-        (neovim.override {
-          viAlias = true;
-          vimAlias = true;
-        })
+        my-nvim
         xxd
 
         # for plugins
