@@ -14,11 +14,12 @@
 }:
 
 let
+  version = "0.1.4";
   anySettings = useColor || useSplashScreen;
   src = fetchFromGitHub {
     owner = "orhun";
     repo = "gpg-tui";
-    rev = "72330cfd2da9e637448116549ba5a2bf6e679b51";
+    rev = "v${version}";
     sha256 = "sha256-K09xlnyvZdnSMQ0TxGBuwE98wNw2K/ApHinxkVo/6J4=";
   };
   toolchain = with fenix;
@@ -47,7 +48,7 @@ let
     '';
 in
 naersk-lib.buildPackage {
-  inherit src;
+  inherit src version;
   singleStep = true;
   nativeBuildInputs = lib.optionals anySettings [ makeWrapper ];
   buildInputs = [ python3 gnupg libgpgerror gpgme xlibs.libxcb ];
