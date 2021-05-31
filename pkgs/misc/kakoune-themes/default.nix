@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, lib
 }:
 
 stdenv.mkDerivation {
@@ -15,4 +16,9 @@ stdenv.mkDerivation {
     mkdir -p "$target"
     cp -r colors "$target"
   '';
+  meta = with lib; {
+    description = "Custom config, syntax-highlighting, color schemes for kakoune";
+    homepage = "https://github.com/anhsirk0/kakoune-themes";
+    licenses = licenses.gpl3;
+  };
 }

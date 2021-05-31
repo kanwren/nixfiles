@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, lib
 }:
 
 stdenv.mkDerivation {
@@ -14,5 +15,9 @@ stdenv.mkDerivation {
     mkdir -p "$out"/share/kak/autoload/plugins/mirror
     cp -r mirror.kak "$out"/share/kak/autoload/plugins/mirror
   '';
+  meta = with lib; {
+    description = "Kakoune plugin to grow/shrink selections in both directions or surround them";
+    homepage = "https://github.com/Delapouite/kakoune-mirror";
+  };
 }
 

@@ -55,6 +55,7 @@ naersk-lib.buildPackage {
   postFixup = move-completions + add-flags;
   meta = {
     description = "A Terminal User Interface for GPG";
+    homepage = "https://github.com/orhun/gpg-tui";
     licenses = with lib.licenses; mit;
   };
 }

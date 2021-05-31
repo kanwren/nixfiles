@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, lib
 }:
 
 stdenv.mkDerivation {
@@ -14,5 +15,10 @@ stdenv.mkDerivation {
     mkdir -p "$out"/share/kak/autoload/plugins/readline
     cp -r readline.kak "$out"/share/kak/autoload/plugins/readline
   '';
+  meta = with lib; {
+    description = "Readline-style mappings for Kakoune";
+    homepage = "https://github.com/chambln/kakoune-readline";
+    licenses = licenses.mit;
+  };
 }
 

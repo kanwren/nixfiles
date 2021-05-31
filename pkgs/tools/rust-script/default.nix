@@ -31,6 +31,7 @@ naersk-lib.buildPackage {
 
   meta = {
     description = "Run Rust files and expressions as scripts without any setup or compilation step";
+    homepage = "https://github.com/fornwall/rust-script";
     licenses = with lib.licenses; [ mit asl20 ];
   };
 }
