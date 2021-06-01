@@ -48,7 +48,11 @@ in
       highlighters = [ "main" "brackets" "cursor" ];
     };
 
+    histSize = 100000;
+
     interactiveShellInit = ''
+      export HISTORY_IGNORE='([bf]g *|cd ..|l[alsh]#( *)#|less *|(nvim|vim#) *)'
+
       # direnv
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
