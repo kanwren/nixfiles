@@ -51,6 +51,10 @@ EOF
   esac
 }
 
+has_components() {
+  test "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$1")" = true
+}
+
 invoke_view() {
   description="View CircuitSim revision history"
   usage_text=""
@@ -98,13 +102,31 @@ compute_hashes() {
   # Note: requires invoke_view --verbose
   current_history="$1"
   declare -a hashes
-  hash_inputs="$(echo "$current_history" | jq -r '.[] | .previous_block_hash + .file_data_hash + .timestamp_raw + (.copied_signatures | map(.start_signature, .middle_signature, .end_signature | .signature | "\t" + .) | add)')"
+  hash_inputs="$(echo "$current_history" | jq -r '.[] | .previous_block_hash + .file_data_hash + .timestamp_raw + (.copied_signatures | map(.start_signature, .middle_signature, .end_signature | .signature | "\t" + .) | add)' | html_encode)"
   while IFS= read -r hash_input; do
     if [ -n "$hash_input" ]; then
-      hashes+=("$(echo -n "$hash_input" | sha256sum | awk '{print $1}')")
+      hashes+=("$(echo -E -n "$hash_input" | sha256sum | awk '{print $1}')")
     fi
   done <<< "$hash_inputs"
   join_by ":" "${hashes[@]}"
+}
+
+# NOTE: CircuitSim uses strict HTML encoding/decoding in GSON, which encodes the
+# following characters:
+# & -> \u0026
+# = -> \u003d
+# ' -> \u0027
+# < -> \u003c
+# > -> \u003e
+# jq will unescape these, so we need to fix them in the output file
+html_encode() {
+  sed '
+    s/&/\\u0026/g;
+    s/=/\\u003d/g;
+    s/'"'"'/\\u0027/g;
+    s/</\\u003c/g;
+    s/>/\\u003e/g
+  ' "$@"
 }
 
 invoke_file_hash() {
@@ -147,7 +169,7 @@ EOF
   # sha256 the circuit data. Note that this relies on 2-space indentation.
   # TODO: library JSON data is prepended to the circuit data. We leave it null
   # here, but it would be nice to handle it.
-  file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
+  file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file" | html_encode)" | sha256sum | awk '{print $1}')"
   echo "$file_data_hash"
 }
 
@@ -189,13 +211,13 @@ EOF
 
   file="$1"
 
-  current_history="$(invoke_view --verbose "$file")"
-  file_data_hash="$(printf "%s" "null$(jq '.circuits' "$file")" | sha256sum | awk '{print $1}')"
-
-  if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
+  if ! has_components "$file"; then
     >&2 echo "Error: This does not look like a CircuitSim file"
     exit 1
   fi
+
+  current_history="$(invoke_view --verbose "$file")"
+  file_data_hash="$(invoke_file_hash "$file")"
 
   block_hashes="$(compute_hashes "$current_history")"
 
@@ -322,7 +344,7 @@ EOF
   echo "Uncorrupting $file..."
 
   echo "Checking file integrity..."
-  if [ "$(jq 'has("version") and has("globalBitSize") and has("clockSpeed") and has("circuits")' "$file")" != "true" ]; then
+  if ! has_components "$file"; then
     >&2 echo "Error: This does not look like a CircuitSim file"
     exit 1
   fi
@@ -398,7 +420,7 @@ EOF
     "$copied_blocks")"
   echo "New revision signature block: $block"
 
-  encoded_block="$(echo -n "$block" | base64 -w0 | sed 's/=/\\u003d/g')"
+  encoded_block="$(echo -n "$block" | base64 -w0)"
   echo "Encoded block: $encoded_block"
 
   if [ "$mode" = "append" ]; then
@@ -407,8 +429,10 @@ EOF
     new_json="$(jq ".revisionSignatures = [\"$encoded_block\"]" "$file" --indent 2)"
   fi
 
+  new_json="$(echo -E -n "$new_json" | html_encode)"
+
   echo "Modifying file..."
-  echo "$new_json" > "$file"
+  echo -E -n "$new_json" > "$file"
 }
 
 invoke_main "$@"
