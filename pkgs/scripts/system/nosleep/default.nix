@@ -1,24 +1,21 @@
-{ writeShellScriptBin
+{ substituteAll
+, runtimeShell
 , xdotool
+, xorg
+, unixtools
 , addmeta
 }:
 
 let
-  script = writeShellScriptBin "nosleep" ''
-    if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-      >&2 echo "Usage: nosleep [seconds]"
-      exit
-    fi
-
-    delay="''${1:-59}"
-
-    while :; do
-      ${xdotool}/bin/xdotool mousemove_relative -- 1 0
-      sleep "$delay"
-      ${xdotool}/bin/xdotool mousemove_relative -- -1 0
-      sleep "$delay"
-    done
-  '';
+  script = substituteAll {
+    name = "nosleep";
+    src = ./nosleep.sh;
+    inherit runtimeShell xdotool;
+    inherit (unixtools) getopt;
+    inherit (xorg) xset;
+    dir = "bin";
+    isExecutable = true;
+  };
 in
 addmeta script {
   description = "Keep screen awake by moving the mouse every so often";
