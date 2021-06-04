@@ -13,8 +13,6 @@ let
     src = ./csrh.sh;
     inherit runtimeShell coreutils jq;
     inherit (unixtools) getopt;
-    circuitsimViewHistoryScript = ./circuitsim-view-history.jq;
-    circuitsimCheckHistoryScript = ./circuitsim-check-history.jq;
     dir = "bin";
     isExecutable = true;
   };

@@ -8,6 +8,120 @@ join_by() { local IFS="$1"; shift; echo "$*"; }
 print_help() { >&2 echo -e "$description\n\n$usage_text"; }
 print_usage() { >&2 echo "$usage_text"; }
 
+define circuitsim_view_history <<'EOF'
+# Split array into groups of size n
+def groups(n): . as $arr | n as $n | length as $len
+    | [range(0; $len; $n) | [range(.; . + $n)]]
+    | map(map($arr[.]))
+;
+
+# Format a Unix timestamp in milliseconds
+def millis_to_date: tonumber | . / 1000 | localtime | strftime("%a %h %d %Y %H:%M:%S %Z");
+
+# Split a base64-encoded revision signature into its components
+def decode_signature: @base64d / "\t";
+
+# Parse a block out of the components of a signature/copy block
+def extract_block: . as $b | {
+    previous_block_hash: .[0],
+    current_block_hash: .[1],
+    timestamp: .[2] | millis_to_date,
+    file_data_hash: .[3],
+} | if $verbose then (.timestamp_raw = $b[2]) else . end;
+
+# Decode and parse a block signature
+def decode_extract_block: . as $s
+    | decode_signature
+    | . as $i
+    | extract_block
+    | if $verbose then ((.signature = $s) | (.signature_parts = $i)) else . end
+;
+
+# Parse an array of copy block signatures and split into start/middle/end components
+def copied_blocks: groups(3) | map(
+    map(decode_extract_block)
+    | {
+        start_signature: .[0],
+        middle_signature: .[1],
+        end_signature: .[2],
+    }
+);
+
+# Decode and parse a revision signature
+def decode_extract_signature: . as $s
+    | decode_signature
+    | . as $i
+    | extract_block
+    | if $verbose then ((.signature = $s) | (.signature_parts = $i)) else . end
+    | (.copied_signatures = ($i[4:] | copied_blocks))
+;
+
+(.revisionSignatures // []) | map(decode_extract_signature)
+EOF
+
+define circuitsim_check_history <<'EOF'
+($hashes | split(":")) as $split_hashes |
+
+# Add an index to every element in the array
+def with_indices: . as $arr | length as $len | [range(0; $len) | { index: ., value: $arr[.] }];
+
+# Take an array and turn it into an array of all adjacent (overlapping) pairs,
+# each represented as an object { _1: <first>, _2: <second> }
+def pairs: [.[:-1], .[1:]] | transpose | map({ _1: .[0], _2: .[1] });
+
+def check_pair: ._1.index as $ix1 | ._2.index as $ix2
+    | ._1.value.current_block_hash as $current | ._2.value.previous_block_hash as $previous
+    | "Hash mismatch between revisions \($ix1) and \($ix2): previous block hash of revision \($ix2) is \($previous), but block hash of revision \($ix1) is \($current)\n" as $msg
+    | if $current == $previous then { success: true } else { success: false, msg: $msg } end
+;
+
+def combine_results:
+    if all(.success) then
+        { success: true }
+    else
+        { sucess: false, msg: map(.msg) | add }
+    end
+;
+
+def check_pairs: pairs | map(check_pair) | combine_results;
+
+def check_first_block: .[0].index as $ix | .[0].value.previous_block_hash as $hash
+    | if $hash == "" then
+        { success: true }
+    else
+        { success: false, msg: "Hash mismatch: expected an empty previous block hash at index \($ix), but got hash \($hash)\n" }
+    end
+;
+
+def check_block_hash: .index as $ix | .value.current_block_hash as $hash | $split_hashes[$ix] as $expected
+    | if $hash == $expected then
+        { success: true }
+    else
+        { success: false, msg: "Hash mismatch: expected block hash \($expected) at index \($ix), but got hash \($hash)\n" }
+    end
+;
+
+def check_block_hashes: map(check_block_hash) | combine_results;
+
+def check_file_hash: .[-1].index as $ix | .[-1].value.file_data_hash as $hash
+    | if $hash == $file_data_hash then
+        { success: true }
+    else
+        { success: false, msg: "Hash mismatch: expected file data hash \($file_data_hash) at index \($ix), but got hash \($hash)\n" }
+    end
+;
+
+def all_checks: [check_first_block, check_pairs, check_block_hashes, check_file_hash] | combine_results;
+
+def report_errors: if .success then empty else .msg | halt_error(1) end;
+
+if length == 0 then
+    "Empty revision history\n" | halt_error(1)
+else
+    with_indices | all_checks | report_errors
+end
+EOF
+
 invoke_main() {
   description="Manage CircuitSim revision history"
   usage_text=""
@@ -95,7 +209,7 @@ EOF
     >&2 echo "Error: expected input file"; print_usage; exit 1
   fi
 
-  jq -f @circuitsimViewHistoryScript@ "$1" --argjson verbose "$verbose"
+  jq "$circuitsim_view_history" "$1" --argjson verbose "$verbose"
 }
 
 compute_hashes() {
@@ -221,7 +335,7 @@ EOF
 
   block_hashes="$(compute_hashes "$current_history")"
 
-  if jq -f @circuitsimCheckHistoryScript@ \
+  if jq "$circuitsim_check_history" \
       --arg hashes "$block_hashes" \
       --arg file_data_hash "$file_data_hash" \
       <(echo "$current_history"); then
