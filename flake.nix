@@ -327,6 +327,10 @@
               type = "app";
               program = "${self.packages.${system}.rust-script}/bin/rust-script";
             };
+            lipsum = {
+              type = "app";
+              program = "${self.packages.${system}."scripts/lipsum"}/bin/lipsum";
+            };
           };
         }
       )))
