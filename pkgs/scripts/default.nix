@@ -20,8 +20,6 @@ in
   nosleep = pkgs.callPackage ./system/nosleep { inherit addmeta; };
   toggle = pkgs.callPackage ./system/toggle { inherit addmeta; };
 
-  firefox-app = pkgs.callPackage ./firefox-app { inherit addmeta; };
-
   # nix
   nix-gcroots = pkgs.callPackage ./nix/nix-gcroots { inherit addmeta; };
   comma = pkgs.callPackage ./nix/comma { inherit addmeta; };

@@ -34,7 +34,7 @@ results.package.override (old: {
   meta = with pkgs.lib; {
     description = "Beautiful images of your code-from right inside your terminal";
     homepage = "https://github.com/mixn/carbon-now-cli";
-    platforms = platforms.unix;
+    platforms = platforms.linux;
     license = licenses.mit;
   };
 })
