@@ -14,6 +14,7 @@ in
   bak = pkgs.callPackage ./util/bak { inherit addmeta; };
   serve = pkgs.callPackage ./util/serve { inherit haskellScript addmeta; };
   truthtable = pkgs.callPackage ./util/truthtable { inherit haskellScript addmeta; };
+  lipsum = pkgs.callPackage ./util/lipsum { inherit addmeta; };
 
   # system
   nosleep = pkgs.callPackage ./system/nosleep { inherit addmeta; };
