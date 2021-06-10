@@ -32,6 +32,8 @@ in
     };
   };
 
+  nord-dircolors = pkgs.callPackage ./misc/nord-dircolors { };
+
   # tools
   carbon-now-cli = pkgs.callPackage ./tools/carbon-now-cli {
     nodejs = pkgs.nodejs-14_x;

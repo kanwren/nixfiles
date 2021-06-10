@@ -52,12 +52,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Sources
-    nord-dircolors-git = {
-      url = "github:arcticicestudio/nord-dircolors";
-      flake = false;
-    };
   };
 
   outputs =

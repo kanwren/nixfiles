@@ -568,22 +568,6 @@
         "type": "github"
       }
     },
-    "nord-dircolors-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1606638347,
-        "narHash": "sha256-6A3h1R1+kZbCwouUshvRpUL3fVkkDuHCD+bz8Jbq4M0=",
-        "owner": "arcticicestudio",
-        "repo": "nord-dircolors",
-        "rev": "35166d328992213194d7d02cd034e39da962f19e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "arcticicestudio",
-        "repo": "nord-dircolors",
-        "type": "github"
-      }
-    },
     "nur": {
       "locked": {
         "lastModified": 1622039216,
@@ -629,7 +613,6 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nord-dircolors-git": "nord-dircolors-git",
         "nur": "nur_2",
         "sops-nix": "sops-nix"
       }
