@@ -26,6 +26,12 @@ in
     zsh-vi-mode = pkgs.callPackage ./misc/zsh-vi-mode { };
   };
 
+  tmuxPlugins = lib.recurseIntoAttrs {
+    nord-tmux = pkgs.callPackage ./misc/nord-tmux {
+      inherit (pkgs.tmuxPlugins) mkTmuxPlugin;
+    };
+  };
+
   # tools
   carbon-now-cli = pkgs.callPackage ./tools/carbon-now-cli {
     nodejs = pkgs.nodejs-14_x;

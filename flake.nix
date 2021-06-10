@@ -58,10 +58,6 @@
       url = "github:arcticicestudio/nord-dircolors";
       flake = false;
     };
-    nord-tmux-git = {
-      url = "github:arcticicestudio/nord-tmux";
-      flake = false;
-    };
   };
 
   outputs =

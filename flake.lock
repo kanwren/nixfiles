@@ -584,22 +584,6 @@
         "type": "github"
       }
     },
-    "nord-tmux-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1598381672,
-        "narHash": "sha256-ihh0wgH4SjceaHtwcV7OyM11lnNhTCWTOS4MbBdmJ1E=",
-        "owner": "arcticicestudio",
-        "repo": "nord-tmux",
-        "rev": "4e2dc2a5065f5e8e67366700f803c733682e8f8c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "arcticicestudio",
-        "repo": "nord-tmux",
-        "type": "github"
-      }
-    },
     "nur": {
       "locked": {
         "lastModified": 1622039216,
@@ -646,7 +630,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nord-dircolors-git": "nord-dircolors-git",
-        "nord-tmux-git": "nord-tmux-git",
         "nur": "nur_2",
         "sops-nix": "sops-nix"
       }

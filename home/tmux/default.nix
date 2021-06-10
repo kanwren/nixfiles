@@ -1,16 +1,8 @@
 { pkgs
-, inputs
+, custom
 , ...
 }:
 
-let
-  nord-tmux-plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "nord-tmux";
-    version = "0.3.0";
-    src = inputs.nord-tmux-git;
-    rtpFilePath = "nord.tmux";
-  };
-in
 {
   programs.tmux = {
     enable = true;
@@ -24,7 +16,7 @@ in
     historyLimit = 10000;
     plugins = with pkgs; [
       {
-        plugin = nord-tmux-plugin;
+        plugin = custom.pkgs.tmuxPlugins.nord-tmux;
         extraConfig = ''
           set -g @nord_tmux_no_patched_font "1"
         '';
