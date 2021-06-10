@@ -89,6 +89,7 @@
           teams
           spotify
           insomnia # graphical REST API client
+          weechat # matrix chat client
         ];
       };
     };
