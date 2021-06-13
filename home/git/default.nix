@@ -6,7 +6,7 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
 
-    userName = "nprindle";
+    userName = "Nicole Prindle";
     userEmail = "nprindle18@gmail.com";
 
     ignores = [
