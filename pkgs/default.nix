@@ -19,6 +19,7 @@ in
     kak-mirror = pkgs.callPackage ./misc/kak-mirror { };
     kak-readline = pkgs.callPackage ./misc/kak-readline { };
     kak-smartindent = pkgs.callPackage ./misc/kak-smartindent { };
+    kak-split-object = pkgs.callPackage ./misc/kak-split-object { };
     kakoune-themes = pkgs.callPackage ./misc/kakoune-themes { };
   };
 
