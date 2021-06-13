@@ -18,6 +18,7 @@
     };
 
     layout = "us";
+    xkbVariant = "dvp";
     xkbOptions = "caps:swapescape,compose:rctrl";
 
     displayManager = {
