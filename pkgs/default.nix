@@ -49,6 +49,8 @@ in
   };
 
   # scripts
-  scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });
+  scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts {
+    inherit naersk fenix;
+  });
 }
 

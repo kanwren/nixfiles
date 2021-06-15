@@ -1,0 +1,11 @@
+[package]
+name = "nix-gcroots"
+version = "0.1.0"
+authors = ["Nicole Prindle <nprindle18@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ascii_tree = "0.1.1"
+clap = "2.33.3"
+serde = { version = "1.0.126", features = ["derive"] }
+serde_json = "1.0.64"

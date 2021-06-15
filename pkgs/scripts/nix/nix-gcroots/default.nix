@@ -1,29 +1,23 @@
-{ writeShellScriptBin
-, addmeta
+{ naersk
+, fenix
+, lib
 }:
 
 let
-  script = writeShellScriptBin "nix-gcroots" ''
-    echo "/nix/var/nix/gcroots/auto:"
-    for f in /nix/var/nix/gcroots/auto/*; do
-      if [ -e "$f" ]; then
-        link="$(readlink "$f")"
-        echo "    $link"
-      fi
-    done
-
-    for d in /nix/var/nix/gcroots/per-user/*; do
-      echo "$d:"
-      for f in $d/*; do
-        if [ -e "$f" ]; then
-          link="$(readlink "$f")"
-          echo "    $link"
-        fi
-      done
-    done
-  '';
+  toolchain = with fenix;
+    combine [
+      minimal.rustc
+      minimal.cargo
+    ];
+  naersk-lib = naersk.override {
+    cargo = toolchain;
+    rustc = toolchain;
+  };
 in
-addmeta script {
-  description = "Print nix garbage collector roots that still exist";
+naersk-lib.buildPackage {
+  src = ./.;
+  meta = with lib; {
+    description = "Print nix garbage collector roots that still exist";
+    platforms = platforms.linux;
+  };
 }
-
