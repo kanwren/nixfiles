@@ -2,7 +2,6 @@
 , fenix
 , fetchFromGitHub
 , pkgsStatic
-, hello
 , lib
 }:
 
