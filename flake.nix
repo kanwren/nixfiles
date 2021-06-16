@@ -201,6 +201,7 @@
         # Nixpkgs overlays
         overlays = {
           raspi-firmware-overlay = import ./overlays/firmwareLinuxNonfree.nix;
+          asciiquarium-nicer-sharks = import ./overlays/asciiquarium-nicer-sharks.nix;
         };
 
         # NixOS modules
