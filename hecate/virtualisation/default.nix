@@ -11,4 +11,5 @@
     };
     podman.enable = true;
   };
+  programs.singularity.enable = true;
 }
