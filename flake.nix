@@ -33,10 +33,6 @@
         flake-utils.follows = "flake-utils";
       };
     };
-    gytis = {
-      url = "github:gytis-ivaskevicius/nixfiles";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     naersk = {
       url = "github:nmattia/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,7 +65,6 @@
     , cs2110-nix
     , nixos-generators
     , nix-autobahn
-    , gytis
     , neovim-nightly-overlay
     , ...
     }@inputs:
@@ -147,7 +142,6 @@
                   nixpkgs.overlays = [
                     nur.overlay
                     cs2110-nix.overlay
-                    gytis.overlay
                     neovim-nightly-overlay.overlay
                   ];
                 };

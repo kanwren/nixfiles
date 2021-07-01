@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "cachix": {
-      "locked": {
-        "lastModified": 1621986151,
-        "narHash": "sha256-RRwF4zI8mmDw3GYCiJ2zDVEex3Q/Os39Rp6ysOec1zY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "76ed24ceab9ec8b520f977a2803181f0c1d86b4d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-20.09",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "cs2110-nix": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -146,103 +130,7 @@
         "type": "github"
       }
     },
-    "flake-utils_4": {
-      "locked": {
-        "lastModified": 1620759905,
-        "narHash": "sha256-WiyWawrgmyN0EdmiHyG2V+fqReiVi8bM9cRdMaKQOFg=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "b543720b25df6ffdfcf9227afafc5b8c1fabfae8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_5": {
-      "locked": {
-        "lastModified": 1610051610,
-        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "forgit-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1620958728,
-        "narHash": "sha256-CunG8uYQDcJjoBg2tidJQ1ICl2B33H3WwaJqF87NRhg=",
-        "owner": "wfxr",
-        "repo": "forgit",
-        "rev": "d5e0fd86e946a3f147f21b9b7a3cef0e874ee684",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wfxr",
-        "repo": "forgit",
-        "type": "github"
-      }
-    },
-    "gytis": {
-      "inputs": {
-        "forgit-git": "forgit-git",
-        "home-manager": "home-manager",
-        "lightcord-git": "lightcord-git",
-        "neovim": "neovim",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-2009": "nixpkgs-2009",
-        "nixpkgs-mozilla": "nixpkgs-mozilla",
-        "nixpkgs-wayland": "nixpkgs-wayland",
-        "nur": "nur",
-        "unstable": "unstable",
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1622104929,
-        "narHash": "sha256-rOZ4m+HypbmGizqxZ3pBeWUmeja+yIpuvOa+J1OK0OU=",
-        "owner": "gytis-ivaskevicius",
-        "repo": "nixfiles",
-        "rev": "905e9e21e55abe96241ecf2f54959599cbcf3fd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gytis-ivaskevicius",
-        "repo": "nixfiles",
-        "type": "github"
-      }
-    },
     "home-manager": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1622014903,
-        "narHash": "sha256-tEXRBi5aMprNLbzMb6YmTy3cO9smvqC2udKyRo6rj2o=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "b840707a87f6a35a5c24ea6edf8846741d924616",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -259,22 +147,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "lightcord-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1621283899,
-        "narHash": "sha256-TyAyl+o/Ld9cQWgBITl9qfWukcGVMmiIRU1IAGJCEBA=",
-        "owner": "Lightcord",
-        "repo": "Lightcord",
-        "rev": "e442cc12d4c7aac9167c1df33ef06d6c204a8eef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Lightcord",
-        "repo": "Lightcord",
         "type": "github"
       }
     },
@@ -318,32 +190,9 @@
         "type": "github"
       }
     },
-    "neovim": {
-      "inputs": {
-        "flake-utils": "flake-utils_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "contrib",
-        "lastModified": 1622039420,
-        "narHash": "sha256-QtuA6psmNp+F9WXxPHSQRvoYE0lDcUlztF4CKByK0as=",
-        "owner": "neovim",
-        "repo": "neovim",
-        "rev": "0b905be47b969baf20fb4fe9828341ddfc356092",
-        "type": "github"
-      },
-      "original": {
-        "dir": "contrib",
-        "owner": "neovim",
-        "repo": "neovim",
-        "type": "github"
-      }
-    },
     "neovim-flake": {
       "inputs": {
-        "flake-utils": "flake-utils_5",
+        "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -499,59 +348,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-2009": {
-      "locked": {
-        "lastModified": 1621986151,
-        "narHash": "sha256-RRwF4zI8mmDw3GYCiJ2zDVEex3Q/Os39Rp6ysOec1zY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "76ed24ceab9ec8b520f977a2803181f0c1d86b4d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-20.09",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-mozilla": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1603906276,
-        "narHash": "sha256-RsNPnEKd7BcogwkqhaV5kI/HuNC4flH/OQCC/4W5y/8=",
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
-        "rev": "8c007b60731c07dd7a052cce508de3bb1ae849b4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
-        "type": "github"
-      }
-    },
-    "nixpkgs-wayland": {
-      "inputs": {
-        "cachix": "cachix",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1622023899,
-        "narHash": "sha256-t49wCuLw+oo2dZSXGsX9nVuM+rzOavVWKb8TWfTI2t4=",
-        "owner": "colemickens",
-        "repo": "nixpkgs-wayland",
-        "rev": "b5c433fc8d335979e0aa5fda797ca61da8d2862b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "colemickens",
-        "repo": "nixpkgs-wayland",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1623176226,
@@ -569,21 +365,6 @@
       }
     },
     "nur": {
-      "locked": {
-        "lastModified": 1622039216,
-        "narHash": "sha256-ZMLEy6OoNiAnh5k6anRFMrLHZ7jDwoR9i6GvxjMa8fY=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "f16087f00a3b25bdf23f365976b5db18dfc61956",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
-    "nur_2": {
       "locked": {
         "lastModified": 1623795488,
         "narHash": "sha256-W5Aqgg1VOg1Dii4jbFfm0PGiRTj0EVU8athXBx6PCtI=",
@@ -603,8 +384,7 @@
         "cs2110-nix": "cs2110-nix",
         "fenix": "fenix",
         "flake-utils": "flake-utils_2",
-        "gytis": "gytis",
-        "home-manager": "home-manager_2",
+        "home-manager": "home-manager",
         "naersk": "naersk",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-autobahn": "nix-autobahn",
@@ -613,7 +393,7 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nur": "nur_2",
+        "nur": "nur",
         "sops-nix": "sops-nix"
       }
     },
@@ -668,40 +448,6 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
-        "type": "github"
-      }
-    },
-    "unstable": {
-      "locked": {
-        "lastModified": 1622046936,
-        "narHash": "sha256-sqJkX3l411ygF1v8eDTAMDVZnJOJ7+7NakjObrvZ1Bo=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "bffd12a4c7d15ac3fbed965e222e9b5e86c72021",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "inputs": {
-        "flake-utils": "flake-utils_4"
-      },
-      "locked": {
-        "lastModified": 1622104134,
-        "narHash": "sha256-ULNz/U1G7odT3c0Ut1/SfUZAyhqjfRzJoSj5Fd/6Rzw=",
-        "owner": "gytis-ivaskevicius",
-        "repo": "flake-utils-plus",
-        "rev": "e405eb98213eb3b358f06c452beb9c70605f8e7b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gytis-ivaskevicius",
-        "ref": "staging",
-        "repo": "flake-utils-plus",
         "type": "github"
       }
     }

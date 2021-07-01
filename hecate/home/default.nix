@@ -84,17 +84,7 @@
           # Applications
           firefox
           libreoffice
-          (lightcord.override (old: {
-            # Patch to fix removed stdenv.lib
-            # TODO: remove once gytis fixes this
-            pkgs = old.pkgs // {
-              callPackage = old.pkgs.newScope {
-                stdenv = old.pkgs.stdenv // {
-                  inherit (old.pkgs) lib;
-                };
-              };
-            };
-          }))
+          discord
           slack
           teams
           spotify
