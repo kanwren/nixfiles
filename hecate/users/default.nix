@@ -15,6 +15,7 @@
           "networkmanager"
           "docker"
           "vboxusers"
+          "libvirtd"
         ];
         createHome = true;
         shell = pkgs.zsh;
