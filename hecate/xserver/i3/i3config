@@ -136,6 +136,16 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+p focus parent
 # focus the child container
 bindsym $mod+Shift+p focus child
+# spill a window into its parent container
+bindsym $mod+d \
+    mark _i3_spill_a; \
+    focus parent; \
+    focus parent; \
+    mark _i3_spill_b; \
+    [con_mark="_i3_spill_a"] focus; \
+    move window to mark _i3_spill_b; \
+    unmark _i3_spill_a; \
+    unmark _i3_spill_b
 
 # vim-like marks
 # read 1 character and mark the current window with this character
