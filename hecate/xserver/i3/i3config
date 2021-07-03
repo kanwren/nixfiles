@@ -147,7 +147,8 @@ bindsym $mod+d \
     move window to mark _i3_spill_b; \
     unmark _i3_spill_a; \
     unmark _i3_spill_b
-# TODO: spill all windows into their parent container
+# spill all windows in the selected container into their parent container
+bindsym $mod+Shift+d exec "@spill_container_script@"
 
 # Swap containers
 bindsym $mod+bracketleft mark --toggle swapee
