@@ -1,5 +1,5 @@
 [package]
-name = "nix-gcroots"
+name = "nix-utils"
 version = "0.1.0"
 authors = ["Nicole Prindle <nprindle18@gmail.com>"]
 edition = "2018"

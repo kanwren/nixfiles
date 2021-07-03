@@ -23,7 +23,7 @@ in
   toggle = pkgs.callPackage ./system/toggle { inherit addmeta; };
 
   # nix
-  nix-gcroots = pkgs.callPackage ./nix/nix-gcroots { inherit naersk fenix; };
+  nix-utils = pkgs.callPackage ./nix/nix-utils { inherit naersk fenix; };
   comma = pkgs.callPackage ./nix/comma { inherit addmeta; };
   add-rpath = pkgs.callPackage ./nix/add-rpath { inherit addmeta; };
 

@@ -1,15 +1,46 @@
-extern crate ascii_tree;
-extern crate clap;
-extern crate serde;
-extern crate serde_json;
-
 use std::collections::{HashMap, HashSet};
 use std::ffi::OsString;
 use std::fs::Metadata;
 use std::path::{Path, PathBuf};
 
-use clap::{App, Arg};
+use clap::{App, Arg, ArgMatches, SubCommand};
 use serde::{Deserialize, Serialize};
+
+pub fn subcommand<'a, 'b>() -> App<'a, 'b> {
+    SubCommand::with_name("gcroots")
+        .about("Query nix garbage collector roots")
+        .arg(
+            Arg::with_name("nix-dir")
+                .short("n")
+                .long("nix-dir")
+                .takes_value(true)
+                .value_name("DIR")
+                .help("Location of the the nix installation (/nix by default)"),
+        )
+        .arg(
+            Arg::with_name("json")
+                .short("j")
+                .long("json")
+                .help("Output in JSON instead of pretty-printing"),
+        )
+        .arg(
+            Arg::with_name("no-dots")
+                .long("no-dots")
+                .help("Exclude paths containing a component starting with a '.' from results"),
+        )
+        .arg(
+            Arg::with_name("flat")
+                .short("f")
+                .long("flat")
+                .help("Print all gcroots as a list, rather than a tree"),
+        )
+        .arg(
+            Arg::with_name("include_broken")
+                .short("b")
+                .long("include-broken")
+                .help("Include broken symlinks"),
+        )
+}
 
 fn list_dir<F>(
     include_broken: bool,
@@ -101,41 +132,7 @@ fn render_tree(roots: Roots) -> String {
     output
 }
 
-fn main() {
-    let matches = App::new("nix-gcroots")
-        .arg(
-            Arg::with_name("nix-dir")
-                .short("n")
-                .long("nix-dir")
-                .takes_value(true)
-                .value_name("DIR")
-                .help("Location of the the nix installation (/nix by default)"),
-        )
-        .arg(
-            Arg::with_name("json")
-                .short("j")
-                .long("json")
-                .help("Output in JSON instead of pretty-printing"),
-        )
-        .arg(
-            Arg::with_name("no-dots")
-                .long("no-dots")
-                .help("Exclude paths containing a component starting with a '.' from results"),
-        )
-        .arg(
-            Arg::with_name("flat")
-                .short("f")
-                .long("flat")
-                .help("Print all gcroots as a list, rather than a tree"),
-        )
-        .arg(
-            Arg::with_name("include_broken")
-                .short("b")
-                .long("include-broken")
-                .help("Include broken symlinks"),
-        )
-        .get_matches();
-
+pub fn handle(matches: &ArgMatches) -> Result<(), String> {
     let nix_dir = PathBuf::from(matches.value_of("nix-dir").unwrap_or("/nix"));
     let output_json = matches.is_present("json");
     let flat = matches.is_present("flat");
@@ -148,7 +145,7 @@ fn main() {
         &if exclude_direnv {
             |path: &Path| {
                 path.components()
-                    .all(|c| !c.as_os_str().to_string_lossy().starts_with("."))
+                    .all(|c| !c.as_os_str().to_string_lossy().starts_with('.'))
             }
         } else {
             |_: &Path| true
@@ -174,13 +171,13 @@ fn main() {
                 rendered += &format!("{}\n", path.into_os_string().into_string().unwrap());
             }
         }
+    } else if output_json {
+        rendered = serde_json::to_string(&res).unwrap();
     } else {
-        if output_json {
-            rendered = serde_json::to_string(&res).unwrap();
-        } else {
-            rendered = render_tree(res);
-        }
+        rendered = render_tree(res);
     }
 
     println!("{}", rendered);
+
+    Ok(())
 }
