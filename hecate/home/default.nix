@@ -70,10 +70,11 @@
           cargo-valgrind
           cargo-watch
 
-          # System monitoring
+          # Tools
           gotop
           filelight
           xfce.thunar
+          custom.pkgs.globus-connect
 
           # CS 2110
           cs2110.CircuitSim
