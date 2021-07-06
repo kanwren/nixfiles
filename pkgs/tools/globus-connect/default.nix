@@ -93,6 +93,13 @@ let
         patchelf --set-interpreter "${glibc.out}/lib/ld-linux-x86-64.so.2" "$bin"
       done
     '';
+
+    meta = {
+      homepage = "https://www.globus.org/";
+      description = "Globus lets you share data on your storage systems with collaborators at other institutions.";
+      license = lib.licenses.asl20;
+      platforms = lib.platforms.x86_64;
+    };
   };
 in
 drv // lib.optionalAttrs createDesktop { inherit desktopItem; }
