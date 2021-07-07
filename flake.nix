@@ -44,10 +44,6 @@
         naersk.follows = "naersk";
       };
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -65,7 +61,6 @@
     , cs2110-nix
     , nixos-generators
     , nix-autobahn
-    , neovim-nightly-overlay
     , ...
     }@inputs:
     let
@@ -142,7 +137,6 @@
                   nixpkgs.overlays = [
                     nur.overlay
                     cs2110-nix.overlay
-                    neovim-nightly-overlay.overlay
                   ];
                 };
                 # extra modules from the inputs
@@ -272,7 +266,7 @@
               pkgs.lefthook
               pkgs.nixpkgs-fmt
               # sops-nix
-              sops-nix.packages.${system}.sops-pgp-hook
+              sops-nix.packages.${system}.sops-import-keys-hook
               sops-nix.packages.${system}.ssh-to-pgp
               sops-nix.packages.${system}.sops-init-gpg-key
             ];
