@@ -68,7 +68,7 @@ let
       cp ${desktopItem}/share/applications/* "$out"/share/applications
     '';
 
-    fixupPhase = ''
+    preFixup = ''
       LD_LIBRARY_PATH="${
         lib.makeLibraryPath [
           "$out/share/globus-connect-personal/gt_amd64"
