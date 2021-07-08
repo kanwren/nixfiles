@@ -46,10 +46,6 @@ in
     inherit naersk fenix;
   };
 
-  gpg-tui = pkgs.callPackage ./tools/gpg-tui {
-    inherit naersk fenix;
-  };
-
   # scripts
   scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts {
     inherit naersk fenix;

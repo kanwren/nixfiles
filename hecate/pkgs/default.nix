@@ -71,7 +71,7 @@ with rec {
     # Crypto stuff
     mkpasswd
     gnupg
-    (custom.pkgs.gpg-tui.override { useColor = true; })
+    gpg-tui
     openssl
 
     # Terminal emulators and multiplexers
