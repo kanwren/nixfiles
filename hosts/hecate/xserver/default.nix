@@ -39,7 +39,7 @@
           };
         };
 
-        background = ../../desktop-backgrounds/alien-moon.png;
+        background = ../../../desktop-backgrounds/alien-moon.png;
       };
     };
 
@@ -57,7 +57,7 @@
       };
 
       # Set the desktop background to the current cached lock screen
-      # TODO: consider using `feh --no-fehbg --bg-fill --randomize ../../desktop-backgrounds/*.png`
+      # TODO: consider using `feh --no-fehbg --bg-fill --randomize ../../../desktop-backgrounds/*.png`
       # (or find a way to randomize betterlockscreen backgrounds)
       extraSessionCommands = ''
         ${pkgs.betterlockscreen}/bin/betterlockscreen -w

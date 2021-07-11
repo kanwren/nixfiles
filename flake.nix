@@ -137,10 +137,10 @@
                     };
                   }
                   # Auto-generated hardware configuration
-                  ./hecate/hardware-configuration.nix
+                  ./hosts/hecate/hardware-configuration.nix
                 ];
                 # the main configuration
-                mainModule = import ./hecate/configuration.nix;
+                mainModule = import ./hosts/hecate/configuration.nix;
                 # extra overlays from the inputs
                 addOverlays = {
                   nixpkgs.overlays = [
@@ -178,7 +178,7 @@
                     inherit inputs;
                   };
                   # the main configuration
-                  mainModule = import ./homepi/configuration.nix;
+                  mainModule = import ./hosts/homepi/configuration.nix;
                   # extra modules from the inputs
                   otherModules = [
                     sops-nix.nixosModules.sops

@@ -7,6 +7,7 @@ My NixOS configurations and other Nix files :snowflake:
 ### Overview
 
 - [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets. Some modules, overlays, and settings are applied in here.
+- [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`modules/`](modules/): Custom NixOS modules
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake. Usually seen imported as `custom.pkgs` when used in configs.
@@ -19,32 +20,32 @@ My NixOS configurations and other Nix files :snowflake:
 
 ### Hosts
 
-- [`hecate`](hecate/): My main laptop
-- [`homepi`](homepi/): My Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
+- [`hecate`](hosts/hecate/): My main laptop
+- [`homepi`](hosts/homepi/): My Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
 
 #### hecate
 
 The bulk of the configuration is for my main laptop `hecate`:
 
-- [`configuration.nix`](hecate/configuration.nix): Configuration root; imports all other configuration.
-- [`boot/`](hecate/boot/): Bootloader and emulation settings
-- [`hardware/`](hecate/hardware/): General hardware-related configurations
-  - Note that the bulk of the hardware configurations specific to `hecate` are in `flake.nix`, including [nixos-hardware](https://github.com/NixOS/nixos-hardware/) modules and[ `hardware-configuration.nix`](hecate/hardware-configuration.nix).
-- [`home/`](hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/)
-  - [`default.nix`](hecate/home/default.nix) is the configuration root
+- [`configuration.nix`](hosts/hecate/configuration.nix): Configuration root; imports all other configuration.
+- [`boot/`](hosts/hecate/boot/): Bootloader and emulation settings
+- [`hardware/`](hosts/hecate/hardware/): General hardware-related configurations
+  - Note that the bulk of the hardware configurations specific to `hecate` are in `flake.nix`, including [nixos-hardware](https://github.com/NixOS/nixos-hardware/) modules and[ `hardware-configuration.nix`](hosts/hecate/hardware-configuration.nix).
+- [`home/`](hosts/hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/)
+  - [`default.nix`](hosts/hecate/home/default.nix) is the configuration root
   - Any other files are for `hecate`-specific config on top of the top-level configs
-- [`i18n/`](hecate/i18n/): Language, input, and internationalization options
-- [`networking/`](hecate/networking/): Wireless and firewall settings
-- [`nix/`](hecate/nix/): Nix- and nixpkgs-related settings
-  - [`default.nix`](hecate/nix/default.nix): Main settings for nix and nixpkgs
-  - [`caches.nix`](hecate/nix/caches.nix): Cachix binary caches
-- [`pkgs/`](hecate/pkgs/): System-wide packages and some configurations for them
-- [`security/`](hecate/security/): Miscellaneous security-related settings
-- [`services/`](hecate/services/): Miscellaneous system programs and services
-- [`time/`](hecate/time/): Settings related to system time
-- [`users/`](hecate/users/): Set up all the users and groups
-- [`virtualisation/`](hecate/virtualisation/): Configurations for programs used for containerization and virtualization (docker, podman, etc.)
-- [`xserver/`](hecate/xserver/): Graphical configurations (display manager, window manager, fonts, applets, etc.)
+- [`i18n/`](hosts/hecate/i18n/): Language, input, and internationalization options
+- [`networking/`](hosts/hecate/networking/): Wireless and firewall settings
+- [`nix/`](hosts/hecate/nix/): Nix- and nixpkgs-related settings
+  - [`default.nix`](hosts/hecate/nix/default.nix): Main settings for nix and nixpkgs
+  - [`caches.nix`](hosts/hecate/nix/caches.nix): Cachix binary caches
+- [`pkgs/`](hosts/hecate/pkgs/): System-wide packages and some configurations for them
+- [`security/`](hosts/hecate/security/): Miscellaneous security-related settings
+- [`services/`](hosts/hecate/services/): Miscellaneous system programs and services
+- [`time/`](hosts/hecate/time/): Settings related to system time
+- [`users/`](hosts/hecate/users/): Set up all the users and groups
+- [`virtualisation/`](hosts/hecate/virtualisation/): Configurations for programs used for containerization and virtualization (docker, podman, etc.)
+- [`xserver/`](hosts/hecate/xserver/): Graphical configurations (display manager, window manager, fonts, applets, etc.)
 
 ### `installer`
 
