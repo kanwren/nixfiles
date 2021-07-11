@@ -1,31 +1,43 @@
 {
   inputs = {
-    # Flakes
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    # doesn't need to upgrade; should stay constant
+    nixpkgs-homepi.url = "github:NixOS/nixpkgs/1c16013bd6e94da748b41cc123c6b509a23eb440";
+
     nur.url = "github:nix-community/NUR";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     flake-utils.url = "github:numtide/flake-utils";
+
     nix-bundle.url = "github:matthewbauer/nix-bundle";
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-cron = {
-      url = "github:nprindle/nix-cron";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    cs2110-nix = {
-      url = "github:nprindle/cs2110-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-cron = {
+      url = "github:nprindle/nix-cron";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    cs2110-nix = {
+      url = "github:nprindle/cs2110-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-autobahn = {
       url = "github:nprindle/nix-autobahn";
       inputs = {
@@ -33,10 +45,12 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
     naersk = {
       url = "github:nmattia/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     fenix = {
       url = "github:nix-community/fenix";
       inputs = {
@@ -49,6 +63,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-homepi
     , nixos-hardware
     , flake-utils
     , nix-bundle
@@ -80,22 +95,16 @@
         };
       };
       # pin flakes and nixpkgs
-      pinFlakes = {
-        nix.registry = {
-          nixpkgs.flake = nixpkgs;
-          nur.flake = nur;
-          home-manager.flake = home-manager;
-        };
-        nix.nixPath = [
-          "nixpkgs=${nixpkgs}"
-          "nur=${nur}"
-        ];
+      pinFlakes = flakes: {
+        # TODO: use nix-std to clean this up
+        nix.registry =
+          builtins.foldl'
+            (a: x: a // { ${x}.flake = flakes.${x}; })
+            { }
+            (builtins.attrNames flakes);
+        nix.nixPath =
+          builtins.map (x: "${x}=${flakes.${x}}") (builtins.attrNames flakes);
       };
-      # by default, we want to use and pin flakes on every machine
-      defaultModules = [
-        useFlakes
-        pinFlakes
-      ];
     in
     nlib.attrsets.recursiveMergeAttrs [
       {
@@ -146,7 +155,8 @@
               in
               nixpkgs.lib.flatten [
                 (passArgs args)
-                defaultModules
+                useFlakes
+                (pinFlakes { inherit nixpkgs nur home-manager; })
                 hardwareModules
                 mainModule
                 addOverlays
@@ -155,35 +165,40 @@
           };
 
           # raspberry pi for home-assistant
-          homepi = nixpkgs.lib.nixosSystem {
-            system = "aarch64-linux";
-            modules =
-              let
-                # extra args to pass to imported modules
-                args = {
-                  inherit inputs;
-                };
-                # the main configuration
-                mainModule = import ./homepi/configuration.nix;
-                # extra modules from the inputs
-                otherModules = [
-                  sops-nix.nixosModules.sops
-                  self.nixosModules.duckdns
-                ];
-                addOverlays = {
-                  nixpkgs.overlays = [
-                    self.overlays.raspi-firmware-overlay
+          homepi =
+            let
+              nixpkgs = nixpkgs-homepi;
+            in
+            nixpkgs.lib.nixosSystem {
+              system = "aarch64-linux";
+              modules =
+                let
+                  # extra args to pass to imported modules
+                  args = {
+                    inherit inputs;
+                  };
+                  # the main configuration
+                  mainModule = import ./homepi/configuration.nix;
+                  # extra modules from the inputs
+                  otherModules = [
+                    sops-nix.nixosModules.sops
+                    self.nixosModules.duckdns
                   ];
-                };
-              in
-              nixpkgs.lib.flatten [
-                (passArgs args)
-                defaultModules
-                mainModule
-                addOverlays
-                otherModules
-              ];
-          };
+                  addOverlays = {
+                    nixpkgs.overlays = [
+                      self.overlays.raspi-firmware-overlay
+                    ];
+                  };
+                in
+                nixpkgs.lib.flatten [
+                  (passArgs args)
+                  useFlakes
+                  (pinFlakes { inherit nixpkgs; })
+                  mainModule
+                  addOverlays
+                  otherModules
+                ];
+            };
         };
 
         # Nixpkgs overlays
