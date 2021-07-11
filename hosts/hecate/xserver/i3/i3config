@@ -83,6 +83,31 @@
     # }}}
 # }}}
 
+# quick commands {{{
+    bindsym $mod+c mode "quickcommand"
+    mode "quickcommand" {
+        bindsym m mode "mons"
+        bindsym d mode "dunst"
+        bindsym Escape mode "default
+    }
+    mode "mons" {
+        bindsym o exec mons -o;        mode "default"
+        bindsym s exec mons -s;        mode "default"
+        bindsym t exec mons -e top;    mode "default"
+        bindsym l exec mons -e left;   mode "default"
+        bindsym r exec mons -e right;  mode "default"
+        bindsym b exec mons -e bottom; mode "default"
+        bindsym Escape mode "default
+    }
+    mode "dunst" {
+        bindsym t exec dunstctl set-paused toggle; mode "default"
+        bindsym p exec dunstctl set-paused true;   mode "default"
+        bindsym u exec dunstctl set-paused false;  mode "default"
+        bindsym q exec "if s=\\"$(dunstctl is-paused)\\"; then notify-send \\"dunst is $([ \\"$s\\" = \\"false\\" ] && echo \\"un\\")paused\\"; else notify-send \\"error querying dunst status\\"; fi";  mode "default"
+        bindsym Escape mode "default
+    }
+# }}}
+
 # special window handling {{{
     # floating {{{
         for_window [class="^Thunar$"] floating enable
