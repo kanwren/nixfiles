@@ -16,10 +16,4 @@
 
   # Singularity
   programs.singularity.enable = true;
-
-  # Vagrant
-  virtualisation.libvirtd.enable = true;
-  environment.systemPackages = with pkgs; [
-    vagrant
-  ];
 }
