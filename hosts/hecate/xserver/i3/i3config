@@ -87,6 +87,7 @@
     bindsym $mod+c mode "quickcommand"
     mode "quickcommand" {
         bindsym m mode "mons"
+        bindsym k mode "kbmap"
         bindsym d mode "dunst"
         bindsym Escape mode "default
     }
@@ -105,6 +106,18 @@
         bindsym u exec dunstctl set-paused false;  mode "default"
         bindsym q exec "if s=\\"$(dunstctl is-paused)\\"; then notify-send \\"dunst is $([ \\"$s\\" = \\"false\\" ] && echo \\"un\\")paused\\"; else notify-send \\"error querying dunst status\\"; fi";  mode "default"
         bindsym Escape mode "default
+    }
+    mode "kbmap" {
+        bindsym space exec "setxkbmap -layout  us";                                        mode "default"
+        bindsym 1     exec "setxkbmap -layout  us";                                        mode "default"
+        bindsym 2     exec "setxkbmap -variant dvorak";                                    mode "default"
+        bindsym 3     exec "setxkbmap -variant dvp";                                       mode "default"
+        bindsym 4     exec "setxkbmap -variant dvorak-l";                                  mode "default"
+        bindsym 5     exec "setxkbmap -variant dvorak-r";                                  mode "default"
+        bindsym 6     exec "setxkbmap -variant colemak";                                   mode "default"
+        bindsym 7     exec "setxkbmap -layout us,apl -variant ,dyalog -option grp:switch"; mode "default"
+
+        bindsym Escape mode "default"
     }
 # }}}
 
@@ -234,7 +247,7 @@
         # read 1 character and mark the current window with this character
         bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
         bindsym $mod+Shift+m exec i3-input -F 'unmark %s' -l 1 -P 'mark: '
-        bindsym $mod+Control+m unmark
+        bindsym $mod+Control+Shift+m unmark
         # read 1 character and go to the window with the character
         bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
     # }}}
@@ -299,22 +312,6 @@
     bindsym $mod+Control+Shift+8 move container to workspace $ws8;  workspace $ws8
     bindsym $mod+Control+Shift+9 move container to workspace $ws9;  workspace $ws9
     bindsym $mod+Control+Shift+0 move container to workspace $ws10; workspace $ws10
-# }}}
-
-# keyboard layout {{{
-    bindsym $mod+Control+Shift+m mode "xkbmap"
-    mode "xkbmap" {
-        bindsym space exec "setxkbmap -layout  us";                                        mode "default"
-        bindsym 1     exec "setxkbmap -layout  us";                                        mode "default"
-        bindsym 2     exec "setxkbmap -variant dvorak";                                    mode "default"
-        bindsym 3     exec "setxkbmap -variant dvp";                                       mode "default"
-        bindsym 4     exec "setxkbmap -variant dvorak-l";                                  mode "default"
-        bindsym 5     exec "setxkbmap -variant dvorak-r";                                  mode "default"
-        bindsym 6     exec "setxkbmap -variant colemak";                                   mode "default"
-        bindsym 7     exec "setxkbmap -layout us,apl -variant ,dyalog -option grp:switch"; mode "default"
-
-        bindsym Escape mode "default"
-    }
 # }}}
 
 # bar {{{
