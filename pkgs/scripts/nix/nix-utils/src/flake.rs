@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::process::Command;
 
-use clap::{App, Arg, ArgMatches, SubCommand, AppSettings};
+use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use serde::{Deserialize, Serialize};
 
 pub fn subcommand<'a, 'b>() -> App<'a, 'b> {
@@ -9,11 +9,7 @@ pub fn subcommand<'a, 'b>() -> App<'a, 'b> {
         .subcommand(
             SubCommand::with_name("list-inputs")
                 .about("List the inputs of a flake from its metadata")
-                .arg(
-                    Arg::with_name("FLAKE")
-                        .index(1)
-                        .help("The flake to query")
-                ),
+                .arg(Arg::with_name("FLAKE").index(1).help("The flake to query")),
         )
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .about("Flake-related utilities")
