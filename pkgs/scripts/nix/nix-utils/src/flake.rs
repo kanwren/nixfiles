@@ -1,14 +1,19 @@
 use std::collections::HashMap;
 use std::process::Command;
 
-use clap::{App, ArgMatches, SubCommand, AppSettings};
+use clap::{App, Arg, ArgMatches, SubCommand, AppSettings};
 use serde::{Deserialize, Serialize};
 
 pub fn subcommand<'a, 'b>() -> App<'a, 'b> {
     SubCommand::with_name("flake")
         .subcommand(
             SubCommand::with_name("list-inputs")
-                .about("List the inputs of a flake from its metadata"),
+                .about("List the inputs of a flake from its metadata")
+                .arg(
+                    Arg::with_name("FLAKE")
+                        .index(1)
+                        .help("The flake to query")
+                ),
         )
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .about("Flake-related utilities")
@@ -28,9 +33,14 @@ struct Metadata {
     locks: Locks,
 }
 
-pub fn list_inputs(_: &ArgMatches) -> Result<(), String> {
+pub fn list_inputs(matches: &ArgMatches) -> Result<(), String> {
+    let args = match matches.value_of("FLAKE") {
+        None => vec!["flake", "metadata", "--json"],
+        Some(flake) => vec!["flake", "metadata", "--json", flake],
+    };
+
     let output = Command::new("nix")
-        .args(vec!["flake", "metadata", "--json"])
+        .args(args)
         .output()
         .map_err(|err| format!("Error: failed to query nix flake metadata: {:?}", err))?;
     let output = if output.status.success() {
