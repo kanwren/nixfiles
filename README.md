@@ -6,7 +6,7 @@ My NixOS configurations and other Nix files :snowflake:
 
 ### Overview
 
-- [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets. Some modules, overlays, and settings are applied in here.
+- [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets.
 - [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`modules/`](modules/): Custom NixOS modules
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
@@ -16,7 +16,9 @@ My NixOS configurations and other Nix files :snowflake:
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
 - [`templates/`](templates/): Nix flake templates, as used by `nix flake new`
-- [`home/`](hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/); each subdirectory is for configuring a different program/service
+- [`home/`](home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/); each subdirectory is for configuring a different program/service
+- [`bundlers/`](bundlers/): Various bundlers that can be used with the `nix bundle` subcommand
+- [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
 ### Hosts
 
@@ -27,10 +29,13 @@ My NixOS configurations and other Nix files :snowflake:
 
 The bulk of the configuration is for my main laptop `hecate`:
 
-- [`configuration.nix`](hosts/hecate/configuration.nix): Configuration root; imports all other configuration.
+- [`host.nix`](hosts/hecate/host.nix): Assembles the system flake
+  - Applies hardware-specific [nixos-hardware](https://github.com/NixOS/nixos-hardware/) modules and [`hardware-configuration.nix`](hosts/hecate/hardware-configuration.nix)
+  - Adds external modules and overlays from the flake inputs
+  - Enables/pins flakes
+- [`configuration.nix`](hosts/hecate/configuration.nix): Configuration root; imports all other configuration
 - [`boot/`](hosts/hecate/boot/): Bootloader and emulation settings
 - [`hardware/`](hosts/hecate/hardware/): General hardware-related configurations
-  - Note that the bulk of the hardware configurations specific to `hecate` are in `flake.nix`, including [nixos-hardware](https://github.com/NixOS/nixos-hardware/) modules and[ `hardware-configuration.nix`](hosts/hecate/hardware-configuration.nix).
 - [`home/`](hosts/hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/)
   - [`default.nix`](hosts/hecate/home/default.nix) is the configuration root
   - Any other files are for `hecate`-specific config on top of the top-level configs

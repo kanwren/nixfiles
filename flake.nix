@@ -81,124 +81,15 @@
     let
       # custom library
       nlib = import ./lib { inherit (nixpkgs) lib; };
-      # Module to pass extra arguments to modules
-      passArgs = args: {
-        config._module.args = args;
-      };
-      # Module to enable nix flakes
-      useFlakes = { pkgs, ... }: {
-        nix = {
-          package = pkgs.nixFlakes;
-          extraOptions = ''
-            experimental-features = nix-command flakes ca-references
-          '';
-        };
-      };
-      # pin flakes and nixpkgs
-      pinFlakes = flakes: {
-        # TODO: use nix-std to clean this up
-        nix.registry =
-          builtins.foldl'
-            (a: x: a // { ${x}.flake = flakes.${x}; })
-            { }
-            (builtins.attrNames flakes);
-        nix.nixPath =
-          builtins.map (x: "${x}=${flakes.${x}}") (builtins.attrNames flakes);
-      };
     in
     nlib.attrsets.recursiveMergeAttrs [
       {
         nixosConfigurations = {
           # main dev laptop
-          hecate = nixpkgs.lib.nixosSystem rec {
-            system = "x86_64-linux";
-            modules =
-              let
-                # extra args to pass to imported modules
-                args = {
-                  inherit inputs;
-                  custom = {
-                    pkgs = self.legacyPackages.${system};
-                    inherit (self) hmModules;
-                    inherit (self) lib;
-                  };
-                };
-                # modules for configuring hecate hardware
-                hardwareModules = with nixos-hardware.nixosModules; [
-                  common-pc-laptop
-                  common-pc-laptop-ssd
-                  common-cpu-amd
-                  common-gpu-nvidia
-                  # configure the bus IDs for common-gpu-nvidia
-                  {
-                    hardware.nvidia.prime = {
-                      intelBusId = "PCI:5:0:0";
-                      nvidiaBusId = "PCI:1:0:0";
-                    };
-                  }
-                  # Auto-generated hardware configuration
-                  ./hosts/hecate/hardware-configuration.nix
-                ];
-                # the main configuration
-                mainModule = import ./hosts/hecate/configuration.nix;
-                # extra overlays from the inputs
-                addOverlays = {
-                  nixpkgs.overlays = [
-                    nur.overlay
-                    cs2110-nix.overlay
-                  ];
-                };
-                # extra modules from the inputs
-                otherModules = [
-                  home-manager.nixosModules.home-manager
-                ];
-              in
-              nixpkgs.lib.flatten [
-                (passArgs args)
-                useFlakes
-                (pinFlakes { inherit nixpkgs nur home-manager; })
-                hardwareModules
-                mainModule
-                addOverlays
-                otherModules
-              ];
-          };
+          hecate = import ./hosts/hecate/host.nix { inherit nlib; } inputs;
 
           # raspberry pi for home-assistant
-          homepi =
-            let
-              nixpkgs = nixpkgs-homepi;
-            in
-            nixpkgs.lib.nixosSystem {
-              system = "aarch64-linux";
-              modules =
-                let
-                  # extra args to pass to imported modules
-                  args = {
-                    inherit inputs;
-                  };
-                  # the main configuration
-                  mainModule = import ./hosts/homepi/configuration.nix;
-                  # extra modules from the inputs
-                  otherModules = [
-                    sops-nix.nixosModules.sops
-                    self.nixosModules.duckdns
-                  ];
-                  addOverlays = {
-                    nixpkgs.overlays = [
-                      self.overlays.raspi-firmware-overlay
-                    ];
-                  };
-                in
-                nixpkgs.lib.flatten [
-                  (passArgs args)
-                  useFlakes
-                  (pinFlakes { inherit nixpkgs; })
-                  mainModule
-                  addOverlays
-                  otherModules
-                ];
-            };
+          homepi = import ./hosts/homepi/host.nix { inherit nlib; } inputs;
         };
 
         # Nixpkgs overlays
@@ -221,53 +112,9 @@
         lib = nlib;
 
         # custom templates
-        templates = {
-          latex = {
-            path = ./templates/latex;
-            description = "A basic LaTeX project";
-          };
-        };
+        templates = import ./templates;
 
-        bundlers = {
-          # nix-bundle shim to bundle programs with names other than the default
-          # See https://github.com/matthewbauer/nix-bundle/issues/74
-          arx-bundle = { program, system }:
-            let
-              pkgs = nixpkgs.legacyPackages.${system};
-              bundle = import nix-bundle { nixpkgs = pkgs; };
-              envProg = builtins.getEnv "PROGRAM";
-              prog =
-                if envProg == "" then
-                  builtins.trace "Warning: PROGRAM not set; defaulting to '${program}'. Did you forget to set PROGRAM or --impure?" program
-                else
-                  "${builtins.dirOf program}/${envProg}";
-              script = pkgs.writeScript "startup" ''
-                #!/bin/sh
-                .${bundle.nix-user-chroot}/bin/nix-user-chroot -n ./nix -- "${prog}" "$@"
-              '';
-            in
-            bundle.makebootstrap {
-              targets = [ script ];
-              startup = ".${builtins.unsafeDiscardStringContext script} '\"$@\"'";
-            };
-
-          docker-bundle = { program, system }:
-            let
-              pkgs = nixpkgs.legacyPackages.${system};
-              envProg = builtins.getEnv "PROGRAM";
-              prog =
-                if envProg == "" then
-                  builtins.trace "Warning: PROGRAM not set; defaulting to '${program}'. Did you forget to set PROGRAM or --impure?" program
-                else
-                  "${builtins.dirOf program}/${envProg}";
-            in
-            pkgs.dockerTools.buildImage {
-              name = "${builtins.baseNameOf program}";
-              tag = "latest";
-              config.Cmd = [ prog ];
-            };
-        };
-
+        bundlers = import ./bundlers { inherit nixpkgs; };
         defaultBundler = self.bundlers.arx-bundle;
       }
       (flake-utils.lib.eachDefaultSystem (system: (
