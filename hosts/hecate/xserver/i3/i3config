@@ -220,30 +220,21 @@
 
     # spilling {{{
         # spill a window into its parent container
-        bindsym $mod+d \
-            mark _i3_spill_a; \
-            focus parent; \
-            focus parent; \
-            mark _i3_spill_b; \
-            [con_mark="_i3_spill_a"] focus; \
-            move window to mark _i3_spill_b; \
-            unmark _i3_spill_a; \
-            unmark _i3_spill_b
+        bindsym $mod+d exec "@spill_container_script@ single"
         # spill all windows in the selected container into their parent container
-        bindsym $mod+Shift+d exec "@spill_container_script@"
+        bindsym $mod+Shift+d exec "@spill_container_script@ multi"
     # }}}
 
     # swapping {{{
-        bindsym $mod+bracketleft mark swapee; mode "swap"
-        mode "swap" {
-            bindsym $mod+bracketleft swap container with mark swapee; unmark swapee; mode "default"
-            bindsym Escape unmark swapee; mode "default"
-        }
+        bindsym $mod+bracketleft mark --add swapee
+        bindsym $mod+bracketright swap container with mark swapee; unmark swapee
     # }}}
 
     # marks {{{
         # read 1 character and mark the current window with this character
-        bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'mark: '
+        bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
+        bindsym $mod+Shift+m exec i3-input -F 'unmark %s' -l 1 -P 'mark: '
+        bindsym $mod+Control+m unmark
         # read 1 character and go to the window with the character
         bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
     # }}}
