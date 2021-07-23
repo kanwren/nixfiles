@@ -114,7 +114,7 @@
         # custom templates
         templates = import ./templates;
 
-        bundlers = import ./bundlers { inherit nixpkgs; };
+        bundlers = import ./bundlers { inherit nixpkgs nix-bundle; };
         defaultBundler = self.bundlers.arx-bundle;
       }
       (flake-utils.lib.eachDefaultSystem (system: (

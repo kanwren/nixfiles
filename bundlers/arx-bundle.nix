@@ -1,7 +1,7 @@
 # nix-bundle shim to bundle programs with names other than the default
 # See https://github.com/matthewbauer/nix-bundle/issues/74
 
-{ nixpkgs }:
+{ nixpkgs, nix-bundle }:
 
 { program, system }:
 
