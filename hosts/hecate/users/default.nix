@@ -24,5 +24,4 @@
   };
 }
 
-# Note: to generate an initialHashedPassword, use
-# nix-shell -p mkpasswd --run 'mkpasswd -m sha-512 -s'
+# Note: to generate an initialHashedPassword, use 'mkpasswd -m sha-512 -s'

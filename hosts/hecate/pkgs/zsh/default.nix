@@ -130,21 +130,33 @@ in
     ohMyZsh = {
       enable = true;
       plugins = [
+        # shell interaction
         "zsh-vi-mode" # "vi-mode"
-        "fzf"
-        "git"
-        "last-working-dir"
-        "colored-man-pages"
-        "command-not-found"
-        "copybuffer"
-        "nix-shell"
+        "safe-paste" # prevent pasted code from running before review
+        "last-working-dir" # switches new shells to last working dir, adds 'lwd'
+        "command-not-found" # shows packages that provide missing commands
+        "nix-shell" # lets nix-shell use zsh
+        "colored-man-pages" # colors man pages
+
+        "fzf" # finds fzf and enables completions, etc.
+        "git" # provides lots of git aliases
 
         # navigation
-        "z"
-        "wd"
+        "z" # adds 'z' to jump to directory matching pattern based on frecency
+        "wd" # bookmark directories for quick jumping, adds 'wd'
+
+        # utility
+        "cp" # adds 'cpv' which uses rsync
+        "copyfile" # adds 'copyfile' to copy file contents to the clipboard
+        "copydir" # adds 'copydir' to copy the CWD
+        "universalarchive" # adds 'ua' for easy archiving into different formats
 
         # completion plugins
+        "ripgrep"
         "cabal"
+        "rust"
+        "rustup"
+        "cargo"
         "docker"
       ];
       customPkgs = [
@@ -156,6 +168,8 @@ in
       ];
     };
   };
+
+  programs.command-not-found.enable = true;
 
   environment = {
     systemPackages = with pkgs; [ direnv h ];

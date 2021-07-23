@@ -2,7 +2,6 @@
 
 {
   boot = {
-    # TODO[NixOS/nixpkgs/issues/129233]: switch to `linuxPackages_latest` once resolved
     kernelPackages = pkgs.linuxPackages_5_12;
 
     loader = {

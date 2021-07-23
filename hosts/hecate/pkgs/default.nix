@@ -87,11 +87,7 @@ with rec {
     qpdf # PDF manipulation tool
     vlc # multimedia viewer
     mpv # multimedia viewer
-    (asunder.override {
-      # CD ripping
-      mp3Support = true;
-      oggSupport = true;
-    })
+    (asunder.override { mp3Support = true; oggSupport = true; }) # CD ripping
     simplescreenrecorder # screen recording
 
     # Browsers
@@ -116,5 +112,4 @@ with rec {
       export PATH="$HOME/.cabal/bin''${PATH:+:''${PATH}}"
     '';
   };
-
 }

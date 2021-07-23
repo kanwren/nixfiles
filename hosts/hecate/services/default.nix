@@ -5,20 +5,12 @@
     # Enable the OpenSSH daemon
     openssh.enable = true;
 
-    # Enable CUPS to print documents
-    printing = {
-      enable = true;
-    };
-
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
 
     gnome = {
       gnome-keyring.enable = true;
     };
-
-    # TODO: re-enable once ldc is unbroken
-    # onedrive.enable = true;
 
     postgresql = {
       enable = true;
