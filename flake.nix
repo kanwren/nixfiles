@@ -96,6 +96,7 @@
         overlays = {
           raspi-firmware-overlay = import ./overlays/firmwareLinuxNonfree.nix;
           asciiquarium-nicer-sharks = import ./overlays/asciiquarium-nicer-sharks.nix;
+          fix-h-warning = import ./overlays/fix-h-warning.nix;
         };
 
         # NixOS modules

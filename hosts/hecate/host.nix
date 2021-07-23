@@ -45,6 +45,7 @@ nixpkgs.lib.nixosSystem rec {
         nixpkgs.overlays = [
           nur.overlay
           cs2110-nix.overlay
+          self.overlays.fix-h-warning
         ];
       };
       # extra modules from the inputs
