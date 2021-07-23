@@ -19,6 +19,10 @@
 
     # TODO: re-enable once ldc is unbroken
     # onedrive.enable = true;
+
+    postgresql = {
+      enable = true;
+    };
   };
 
   programs = {
