@@ -28,7 +28,10 @@
     gaps outer 10
 # }}}
 
-# system/media control bindings {{{
+# control bindings {{{
+    # run i3 commands on the fly
+    bindsym $mod+i exec i3-input -f pango:monospace 12
+
     # volume controls (requires pulseaudio)
     bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5%    # Increase sound volume
     bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ -5%    # Decrease sound volume
@@ -88,8 +91,9 @@
     mode "quickcommand" {
         bindsym m mode "mons"
         bindsym k mode "kbmap"
+        bindsym i mode "system"
         bindsym d mode "dunst"
-        bindsym Escape mode "default
+        bindsym Escape mode "default"
     }
     mode "mons" {
         bindsym o exec mons -o;        mode "default"
@@ -98,14 +102,21 @@
         bindsym l exec mons -e left;   mode "default"
         bindsym r exec mons -e right;  mode "default"
         bindsym b exec mons -e bottom; mode "default"
-        bindsym Escape mode "default
+        bindsym Escape mode "default"
+    }
+    mode "system" {
+        bindsym r               restart;                mode "default"
+        bindsym Shift+e         exit;                   mode "default"
+        bindsym Control+Shift+s exec shutdown now;      mode "default"
+        bindsym Control+Shift+r exec shutdown -r now;   mode "default"
+        bindsym Escape mode "default"
     }
     mode "dunst" {
         bindsym t exec dunstctl set-paused toggle; mode "default"
         bindsym p exec dunstctl set-paused true;   mode "default"
         bindsym u exec dunstctl set-paused false;  mode "default"
         bindsym q exec "if s=\\"$(dunstctl is-paused)\\"; then notify-send \\"dunst is $([ \\"$s\\" = \\"false\\" ] && echo \\"un\\")paused\\"; else notify-send \\"error querying dunst status\\"; fi";  mode "default"
-        bindsym Escape mode "default
+        bindsym Escape mode "default"
     }
     mode "kbmap" {
         bindsym space exec "setxkbmap -layout  us";                                        mode "default"
@@ -138,14 +149,6 @@
         for_window [class="^Slack$"] mark l
         for_window [class="^Spotify$"] mark s
     # }}}
-# }}}
-
-# i3 management {{{
-    # run i3 commands on the fly
-    bindsym $mod+i exec i3-input -f pango:monospace 12
-
-    # restart i3 in-place
-    bindsym $mod+Shift+r restart
 # }}}
 
 # window management bindings {{{
