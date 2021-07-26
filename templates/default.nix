@@ -1,6 +1,6 @@
 {
   latex = {
-    path = ./templates/latex;
+    path = ./latex;
     description = "A basic LaTeX project";
   };
 }
