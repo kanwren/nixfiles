@@ -28,7 +28,7 @@ in
       (with pkgs.nodePackages; [
         typescript-language-server
       ])
-      (with pkgs.python3Packages; [
+      (with pkgs.python38Packages; [
         python-language-server
         pyls-mypy
       ])
