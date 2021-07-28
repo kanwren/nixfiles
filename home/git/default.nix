@@ -60,25 +60,15 @@
     };
 
     extraConfig = {
-      gist = {
-        private = true;
-      };
-      credential = {
-        helper = "manager";
-      };
+      gist.private = true;
+      credential.helper = "manager";
       core = {
         editor = "nvim";
         autocrlf = false;
       };
-      init = {
-        defaultBranch = "main";
-      };
-      diff = {
-        tool = "vimdiff";
-      };
-      difftool = {
-        prompt = false;
-      };
+      init.defaultBranch = "main";
+      diff.tool = "vimdiff";
+      difftool.prompt = false;
       merge = {
         tool = "vimdiff";
         conflictstyle = "diff3";
@@ -87,15 +77,9 @@
         prompt = false;
         keepBackup = false;
       };
-      push = {
-        default = "simple";
-      };
-      pull = {
-        ff = "only";
-      };
-      advice = {
-        addEmptyPathspec = false;
-      };
+      push.default = "simple";
+      pull.ff = "only";
+      advice.addEmptyPathspec = false;
     };
 
     lfs.enable = true;

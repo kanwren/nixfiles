@@ -8,7 +8,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "curses";
+    pinentryFlavor = "gtk2";
 
     defaultCacheTtl = time.unitsOf time.seconds (time.weeks 1);
     defaultCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;
