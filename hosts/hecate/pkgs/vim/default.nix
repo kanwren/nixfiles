@@ -28,9 +28,10 @@ in
       (with pkgs.nodePackages; [
         typescript-language-server
       ])
-      (with pkgs.python38Packages; [
-        python-language-server
-        pyls-mypy
+      (with pkgs.python39Packages; [
+        python-lsp-server
+        python-lsp-black
+        pylsp-mypy
       ])
     ];
 
