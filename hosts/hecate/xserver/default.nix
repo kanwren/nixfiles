@@ -39,7 +39,7 @@
           };
         };
 
-        background = ../../../desktop-backgrounds/alien-moon.png;
+        background = ../../../desktop-backgrounds/earth.png;
       };
     };
 
