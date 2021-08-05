@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 
 {
+  imports = [
+    ./tailscale.nix
+  ];
+
   services = {
     # Enable the OpenSSH daemon
     openssh.enable = true;

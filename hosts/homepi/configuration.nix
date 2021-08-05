@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./home-assistant.nix
+    ./tailscale.nix
   ];
 
   sops.gnupgHome = "/var/lib/sops";
