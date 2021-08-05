@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # doesn't need to upgrade; should stay constant
-    nixpkgs-homepi.url = "github:NixOS/nixpkgs/1c16013bd6e94da748b41cc123c6b509a23eb440";
+    nixpkgs-homepi.url = "github:NixOS/nixpkgs/465daf79b4a23d6e47d2efddece7120da8800c63";
 
     nur.url = "github:nix-community/NUR";
 

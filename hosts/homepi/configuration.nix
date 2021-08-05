@@ -36,11 +36,7 @@
         ];
       };
     };
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 631 ];
-      allowedUDPPorts = [ 631 ];
-    };
+    firewall.enable = true;
     nameservers = [
       "8.8.8.8"
     ];
@@ -66,17 +62,13 @@
   };
 
   nix = {
-    trustedUsers = [
-      "root"
-      "rarer"
-    ];
+    allowedUsers = [ "@wheel" ];
   };
 
   environment = {
+    defaultPackages = lib.mkForce [ ];
     systemPackages = with pkgs; [
       vim
-      libraspberrypi
-      git
     ];
     variables = {
       EDITOR = "vim";
@@ -87,21 +79,34 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "yes";
+      permitRootLogin = "prohibit-password";
+      passwordAuthentication = false;
+      allowSFTP = false;
+      challengeResponseAuthentication = false;
+      extraConfig = ''
+        AllowTcpForwarding yes
+        X11Forwarding no
+        AllowAgentForwarding no
+        AllowStreamLocalForwarding no
+        AuthenticationMethods publickey
+      '';
     };
+  };
+
+  security = {
+    sudo.execWheelOnly = true;
   };
 
   programs = {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "curses";
+      pinentryFlavor = "tty";
     };
   };
 
   documentation.enable = false;
 
-  system.stateVersion = "20.09";
-
+  system.stateVersion = "21.05";
 }
 
