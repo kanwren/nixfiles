@@ -16,7 +16,6 @@ My NixOS configurations and other Nix files :snowflake:
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
 - [`templates/`](templates/): Nix flake templates, as used by `nix flake new`
-- [`home/`](home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/); each subdirectory is for configuring a different program/service
 - [`bundlers/`](bundlers/): Various bundlers that can be used with the `nix bundle` subcommand
 - [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
@@ -38,7 +37,8 @@ The bulk of the configuration is for my main laptop `hecate`:
 - [`hardware/`](hosts/hecate/hardware/): General hardware-related configurations
 - [`home/`](hosts/hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/)
   - [`default.nix`](hosts/hecate/home/default.nix) is the configuration root
-  - Any other files are for `hecate`-specific config on top of the top-level configs
+  - Each directory corresponds to a user
+  - Every directory in a user's directory is for configuring a particular program or service
 - [`i18n/`](hosts/hecate/i18n/): Language, input, and internationalization options
 - [`networking/`](hosts/hecate/networking/): Wireless and firewall settings
 - [`nix/`](hosts/hecate/nix/): Nix- and nixpkgs-related settings
