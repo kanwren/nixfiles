@@ -83,7 +83,7 @@ in
     enable = true;
     inherit subdomain;
     tokenPath = "/run/secrets/duck-dns-token";
-    time = with inputs.nix-cron.lib.cron; { minute = every 5; };
+    onCalendar = "*-*-* *:00,30:00"; # Update twice per hour
   };
 }
 

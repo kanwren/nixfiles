@@ -28,11 +28,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cron = {
-      url = "github:nprindle/nix-cron";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     cs2110-nix = {
       url = "github:nprindle/cs2110-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -68,7 +63,6 @@
     , flake-utils
     , nix-bundle
     , sops-nix
-    , nix-cron
     , nur
     , home-manager
     , naersk
@@ -97,7 +91,7 @@
 
         # NixOS modules
         nixosModules = {
-          duckdns = import ./modules/duckdns.nix { inherit nix-cron; };
+          duckdns = import ./modules/duckdns.nix;
         };
 
         # home-manager modules

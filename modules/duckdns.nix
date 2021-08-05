@@ -1,12 +1,9 @@
-{ nix-cron }:
-
 { config, lib, pkgs, ... }:
 
 with lib;
 
 let
   cfg = config.services.duckdns;
-  inherit (nix-cron.lib) cron;
 in
 {
   options = {
@@ -40,12 +37,12 @@ in
         '';
       };
 
-      time = mkOption {
-        type = with cron.types; time_t;
-        default = with cron; { minutes = every 5; };
+      onCalendar = mkOption {
+        type = with lib.types; str;
+        default = "*-*-* *:00:00";
         description = ''
-          A string representing a cron configuration for how often to schedule a
-          DNS update. By default, updates every 5 minutes.
+          A string representing a systemd OnCalendar configuration for how often
+          to schedule a DNS update. By default, updates once an hour.
         '';
       };
     };
@@ -59,28 +56,27 @@ in
       }
     ];
 
-    services.cron = {
-      enable = true;
-      systemCronJobs =
-        let
-          updateDuckIp = pkgs.writeShellScript "update-duck-ip" ''
-            ${
-              if cfg.token != null then ''
-                url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=${cfg.token}&verbose=true&ip="
-              '' else ''
-                token="$(< ${cfg.tokenPath})"
-                url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=$token&verbose=true&ip="
-              ''
-            }
-            echo url="$url" | curl -k -o /tmp/duck.log -K - >/dev/null 2>&1
-          '';
-          updateJob = cron.systemJob {
-            time = cfg.time;
-            user = "root";
-            commandFile = updateDuckIp;
-          };
-        in
-        [ updateJob ];
+    systemd = {
+      services.update-duckdns-ip = {
+        serviceConfig.Type = "oneshot";
+        script = ''
+          ${
+            if cfg.token != null then ''
+              url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=${cfg.token}&verbose=true&ip="
+            '' else ''
+              token="$(< ${cfg.tokenPath})"
+              url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=$token&verbose=true&ip="
+            ''
+          }
+          echo url="$url" | ${pkgs.curl}/bin/curl -k -o /tmp/duck.log -K - >/dev/null 2>&1
+        '';
+      };
+
+      timers.update-duckdns-ip = {
+        wantedBy = [ "timers.target" ];
+        partOf = [ "update-duckdns-ip.service" ];
+        timerConfig.OnCalendar = cfg.onCalendar;
+      };
     };
   };
 }

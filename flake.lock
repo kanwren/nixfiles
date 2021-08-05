@@ -202,26 +202,6 @@
         "type": "github"
       }
     },
-    "nix-cron": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1620578716,
-        "narHash": "sha256-v+FC0RBEODyWg9JEVuyWnseXfkdlDZAppW23v7CKHoE=",
-        "owner": "nprindle",
-        "repo": "nix-cron",
-        "rev": "8eae3285008591d6540b669a2789a2cf4022d882",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nprindle",
-        "repo": "nix-cron",
-        "type": "github"
-      }
-    },
     "nixlib": {
       "locked": {
         "lastModified": 1624753224,
@@ -344,7 +324,6 @@
         "naersk": "naersk",
         "nix-autobahn": "nix-autobahn",
         "nix-bundle": "nix-bundle",
-        "nix-cron": "nix-cron",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
