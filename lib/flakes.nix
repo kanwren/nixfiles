@@ -11,7 +11,7 @@
     nix = {
       package = pkgs.nixFlakes;
       extraOptions = ''
-        experimental-features = nix-command flakes ca-references
+        experimental-features = nix-command flakes ca-references ca-derivations
       '';
     };
   };
