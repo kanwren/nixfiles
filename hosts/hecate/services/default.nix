@@ -12,6 +12,11 @@
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
 
+    # cups
+    printing = {
+      enable = true;
+    };
+
     gnome = {
       gnome-keyring.enable = true;
     };
