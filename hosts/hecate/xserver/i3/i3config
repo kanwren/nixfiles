@@ -68,6 +68,7 @@
     bindsym $mod+Return exec kitty
     # browser
     bindsym $mod+b exec firefox
+    bindsym $mod+Shift+b exec firefox --private-window
     # clipboard manager
     bindsym $mod+n exec copyq show
 
