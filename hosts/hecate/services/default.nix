@@ -7,7 +7,10 @@
 
   services = {
     # Enable the OpenSSH daemon
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      forwardX11 = true;
+    };
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
