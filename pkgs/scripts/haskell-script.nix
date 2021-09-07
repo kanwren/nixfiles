@@ -1,4 +1,4 @@
-{ ghcVersion ? "8106", writers, haskell, ... }@args:
+{ ghcVersion ? "8107", writers, haskell, ... }@args:
 
 { name, contents, libraries ? (_: [ ]) }:
 
