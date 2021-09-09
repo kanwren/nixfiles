@@ -16,6 +16,7 @@
           "docker"
           "vboxusers"
           "libvirtd"
+          "wireshark"
         ];
         createHome = true;
         shell = pkgs.zsh;
