@@ -31,7 +31,7 @@
       unbind C-b
       set -g prefix M-Space
       bind-key M-Space send-prefix
-      set -g prefix2 C-a
+      # set -g prefix2 C-a
 
       set-window-option -g automatic-rename on
 
