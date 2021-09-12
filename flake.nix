@@ -50,6 +50,7 @@
       url = "github:nix-community/fenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        naersk.follows = "naersk";
       };
     };
   };
