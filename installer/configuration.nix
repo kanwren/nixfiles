@@ -48,7 +48,13 @@
       })
     ];
   };
-  programs.bash.interactiveShellInit = ''
-    set -o vi
-  '';
+  programs.bash = {
+    interactiveShellInit = ''
+      set -o vi
+    '';
+    shellAliases = {
+      # Copy repo as an offline resource until I can connect to the internet
+      goto-nixfiles = "cd ${../.}";
+    };
+  };
 }
