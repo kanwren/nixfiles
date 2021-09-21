@@ -33,6 +33,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-utils = {
+      url = "github:nprindle/nix-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        naersk.follows = "naersk";
+        fenix.follows = "fenix";
+      };
+    };
+
     nix-autobahn = {
       url = "github:nprindle/nix-autobahn";
       inputs = {
@@ -69,6 +79,7 @@
     , fenix
     , cs2110-nix
     , nixos-generators
+    , nix-utils
     , nix-autobahn
     , ...
     }@inputs:
@@ -169,6 +180,9 @@
       # Re-exports
       {
         inherit (nix-autobahn) packages apps;
+      }
+      {
+        inherit (nix-utils) packages apps;
       }
     ];
 }

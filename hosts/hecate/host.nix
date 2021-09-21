@@ -9,6 +9,10 @@
 , ...
 }@inputs:
 
+let
+  mergeAttrs = builtins.foldl' (x: y: x // y) { };
+in
+
 nixpkgs.lib.nixosSystem rec {
   system = "x86_64-linux";
   modules =
@@ -17,7 +21,10 @@ nixpkgs.lib.nixosSystem rec {
       args = {
         inherit inputs;
         custom = {
-          pkgs = self.legacyPackages.${system};
+          pkgs = mergeAttrs [
+            self.legacyPackages.${system}
+            inputs.nix-utils.packages.${system}
+          ];
           inherit (self) hmModules;
           inherit (self) lib;
         };

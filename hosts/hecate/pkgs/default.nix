@@ -9,6 +9,10 @@ with rec {
   # All scripts should be custom packages
   scripts = custom.lib.attrsets.recursiveDerivations custom.pkgs.scripts;
 
+  from-inputs = [
+    custom.pkgs.nix-utils
+  ];
+
   baseSystemPackages = with pkgs; [
     # Nix stuff
     cachix
@@ -106,6 +110,7 @@ with rec {
     systemPackages = lib.concatLists [
       baseSystemPackages
       scripts
+      from-inputs
     ];
     homeBinInPath = true;
     shellInit = ''

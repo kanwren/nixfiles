@@ -199,6 +199,35 @@
         "type": "github"
       }
     },
+    "nix-utils": {
+      "inputs": {
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "naersk": [
+          "naersk"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1632205820,
+        "narHash": "sha256-Rvs69pXWZKSsA7nFB1wwngG0KUJj+ekrAyvYLsTCPSs=",
+        "owner": "nprindle",
+        "repo": "nix-utils",
+        "rev": "4725343543924acd8351dbc10e23abc1ed1bc29f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nprindle",
+        "repo": "nix-utils",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1624753224,
@@ -321,6 +350,7 @@
         "naersk": "naersk",
         "nix-autobahn": "nix-autobahn",
         "nix-bundle": "nix-bundle",
+        "nix-utils": "nix-utils",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
