@@ -10,6 +10,7 @@
     openssh = {
       enable = true;
       forwardX11 = true;
+      allowSFTP = true;
     };
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)
