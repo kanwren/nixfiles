@@ -2,7 +2,7 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_5_13;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     loader = {
       systemd-boot.enable = true;
