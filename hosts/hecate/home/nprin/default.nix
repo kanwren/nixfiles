@@ -54,6 +54,8 @@
         httpie # command-line REST API client
 
         # Development
+        # misc
+        graphviz
         # C
         stdenv.cc
         stdenv.cc.cc.man

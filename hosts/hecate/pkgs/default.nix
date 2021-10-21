@@ -43,6 +43,7 @@ with rec {
     ctags
     tldr
     entr
+    pdsh
     jq
     # Alternatives to coreutils
     ripgrep
