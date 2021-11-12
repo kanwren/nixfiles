@@ -14,13 +14,13 @@ with rec {
   ];
 
   baseSystemPackages = with pkgs; [
-    # Nix stuff
+    # nix stuff
     cachix
     patchelf
     nix-index
     nix-prefetch-git
 
-    # Core utils
+    # core utils
     binutils-unwrapped
     moreutils
     usbutils
@@ -28,39 +28,44 @@ with rec {
     dnsutils
     zlib
 
-    # CLI tools
-    wget
-    curl
-    git
-    killall
-    manpages
-    whois
-    tree
-    file
-    dos2unix
-    xclip
-    linuxPackages.perf
-    ctags
-    tldr
-    entr
-    pdsh
-    jq
-    # Alternatives to coreutils
+    # alternatives to coreutils
     ripgrep
     fd
     exa
     fzf
 
-    # System stuff
+    # file transfer, requests
+    wget
+    curl
+
+    # version control
+    git
+
+    # help, docs
+    manpages
+    tldr
+    cht-sh
+
+    # system management and utilities
+    killall
+    whois
+    linuxPackages.perf # profiling
+    xclip # X clipboard access
     brightnessctl
     mons
 
-    # CLI math tools
-    bc
-    libqalculate
-    qalculate-gtk # graphical calculator
+    # administrative tools
+    pdsh # parallel remote shell
 
-    # Compression tools
+    # navigation, files, formats, data processing
+    tree
+    file
+    dos2unix
+    entr # run commands when files change
+    ctags # source code browsing
+    jq # JSON processor
+
+    # compression
     gnutar
     gzip
     bzip2
@@ -68,22 +73,27 @@ with rec {
     unzip
     xz
     unrar
-    unar
+    unar # compression multitool
 
-    # Filesystem tools
+    # filesystem stuff
+    parted
     ntfsprogs
 
-    # Crypto stuff
+    # math
+    bc
+    libqalculate
+    qalculate-gtk # graphical calculator
+
+    # cryptography stuff
+    openssl
     mkpasswd
     gnupg
-    gpg-tui
-    openssl
 
-    # Terminal emulators and multiplexers
+    # terminal emulators and multiplexers
     kitty
     tmux
 
-    # Media
+    # media
     exiftool # EXIF data
     feh # image viewer
     imagemagick7 # image manipulation tools
@@ -95,7 +105,7 @@ with rec {
     (asunder.override { mp3Support = true; oggSupport = true; }) # CD ripping
     simplescreenrecorder # screen recording
 
-    # Browsers
+    # browsers
     firefox
   ];
 };
@@ -114,8 +124,5 @@ with rec {
       from-inputs
     ];
     homeBinInPath = true;
-    shellInit = ''
-      export PATH="$HOME/.cabal/bin''${PATH:+:''${PATH}}"
-    '';
   };
 }

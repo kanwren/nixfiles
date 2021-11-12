@@ -43,19 +43,23 @@
       #   and configuration can be done entirely in home-manager
       # - Write the configuration file and use home-manager to manage it
       packages = with pkgs; [
-        # CLI tools
-        gitAndTools.gist # GitHub gists
-        gitAndTools.gh # GitHub CLI
-        shellcheck # check shell scripts
-        woof # quickly serve files locally over http
-        tokei # count lines of code
+        # CLI navigation
         h # quick directory jumping
-        jo # easy json generation for the command line
-        httpie # command-line REST API client
 
-        # Development
-        # misc
-        graphviz
+        # files, formats
+        tokei # count lines of code
+        shellcheck # check shell scripts
+
+        # http
+        httpie # command line HTTP client
+        woof # serve files locally over http
+        jo # json generation
+
+        # CLI/TUI clients over other tools
+        gitAndTools.gh
+        gpg-tui
+
+        # development
         # C
         stdenv.cc
         stdenv.cc.cc.man
@@ -68,20 +72,16 @@
         cargo-inspect
         cargo-valgrind
         cargo-watch
+        # misc
+        graphviz
 
-        # Tools
+        # system management, monitoring, and utilities
         gotop
         filelight
         xfce.thunar
         custom.pkgs.globus-connect
 
-        # CS 2110
-        cs2110.CircuitSim
-        cs2110.cs2110docker
-        # Old complx looks bad with dark GTK theme
-        (cs2110.complx.override { disableGTK = true; })
-
-        # Applications
+        # applications
         firefox
         libreoffice
         discord
