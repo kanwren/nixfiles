@@ -12,6 +12,8 @@
     };
     # Podman
     podman.enable = true;
+
+    virtualbox.host.enable = true;
   };
 
   # Singularity
