@@ -72,6 +72,10 @@
         cargo-inspect
         cargo-valgrind
         cargo-watch
+        # Haskell
+        haskell.compiler.ghc921
+        ghcid
+        cabal-install
         # misc
         tectonic
         graphviz
