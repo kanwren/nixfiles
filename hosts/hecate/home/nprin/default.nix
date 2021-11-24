@@ -73,6 +73,7 @@
         cargo-valgrind
         cargo-watch
         # misc
+        tectonic
         graphviz
 
         # system management, monitoring, and utilities

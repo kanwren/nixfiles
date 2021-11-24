@@ -21,11 +21,7 @@
     historyIgnore = [ "ls" "cd" "exit" "history" ];
 
     # User-specific shell aliases
-    shellAliases = with pkgs; {
-      cleantex = "rm *.aux *.log *.fls *.fdb_latexmk || true";
-      copylast = "fc -ln -1 | ${gawk}/bin/awk '{\$1=\$1}1' | ${xclip}/bin/xclip -sel clip";
-      xc = "${xclip}/bin/xclip -sel clip";
-    };
+    shellAliases = with pkgs; { };
 
     initExtra = ''
       # Set up 'h'
