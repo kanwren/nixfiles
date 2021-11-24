@@ -107,6 +107,9 @@ with rec {
 
     # browsers
     firefox
+
+    # misc
+    cudatoolkit
   ];
 };
 
