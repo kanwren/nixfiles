@@ -37,6 +37,7 @@ with rec {
     # file transfer, requests
     wget
     curl
+    sshfs
 
     # version control
     git
