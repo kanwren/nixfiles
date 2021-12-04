@@ -50,7 +50,7 @@ in
     histSize = 100000;
 
     interactiveShellInit = ''
-      export HISTORY_IGNORE='([bf]g *|cd ..|l[alsh]#( *)#|less *|(nvim|vim#) *)'
+      export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
 
       # direnv
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
