@@ -60,9 +60,6 @@
         gpg-tui
 
         # development
-        # C
-        stdenv.cc
-        stdenv.cc.cc.man
         # Rust
         rustup
         cargo-cache
@@ -72,10 +69,6 @@
         cargo-inspect
         cargo-valgrind
         cargo-watch
-        # Haskell
-        haskell.compiler.ghc921
-        ghcid
-        cabal-install
         # misc
         tectonic
         graphviz
@@ -94,7 +87,6 @@
         teams
         spotify
         insomnia # graphical REST API client
-        weechat # matrix chat client
         anki # flashcard app
       ];
     };
