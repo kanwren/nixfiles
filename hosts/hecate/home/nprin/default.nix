@@ -20,7 +20,6 @@
       ./gpg-agent
       ./gtk
       ./haskell
-      ./kakoune
       ./kitty
       ./nushell
       ./rofi

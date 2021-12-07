@@ -14,15 +14,6 @@ in
   # development
   spim = pkgs.callPackage ./development/spim { };
 
-  # misc
-  kakounePlugins = lib.recurseIntoAttrs {
-    kak-mirror = pkgs.callPackage ./misc/kak-mirror { };
-    kak-readline = pkgs.callPackage ./misc/kak-readline { };
-    kak-smartindent = pkgs.callPackage ./misc/kak-smartindent { };
-    kak-split-object = pkgs.callPackage ./misc/kak-split-object { };
-    kakoune-themes = pkgs.callPackage ./misc/kakoune-themes { };
-  };
-
   zshPlugins = lib.recurseIntoAttrs {
     zsh-vi-mode = pkgs.callPackage ./misc/zsh-vi-mode { };
   };
@@ -47,8 +38,6 @@ in
   };
 
   # scripts
-  scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts {
-    inherit naersk fenix;
-  });
+  scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });
 }
 

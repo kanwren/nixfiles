@@ -28,11 +28,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cs2110-nix = {
-      url = "github:nprindle/cs2110-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-utils = {
       url = "github:nprindle/nix-utils";
       inputs = {
@@ -77,7 +72,6 @@
     , home-manager
     , naersk
     , fenix
-    , cs2110-nix
     , nixos-generators
     , nix-utils
     , nix-autobahn

@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "cs2110-nix": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1627683793,
-        "narHash": "sha256-8gBDIMOQXcgtk4/9wAXJWM60c4hD+qUgohA8EZO2qVE=",
-        "owner": "nprindle",
-        "repo": "cs2110-nix",
-        "rev": "b049e2c697f11f2881d81b797406c2eccab0d2f7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nprindle",
-        "repo": "cs2110-nix",
-        "type": "github"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -66,21 +45,6 @@
       }
     },
     "flake-utils": {
-      "locked": {
-        "lastModified": 1614513358,
-        "narHash": "sha256-LakhOx3S1dRjnh0b5Dg3mbZyH0ToC9I8Y2wKSkBaTzU=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5466c5bbece17adaab2d82fae80b46e807611bf3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
       "locked": {
         "lastModified": 1638122382,
         "narHash": "sha256-sQzZzAbvKEqN9s0bzWuYmRaA03v40gaJ4+iL1LXjaeI=",
@@ -364,9 +328,8 @@
     },
     "root": {
       "inputs": {
-        "cs2110-nix": "cs2110-nix",
         "fenix": "fenix",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "naersk": "naersk",
         "nix-autobahn": "nix-autobahn",

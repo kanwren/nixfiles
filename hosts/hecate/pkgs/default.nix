@@ -7,7 +7,13 @@
 with rec {
   # Scripts to be available globally
   # All scripts should be custom packages
-  scripts = custom.lib.attrsets.recursiveDerivations custom.pkgs.scripts;
+  scripts = custom.lib.attrsets.recursiveDerivations {
+    inherit (custom.pkgs.scripts)
+      lipsum
+      nosleep
+      toggle
+      add-rpath;
+  };
 
   from-inputs = [
     custom.pkgs.nix-utils

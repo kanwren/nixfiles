@@ -5,7 +5,6 @@
 , nixos-hardware
 , nur
 , home-manager
-, cs2110-nix
 , ...
 }@inputs:
 
@@ -51,7 +50,6 @@ nixpkgs.lib.nixosSystem rec {
       addOverlays = {
         nixpkgs.overlays = [
           nur.overlay
-          cs2110-nix.overlay
           self.overlays.fix-h-warning
         ];
       };
