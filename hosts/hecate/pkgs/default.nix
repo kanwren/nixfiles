@@ -53,6 +53,10 @@ with rec {
     tldr
     cht-sh
 
+    # stdenv compiler
+    stdenv.cc
+    stdenv.cc.cc.man
+
     # system management and utilities
     killall
     whois
