@@ -108,6 +108,8 @@ with rec {
     exiftool # EXIF data
     feh # image viewer
     imagemagick7 # image manipulation tools
+    ffmpeg # audio/video manipulation
+    ghostscript # to support imagemagick
     gimp # image editor
     zathura # PDF viewer
     qpdf # PDF manipulation tool
