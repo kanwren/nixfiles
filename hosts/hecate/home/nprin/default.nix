@@ -57,6 +57,7 @@
         # CLI/TUI clients over other tools
         gitAndTools.gh
         gpg-tui
+        ngrok
 
         # development
         # Rust
