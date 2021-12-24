@@ -39,5 +39,8 @@ in
 
   # scripts
   scripts = lib.recurseIntoAttrs (pkgs.callPackage ./scripts { });
+
+  # misc
+  hollywood = pkgs.callPackage ./misc/hollywood { };
 }
 
