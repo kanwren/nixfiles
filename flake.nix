@@ -58,6 +58,14 @@
         naersk.follows = "naersk";
       };
     };
+
+    nvim-configs = {
+      url = "github:nprindle/nvim-configs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs =
@@ -75,6 +83,7 @@
     , nixos-generators
     , nix-utils
     , nix-autobahn
+    , nvim-configs
     , ...
     }@inputs:
     let
@@ -177,6 +186,9 @@
       }
       {
         inherit (nix-utils) packages apps;
+      }
+      {
+        inherit (nvim-configs) packages;
       }
     ];
 }

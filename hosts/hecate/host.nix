@@ -22,7 +22,7 @@ nixpkgs.lib.nixosSystem rec {
         custom = {
           pkgs = mergeAttrs [
             self.legacyPackages.${system}
-            inputs.nix-utils.packages.${system}
+            self.packages.${system}
           ];
           inherit (self) hmModules;
           inherit (self) lib;
