@@ -9,9 +9,8 @@
   # Module to enable nix flakes
   useFlakes = { pkgs, ... }: {
     nix = {
-      package = pkgs.nixFlakes;
       extraOptions = ''
-        experimental-features = nix-command flakes ca-references ca-derivations
+        experimental-features = nix-command flakes ca-derivations
       '';
     };
   };
