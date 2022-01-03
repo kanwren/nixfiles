@@ -113,7 +113,6 @@ with rec {
     gimp # image editor
     zathura # PDF viewer
     qpdf # PDF manipulation tool
-    vlc # multimedia viewer
     mpv # multimedia viewer
     simplescreenrecorder # screen recording
 
