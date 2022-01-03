@@ -46,15 +46,10 @@
           customRC = builtins.readFile ./minimal.vimrc;
         };
       })
+      (writeShellScriptBin "locate-nixfiles" "echo ${../.}")
     ];
   };
-  programs.bash = {
-    interactiveShellInit = ''
-      set -o vi
-    '';
-    shellAliases = {
-      # Copy repo as an offline resource until I can connect to the internet
-      goto-nixfiles = "cd ${../.}";
-    };
-  };
+  programs.bash.interactiveShellInit = ''
+    set -o vi
+  '';
 }
