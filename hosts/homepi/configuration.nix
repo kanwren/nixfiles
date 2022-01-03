@@ -7,9 +7,13 @@
     ./tailscale.nix
   ];
 
-  sops.gnupgHome = "/var/lib/sops";
-  sops.sshKeyPaths = [ ];
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    gnupg = {
+      home = "/var/lib/sops";
+      sshKeyPaths = [ ];
+    };
+  };
 
   boot = {
     loader = {

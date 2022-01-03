@@ -55,7 +55,7 @@ in
   };
 
   security.acme = {
-    email = "nprindle18@gmail.com";
+    defaults.email = "nprindle18@gmail.com";
     acceptTerms = true;
   };
 
