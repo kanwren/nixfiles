@@ -57,11 +57,28 @@
               registry = { nixpkgs.flake = nixpkgs; };
               nixPath = [ "nixpkgs=${pkgs.path}" ];
             };
-            services.openssh.enable = true;
+            users.users.root.password = "";
           })
 
           nixos-shell.nixosModules.nixos-shell
         ];
       };
-    };
+    }
+    //
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
+        defaultApp = {
+          type = "app";
+          program = "${pkgs.writeShellScript "nixos-shell" ''
+            if [ $# -eq 0 ]; then
+              ${nixos-shell.defaultPackage.${system}}/bin/nixos-shell --flake '.#vm'
+            else
+              ${nixos-shell.defaultPackage.${system}}/bin/nixos-shell $@
+            fi
+          ''}";
+        };
+      });
 }
