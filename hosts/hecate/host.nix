@@ -60,7 +60,7 @@ nixpkgs.lib.nixosSystem rec {
     in
     nixpkgs.lib.flatten [
       nlib.flakes.useFlakes
-      (nlib.flakes.pinFlakes { inherit nixpkgs nur home-manager; })
+      (nlib.flakes.pinFlakes { inherit nixpkgs; })
 
       (nlib.flakes.passArgs args)
 
