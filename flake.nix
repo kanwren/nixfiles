@@ -1,4 +1,6 @@
 {
+  description = "nprindle's NixOS configurations and other Nix tools";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
