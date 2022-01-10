@@ -271,6 +271,29 @@
         "type": "github"
       }
     },
+    "nixos-wsl": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1641826312,
+        "narHash": "sha256-IX3XwP610pXeKjgYpSuNQlrCD1xmSSDsOk5duQbUtIY=",
+        "owner": "nprindle",
+        "repo": "NixOS-WSL",
+        "rev": "a57a60ab8f3b3179da0223a24717dd2247cd7650",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nprindle",
+        "repo": "NixOS-WSL",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1641135641,
@@ -410,6 +433,7 @@
         "nix-utils": "nix-utils",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
+        "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-homepi": "nixpkgs-homepi",
         "nur": "nur",

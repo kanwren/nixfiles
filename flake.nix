@@ -25,6 +25,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nprindle/NixOS-WSL";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,6 +85,7 @@
     , nixos-hardware
     , flake-utils
     , nix-bundle
+    , nixos-wsl
     , sops-nix
     , nur
     , home-manager
@@ -98,8 +107,9 @@
           # main dev laptop
           hecate = import ./hosts/hecate/host.nix inputs;
 
-          # raspberry pi for home-assistant
           homepi = import ./hosts/homepi/host.nix inputs;
+
+          wsl = import ./hosts/wsl/host.nix inputs;
         };
 
         # Nixpkgs overlays
