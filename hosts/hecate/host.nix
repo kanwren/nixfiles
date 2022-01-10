@@ -1,5 +1,3 @@
-{ nlib }:
-
 { self
 , nixpkgs
 , nixos-hardware
@@ -14,10 +12,16 @@ in
 
 nixpkgs.lib.nixosSystem rec {
   system = "x86_64-linux";
-  modules =
-    let
-      # extra args to pass to imported modules
-      args = {
+  modules = nixpkgs.lib.flatten [
+    self.nixosModules.mixins.use-flakes
+    # pin nixpkgs
+    {
+      nix.registry.nixpkgs.flake = nixpkgs;
+      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    }
+
+    {
+      config._module.args = {
         inherit inputs;
         custom = {
           pkgs = mergeAttrs [
@@ -28,45 +32,33 @@ nixpkgs.lib.nixosSystem rec {
           inherit (self) lib;
         };
       };
-      # modules for configuring hecate hardware
-      hardwareModules = with nixos-hardware.nixosModules; [
-        common-pc-laptop
-        common-pc-laptop-ssd
-        common-cpu-amd
-        common-gpu-nvidia
-        # configure the bus IDs for common-gpu-nvidia
-        {
-          hardware.nvidia.prime = {
-            intelBusId = "PCI:5:0:0";
-            nvidiaBusId = "PCI:1:0:0";
-          };
-        }
-        # Auto-generated hardware configuration
-        ./hardware-configuration.nix
-      ];
-      # the main configuration
-      mainModule = import ./configuration.nix;
-      # extra overlays from the inputs
-      addOverlays = {
-        nixpkgs.overlays = [
-          nur.overlay
-          self.overlays.fix-h-warning
-        ];
-      };
-      # extra modules from the inputs
-      otherModules = [
-        home-manager.nixosModules.home-manager
-      ];
-    in
-    nixpkgs.lib.flatten [
-      nlib.flakes.useFlakes
-      (nlib.flakes.pinFlakes { inherit nixpkgs; })
+    }
 
-      (nlib.flakes.passArgs args)
+    # hardware modules
+    (with nixos-hardware.nixosModules; [
+      common-pc-laptop
+      common-pc-laptop-ssd
+      common-cpu-amd
+      common-gpu-nvidia
+      # configure the bus IDs for common-gpu-nvidia
+      {
+        hardware.nvidia.prime = {
+          intelBusId = "PCI:5:0:0";
+          nvidiaBusId = "PCI:1:0:0";
+        };
+      }
+      ./hardware-configuration.nix
+    ])
 
-      hardwareModules
-      mainModule
-      addOverlays
-      otherModules
-    ];
+    {
+      nixpkgs.overlays = [
+        nur.overlay
+        self.overlays.fix-h-warning
+      ];
+    }
+
+    home-manager.nixosModules.home-manager
+
+    ./configuration.nix
+  ];
 }

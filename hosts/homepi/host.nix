@@ -1,5 +1,3 @@
-{ nlib }:
-
 { self
 , nixpkgs-homepi
 , sops-nix
@@ -12,34 +10,30 @@ in
 
 nixpkgs.lib.nixosSystem {
   system = "aarch64-linux";
-  modules =
-    let
-      # extra args to pass to imported modules
-      args = {
+  modules = nixpkgs.lib.flatten [
+    self.nixosModules.mixins.use-flakes
+    # pin nixpkgs
+    {
+      nix.registry.nixpkgs.flake = nixpkgs;
+      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    }
+
+    {
+      config._module.args = {
         inherit inputs;
       };
-      # the main configuration
-      mainModule = import ./configuration.nix;
-      # extra modules from the inputs
-      otherModules = [
-        sops-nix.nixosModules.sops
-        self.nixosModules.duckdns
+    }
+
+    {
+      nixpkgs.overlays = [
+        self.overlays.raspi-firmware-overlay
       ];
-      addOverlays = {
-        nixpkgs.overlays = [
-          self.overlays.raspi-firmware-overlay
-        ];
-      };
-    in
-    nixpkgs.lib.flatten [
-      nlib.flakes.useFlakes
-      (nlib.flakes.pinFlakes { inherit nixpkgs; })
+    }
 
-      (nlib.flakes.passArgs args)
+    sops-nix.nixosModules.sops
+    self.nixosModules.duckdns
 
-      mainModule
-      addOverlays
-      otherModules
-    ];
+    ./configuration.nix
+  ];
 }
 

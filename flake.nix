@@ -96,10 +96,10 @@
       {
         nixosConfigurations = {
           # main dev laptop
-          hecate = import ./hosts/hecate/host.nix { inherit nlib; } inputs;
+          hecate = import ./hosts/hecate/host.nix inputs;
 
           # raspberry pi for home-assistant
-          homepi = import ./hosts/homepi/host.nix { inherit nlib; } inputs;
+          homepi = import ./hosts/homepi/host.nix inputs;
         };
 
         # Nixpkgs overlays
@@ -108,6 +108,9 @@
         # NixOS modules
         nixosModules = {
           duckdns = import ./modules/duckdns.nix;
+          mixins = {
+            use-flakes = import ./modules/mixins/use-flakes.nix { inherit nixpkgs; };
+          };
         };
 
         # home-manager modules
