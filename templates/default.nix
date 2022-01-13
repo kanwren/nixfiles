@@ -3,6 +3,10 @@
     path = ./latex;
     description = "A basic LaTeX project";
   };
+  tectonic = {
+    path = ./tectonic;
+    description = "A basic LaTeX project using tectonic";
+  };
   haskell-nix = {
     path = ./haskell-nix;
     description = "haskell.nix flake template";
