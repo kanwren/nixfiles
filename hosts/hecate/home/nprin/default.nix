@@ -27,6 +27,7 @@
       ./vscode
       ./xserver
       ./zathura
+      ./zsh
     ];
 
     _module.args = {
