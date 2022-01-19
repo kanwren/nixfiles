@@ -1,0 +1,3 @@
+{
+  nprin = import ./nprin;
+}

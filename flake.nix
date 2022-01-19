@@ -7,8 +7,6 @@
     # doesn't need to upgrade; should stay constant
     nixpkgs-homepi.url = "github:NixOS/nixpkgs/61d24cba72831201efcab419f19b947cf63a2d61";
 
-    nur.url = "github:nix-community/NUR";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -87,7 +85,6 @@
     , nix-bundle
     , nixos-wsl
     , sops-nix
-    , nur
     , home-manager
     , naersk
     , fenix
@@ -116,12 +113,7 @@
         overlays = import ./overlays;
 
         # NixOS modules
-        nixosModules = {
-          duckdns = import ./modules/duckdns.nix;
-          mixins = {
-            use-flakes = import ./modules/mixins/use-flakes.nix { inherit nixpkgs; };
-          };
-        };
+        nixosModules = import ./modules;
 
         # home-manager modules
         hmModules = {
@@ -161,7 +153,7 @@
           legacyPackages =
             let
               base = import ./pkgs {
-                inherit pkgs nur;
+                inherit pkgs;
                 naersk = naersk.lib.${system};
                 fenix = fenix.packages.${system};
               };

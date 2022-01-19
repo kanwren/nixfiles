@@ -10,8 +10,6 @@
       timeout = 3;
     };
 
-    cleanTmpDir = true;
-
     # enable aarch64-linux emulation
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };

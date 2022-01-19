@@ -1,5 +1,4 @@
 { pkgs ? import <nixpkgs> { }
-, nur
 , naersk
 , fenix
 }:
@@ -8,9 +7,6 @@ let
   inherit (pkgs) lib;
 in
 {
-  # Re-export NUR as a package set
-  nur = import nur { nurpkgs = pkgs; inherit pkgs; };
-
   # development
   spim = pkgs.callPackage ./development/spim { };
 

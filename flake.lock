@@ -383,21 +383,6 @@
         "type": "github"
       }
     },
-    "nur": {
-      "locked": {
-        "lastModified": 1641198127,
-        "narHash": "sha256-V5beyGlEIPoA5tGRHR8HKgUNOfq2Pk/pMRJsTDe5aH0=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "f3540de5479a029dbf289232611800e3a83c6913",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
     "nvim-configs": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -436,7 +421,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-homepi": "nixpkgs-homepi",
-        "nur": "nur",
         "nvim-configs": "nvim-configs",
         "sops-nix": "sops-nix"
       }
