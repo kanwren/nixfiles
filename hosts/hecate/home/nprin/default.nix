@@ -60,13 +60,6 @@
         # development
         # Rust
         rustup
-        cargo-cache
-        cargo-edit
-        cargo-expand
-        cargo-feature
-        cargo-inspect
-        cargo-valgrind
-        cargo-watch
         # misc
         tectonic
         graphviz
