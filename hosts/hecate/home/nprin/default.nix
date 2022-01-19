@@ -71,7 +71,6 @@
         custom.pkgs.globus-connect
 
         # applications
-        firefox
         libreoffice
         discord
         slack
