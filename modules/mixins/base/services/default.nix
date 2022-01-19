@@ -1,20 +1,19 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   services = {
-    # Enable the OpenSSH daemon
-    openssh = {
-      enable = true;
-      forwardX11 = true;
-      allowSFTP = true;
-    };
+    openssh.enable = true;
   };
 
   programs = {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "gtk2";
+      pinentryFlavor =
+        if config.services.xserver.enable then
+          "gtk2"
+        else
+          "curses";
     };
   };
 }

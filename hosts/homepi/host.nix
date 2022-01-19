@@ -8,31 +8,18 @@ let
   nixpkgs = nixpkgs-homepi;
 in
 
-nixpkgs.lib.nixosSystem {
+self.lib.system.makeSystem {
+  inherit self inputs nixpkgs;
+
   system = "aarch64-linux";
+
+  overlays = [
+    self.overlays.raspi-firmware-overlay
+  ];
+
   modules = nixpkgs.lib.flatten [
-    self.nixosModules.mixins.use-flakes
-    # pin nixpkgs
-    {
-      nix.registry.nixpkgs.flake = nixpkgs;
-      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-    }
-
-    {
-      config._module.args = {
-        inherit inputs;
-      };
-    }
-
-    {
-      nixpkgs.overlays = [
-        self.overlays.raspi-firmware-overlay
-      ];
-    }
-
     sops-nix.nixosModules.sops
     self.nixosModules.duckdns
-
     ./configuration.nix
   ];
 }

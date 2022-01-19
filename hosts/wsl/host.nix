@@ -1,23 +1,17 @@
-{ nlib }:
-
 { self
 , nixpkgs
 , nixos-wsl
 , ...
 }@inputs:
 
-nixpkgs.lib.nixosSystem rec {
+self.lib.system.makeSystem rec {
+  inherit self inputs nixpkgs;
+
   system = "x86_64-linux";
+
   modules = [
-    self.nixosModules.mixins.use-flakes
-    {
-      nix.registry.nixpkgs.flake = nixpkgs;
-      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-      config._module.args = {
-        inherit inputs;
-      };
-    }
     nixos-wsl.nixosModule
+    self.nixosModules.mixins.base
     ./configuration.nix
   ];
 }
