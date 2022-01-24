@@ -75,6 +75,7 @@
     # quicklaunch {{{
         bindsym $mod+v mode "quicklaunch"
         mode "quicklaunch" {
+            bindsym x exec xterm;                                            mode "default"
             bindsym v exec kitty vim;                                        mode "default"
             bindsym b exec firefox;                                          mode "default"
             bindsym k exec firefox https://trello.com/b/xitLgASa/kanban;     mode "default"
