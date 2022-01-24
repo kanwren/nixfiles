@@ -38,6 +38,7 @@ self.lib.system.makeSystem rec {
       tailscale
 
       desktop.base
+      desktop.x.base
       desktop.x.i3
       desktop.audio
       desktop.bluetooth
