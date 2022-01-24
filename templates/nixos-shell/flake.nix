@@ -9,13 +9,9 @@
   inputs = {
     nixos-shell.url = "github:Mic92/nixos-shell";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, nixos-shell, flake-utils, flake-compat }:
+  outputs = { self, nixpkgs, nixos-shell, flake-utils }:
     let
       inherit (nixpkgs) lib;
     in
