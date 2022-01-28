@@ -1,14 +1,6 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-
-    ./boot
-    ./hardware
-    ./networking
-  ];
-
   system.stateVersion = "21.11";
 
   boot = {

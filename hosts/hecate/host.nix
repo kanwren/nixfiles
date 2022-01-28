@@ -48,6 +48,7 @@ self.lib.system.makeSystem rec {
       users.nprin.home
     ])
 
+    ./hardware-configuration.nix
     ./configuration.nix
   ];
 }
