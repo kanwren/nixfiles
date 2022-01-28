@@ -2,7 +2,11 @@
 
 {
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      permitRootLogin = "prohibit-password";
+      passwordAuthentication = false;
+    };
   };
 
   programs = {
