@@ -7,15 +7,15 @@ My NixOS configurations and other Nix files :snowflake:
 ### Overview
 
 - [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets.
-- [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`modules/`](modules/): Custom NixOS modules
+  - [`modules/mixins/`](modules/mixins): See the [`mixins`](#mixins) section
+- [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake. Usually seen imported as `custom.pkgs` when used in configs.
 - [`lib/`](lib/): Custom library functions used throughout the configs and exported from flake. Usually seen imported as `custom.lib` or `nlib`.
 - [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
-- [`templates/`](templates/): Nix flake templates, as used by `nix flake new`
 - [`bundlers/`](bundlers/): Various bundlers that can be used with the `nix bundle` subcommand
 - [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
@@ -24,33 +24,17 @@ My NixOS configurations and other Nix files :snowflake:
 - [`hecate`](hosts/hecate/): My main laptop
 - [`homepi`](hosts/homepi/): My Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
 
-#### hecate
+#### Mixins
 
-The bulk of the configuration is for my main laptop `hecate`:
+Most of the code for building configurations is split into mixins, which are
+NixOS modules that configure part of a system according to my preferences.
+Mixins can be mixed-and-matched and composed together to create the base config
+for a specific system.
 
-- [`host.nix`](hosts/hecate/host.nix): Assembles the system flake
-  - Applies hardware-specific [nixos-hardware](https://github.com/NixOS/nixos-hardware/) modules and [`hardware-configuration.nix`](hosts/hecate/hardware-configuration.nix)
-  - Adds external modules and overlays from the flake inputs
-  - Enables/pins flakes
-- [`configuration.nix`](hosts/hecate/configuration.nix): Configuration root; imports all other configuration
-- [`boot/`](hosts/hecate/boot/): Bootloader and emulation settings
-- [`hardware/`](hosts/hecate/hardware/): General hardware-related configurations
-- [`home/`](hosts/hecate/home/): Configurations for [home-manager](https://github.com/nix-community/home-manager/)
-  - [`default.nix`](hosts/hecate/home/default.nix) is the configuration root
-  - Each directory corresponds to a user
-  - Every directory in a user's directory is for configuring a particular program or service
-- [`i18n/`](hosts/hecate/i18n/): Language, input, and internationalization options
-- [`networking/`](hosts/hecate/networking/): Wireless and firewall settings
-- [`nix/`](hosts/hecate/nix/): Nix- and nixpkgs-related settings
-  - [`default.nix`](hosts/hecate/nix/default.nix): Main settings for nix and nixpkgs
-  - [`caches.nix`](hosts/hecate/nix/caches.nix): Cachix binary caches
-- [`pkgs/`](hosts/hecate/pkgs/): System-wide packages and some configurations for them
-- [`security/`](hosts/hecate/security/): Miscellaneous security-related settings
-- [`services/`](hosts/hecate/services/): Miscellaneous system programs and services
-- [`time/`](hosts/hecate/time/): Settings related to system time
-- [`users/`](hosts/hecate/users/): Set up all the users and groups
-- [`virtualisation/`](hosts/hecate/virtualisation/): Configurations for programs used for containerization and virtualization (docker, podman, etc.)
-- [`xserver/`](hosts/hecate/xserver/): Graphical configurations (display manager, window manager, fonts, applets, etc.)
+- [`base/`](modules/mixins/base): The common base of all of my systems, with essential packages, services, and settings
+- [`desktop/`](modules/mixins/desktop): Different mixins for creating a development workstation on a (usually graphical) computer
+  - [`desktop/x`](modules/mixins/desktop/x): Mixins for display managers, window managers, and desktop environments
+- [`users/`](modules/mixins/users): Per-user system user settings and [home-manager](https://github.com/nix-community/home-manager/) configurations
 
 ### `installer`
 
