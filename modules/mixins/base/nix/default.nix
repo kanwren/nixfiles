@@ -21,7 +21,7 @@
       options = "--delete-older-than 30d";
     };
 
-    trustedUsers = [ "root" ];
+    settings.trusted-users = [ "root" ];
   };
 
   nixpkgs = {

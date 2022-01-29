@@ -28,7 +28,7 @@
       builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile keyfile));
   };
 
-  nix.trustedUsers = [ "nprin" ];
+  nix.settings.trusted-users = [ "nprin" ];
 }
 
 # Note: to generate an initialHashedPassword, use 'mkpasswd -m sha-512 -s'
