@@ -6,6 +6,7 @@
       (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
       fira-code
       fira-mono
+      source-code-pro
     ];
   };
 }
