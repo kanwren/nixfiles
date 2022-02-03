@@ -10,10 +10,6 @@ self.lib.system.makeSystem rec {
 
   system = "x86_64-linux";
 
-  overlays = [
-    self.overlays.fix-h-warning
-  ];
-
   modules = nixpkgs.lib.flatten [
     home-manager.nixosModules.home-manager
 
