@@ -98,7 +98,6 @@ let
       homepage = "https://www.globus.org/";
       description = "Globus lets you share data on your storage systems with collaborators at other institutions.";
       license = lib.licenses.asl20;
-      platforms = lib.platforms.x86_64;
     };
   };
 in
