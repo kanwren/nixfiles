@@ -1,25 +1,18 @@
 { nixos-generators
 , nixpkgs
-, lib
-, system
 }:
 
 let
-  formats = lib.pipe "${nixos-generators}/formats" [
-    builtins.readDir
-    (lib.filterAttrs (_: v: v == "regular"))
-    builtins.attrNames
-    (builtins.filter (lib.hasSuffix ".nix"))
-    (builtins.map (lib.removeSuffix ".nix"))
-  ];
-  mkInstaller = format:
-    let
-      conf = import "${nixos-generators}/nixos-generate.nix" {
-        inherit nixpkgs system;
-        configuration = ./configuration.nix;
-        formatConfig = "${nixos-generators}/formats/${format}.nix";
-      };
-    in
-    conf.config.system.build.${conf.config.formatAttr};
+  mkInstaller = system: format: nixos-generators.nixosGenerate {
+    pkgs = nixpkgs.legacyPackages.${system};
+    modules = [ ./configuration.nix ];
+    inherit format;
+  };
 in
-lib.listToAttrs (builtins.map (f: { name = f; value = mkInstaller f; }) formats)
+{
+  packages = {
+    x86_64-linux.install-iso = mkInstaller "x86_64-linux" "install-iso";
+    aarch64-linux.sd-aarch64-installer = mkInstaller "aarch64-linux" "sd-aarch64-installer";
+  };
+}
+

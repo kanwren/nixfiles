@@ -159,16 +159,8 @@
                 naersk = naersk.lib.${system};
                 fenix = fenix.packages.${system};
               };
-              installers = {
-                # custom installers via nixos-generators; we explicitly do not
-                # recurseIntoAttrs to prevent them being put in 'packages'
-                installer = import ./installer/installers.nix {
-                  inherit nixpkgs system nixos-generators;
-                  inherit (nixpkgs) lib;
-                };
-              };
             in
-            base // installers;
+            base;
 
           # flattened packages for flake
           packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
@@ -189,6 +181,9 @@
           };
         }
       )))
+      (import ./installer/installers.nix {
+        inherit nixpkgs nixos-generators;
+      })
       # Re-exports
       {
         inherit (nix-autobahn) packages apps;

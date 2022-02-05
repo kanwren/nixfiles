@@ -19,25 +19,31 @@
       experimental-features = nix-command flakes
     '';
   };
+
   services = {
     openssh = {
       enable = true;
       permitRootLogin = "yes";
     };
   };
+
+  networking.wireless.enable = true;
+
   programs = {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
       pinentryFlavor = "curses";
     };
+    bash.enableCompletion = true;
   };
+
   users.users.root.password = "nixos";
+
   environment = {
     variables.EDITOR = "vim";
+
     systemPackages = with pkgs; [
-      git
-      tmux
       (pkgs.vim_configurable.customize {
         name = "vim";
         vimrcConfig = {
@@ -46,8 +52,20 @@
         };
       })
       (writeShellScriptBin "locate-nixfiles" "echo ${../.}")
+
+      git
+      tmux
+      parted
+      unixtools.fdisk
+      ripgrep
+      fzf
+      wget
+      curl
+      gnupg
+      mkpasswd
     ];
   };
+
   programs.bash.interactiveShellInit = ''
     set -o vi
   '';
