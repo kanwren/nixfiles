@@ -1,6 +1,9 @@
 {
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      dhcp = "dhclient";
+    };
     wireless.enable = false;
 
     # DHCP should be enabled for each interface individually via
