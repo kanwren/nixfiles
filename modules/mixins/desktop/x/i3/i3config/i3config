@@ -78,11 +78,11 @@
             bindsym x exec xterm;                                            mode "default"
             bindsym v exec kitty vim;                                        mode "default"
             bindsym b exec firefox;                                          mode "default"
-            bindsym k exec firefox https://trello.com/b/xitLgASa/kanban;     mode "default"
             bindsym f exec thunar;                                           mode "default"
             bindsym d exec Discord;                                          mode "default"
             bindsym l exec slack;                                            mode "default"
             bindsym s exec spotify;                                          mode "default"
+            bindsym p exec bitwarden;                                        mode "default"
             bindsym Escape mode "default"
         }
     # }}}
