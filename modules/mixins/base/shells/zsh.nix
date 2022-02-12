@@ -146,8 +146,6 @@ in
         "ripgrep"
         "cabal"
         "rust"
-        "rustup"
-        "cargo"
         "docker"
       ];
       customPkgs = [

@@ -10,8 +10,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "jeffreytse";
     repo = "zsh-vi-mode";
-    rev = "ac4bed3c10eb1b045ba019c69d4ce7a6d8213abb";
-    sha256 = "18hwf072vd1kc9cpcx8hnw8lk9qvf8gm6ajgr2vq9klz14d13sg1";
+    rev = "462c032389c30a1c53226890d83c7465af92b249";
+    sha256 = "0c0abw1phqwihg4cbqipj32zkryi7235l1rw80n54niflz7sl0dx";
   };
 
   installPhase = ''
