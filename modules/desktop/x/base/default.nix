@@ -37,7 +37,7 @@
           };
         };
 
-        background = ../../../../../desktop-backgrounds/earth.png;
+        background = ../../../../desktop-backgrounds/earth.png;
       };
     };
   };

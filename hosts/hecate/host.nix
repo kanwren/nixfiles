@@ -28,7 +28,7 @@ self.lib.system.makeSystem rec {
       }
     ])
 
-    (with self.nixosModules.mixins; [
+    (with self.nixosModules; [
       base
       home-manager-base
       tailscale

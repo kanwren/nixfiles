@@ -7,8 +7,7 @@ My NixOS configurations and other Nix files :snowflake:
 ### Overview
 
 - [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets.
-- [`modules/`](modules/): Custom NixOS modules
-  - [`modules/mixins/`](modules/mixins): See the [`mixins`](#mixins) section
+- [`modules/`](modules/): Custom NixOS modules; see the [`mixins`](#mixins) section
 - [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake. Usually seen imported as `custom.pkgs` when used in configs.
@@ -31,10 +30,10 @@ NixOS modules that configure part of a system according to my preferences.
 Mixins can be mixed-and-matched and composed together to create the base config
 for a specific system.
 
-- [`base/`](modules/mixins/base): The common base of all of my systems, with essential packages, services, and settings
-- [`desktop/`](modules/mixins/desktop): Different mixins for creating a development workstation on a (usually graphical) computer
-  - [`desktop/x`](modules/mixins/desktop/x): Mixins for display managers, window managers, and desktop environments
-- [`users/`](modules/mixins/users): Per-user system user settings and [home-manager](https://github.com/nix-community/home-manager/) configurations
+- [`base/`](modules/base): The common base of all of my systems, with essential packages, services, and settings
+- [`desktop/`](modules/desktop): Different mixins for creating a development workstation on a (usually graphical) computer
+  - [`desktop/x`](modules/desktop/x): Mixins for display managers, window managers, and desktop environments
+- [`users/`](modules/users): Per-user system user settings and [home-manager](https://github.com/nix-community/home-manager/) configurations
 
 ### `installer`
 

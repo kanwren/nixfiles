@@ -11,7 +11,7 @@ self.lib.system.makeSystem rec {
 
   modules = [
     nixos-wsl.nixosModule
-    self.nixosModules.mixins.base
+    self.nixosModules.base
     ./configuration.nix
   ];
 }
