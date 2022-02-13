@@ -5,7 +5,7 @@
 
 stdenv.mkDerivation rec {
   name = "zsh-vi-mode";
-  version = "unstable_2021-05-20";
+  version = "unstable_2022-02-11";
 
   src = fetchFromGitHub {
     owner = "jeffreytse";

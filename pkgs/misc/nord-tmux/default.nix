@@ -8,8 +8,8 @@ mkTmuxPlugin {
   src = fetchFromGitHub {
     owner = "arcticicestudio";
     repo = "nord-tmux";
-    rev = "5bb2086690e3e27378794fb68ed98e91f0cce059";
-    sha256 = "0zlj834fpn8z7khdwjp8irzz2vvmc79qkp6jb7jk1xzlcxflc1qh";
+    rev = "fb282780a13cf43a864d8f2b5f689e95551e2864";
+    sha256 = "038pfg03rz601l2vwqda5nl8zfpjfihfb7qkslc6f9bd5kcppjzy";
   };
   rtpFilePath = "nord.tmux";
 }

@@ -25,10 +25,6 @@ in
   # tools
   globus-connect = pkgs.callPackage ./tools/globus-connect { };
 
-  carbon-now-cli = pkgs.callPackage ./tools/carbon-now-cli {
-    nodejs = pkgs.nodejs-14_x;
-  };
-
   rust-script = pkgs.callPackage ./tools/rust-script {
     inherit naersk fenix;
   };

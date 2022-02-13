@@ -9,8 +9,8 @@ let
   src = fetchFromGitHub {
     owner = "fornwall";
     repo = "rust-script";
-    rev = "09c534fecb427eec638bf7066dff939a5be5f7f6";
-    sha256 = "0361p9awpf74jjfv66a3f1zvi5n59zd8jss9diydk2lrb54rr3hk";
+    rev = "0.20.0";
+    sha256 = "15d4k83hckicm987iys9qkahmb27d1hnl804wr0j0mvvks9d3jsr";
   };
   toolchain = with fenix;
     combine [
