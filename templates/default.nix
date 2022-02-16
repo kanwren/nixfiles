@@ -15,4 +15,8 @@
     path = ./nixos-shell;
     description = "Template for nixos-shell VMs";
   };
+  devshell = {
+    path = ./devshell;
+    description = "Template for a flake with a devShell";
+  };
 }
