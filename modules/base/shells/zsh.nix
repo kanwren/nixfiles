@@ -147,6 +147,7 @@ in
         "cabal"
         "rust"
         "docker"
+        "bazel"
       ];
       customPkgs = [
         self.packages.${system}."zshPlugins/zsh-vi-mode"
