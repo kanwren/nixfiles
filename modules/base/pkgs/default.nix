@@ -38,7 +38,7 @@
       whois
       linuxPackages.perf # profiling
       # help, docs
-      manpages
+      man-pages
       tldr
       cht-sh
       # navigation, files, formats, data processing

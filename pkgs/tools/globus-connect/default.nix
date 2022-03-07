@@ -9,7 +9,7 @@
 , gcc-unwrapped
 , glibc
 , python3
-, libaudit
+, audit
 , makeDesktopItem
 , createDesktop ? true
 }:
@@ -73,7 +73,7 @@ let
         lib.makeLibraryPath [
           "$out/share/globus-connect-personal/gt_amd64"
           gcc-unwrapped.lib
-          libaudit.out
+          audit.out
         ]
       }''${LD_LIBRARY_PATH:+:''${LD_LIBRARY_PATH}}"
 
