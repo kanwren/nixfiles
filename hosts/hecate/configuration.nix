@@ -37,4 +37,8 @@
 
     trackpoint.enable = true;
   };
+
+  services = {
+    joycond.enable = true;
+  };
 }
