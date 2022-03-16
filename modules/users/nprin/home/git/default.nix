@@ -11,6 +11,7 @@
 
     ignores = [
       "tags"
+      ".direnv/"
     ];
 
     aliases = {
