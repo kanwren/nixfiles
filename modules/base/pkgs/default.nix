@@ -28,6 +28,7 @@
       # CLI tools
       ripgrep
       fd
+      sd
       exa
       fzf
       wget
