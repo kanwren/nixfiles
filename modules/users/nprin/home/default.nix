@@ -5,6 +5,8 @@
     imports = [
       self.hmModules.xcompose
 
+      ./scripts
+
       ./bash
       ./direnv
       ./dunst
@@ -63,6 +65,7 @@
 
         # misc
         self.packages.${system}.globus-connect
+        self.packages.${system}."scripts/nosleep"
       ];
     };
   };
