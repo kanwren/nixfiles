@@ -1,14 +1,5 @@
 # vim: set ft=i3 foldmethod=marker:
 
-# startup programs {{{
-    exec --no-startup-id compton
-    exec --no-startup-id copyq
-    exec --no-startup-id nm-applet
-    exec --no-startup-id blueman-applet
-    exec --no-startup-id mate-volume-control-status-icon
-    exec --no-startup-id ibus-daemon --daemonize --replace
-# }}}
-
 # i3 config {{{
     set $mod Mod4
 
@@ -49,28 +40,16 @@
 # }}}
 
 # program launching {{{
-    # lock screen
-    bindsym $mod+Shift+i exec betterlockscreen -l dimblur
-    bindsym $mod+Shift+o exec betterlockscreen -s dimblur
-
     # program launcher
     bindsym $mod+Shift+Return exec "rofi -modi drun,run,ssh -show drun -fuzzy"
     # switch windows
     bindsym $mod+Shift+w exec "rofi -show window"
-
-    # screenshot
-    bindsym Print exec flameshot gui
-
-    # graphical calculator
-    bindsym XF86Calculator exec qalculate-gtk
 
     # terminal
     bindsym $mod+Return exec kitty
     # browser
     bindsym $mod+b exec firefox
     bindsym $mod+Shift+b exec firefox --private-window
-    # clipboard manager
-    bindsym $mod+n exec copyq show
 
     # quicklaunch {{{
         bindsym $mod+v mode "quicklaunch"
@@ -83,7 +62,6 @@
             bindsym l exec slack;                mode "default"
             bindsym s exec spotify;              mode "default"
             bindsym p exec bitwarden;            mode "default"
-            bindsym g exec "@pick_game_script@"; mode "default"
             bindsym Escape mode "default"
         }
     # }}}
@@ -143,8 +121,6 @@
 
         no_focus [title="Microsoft Teams Notification"]
         for_window [title="Microsoft Teams Notification"] floating enable
-
-        for_window [class="^copyq$"] floating enable
     # }}}
 
     # automatic marks {{{

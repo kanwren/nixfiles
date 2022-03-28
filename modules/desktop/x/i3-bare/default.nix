@@ -6,7 +6,7 @@
       enable = true;
       package = pkgs.i3-gaps;
       configFile = pkgs.substituteAll {
-        src = ../i3/i3config/i3config;
+        src = ./i3config/i3config;
         spill_container_script = pkgs.substituteAll {
           src = ../i3/i3config/spill_container.sh;
           isExecutable = true;

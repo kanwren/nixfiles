@@ -18,6 +18,11 @@
           inherit (pkgs) runtimeShell jq;
           i3 = config.services.xserver.windowManager.i3.package;
         };
+        pick_game_script = pkgs.substituteAll {
+          src = ./i3config/pick_game.sh;
+          isExecutable = true;
+          inherit (pkgs) rofi;
+        };
       };
 
       # Set the desktop background to the current cached lock screen
