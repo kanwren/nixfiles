@@ -139,7 +139,7 @@ in
         # utility
         "cp" # adds 'cpv' which uses rsync
         "copyfile" # adds 'copyfile' to copy file contents to the clipboard
-        "copydir" # adds 'copydir' to copy the CWD
+        "copypath"
         "universalarchive" # adds 'ua' for easy archiving into different formats
 
         # completion plugins
