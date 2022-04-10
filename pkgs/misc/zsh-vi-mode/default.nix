@@ -5,13 +5,13 @@
 
 stdenv.mkDerivation rec {
   name = "zsh-vi-mode";
-  version = "unstable_2022-02-11";
+  version = "unstable_2022-04-10";
 
   src = fetchFromGitHub {
     owner = "jeffreytse";
     repo = "zsh-vi-mode";
-    rev = "462c032389c30a1c53226890d83c7465af92b249";
-    sha256 = "0c0abw1phqwihg4cbqipj32zkryi7235l1rw80n54niflz7sl0dx";
+    rev = "9e909d0bdd0aff36ca60ea213ec92f46a554b288";
+    sha256 = "1rnzgwygmy7a771n1pgw8hryrnxkagbfc9ima824g18cf5m0ks02";
   };
 
   installPhase = ''
