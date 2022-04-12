@@ -7,6 +7,6 @@
       package = pkgs.sudo;
       wheelNeedsPassword = true;
     };
-    chromiumSuidSandbox.enable = true;
+    chromiumSuidSandbox.enable = false; # TODO
   };
 }
