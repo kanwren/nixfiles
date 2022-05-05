@@ -92,10 +92,15 @@
 # quick commands {{{
     bindsym $mod+c mode "quickcommand"
     mode "quickcommand" {
+        bindsym a mode "audio"
         bindsym m mode "mons"
         bindsym k mode "kbmap"
         bindsym i mode "system"
         bindsym d mode "dunst"
+        bindsym Escape mode "default"
+    }
+    mode "audio" {
+        bindsym m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle; mode "default"
         bindsym Escape mode "default"
     }
     mode "mons" {

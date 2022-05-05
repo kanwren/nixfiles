@@ -39,7 +39,9 @@
         httpie # command line HTTP client
         woof # serve files locally over http
         jo # json generation
+
         gotop # activity monitor
+        btop # activity monitor
 
         # clients
         gitAndTools.gh
