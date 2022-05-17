@@ -2,7 +2,6 @@
   networking = {
     networkmanager = {
       enable = true;
-      dhcp = "dhclient";
     };
     wireless.enable = false;
 
