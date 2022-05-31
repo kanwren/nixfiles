@@ -23,6 +23,8 @@
     postgresql = {
       enable = true;
     };
+
+    atd.enable = true;
   };
 
   # open port 631 for cups
