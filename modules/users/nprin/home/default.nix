@@ -59,6 +59,7 @@
         filelight # disk usage visualization
         libreoffice
         discord
+        betterdiscordctl # https://github.com/catppuccin/discord has a nice theme
         slack
         teams
         spotify

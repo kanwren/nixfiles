@@ -15,15 +15,9 @@
     clock24 = true;
     keyMode = "vi";
     historyLimit = 10000;
-    plugins = with pkgs; [
-      {
-        plugin = self.packages.${system}."tmuxPlugins/nord-tmux";
-        extraConfig = ''
-          set -g @nord_tmux_no_patched_font "1"
-        '';
-      }
-    ];
     extraConfig = ''
+      source-file ${self.packages.${system}.catppuccin-tmux}/catppuccin.conf
+
       set -g default-shell ${pkgs.zsh}/bin/zsh
 
       set-option -sa terminal-overrides ',kitty:RGB'

@@ -18,8 +18,9 @@
         corner_radius = 3;
         icon_position = "right";
         max_icon_size = 75;
-        transparency = 20;
-        frame_color = "#88c0d0";
+        # transparency = 20;
+        frame_color = "#96CDFB";
+        separator_color = "frame";
         frame_width = 2;
         word_wrap = true;
         follow = "mouse";
@@ -28,18 +29,19 @@
         format = "%s\\n%b";
       };
       urgency_low = {
-        background = "#000000";
-        foreground = "#ffffff";
+        background = "#1E1E2E";
+        foreground = "#D9E0EE";
         timeout = 10;
       };
       urgency_normal = {
-        background = "#000000";
-        foreground = "#ffffff";
+        background = "#1E1E2E";
+        foreground = "#D9E0EE";
         timeout = 10;
       };
       urgency_critical = {
-        background = "#000000";
-        foreground = "#ffffff";
+        background = "#1E1E2E";
+        foreground = "#D9E0EE";
+        frame_color = "#F8BD96";
         timeout = 10;
       };
     };

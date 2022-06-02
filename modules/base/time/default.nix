@@ -7,5 +7,5 @@
   };
 
   location.provider = "geoclue2";
-  services.localtime.enable = true;
+  services.localtimed.enable = true;
 }

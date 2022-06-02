@@ -2,7 +2,7 @@
 
 {
   location.provider = "geoclue2";
-  services.localtime.enable = true;
+  services.localtimed.enable = true;
 
   services.redshift = {
     enable = true;
