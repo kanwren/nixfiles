@@ -3,7 +3,6 @@
 {
   imports = [
     ./picom.nix
-    ./redshift.nix
   ];
 
   services.xserver = {
