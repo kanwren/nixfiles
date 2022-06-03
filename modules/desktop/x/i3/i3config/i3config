@@ -21,7 +21,7 @@
     font pango:DejaVu Sans Mono 12
 
     # window settings
-    for_window [class=".*"] border pixel 3
+    for_window [class=".*"] border pixel 1
     # requires i3-gaps
     hide_edge_borders both
     gaps inner 10

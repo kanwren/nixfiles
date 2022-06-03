@@ -6,7 +6,7 @@ floating_modifier $mod
 
 font pango:DejaVu Sans Mono 12
 
-for_window [class=".*"] border pixel 3
+for_window [class=".*"] border pixel 1
 hide_edge_borders both
 gaps inner 10
 gaps outer 10
