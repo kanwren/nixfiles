@@ -27,8 +27,8 @@
           clock-format = "%I:%M %p";
 
           theme = {
-            name = "Materia-dark";
-            package = pkgs.materia-theme;
+            name = "Catppuccin-dark";
+            package = pkgs.catppuccin-gtk;
           };
 
           iconTheme = {
@@ -37,7 +37,7 @@
           };
         };
 
-        background = ../../../../desktop-backgrounds/earth.png;
+        background = ../../../../desktop-backgrounds/dark-cat.png;
       };
     };
   };
