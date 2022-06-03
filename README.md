@@ -91,7 +91,11 @@ theming. Here are some things that may need to be done manually:
 - BetterDiscord installation: run `betterdiscordctl install`
   - Also grab Catppuccin by following the instructions [here](https://github.com/catppuccin/discord)
 - Browser stuff:
-  - Catppuccin for DDG: https://github.com/catppuccin/duckduckgo
+  - Appearance:
+    - [Catppuccin for DDG](https://github.com/catppuccin/duckduckgo)
+    - Userchrome stuff (`~/.mozilla/firefox/<profile>/chrome/userChrome.css`):
+      - Hide tab bar: `#tabbrowser-tabs { visibility: collapse !important; }`
+      - Hide TST bar: `#TabsToolbar { visibility: collapse !important; } #sidebar-header { display: none; }`
   - Firefox extensions:
     - Themes:
       - [catppuccin-mocha-lavender](https://addons.mozilla.org/en-US/firefox/addon/catppuccin-mocha-lavender/)
