@@ -20,7 +20,7 @@
 
       set -g default-shell ${pkgs.zsh}/bin/zsh
 
-      set-option -sa terminal-overrides ',kitty:RGB'
+      set-option -sa terminal-overrides ',xterm-kitty:RGB'
 
       # Set prefix to M-Space (shortcut doesn't support M-)
       unbind C-b

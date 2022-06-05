@@ -8,6 +8,7 @@
       ./scripts
 
       ./bash
+      ./cava
       ./direnv
       ./dunst
       ./firefox
