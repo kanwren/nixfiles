@@ -28,6 +28,7 @@ in
   services.home-assistant = {
     enable = true;
 
+    config = null;
     configDir = "/var/lib/hass";
 
     port = 8123;
