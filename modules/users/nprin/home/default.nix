@@ -3,10 +3,12 @@
 {
   home-manager.users.nprin = {
     imports = [
+      self.hmModules.btop
 
       ./scripts
 
       ./bash
+      ./btop
       ./cava
       ./direnv
       ./dunst

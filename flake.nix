@@ -119,6 +119,7 @@
 
         # home-manager modules
         hmModules = {
+          btop = import ./hm-modules/btop.nix;
         };
 
         # custom lib functions

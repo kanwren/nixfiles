@@ -23,6 +23,7 @@ in
   catppuccin-tmux = pkgs.callPackage ./misc/catppuccin-tmux { };
   catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { };
   catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { };
+  catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { };
 
   # tools
   globus-connect = pkgs.callPackage ./tools/globus-connect { };
