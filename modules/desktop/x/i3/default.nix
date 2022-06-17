@@ -24,13 +24,6 @@
         };
       };
 
-      # Set the desktop background to the current cached lock screen
-      # TODO: consider using `feh --no-fehbg --bg-fill --randomize ../../../desktop-backgrounds/*.png`
-      # (or find a way to randomize betterlockscreen backgrounds)
-      extraSessionCommands = ''
-        ${pkgs.feh}/bin/feh --no-fehbg --bg-fill ~/.cache/betterlockscreen/current/wall_resize.png
-      '';
-
       extraPackages = with pkgs; [
         # Menu/launcher
         rofi

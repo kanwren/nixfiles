@@ -337,3 +337,5 @@
     bindsym $mod+Shift+u bar mode invisible
     bindsym $mod+Control+Shift+u bar hidden_state toggle
 # }}}
+
+exec sh ~/.fehbg
