@@ -119,7 +119,6 @@
 
         # home-manager modules
         hmModules = {
-          xcompose = import ./hm-modules/xcompose.nix { inherit nlib; };
         };
 
         # custom lib functions

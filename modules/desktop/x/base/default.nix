@@ -16,7 +16,7 @@
     };
 
     layout = "us";
-    xkbOptions = "caps:swapescape,compose:rctrl";
+    xkbOptions = "caps:swapescape"; # TODO: set good compose key
 
     displayManager = {
       lightdm = {

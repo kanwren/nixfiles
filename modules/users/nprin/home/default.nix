@@ -3,7 +3,6 @@
 {
   home-manager.users.nprin = {
     imports = [
-      self.hmModules.xcompose
 
       ./scripts
 
@@ -22,7 +21,6 @@
       ./rofi
       ./tmux
       ./vscode
-      ./xserver
       ./zathura
       ./zsh
     ];
