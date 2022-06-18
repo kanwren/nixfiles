@@ -4,8 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    # doesn't need to upgrade; should stay constant
-    nixpkgs-homepi.url = "github:NixOS/nixpkgs/61d24cba72831201efcab419f19b947cf63a2d61";
+    # pinned from nixos-22.05-aarch64
+    nixpkgs-homepi.url = "github:NixOS/nixpkgs/f919a40e544da31a3b4b42e87cf30a5078c2b09c";
 
     home-manager = {
       url = "github:nix-community/home-manager";

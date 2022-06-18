@@ -4,7 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ./home-assistant.nix
-    ./tailscale.nix
   ];
 
   sops = {
@@ -87,7 +86,7 @@
       permitRootLogin = "prohibit-password";
       passwordAuthentication = false;
       allowSFTP = false;
-      challengeResponseAuthentication = false;
+      kbdInteractiveAuthentication = false;
       extraConfig = ''
         AllowTcpForwarding yes
         X11Forwarding no

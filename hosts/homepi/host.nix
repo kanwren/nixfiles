@@ -19,7 +19,10 @@ self.lib.system.makeSystem {
 
   modules = nixpkgs.lib.flatten [
     sops-nix.nixosModules.sops
+
     self.nixosModules.duckdns
+    self.nixosModules.tailscale
+
     ./configuration.nix
   ];
 }

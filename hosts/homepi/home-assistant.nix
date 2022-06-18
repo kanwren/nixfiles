@@ -8,6 +8,7 @@
 let
   subdomain = "rarer";
   url = "${subdomain}.duckdns.org";
+  hassPort = 8123; # the default hass port
 in
 
 {
@@ -23,36 +24,24 @@ in
   };
   users.extraUsers.hass.extraGroups = [ "keys" ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 hassPort ];
 
   services.home-assistant = {
     enable = true;
-
     config = null;
-    configDir = "/var/lib/hass";
+    extraPackages = ps: with ps; [ gtts ];
+    extraComponents = [
+      # Required for default config
+      "cloud"
+      "tts"
+      "zeroconf"
+      "ssdp"
+      "mobile_app"
+      "default_config"
 
-    port = 8123;
-    openFirewall = true;
-
-    package = (pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [
-        gtts
-      ];
-      extraComponents = [
-        # Required for default config
-        "cloud"
-        "tts"
-        "zeroconf"
-        "ssdp"
-        "mobile_app"
-        "default_config"
-
-        "zwave"
-        "google_assistant"
-      ];
-    }).overridePythonAttrs {
-      doCheck = false;
-    };
+      "zwave_js"
+      "google_assistant"
+    ];
   };
 
   security.acme = {
@@ -69,7 +58,7 @@ in
         proxy_buffering off;
       '';
       locations."/".extraConfig = ''
-        proxy_pass http://127.0.0.1:${builtins.toString config.services.home-assistant.port};
+        proxy_pass http://127.0.0.1:${builtins.toString hassPort};
         proxy_set_header Host $host;
         proxy_redirect http:// https://;
         proxy_http_version 1.1;
