@@ -38,7 +38,5 @@
     trackpoint.enable = true;
   };
 
-  services = {
-    joycond.enable = true;
-  };
+  virtualisation.virtualbox.host.enable = true;
 }
