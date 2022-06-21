@@ -89,7 +89,6 @@ Some things cannot be set up automatically, especially some of the Catppuccin
 theming. Here are some things that may need to be done manually:
 
 - BetterDiscord installation: run `betterdiscordctl install`
-  - Also grab Catppuccin by following the instructions [here](https://github.com/catppuccin/discord)
 - Browser stuff:
   - Appearance:
     - [Catppuccin for DDG](https://github.com/catppuccin/duckduckgo)
@@ -123,4 +122,4 @@ theming. Here are some things that may need to be done manually:
       - Misc:
         - [Tabby cat](https://addons.mozilla.org/en-US/firefox/addon/tabby-cat-friend/)
 - Wallpapers: https://github.com/catppuccin/wallpapers
-
+  - Update wallpaper with `betterlockscreen -u ...` and `betterlockscreen -w`

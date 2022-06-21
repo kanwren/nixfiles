@@ -11,6 +11,7 @@
       ./btop
       ./cava
       ./direnv
+      ./discord
       ./dunst
       ./firefox
       ./flameshot
@@ -19,6 +20,7 @@
       ./gtk
       ./haskell
       ./kitty
+      ./nix
       ./nushell
       ./rofi
       ./tmux
@@ -59,8 +61,6 @@
         bitwarden # password manager
         filelight # disk usage visualization
         libreoffice
-        discord
-        betterdiscordctl # https://github.com/catppuccin/discord has a nice theme
         slack
         teams
         spotify
