@@ -1,7 +1,7 @@
 { pkgs, lib, config, system, self, inputs, ... }:
 
 {
-  home-manager.users.nprin = {
+  home-manager.users.wren = {
     imports = [
       self.hmModules.btop
 

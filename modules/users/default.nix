@@ -1,3 +1,3 @@
 {
-  nprin = import ./nprin;
+  wren = import ./wren;
 }

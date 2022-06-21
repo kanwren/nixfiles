@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  users.users.nprin = {
+  users.users.wren = {
     initialPassword = "setup";
     isNormalUser = true;
     uid = 1000;
@@ -28,7 +28,7 @@
       builtins.filter (x: x != "") (lib.splitString "\n" (builtins.readFile keyfile));
   };
 
-  nix.settings.trusted-users = [ "nprin" ];
+  nix.settings.trusted-users = [ "wren" ];
 }
 
 # Note: to generate an initialHashedPassword, use 'mkpasswd -m sha-512 -s'

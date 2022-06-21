@@ -40,8 +40,8 @@ self.lib.system.makeSystem rec {
       desktop.bluetooth
       desktop.virtualisation
 
-      users.nprin.base
-      users.nprin.home
+      users.wren.base
+      users.wren.home
     ])
 
     ./hardware-configuration.nix

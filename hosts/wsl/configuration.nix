@@ -3,7 +3,7 @@
 {
   boot.wsl = {
     enable = true;
-    user = "nprin";
+    user = "wren";
   };
 
   # this wouldn't work, so override the base module
@@ -12,7 +12,7 @@
 
   users = {
     mutableUsers = true;
-    users.nprin = {
+    users.wren = {
       initialPassword = "setup";
     };
   };
