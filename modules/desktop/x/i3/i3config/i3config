@@ -156,6 +156,7 @@
         for_window [class="^discord$"] mark d
         for_window [class="^Slack$"] mark l
         for_window [class="^Spotify$"] mark s
+        for_window [class="^Bitwarden$"] mark p
     # }}}
 # }}}
 
