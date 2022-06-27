@@ -21,7 +21,6 @@
       ./haskell
       ./kitty
       ./nix
-      ./nushell
       ./rofi
       ./tmux
       ./vscode
@@ -34,6 +33,8 @@
     };
 
     home = {
+      stateVersion = "22.11";
+
       packages = with pkgs; [
         # CLI/TUI stuff
         h # quick directory jumping
