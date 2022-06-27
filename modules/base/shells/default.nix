@@ -1,4 +1,4 @@
-{ pkgs, self, system, ... }:
+{ pkgs, ... }:
 
 {
   programs = {
@@ -101,7 +101,6 @@
           "wd" # bookmark directories for quick jumping, adds 'wd'
 
           # utility
-          "cp" # adds 'cpv' which uses rsync
           "copyfile" # adds 'copyfile' to copy file contents to the clipboard
           "copypath"
           "universalarchive" # adds 'ua' for easy archiving into different formats
@@ -114,7 +113,10 @@
           "bazel"
         ];
         customPkgs = [
-          self.packages.${system}."zshPlugins/zsh-vi-mode"
+          (pkgs.runCommand "zsh-vi-mode" { } ''
+            mkdir -p "$out"/share/zsh/plugins
+            cp -r ${pkgs.zsh-vi-mode}/share/zsh-vi-mode "$out"/share/zsh/plugins/zsh-vi-mode
+          '')
           (pkgs.runCommand "zsh-nix-shell" { } ''
             mkdir -p "$out"/share/zsh/plugins
             cp -r ${pkgs.zsh-nix-shell}/share/zsh-nix-shell "$out"/share/zsh/plugins/nix-shell

@@ -1,6 +1,8 @@
 { lib, ... }:
 
 {
+  system.stateVersion = "22.11";
+
   boot.wsl = {
     enable = true;
     user = "wren";

@@ -16,8 +16,6 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    nix-bundle.url = "github:matthewbauer/nix-bundle";
-
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,39 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-utils = {
-      url = "github:nprindle/nix-utils";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        naersk.follows = "naersk";
-        fenix.follows = "fenix";
-      };
-    };
-
-    nix-autobahn = {
-      url = "github:nprindle/nix-autobahn";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        fenix.follows = "fenix";
-        naersk.follows = "naersk";
-      };
-    };
-
-    naersk = {
-      url = "github:nmattia/naersk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        naersk.follows = "naersk";
-      };
-    };
-
     nvim-configs = {
       url = "github:nprindle/nvim-configs";
       inputs = {
@@ -84,15 +49,10 @@
     , nixpkgs-homepi
     , nixos-hardware
     , flake-utils
-    , nix-bundle
     , nixos-wsl
     , sops-nix
     , home-manager
-    , naersk
-    , fenix
     , nixos-generators
-    , nix-utils
-    , nix-autobahn
     , nvim-configs
     , ...
     }@inputs:
@@ -127,16 +87,13 @@
 
         # custom templates
         templates = import ./templates;
-
-        bundlers = import ./bundlers { inherit nixpkgs nix-bundle; };
-        defaultBundler = self.bundlers.arx-bundle;
       }
-      (flake-utils.lib.eachDefaultSystem (system: (
+      (flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: (
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          devShell = pkgs.mkShell {
+          devShells.default = pkgs.mkShell {
             nativeBuildInputs = [
               # formatting
               pkgs.lefthook
@@ -151,48 +108,11 @@
             ];
           };
 
-          # traditional nested packages
-          legacyPackages =
-            let
-              base = import ./pkgs {
-                inherit pkgs;
-                naersk = naersk.lib.${system};
-                fenix = fenix.packages.${system};
-              };
-            in
-            base;
-
-          # flattened packages for flake
-          packages = flake-utils.lib.flattenTree self.legacyPackages.${system};
-
-          apps = {
-            carbon-now = {
-              type = "app";
-              program = "${self.packages.${system}.carbon-now-cli}/bin/carbon-now";
-            };
-            rust-script = {
-              type = "app";
-              program = "${self.packages.${system}.rust-script}/bin/rust-script";
-            };
-            lipsum = {
-              type = "app";
-              program = "${self.packages.${system}."scripts/lipsum"}/bin/lipsum";
-            };
-          };
+          packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs; });
         }
       )))
       (import ./installer/installers.nix {
         inherit nixpkgs nixos-generators;
       })
-      # Re-exports
-      {
-        inherit (nix-autobahn) packages apps;
-      }
-      {
-        inherit (nix-utils) packages apps;
-      }
-      {
-        inherit (nvim-configs) packages;
-      }
     ];
 }

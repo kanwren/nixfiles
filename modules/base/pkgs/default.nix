@@ -4,8 +4,6 @@
   environment = {
     systemPackages = with pkgs; [
       # editor
-      # the full config is self.packages.${system}.neovim-with-plugin-deps,
-      # which I usually put into the profile for the sake of flexibility
       neovim
 
       # nix stuff

@@ -1,7 +1,4 @@
-{ pkgs ? import <nixpkgs> { }
-, naersk
-, fenix
-}:
+{ pkgs ? import <nixpkgs> { } }:
 
 let
   inherit (pkgs) lib;
@@ -10,15 +7,6 @@ let
   });
 in
 {
-  # development
-  spim = pkgs.callPackage ./development/spim { };
-
-  zshPlugins = lib.recurseIntoAttrs {
-    zsh-vi-mode = pkgs.callPackage ./misc/zsh-vi-mode { };
-  };
-
-  nord-dircolors = pkgs.callPackage ./misc/nord-dircolors { };
-
   catppuccin-kitty = pkgs.callPackage ./misc/catppuccin-kitty { };
   catppuccin-tmux = pkgs.callPackage ./misc/catppuccin-tmux { };
   catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { };
@@ -27,13 +15,6 @@ in
 
   # tools
   globus-connect = pkgs.callPackage ./tools/globus-connect { };
-
-  rust-script = pkgs.callPackage ./tools/rust-script {
-    inherit naersk fenix;
-  };
-
-  autograde = pkgs.callPackage ./tools/cs2110/autograde { inherit addmeta; };
-  csrh = pkgs.callPackage ./tools/cs2110/csrh { inherit addmeta; };
 
   # scripts
   scripts = lib.recurseIntoAttrs {

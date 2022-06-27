@@ -1,8 +1,4 @@
-{ config, pkgs, self, ... }:
-
-let
-  inherit (self.lib) time;
-in
+{ config, pkgs, ... }:
 
 {
   services.gpg-agent = {
@@ -10,7 +6,7 @@ in
     enableSshSupport = true;
     pinentryFlavor = "gtk2";
 
-    defaultCacheTtl = time.unitsOf time.seconds (time.weeks 1);
+    defaultCacheTtl = 7 * 24 * 60 * 60; # one week
     defaultCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;
     maxCacheTtl = config.services.gpg-agent.defaultCacheTtl;
     maxCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;

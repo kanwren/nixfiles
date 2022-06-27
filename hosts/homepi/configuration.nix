@@ -6,6 +6,8 @@
     ./home-assistant.nix
   ];
 
+  system.stateVersion = "22.11";
+
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
     gnupg = {
@@ -110,7 +112,5 @@
   };
 
   documentation.enable = false;
-
-  system.stateVersion = "21.05";
 }
 

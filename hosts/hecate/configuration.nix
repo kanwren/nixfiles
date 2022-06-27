@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.11";
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
