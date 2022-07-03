@@ -22,6 +22,7 @@
       ./kitty
       ./nix
       ./rofi
+      ./spotify
       ./tmux
       ./vscode
       ./zathura
@@ -64,7 +65,6 @@
         libreoffice
         slack
         teams
-        spotify
         insomnia # graphical REST API client
         anki # flashcards
 

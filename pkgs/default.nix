@@ -12,6 +12,7 @@ in
   catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { };
   catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { };
   catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { };
+  catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { };
 
   # tools
   globus-connect = pkgs.callPackage ./tools/globus-connect { };
