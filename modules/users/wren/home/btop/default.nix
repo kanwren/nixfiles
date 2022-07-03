@@ -5,7 +5,7 @@
     enable = true;
 
     themes = {
-      catppuccin = "${self.packages.${system}.catppuccin-btop}/share/btop/themes/catppuccin.theme";
+      catppuccin = "${self.packages.${system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";
     };
     defaultTheme = "catppuccin";
 
