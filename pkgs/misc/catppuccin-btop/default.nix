@@ -6,8 +6,8 @@ let
   src = fetchFromGitHub {
     owner = "catppuccin";
     repo = "btop";
-    rev = "3610a8c497ac6dc24d297a27cf5aff2d8f63f9d0";
-    sha256 = "169f7hldk84mrsgfzawabrdij3jb31prmwh9z46mszwxjmwsl7ny";
+    rev = "276b9a9d08ad70e9fb0e6a2f8a1b181209c79c6f";
+    sha256 = "1iiwvi3sqlma4fiz11knn7hgl157f1b216ag8blkbmls0yfv4glp";
   };
 in
 

@@ -4,6 +4,6 @@
 fetchFromGitHub {
   owner = "catppuccin";
   repo = "zathura";
-  rev = "ce08df4168cf10acf4f2cd51a97a2e9acc471303";
-  sha256 = "145w87zhdc6y3xb2cwfi7d413hhg5xz5xqhl0xl0mkbravci6lca";
+  rev = "a7f22e5bd8acf5b2a9760d13e33bbbeab1d204f0";
+  sha256 = "0bxld5yqw538s8wan97s3xvhyh5m9xr75gzrbh1hzn4kxzqz3yd9";
 }

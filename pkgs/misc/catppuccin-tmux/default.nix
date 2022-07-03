@@ -4,6 +4,6 @@
 fetchFromGitHub {
   owner = "catppuccin";
   repo = "tmux";
-  rev = "87c33d683cf2b40e1340a10fa9049af2d28f5606";
-  sha256 = "0frqk3g85licwl06qnck1bpxm9c7h9mj5law5vq28i2kv24qvv9n";
+  rev = "1c87a9e1d2fac21815497ed7f599a1c1208d40cd";
+  sha256 = "1vz6srk4zfgsjpwb7xa7n9mg5kfb3x7aq963mwqnl8m4zvmcy8vz";
 }

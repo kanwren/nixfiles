@@ -4,6 +4,6 @@
 fetchFromGitHub {
   owner = "catppuccin";
   repo = "cava";
-  rev = "4c187182e1d3e42d973e4aa74194733f42f10f33";
-  sha256 = "0rdqvyl47q7r3b47mn4j5wh22i24w8prdyxb3y5i4d4rcvpsrn35";
+  rev = "9796000d6b4819a07fdf9ab866a7dbba722846b8";
+  sha256 = "0l0rd9mysji50vlfw120i24ivn7p782qzljyy78ih9wgi6wzjv6l";
 }
