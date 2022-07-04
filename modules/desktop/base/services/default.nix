@@ -12,17 +12,9 @@
     blueman.enable = true;
 
     # cups
-    printing = {
-      enable = true;
-    };
+    printing.enable = true;
 
-    gnome = {
-      gnome-keyring.enable = true;
-    };
-
-    postgresql = {
-      enable = true;
-    };
+    gnome.gnome-keyring.enable = true;
 
     atd.enable = true;
   };
