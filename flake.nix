@@ -22,7 +22,7 @@
     };
 
     nixos-wsl = {
-      url = "github:nprindle/NixOS-WSL";
+      url = "github:nix-community/NixOS-WSL";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";

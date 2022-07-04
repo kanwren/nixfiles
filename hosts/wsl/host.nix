@@ -10,7 +10,7 @@ self.lib.system.makeSystem rec {
   system = "x86_64-linux";
 
   modules = [
-    nixos-wsl.nixosModule
+    nixos-wsl.nixosModules.wsl
     self.nixosModules.base
     ./configuration.nix
   ];

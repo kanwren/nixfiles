@@ -3,9 +3,10 @@
 {
   system.stateVersion = "22.11";
 
-  boot.wsl = {
+  wsl = {
     enable = true;
-    user = "wren";
+    defaultUser = "wren";
+    automountPath = "/mnt";
   };
 
   # this wouldn't work, so override the base module
