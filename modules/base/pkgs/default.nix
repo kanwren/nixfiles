@@ -18,6 +18,8 @@
       usbutils
       pciutils
       dnsutils
+      findutils
+      findutils.locate
       zlib
       # filesystem tools
       parted
