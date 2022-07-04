@@ -109,6 +109,11 @@
           };
 
           packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs; });
+
+          checks.check-format = pkgs.runCommand "check-format" { buildInputs = [ pkgs.nixpkgs-fmt ]; } ''
+            nixpkgs-fmt --check ${./.}
+            touch "$out"
+          '';
         }
       )))
       (import ./installer/installers.nix {
