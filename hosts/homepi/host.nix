@@ -21,7 +21,7 @@ self.lib.system.makeSystem {
     sops-nix.nixosModules.sops
 
     self.nixosModules.duckdns
-    self.nixosModules.tailscale
+    self.nixosModules.mixins.tailscale
 
     ./configuration.nix
   ];

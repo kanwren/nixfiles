@@ -1,7 +1,5 @@
 { self
 , nixpkgs
-, nixos-hardware
-, home-manager
 , ...
 }@inputs:
 
@@ -11,10 +9,10 @@ self.lib.system.makeSystem rec {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
-    home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
 
     # hardware modules
-    (with nixos-hardware.nixosModules; [
+    (with inputs.nixos-hardware.nixosModules; [
       common-pc-laptop
       common-pc-laptop-ssd
       common-cpu-amd
@@ -28,10 +26,9 @@ self.lib.system.makeSystem rec {
       }
     ])
 
-    (with self.nixosModules; [
+    (with self.nixosModules.mixins; [
       base
-      home-manager-base
-      tailscale
+      home-manager
 
       desktop.base
       desktop.x.base
@@ -42,6 +39,8 @@ self.lib.system.makeSystem rec {
 
       users.wren.base
       users.wren.home
+
+      tailscale
     ])
 
     ./hardware-configuration.nix
