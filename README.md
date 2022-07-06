@@ -11,7 +11,7 @@ My NixOS configurations and other Nix files :snowflake:
 - [`hosts/`](hosts/): Configuration for each of my NixOS machines
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake
-- [`lib/`](lib/): Custom library functions used throughout the configs and exported from flake. Usually seen imported as `custom.lib` or `nlib`.
+- [`lib/`](lib/): Custom library functions used throughout the configs and exported from flake
 - [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
