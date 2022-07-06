@@ -90,11 +90,9 @@ theming. Here are some things that may need to be done manually:
 
 - BetterDiscord installation: run `betterdiscordctl install`
 - Browser stuff:
-  - Appearance:
-    - [Catppuccin for DDG](https://github.com/catppuccin/duckduckgo)
-    - Userchrome stuff (`~/.mozilla/firefox/<profile>/chrome/userChrome.css`):
-      - Hide tab bar: `#tabbrowser-tabs { visibility: collapse !important; }`
-      - Hide TST bar: `#TabsToolbar { visibility: collapse !important; } #sidebar-header { display: none; }`
+  - Userchrome stuff (`~/.mozilla/firefox/<profile>/chrome/userChrome.css`):
+    - Hide tab bar: `#tabbrowser-tabs { visibility: collapse !important; }`
+    - Hide TST bar: `#TabsToolbar { visibility: collapse !important; } #sidebar-header { display: none; }`
   - Firefox extensions:
     - Themes:
       - [catppuccin-mocha-lavender](https://addons.mozilla.org/en-US/firefox/addon/catppuccin-mocha-lavender/)
@@ -117,7 +115,9 @@ theming. Here are some things that may need to be done manually:
           - [Bookmark Tree for Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/bookmark-tree-for-tst/)
       - Site enhancements:
         - [Stylus](https://addons.mozilla.org/en-US/firefox/addon/styl-us/)
+          - [Catppuccin for GitHub](https://github.com/catppuccin/github/raw/main/catppuccin.user.css)
           - [Youtube-Catppuccin Mocha](https://github.com/catppuccin/YouTube/raw/main/src/YouTubeCatppuccinMocha.user.css)
+          - [Catppuccin for DDG](https://github.com/catppuccin/duckduckgo)
         - [YouTube Windowed FullScreen](https://addons.mozilla.org/en-US/firefox/addon/youtube-window-fullscreen/)
       - Misc:
         - [Tabby cat](https://addons.mozilla.org/en-US/firefox/addon/tabby-cat-friend/)
