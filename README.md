@@ -50,11 +50,11 @@ $ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
     -f sd-aarch64-installer --system aarch64-linux -c installer/configuration.nix
 ```
 
-Alternatively, `legacyPackages` exports derivations to do this automatically:
+Alternatively, some installers are exported by default:
 
 ```
-$ nix build 'github:nprindle/nixfiles#legacyPackages.x86_64-linux.installer.install-iso'
-$ nix build 'github:nprindle/nixfiles#legacyPackages.aarch64-linux.installer.sd-aarch64-installer'
+$ nix build 'github:nprindle/nixfiles#packages.x86_64-linux.install-iso'
+$ nix build 'github:nprindle/nixfiles#packages.aarch64-linux.sd-aarch64-installer'
 ```
 
 ### sops-nix
