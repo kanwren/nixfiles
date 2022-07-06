@@ -15,7 +15,6 @@ My NixOS configurations and other Nix files :snowflake:
 - [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
-- [`bundlers/`](bundlers/): Various bundlers that can be used with the `nix bundle` subcommand
 - [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
 ### Hosts
