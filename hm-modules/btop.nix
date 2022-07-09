@@ -41,7 +41,7 @@ in
       };
 
       config = mkOption {
-        type = types.attrsOf (types.oneOf [ types.string types.int types.bool ]);
+        type = types.attrsOf (types.oneOf [ types.str types.int types.bool ]);
         default = { };
         description = "Configuration to be written to btop.conf";
       };
