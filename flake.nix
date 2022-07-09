@@ -78,9 +78,7 @@
         nixosModules = import ./modules;
 
         # home-manager modules
-        hmModules = {
-          btop = import ./hm-modules/btop.nix;
-        };
+        hmModules = import ./hm-modules;
 
         # custom lib functions
         lib = nlib;
