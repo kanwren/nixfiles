@@ -66,7 +66,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        defaultApp = {
+        apps.default = {
           type = "app";
           program = "${pkgs.writeShellScript "nixos-shell" ''
             if [ $# -eq 0 ]; then

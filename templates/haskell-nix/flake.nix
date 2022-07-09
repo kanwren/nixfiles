@@ -33,6 +33,6 @@
         flake = pkgs.quux-project.flake { };
       in
       flake // {
-        defaultPackage = flake.packages."quux:exe:quux";
+        packages.default = flake.packages."quux:exe:quux";
       });
 }

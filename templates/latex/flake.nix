@@ -24,7 +24,7 @@
         };
       in
       {
-        defaultPackage = self.packages.${system}.${docname};
+        packages.default = self.packages.${system}.${docname};
 
         packages.${docname} = pkgs.stdenv.mkDerivation {
           name = docname;
