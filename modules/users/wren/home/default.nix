@@ -42,17 +42,12 @@
         h # quick directory jumping
         tokei # count lines of code
         shellcheck # check shell scripts
-        httpie # command line HTTP client
-        woof # serve files locally over http
-        jo # json generation
-
-        gotop # activity monitor
         btop # activity monitor
-
-        # clients
-        gitAndTools.gh
-        gpg-tui
-        ngrok
+        gitAndTools.gh # github client
+        jo # json generation
+        httpie # command line HTTP client
+        miniserve # serve files/directories over HTTP
+        ngrok # expose tunnels to local servers
 
         # development
         rustup
