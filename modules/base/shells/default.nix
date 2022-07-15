@@ -1,5 +1,28 @@
 { pkgs, ... }:
 
+let
+  # Utility functions that work in both bash and zsh
+  utilityFunctions = ''
+    # cd into the output of a nix build without making a local symlink
+    function nix-explore() {
+      if ! nix build "$1" --no-link -v; then
+        return $?
+      fi
+
+      if ! _nix_explore_path_info="$(nix path-info "$1")"; then
+        return $?
+      fi
+
+      if [ $(echo "$_nix_explore_path_info" | wc -l) -eq 1 ]; then
+        cd "$_nix_explore_path_info"
+      else
+        >&2 echo "Error: couldn't get unique path info"
+        >&2 echo "$_nix_explore_path_info"
+      fi
+    }
+  '';
+in
+
 {
   programs = {
     zsh = {
@@ -55,6 +78,8 @@
         function zvm_after_init() {
           source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
         }
+
+        ${utilityFunctions}
       '';
 
       shellAliases =
@@ -213,6 +238,8 @@
         else
           PS1='\u@\h:\w\$ '
         fi
+
+        ${utilityFunctions}
       '';
     };
 
