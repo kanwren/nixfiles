@@ -11,7 +11,7 @@
     extraConfig = ''
       map i recolor
       map p print
-      include ${self.packages.${system}.catppuccin-zathura}/catppuccin
+      include ${self.packages.${system}.catppuccin-zathura}/share/zathura/themes/catppuccin-mocha
     '';
   };
 }
