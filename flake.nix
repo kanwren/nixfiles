@@ -95,7 +95,7 @@
             nativeBuildInputs = [
               # formatting
               pkgs.lefthook
-              pkgs.nixpkgs-fmt
+              self.formatter.${system}
               # sops-nix
               sops-nix.packages.${system}.sops-import-keys-hook
               sops-nix.packages.${system}.ssh-to-pgp
@@ -108,7 +108,9 @@
 
           packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs; });
 
-          checks.check-format = pkgs.runCommand "check-format" { buildInputs = [ pkgs.nixpkgs-fmt ]; } ''
+          formatter = pkgs.nixpkgs-fmt;
+
+          checks.check-format = pkgs.runCommand "check-format" { buildInputs = [ self.formatter.${system} ]; } ''
             nixpkgs-fmt --check ${./.}
             touch "$out"
           '';
