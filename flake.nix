@@ -47,14 +47,13 @@
     { self
     , nixpkgs
     , nixpkgs-homepi
+    , home-manager
     , nixos-hardware
     , flake-utils
+    , nixos-generators
     , nixos-wsl
     , sops-nix
-    , home-manager
-    , nixos-generators
     , nvim-configs
-    , ...
     }@inputs:
     let
       # custom library

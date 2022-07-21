@@ -3,8 +3,10 @@
 with lib;
 
 let
-  attrsToList = as: builtins.map (k: { name = k; value = as.${k}; }) (builtins.attrNames as);
+  attrsToList = as: builtins.map (name: { inherit name; value = as.${name}; }) (builtins.attrNames as);
+
   cfg = config.programs.btop;
+
   # TODO: figure out exactly what this conf format is
   generateConf =
     let

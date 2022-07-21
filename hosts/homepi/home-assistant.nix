@@ -1,7 +1,4 @@
 { config
-, pkgs
-, lib
-, inputs
 , ...
 }:
 
@@ -17,9 +14,10 @@ in
     "google-home-service-account.json" = {
       format = "binary";
       sopsFile = ./secrets/google-home-service-account.keytab;
-      owner = config.users.extraUsers.hass.name;
-      group = config.users.extraUsers.hass.group;
       path = "/var/lib/hass/service-account.json";
+
+      inherit (config.users.extraUsers.hass) group;
+      owner = config.users.extraUsers.hass.name;
     };
   };
   users.extraUsers.hass.extraGroups = [ "keys" ];

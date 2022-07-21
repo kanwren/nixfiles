@@ -1,7 +1,7 @@
 final: prev:
 
 {
-  firmwareLinuxNonfree = prev.firmwareLinuxNonfree.overrideAttrs (old: {
+  firmwareLinuxNonfree = prev.firmwareLinuxNonfree.overrideAttrs (_: {
     version = "2020-12-18";
     src = prev.fetchgit {
       url = "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git";

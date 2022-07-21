@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   services.logind = {
     extraConfig = ''

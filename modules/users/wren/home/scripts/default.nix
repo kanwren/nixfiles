@@ -1,5 +1,3 @@
-{ pkgs, lib, config, system, self, inputs, ... }:
-
 let
   scripts = { };
 in

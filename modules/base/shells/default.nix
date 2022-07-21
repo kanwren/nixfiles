@@ -164,7 +164,7 @@ in
             # all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked";
             ahead = style "bold bright-green" (withCount "⇡");
             behind = style "bold bright-green" (withCount "⇣");
-            diverged = style "bold bright-green" ("⇡$ahead_count⇣$behind_count");
+            diverged = style "bold bright-green" "⇡$ahead_count⇣$behind_count";
             stashed = style "bold bright-blue" (withCount "\\$");
             staged = style "bold yellow" (withCount "+");
             modified = style "bold yellow" (withCount "!");

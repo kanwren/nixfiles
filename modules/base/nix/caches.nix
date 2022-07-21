@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   nix.settings = {
     # cache.nixos.org is included by default

@@ -24,9 +24,7 @@ let
     desktopName = "Globus Connect Personal";
     genericName = "File Transfer Tool";
   };
-in
 
-let
   tcl-8_6_10 = tcl-8_6.overrideAttrs (_: rec {
     release = "8.6";
     version = "${release}.10";

@@ -1,4 +1,4 @@
-{ pkgs, self, system, ... }:
+{ self, system, ... }:
 
 {
   programs.btop = {

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, system, self, inputs, ... }:
+{ pkgs, lib, system, self, inputs, ... }:
 
 {
   home-manager.users.wren = {

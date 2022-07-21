@@ -37,7 +37,7 @@ let
     AdditionalOptions = {
       # TODO: add support for custom apps
       # custom_apps = [ ... ];
-      extensions = cfg.extensions;
+      inherit (cfg) extensions;
       experimental_features = false;
       home_config = true;
       sidebar_config = true;

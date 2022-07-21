@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
 {
   services.xserver = {
     desktopManager.plasma5 = {

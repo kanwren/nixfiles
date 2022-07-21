@@ -14,7 +14,7 @@ rec {
   catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { };
   catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { };
   catppuccin-twemoji-hearts = pkgs.callPackage ./misc/catppuccin-twemoji-hearts {
-    generate-heart-emoji = scripts.generate-heart-emoji;
+    inherit (scripts) generate-heart-emoji;
   };
 
   # tools

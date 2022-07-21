@@ -11,7 +11,7 @@
 #   nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
 #     -f sd-aarch64-installer --system aarch64-linux -c configuration.nix
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   nix = {
