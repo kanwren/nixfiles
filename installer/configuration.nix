@@ -14,6 +14,8 @@
 { pkgs, ... }:
 
 {
+  system.stateVersion = "22.11";
+
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
