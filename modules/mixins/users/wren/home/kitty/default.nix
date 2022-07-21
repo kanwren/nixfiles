@@ -44,17 +44,28 @@
     };
 
     keybindings = {
+      # clipboard
       "kitty_mod+c" = "copy_to_clipboard";
       "kitty_mod+v" = "paste_from_clipboard";
       "shift+insert" = "paste_from_selection";
+
+      # sizing
       "kitty_mod+equal" = "change_font_size all +1.0";
       "kitty_mod+minus" = "change_font_size all -1.0";
       "kitty_mod+backspace" = "change_font_size all 0";
-      "kitty_mod+e" = "kitten hints";
-      "kitty_mod+p>f" = "kitten hints --type path --program -";
-      "kitty_mod+p>shift+f" = "kitten hints --type path";
-      "kitty_mod+p>l" = "kitten hints --type line --program -";
-      "kitty_mod+p>h" = "kitten hints --type hash --program -";
+
+      # hints kitten
+      "kitty_mod+h>u" = "kitten hints --program @ --type url";
+      "kitty_mod+h>p" = "kitten hints --program @ --type path";
+      "kitty_mod+h>h" = "kitten hints --program @ --type hash";
+      "kitty_mod+h>l" = "kitten hints --program @ --type line";
+      "kitty_mod+h>i" = "kitten hints --program @ --type ip";
+      "kitty_mod+h>shift+u" = "kitten hints --program @ --type url  --multiple --multiple-joiner space";
+      "kitty_mod+h>shift+p" = "kitten hints --program @ --type path --multiple --multiple-joiner space";
+      "kitty_mod+h>shift+h" = "kitten hints --program @ --type hash --multiple --multiple-joiner space";
+      "kitty_mod+h>shift+l" = "kitten hints --program @ --type line --multiple --multiple-joiner space";
+      "kitty_mod+h>shift+i" = "kitten hints --program @ --type ip   --multiple --multiple-joiner space";
+
       "kitty_mod+u" = "kitten unicode_input";
       "kitty_mod+escape" = "kitty_shell window";
     };
