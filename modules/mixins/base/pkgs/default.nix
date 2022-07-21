@@ -3,9 +3,6 @@
 {
   environment = {
     systemPackages = with pkgs; [
-      # editor
-      neovim
-
       # nix stuff
       cachix
       patchelf
