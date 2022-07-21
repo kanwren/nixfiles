@@ -1,3 +1,0 @@
-{
-  wren = import ./wren;
-}

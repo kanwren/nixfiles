@@ -74,7 +74,7 @@
         overlays = import ./overlays;
 
         # NixOS modules
-        nixosModules = import ./modules;
+        nixosModules = import ./modules self;
 
         # home-manager modules
         hmModules = import ./hm-modules;

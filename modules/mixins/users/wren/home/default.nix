@@ -1,12 +1,12 @@
-{ pkgs, lib, system, self, inputs, ... }:
+self:
+
+{ pkgs, lib, ... }:
 
 {
   home-manager.users.wren = {
     imports = [
       self.hmModules.btop
       self.hmModules.spicetify
-
-      ./scripts
 
       ./bash
       ./btop
@@ -30,9 +30,7 @@
       ./zsh
     ];
 
-    _module.args = {
-      inherit system inputs self;
-    };
+    _module.args = { inherit self; };
 
     home = {
       stateVersion = "22.11";
@@ -65,8 +63,8 @@
         anki # flashcards
 
         # misc
-        self.packages.${system}.globus-connect
-        self.packages.${system}."scripts/nosleep"
+        self.packages.${pkgs.system}.globus-connect
+        self.packages.${pkgs.system}."scripts/nosleep"
       ];
     };
   };

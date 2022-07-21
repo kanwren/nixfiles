@@ -1,11 +1,11 @@
-{ self, system, ... }:
+{ pkgs, self, ... }:
 
 {
   programs.btop = {
     enable = true;
 
     themes = {
-      catppuccin = "${self.packages.${system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";
+      catppuccin = "${self.packages.${pkgs.system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";
     };
     defaultTheme = "catppuccin";
 

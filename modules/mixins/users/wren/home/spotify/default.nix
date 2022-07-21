@@ -1,9 +1,9 @@
 # See https://github.com/spicetify/spicetify-cli/issues/1453
 
-{ self, system, ... }:
+{ self, pkgs, ... }:
 
 let
-  catppuccin = self.packages.${system}.catppuccin-spicetify;
+  catppuccin = self.packages.${pkgs.system}.catppuccin-spicetify;
 in
 
 {

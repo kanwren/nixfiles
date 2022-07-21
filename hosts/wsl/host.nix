@@ -5,7 +5,7 @@
 }@inputs:
 
 self.lib.system.makeSystem rec {
-  inherit self inputs nixpkgs;
+  inherit nixpkgs;
 
   system = "x86_64-linux";
 

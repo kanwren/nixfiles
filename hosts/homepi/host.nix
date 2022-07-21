@@ -9,7 +9,7 @@ let
 in
 
 self.lib.system.makeSystem {
-  inherit self inputs nixpkgs;
+  inherit nixpkgs;
 
   system = "aarch64-linux";
 

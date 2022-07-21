@@ -37,7 +37,7 @@
           };
         };
 
-        background = ../../../../desktop-backgrounds/dark-cat.png;
+        background = ../../../../../desktop-backgrounds/dark-cat.png;
       };
     };
   };

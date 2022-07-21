@@ -1,4 +1,4 @@
-{ self, system, ... }:
+{ self, pkgs, ... }:
 
 {
   programs.zathura = {
@@ -11,7 +11,7 @@
     extraConfig = ''
       map i recolor
       map p print
-      include ${self.packages.${system}.catppuccin-zathura}/share/zathura/themes/catppuccin-mocha
+      include ${self.packages.${pkgs.system}.catppuccin-zathura}/share/zathura/themes/catppuccin-mocha
     '';
   };
 }

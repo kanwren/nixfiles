@@ -1,8 +1,4 @@
-{ pkgs
-, self
-, system
-, ...
-}:
+{ pkgs, self, ... }:
 
 {
   programs.tmux = {
@@ -16,7 +12,7 @@
     keyMode = "vi";
     historyLimit = 10000;
     extraConfig = ''
-      source-file ${self.packages.${system}.catppuccin-tmux}/catppuccin.conf
+      source-file ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.conf
 
       set -g default-shell ${pkgs.zsh}/bin/zsh
 

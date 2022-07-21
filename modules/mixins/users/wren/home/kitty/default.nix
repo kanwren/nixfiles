@@ -1,4 +1,4 @@
-{ self, system, ... }:
+{ pkgs, self, ... }:
 
 {
   programs.kitty = {
@@ -60,7 +60,7 @@
     };
 
     extraConfig = ''
-      include ${self.packages.${system}.catppuccin-kitty}/mocha.conf
+      include ${self.packages.${pkgs.system}.catppuccin-kitty}/mocha.conf
     '';
   };
 }
