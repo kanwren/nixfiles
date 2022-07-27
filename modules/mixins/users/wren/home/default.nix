@@ -23,6 +23,7 @@ self:
       ./kitty
       ./nix
       ./rofi
+      ./rust
       ./spotify
       ./tmux
       ./vscode
@@ -35,11 +36,7 @@ self:
     home = {
       stateVersion = "22.11";
 
-      sessionPath = [
-        "$HOME/bin"
-        "$HOME/.cargo/bin"
-        "$HOME/.cabal/bin"
-      ];
+      sessionPath = [ "$HOME/bin" ];
 
       packages = with pkgs; [
         # CLI/TUI stuff
@@ -54,7 +51,6 @@ self:
         ngrok # expose tunnels to local servers
 
         # development
-        rustup
         tectonic
         graphviz
 
