@@ -35,6 +35,12 @@ self:
     home = {
       stateVersion = "22.11";
 
+      sessionPath = [
+        "$HOME/bin"
+        "$HOME/.cargo/bin"
+        "$HOME/.cabal/bin"
+      ];
+
       packages = with pkgs; [
         # CLI/TUI stuff
         h # quick directory jumping

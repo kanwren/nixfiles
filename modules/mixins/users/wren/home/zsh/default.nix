@@ -1,6 +1,10 @@
-# The zsh configuration is the same as the system zsh configuration
 {
-  home.file = {
-    ".zshrc".text = "# placeholder to satisfy zsh";
+  programs.zsh = {
+    enable = true;
+    history = {
+      save = 100000;
+      size = 100000;
+      expireDuplicatesFirst = true;
+    };
   };
 }
