@@ -49,6 +49,7 @@ self:
         httpie # command line HTTP client
         miniserve # serve files/directories over HTTP
         ngrok # expose tunnels to local servers
+        qrencode # generate QR codes
 
         # development
         tectonic
