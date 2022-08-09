@@ -3,12 +3,15 @@
 , ...
 }@inputs:
 
-self.lib.system.makeSystem rec {
-  inherit nixpkgs;
-
+nixpkgs.lib.nixosSystem rec {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
+    {
+      nix.registry.nixpkgs.flake = nixpkgs;
+      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    }
+
     inputs.home-manager.nixosModules.home-manager
 
     # hardware modules

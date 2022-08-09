@@ -79,9 +79,6 @@
         # home-manager modules
         hmModules = import ./hm-modules;
 
-        # custom lib functions
-        lib = nlib;
-
         # custom templates
         templates = import ./templates;
       }

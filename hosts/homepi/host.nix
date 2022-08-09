@@ -8,9 +8,7 @@ let
   nixpkgs = nixpkgs-homepi;
 in
 
-self.lib.system.makeSystem {
-  inherit nixpkgs;
-
+nixpkgs.lib.nixosSystem {
   system = "aarch64-linux";
 
   overlays = [
@@ -18,6 +16,11 @@ self.lib.system.makeSystem {
   ];
 
   modules = nixpkgs.lib.flatten [
+    {
+      nix.registry.nixpkgs.flake = nixpkgs;
+      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    }
+
     sops-nix.nixosModules.sops
 
     self.nixosModules.duckdns
