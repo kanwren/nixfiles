@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -48,6 +53,7 @@
     , nixpkgs
     , nixpkgs-homepi
     , home-manager
+    , darwin
     , nixos-hardware
     , flake-utils
     , nixos-generators
@@ -70,6 +76,10 @@
           wsl = import ./hosts/wsl/host.nix inputs;
         };
 
+        darwinConfigurations = {
+          "nprindle-macbookpro" = import ./hosts/nprindle-macbookpro/host.nix inputs;
+        };
+
         # Nixpkgs overlays
         overlays = import ./overlays;
 
@@ -82,7 +92,7 @@
         # custom templates
         templates = import ./templates;
       }
-      (flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system: (
+      (flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ] (system: (
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
