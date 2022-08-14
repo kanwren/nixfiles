@@ -5,6 +5,13 @@
     ./picom.nix
   ];
 
+  services.logind = {
+    extraConfig = ''
+      IdleAction=ignore
+      HandlePowerKey=ignore
+    '';
+  };
+
   services.xserver = {
     windowManager.i3 = {
       enable = true;

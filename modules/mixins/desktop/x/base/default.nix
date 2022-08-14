@@ -3,7 +3,6 @@
 {
   imports = [
     ./fonts.nix
-    ./logind.nix
   ];
 
   services.xserver = {
