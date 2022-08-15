@@ -1,5 +1,40 @@
 { pkgs, self, lib, ... }:
 
+let
+  makeOmzConfig =
+    { package ? pkgs.oh-my-zsh
+    , plugins ? [ ]
+    , customPkgs ? [ ]
+    }:
+    let
+      mkLinkFarmEntry = name: dir:
+        let
+          env = pkgs.buildEnv {
+            name = "zsh-${name}-env";
+            paths = customPkgs;
+            pathsToLink = "/share/zsh/${dir}";
+          };
+        in
+        { inherit name; path = "${env}/share/zsh/${dir}"; };
+    in
+    ''
+      export ZSH="${package}/share/oh-my-zsh"
+      export plugins=(${builtins.concatStringsSep " " plugins})
+      export ZSH_CUSTOM="${pkgs.linkFarm "oh-my-zsh-custom" [
+        (mkLinkFarmEntry "themes" "themes")
+        (mkLinkFarmEntry "completions" "site-functions")
+        (mkLinkFarmEntry "plugins" "plugins")
+      ]}"
+      export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
+      if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
+        mkdir -p "$ZSH_CACHE_DIR"
+      fi
+
+      # This has to be sourced in the user's ~/.zshrc, due to invasive shell setup that runs at the beginning of ~/.zshrc
+      # source $ZSH/oh-my-zsh.sh
+    '';
+in
+
 {
   imports = [
     ./nix.nix
@@ -10,9 +45,10 @@
     ripgrep
     direnv
     h
+    exa
+    bat
     fzf
     jq
-    yq
     fd
     sd
     wget
@@ -54,8 +90,6 @@
       # This is loaded by enableCompletion, but it's done after interactiveShellInit
       autoload -Uz compinit && compinit
 
-      export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
-
       # direnv
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
       emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
@@ -64,11 +98,22 @@
       eval "$(${pkgs.h}/bin/h --setup ~/code)"
       eval "$(${pkgs.h}/bin/up --setup)"
 
+      # history
+      export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
+      export HISTSIZE=1000000
+      export SAVEHIST=1000000
+      setopt APPEND_HISTORY
+      setopt INC_APPEND_HISTORY
+      setopt HIST_IGNORE_ALL_DUPS
+      setopt HIST_IGNORE_DUPS
+
       setopt autocd extendedglob
       unsetopt beep
 
       bindkey -v
       export KEYTIMEOUT=1
+
+      export FZF_BASE="${pkgs.fzf}/share/fzf"
 
       # See github:spwhitt/nix-zsh-completions/issues/32
       function _nix() {
@@ -86,6 +131,42 @@
         fi
       }
       compdef _nix nix
+
+      # Fix fzf not being loaded with zsh-vi-mode
+      # See https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+      function zvm_after_init() {
+        source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
+      }
+
+      ${makeOmzConfig {
+        plugins = [
+          "bazel"
+          "colored-man-pages"
+          "command-not-found"
+          "docker"
+          "fzf"
+          "git"
+          "last-working-dir"
+          "nix-shell"
+          "ripgrep"
+          "safe-paste"
+          "wd"
+          "z"
+          "zsh-vi-mode"
+        ];
+        customPkgs = [
+          (pkgs.runCommand "zsh-nix-shell" { } ''
+            mkdir -p "$out"/share/zsh/plugins
+            cp -r ${pkgs.zsh-nix-shell}/share/zsh-nix-shell "$out"/share/zsh/plugins/nix-shell
+          '')
+          (pkgs.runCommand "zsh-vi-mode" { } ''
+            mkdir -p "$out"/share/zsh/plugins
+            cp -r ${pkgs.zsh-vi-mode}/share/zsh-vi-mode "$out"/share/zsh/plugins/zsh-vi-mode
+          '')
+        ];
+      }}
+
+      # TODO: setup starship
     '';
   };
 

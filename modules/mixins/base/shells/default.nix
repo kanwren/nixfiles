@@ -35,7 +35,7 @@ in
         highlighters = [ "main" "brackets" "cursor" ];
       };
 
-      histSize = 100000;
+      histSize = 1000000;
 
       interactiveShellInit = ''
         export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
