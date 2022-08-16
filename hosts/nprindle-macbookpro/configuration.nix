@@ -22,6 +22,7 @@
     cht-sh
     tree
     unar
+    watch
   ];
 
   environment.variables = {
