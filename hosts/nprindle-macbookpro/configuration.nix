@@ -1,43 +1,9 @@
 { pkgs, self, lib, ... }:
 
-let
-  makeOmzConfig =
-    { package ? pkgs.oh-my-zsh
-    , plugins ? [ ]
-    , customPkgs ? [ ]
-    }:
-    let
-      mkLinkFarmEntry = name: dir:
-        let
-          env = pkgs.buildEnv {
-            name = "zsh-${name}-env";
-            paths = customPkgs;
-            pathsToLink = "/share/zsh/${dir}";
-          };
-        in
-        { inherit name; path = "${env}/share/zsh/${dir}"; };
-    in
-    ''
-      export ZSH="${package}/share/oh-my-zsh"
-      export plugins=(${builtins.concatStringsSep " " plugins})
-      export ZSH_CUSTOM="${pkgs.linkFarm "oh-my-zsh-custom" [
-        (mkLinkFarmEntry "themes" "themes")
-        (mkLinkFarmEntry "completions" "site-functions")
-        (mkLinkFarmEntry "plugins" "plugins")
-      ]}"
-      export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
-      if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
-        mkdir -p "$ZSH_CACHE_DIR"
-      fi
-
-      # This has to be sourced in the user's ~/.zshrc, due to invasive shell setup that runs at the beginning of ~/.zshrc
-      # source $ZSH/oh-my-zsh.sh
-    '';
-in
-
 {
   imports = [
     ./nix.nix
+    ./oh-my-zsh.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -74,71 +40,80 @@ in
     cdAliases // {
       vi = "nvim";
       vim = "nvim";
-      ls = "${pkgs.exa}/bin/exa --git";
       cat = "${pkgs.bat}/bin/bat";
+      ls = "${pkgs.exa}/bin/exa --git";
+      l = "${pkgs.exa}/bin/exa --git -lah";
+      la = "${pkgs.exa}/bin/exa --git -lAh";
+      ll = "${pkgs.exa}/bin/exa --git -lh";
+      lsa = "${pkgs.exa}/bin/exa --git -lh";
     };
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableFzfCompletion = true;
-    enableFzfGit = true;
-    enableSyntaxHighlighting = true;
-    enableFzfHistory = true;
-    promptInit = "";
-    interactiveShellInit = ''
-      # This is loaded by enableCompletion, but it's done after interactiveShellInit
-      autoload -Uz compinit && compinit
+  programs = {
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableFzfCompletion = true;
+      enableFzfGit = true;
+      enableSyntaxHighlighting = true;
+      enableFzfHistory = true;
+      promptInit = "";
+      interactiveShellInit = ''
+        # This is loaded by enableCompletion, but it's done after interactiveShellInit
+        autoload -Uz compinit && compinit
 
-      # direnv
-      emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
-      emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
+        # direnv
+        emulate zsh -c "$(${pkgs.direnv}/bin/direnv export zsh)"
+        emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
-      # h
-      eval "$(${pkgs.h}/bin/h --setup ~/code)"
-      eval "$(${pkgs.h}/bin/up --setup)"
+        # h
+        eval "$(${pkgs.h}/bin/h --setup ~/code)"
+        eval "$(${pkgs.h}/bin/up --setup)"
 
-      # history
-      export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
-      export HISTSIZE=1000000
-      export SAVEHIST=1000000
-      setopt APPEND_HISTORY
-      setopt INC_APPEND_HISTORY
-      setopt HIST_IGNORE_ALL_DUPS
-      setopt HIST_IGNORE_DUPS
+        # history
+        export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
+        export HISTSIZE=1000000
+        export SAVEHIST=1000000
+        setopt APPEND_HISTORY
+        setopt INC_APPEND_HISTORY
+        setopt HIST_IGNORE_ALL_DUPS
+        setopt HIST_IGNORE_DUPS
 
-      setopt autocd extendedglob
-      unsetopt beep
+        setopt autocd extendedglob
+        unsetopt beep
 
-      bindkey -v
-      export KEYTIMEOUT=1
+        bindkey -v
+        export KEYTIMEOUT=1
 
-      export FZF_BASE="${pkgs.fzf}/share/fzf"
+        export FZF_BASE="${pkgs.fzf}/share/fzf"
 
-      # See github:spwhitt/nix-zsh-completions/issues/32
-      function _nix() {
-        local ifs_bk="$IFS"
-        local input=("''${(Q)words[@]}")
-        IFS=$'\n'$'\t'
-        local res=($(NIX_GET_COMPLETIONS=$((CURRENT - 1)) "$input[@]"))
-        IFS="$ifs_bk"
-        local tpe="$res[1]"
-        local suggestions=(''${res:1})
-        if [[ "$tpe" == filenames ]]; then
-          compadd -fa suggestions
-        else
-          compadd -a suggestions
-        fi
-      }
-      compdef _nix nix
+        # See github:spwhitt/nix-zsh-completions/issues/32
+        function _nix() {
+          local ifs_bk="$IFS"
+          local input=("''${(Q)words[@]}")
+          IFS=$'\n'$'\t'
+          local res=($(NIX_GET_COMPLETIONS=$((CURRENT - 1)) "$input[@]"))
+          IFS="$ifs_bk"
+          local tpe="$res[1]"
+          local suggestions=(''${res:1})
+          if [[ "$tpe" == filenames ]]; then
+            compadd -fa suggestions
+          else
+            compadd -a suggestions
+          fi
+        }
+        compdef _nix nix
 
-      # Fix fzf not being loaded with zsh-vi-mode
-      # See https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
-      function zvm_after_init() {
-        source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
-      }
+        # Fix fzf not being loaded with zsh-vi-mode
+        # See https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
+        function zvm_after_init() {
+          source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
+        }
 
-      ${makeOmzConfig {
+        # TODO: setup starship
+      '';
+
+      ohMyZsh = {
+        enable = true;
         plugins = [
           "bazel"
           "colored-man-pages"
@@ -164,13 +139,20 @@ in
             cp -r ${pkgs.zsh-vi-mode}/share/zsh-vi-mode "$out"/share/zsh/plugins/zsh-vi-mode
           '')
         ];
-      }}
 
-      # TODO: setup starship
-    '';
-  };
+        # $ZSH/oh-my-zsh.sh should be source in ~/.zshrc, due to invasive shell
+        # setup that runs at the beginning of ~/.zshrc. it's good to also
+        # protect environment.shellAliases from being overwritten by wrapping
+        # the load in
+        # ```
+        # save_aliases=$(alias -L)
+        # ...
+        # eval $save_aliases; unset save_aliases
+        # ```
+        doLoad = false;
+      };
+    };
 
-  programs = {
     tmux = {
       enable = true;
       enableSensible = true;
