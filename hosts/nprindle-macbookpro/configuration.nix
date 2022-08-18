@@ -6,48 +6,66 @@
     ./oh-my-zsh.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    btop
-    ripgrep
-    direnv
-    h
-    exa
-    bat
-    fzf
-    jq
-    fd
-    sd
-    wget
-    tldr
-    cht-sh
-    tree
-    unar
-    watch
-  ];
-
-  environment.variables = {
-    EDITOR = "nvim";
+  system = {
+    keyboard = {
+      enableKeyMapping = true;
+      userKeyMapping =
+        let
+          escapeKey = 30064771129;
+          capsLockKey = 30064771113;
+          remap = from: to: { HIDKeyboardModifierMappingSrc = from; HIDKeyboardModifierMappingDst = to; };
+        in
+        [
+          (remap escapeKey capsLockKey)
+          (remap capsLockKey escapeKey)
+        ];
+    };
   };
 
-  environment.shellAliases =
-    let
-      repeat = n: x: builtins.genList (_: x) n;
-      mkCdAlias = n: {
-        name = ".${toString n}";
-        value = "cd ${builtins.concatStringsSep "/" (repeat n "..")}";
-      };
-      cdAliases = { ".." = "cd .."; } // builtins.listToAttrs (builtins.map mkCdAlias (lib.lists.range 1 9));
-    in
-    cdAliases // {
-      vi = "nvim";
-      vim = "nvim";
-      cat = "${pkgs.bat}/bin/bat";
-      ls = "${pkgs.exa}/bin/exa --git";
-      l = "${pkgs.exa}/bin/exa --git -lah";
-      la = "${pkgs.exa}/bin/exa --git -lAh";
-      ll = "${pkgs.exa}/bin/exa --git -lh";
-      lsa = "${pkgs.exa}/bin/exa --git -lh";
+  environment = {
+    systemPackages = with pkgs; [
+      btop
+      ripgrep
+      direnv
+      h
+      exa
+      bat
+      fzf
+      jq
+      fd
+      sd
+      wget
+      tldr
+      cht-sh
+      tree
+      unar
+      watch
+    ];
+
+    variables = {
+      EDITOR = "nvim";
     };
+
+    shellAliases =
+      let
+        repeat = n: x: builtins.genList (_: x) n;
+        mkCdAlias = n: {
+          name = ".${toString n}";
+          value = "cd ${builtins.concatStringsSep "/" (repeat n "..")}";
+        };
+        cdAliases = { ".." = "cd .."; } // builtins.listToAttrs (builtins.map mkCdAlias (lib.lists.range 1 9));
+      in
+      cdAliases // {
+        vi = "nvim";
+        vim = "nvim";
+        cat = "${pkgs.bat}/bin/bat";
+        ls = "${pkgs.exa}/bin/exa --git";
+        l = "${pkgs.exa}/bin/exa --git -lah";
+        la = "${pkgs.exa}/bin/exa --git -lAh";
+        ll = "${pkgs.exa}/bin/exa --git -lh";
+        lsa = "${pkgs.exa}/bin/exa --git -lh";
+      };
+  };
 
   programs = {
     zsh = {
