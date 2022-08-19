@@ -68,6 +68,23 @@
   };
 
   programs = {
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      interactiveShellInit = ''
+        set -o vi
+        shopt -s checkwinsize
+        shopt -s extglob
+        shopt -s globstar
+        shopt -s checkjobs
+        shopt -s histappend
+        shopt -s cmdhist
+        HISTCONTROL=ignoreboth
+        HISTSIZE=10000
+        HISTFILESIZE=10000
+        HISTIGNORE="ls:cd:exit:history"
+      '';
+    };
     zsh = {
       enable = true;
       enableCompletion = true;
