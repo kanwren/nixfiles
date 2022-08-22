@@ -7,7 +7,7 @@
       name = "FiraCode Nerd Font Mono";
     };
     theme = {
-      name = "Catppuccin-dark";
+      name = "Catppuccin-Purple-Dark";
       package = pkgs.catppuccin-gtk;
     };
     iconTheme = {

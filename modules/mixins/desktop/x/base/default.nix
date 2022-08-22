@@ -26,7 +26,7 @@
           clock-format = "%I:%M %p";
 
           theme = {
-            name = "Catppuccin-dark";
+            name = "Catppuccin-Purple-Dark";
             package = pkgs.catppuccin-gtk;
           };
 

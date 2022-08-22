@@ -62,7 +62,8 @@ in
             };
           in
           { inherit name; path = "${env}/share/zsh/${dir}"; };
-      in ''
+      in
+      ''
         # begin oh-my-zsh configs
         export ZSH="${cfg.package}/share/oh-my-zsh"
         export plugins=(${builtins.concatStringsSep " " cfg.plugins})
