@@ -5,8 +5,10 @@
       keep-outputs = true
       keep-derivations = true
     '';
-    useSandbox = true;
-    sandboxPaths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
+    settings = {
+      sandbox = true;
+      extra-sandbox-paths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
