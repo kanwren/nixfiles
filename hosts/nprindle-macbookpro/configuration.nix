@@ -111,6 +111,14 @@
       enableFzfHistory = true;
       promptInit = "";
       interactiveShellInit = ''
+        # syntax highlighting (pkgs.zsh-syntax-highlighting sourced by enableSyntaxHighlighting)
+        export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
+
+        # autosuggest
+        source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+        export ZSH_AUTOSUGGEST_STRATEGY=(history)
+
         # This is loaded by enableCompletion, but it's done after interactiveShellInit
         autoload -Uz compinit && compinit
 
@@ -174,6 +182,8 @@
           "docker"
           "fzf"
           "git"
+          "golang"
+          "kubectl"
           "last-working-dir"
           "nix-shell"
           "ripgrep"
