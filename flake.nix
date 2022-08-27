@@ -89,6 +89,9 @@
         # home-manager modules
         hmModules = import ./hm-modules;
 
+        # nix-darwin modules
+        darwinModules = import ./darwin-modules;
+
         # custom templates
         templates = import ./templates;
       }
