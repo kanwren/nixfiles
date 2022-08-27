@@ -30,18 +30,16 @@ nixpkgs.lib.nixosSystem rec {
     ])
 
     (with self.nixosModules.mixins; [
-      base
+      base.full
       home-manager
 
       desktop.base
-      desktop.x.base
       desktop.x.i3
       desktop.audio
       desktop.bluetooth
       desktop.virtualisation
 
-      users.wren.base
-      users.wren.home
+      users.wren.full
 
       tailscale
     ])

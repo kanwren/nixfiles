@@ -9,13 +9,7 @@ self:
     tailscale = import ./mixins/tailscale;
 
     # different components for a desktop with graphics
-    desktop = {
-      base = import ./mixins/desktop/base;
-      x = import ./mixins/desktop/x;
-      audio = import ./mixins/desktop/audio;
-      bluetooth = import ./mixins/desktop/bluetooth;
-      virtualisation = import ./mixins/desktop/virtualisation;
-    };
+    desktop = import ./mixins/desktop;
 
     # base configs and home-manager configs for each user
     users = import ./mixins/users self;

@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../base
     ./picom.nix
   ];
 

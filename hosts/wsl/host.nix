@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem rec {
     }
 
     nixos-wsl.nixosModules.wsl
-    self.nixosModules.mixins.base
+    self.nixosModules.mixins.base.full
     ./configuration.nix
   ];
 }
