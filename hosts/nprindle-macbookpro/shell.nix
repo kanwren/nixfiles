@@ -49,7 +49,6 @@
       enableFzfGit = true;
       enableSyntaxHighlighting = true;
       enableFzfHistory = true;
-      promptInit = "";
       interactiveShellInit = ''
         # syntax highlighting (pkgs.zsh-syntax-highlighting sourced by enableSyntaxHighlighting)
         export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)

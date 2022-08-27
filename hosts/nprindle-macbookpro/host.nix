@@ -9,6 +9,8 @@ darwin.lib.darwinSystem {
 
   modules = [
     self.darwinModules.oh-my-zsh
+    self.darwinModules.starship
+    self.nixosModules.mixins.base.starship
 
     {
       nix.registry.nixpkgs.flake = nixpkgs;
