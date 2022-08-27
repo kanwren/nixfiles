@@ -3,7 +3,7 @@
 {
   imports = [
     ./nix.nix
-    ./shell.nix
+    ./shells.nix
     ./yabai.nix
     ./skhd.nix
   ];
@@ -60,6 +60,8 @@
       tree
       unar
       watch
+      gitAndTools.gitFull
+      gitAndTools.gh
     ];
 
     variables = {

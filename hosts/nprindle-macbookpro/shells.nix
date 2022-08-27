@@ -17,10 +17,14 @@
         cat = "${pkgs.bat}/bin/bat";
         ls = "${pkgs.exa}/bin/exa --git";
         l = "${pkgs.exa}/bin/exa --git -lah";
-        la = "${pkgs.exa}/bin/exa --git -lAh";
+        la = "${pkgs.exa}/bin/exa --git -lah";
         ll = "${pkgs.exa}/bin/exa --git -lh";
         lsa = "${pkgs.exa}/bin/exa --git -lh";
       };
+
+    variables = {
+      LC_CTYPE = "en_US.UTF-8";
+    };
   };
 
   programs = {
@@ -28,6 +32,10 @@
       enable = true;
       enableCompletion = true;
       interactiveShellInit = ''
+        if [ `ulimit -n` -lt 8192 ]; then
+          ulimit -n 8192
+        fi
+
         set -o vi
         shopt -s checkwinsize
         shopt -s extglob
@@ -36,8 +44,8 @@
         shopt -s histappend
         shopt -s cmdhist
         HISTCONTROL=ignoreboth
-        HISTSIZE=10000
-        HISTFILESIZE=10000
+        HISTSIZE=1000000
+        HISTFILESIZE=1000000
         HISTIGNORE="ls:cd:exit:history"
       '';
     };
@@ -49,6 +57,13 @@
       enableFzfGit = true;
       enableSyntaxHighlighting = true;
       enableFzfHistory = true;
+      shellInit = ''
+        typeset -U path
+
+        if [ `ulimit -n` -lt 8192 ]; then
+          ulimit -n 8192
+        fi
+      '';
       interactiveShellInit = ''
         # syntax highlighting (pkgs.zsh-syntax-highlighting sourced by enableSyntaxHighlighting)
         export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
@@ -57,6 +72,10 @@
         source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
         export ZSH_AUTOSUGGEST_STRATEGY=(history)
+
+        if command -v brew &>/dev/null; then
+          FPATH="$(brew --prefix)/share/zsh/site-functions''${FPATH:+:''${FPATH}}"
+        fi
 
         # This is loaded by enableCompletion, but it's done after interactiveShellInit
         autoload -Uz compinit && compinit
@@ -71,6 +90,7 @@
 
         # history
         export HISTORY_IGNORE='([bf]g *|cd( *)#|.[.123456789]|l[alsh]#( *)#|less *|(nvim|vim#)( *)#)'
+        export HISTFILE="$HOME/.zsh_history"
         export HISTSIZE=1000000
         export SAVEHIST=1000000
         setopt APPEND_HISTORY
@@ -121,6 +141,7 @@
           "docker"
           "fzf"
           "git"
+          "gh"
           "golang"
           "kubectl"
           "last-working-dir"
