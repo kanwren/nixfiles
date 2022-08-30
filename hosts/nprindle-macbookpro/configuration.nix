@@ -62,6 +62,8 @@
       watch
       gitAndTools.gitFull
       gitAndTools.gh
+      jo
+      httpie
     ];
 
     variables = {
