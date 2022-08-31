@@ -64,6 +64,7 @@
       gitAndTools.gh
       jo
       httpie
+      kitty
     ];
 
     variables = {
