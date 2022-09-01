@@ -11,14 +11,16 @@ in
 nixpkgs.lib.nixosSystem {
   system = "aarch64-linux";
 
-  overlays = [
-    self.overlays.raspi-firmware-overlay
-  ];
-
   modules = nixpkgs.lib.flatten [
     {
       nix.registry.nixpkgs.flake = nixpkgs;
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+    }
+
+    {
+      nixpkgs.overlays = [
+        self.overlays.raspi-firmware-overlay
+      ];
     }
 
     sops-nix.nixosModules.sops
