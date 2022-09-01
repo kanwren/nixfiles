@@ -62,10 +62,9 @@
     , nvim-configs
     }@inputs:
     let
-      # custom library
-      nlib = import ./lib { inherit (nixpkgs) lib; };
+      recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
     in
-    nlib.attrsets.recursiveMergeAttrs [
+    recursiveMergeAttrs [
       {
         nixosConfigurations = {
           # main dev laptop
