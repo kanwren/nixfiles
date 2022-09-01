@@ -64,10 +64,6 @@ self:
         teams
         insomnia # graphical REST API client
         anki # flashcards
-
-        # misc
-        self.packages.${pkgs.system}.globus-connect
-        self.packages.${pkgs.system}."scripts/nosleep"
       ];
     };
   };

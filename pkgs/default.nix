@@ -17,13 +17,9 @@ rec {
     inherit (scripts) generate-heart-emoji;
   };
 
-  # tools
-  globus-connect = pkgs.callPackage ./tools/globus-connect { };
-
   # scripts
   scripts = lib.recurseIntoAttrs {
     lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
-    nosleep = pkgs.callPackage ./scripts/nosleep { inherit addmeta; };
     add-rpath = pkgs.callPackage ./scripts/add-rpath { inherit addmeta; };
     generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
   };
