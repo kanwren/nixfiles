@@ -52,6 +52,7 @@
       bat
       fzf
       jq
+      dive
       fd
       sd
       wget
