@@ -13,12 +13,12 @@
       enableKeyMapping = true;
       userKeyMapping =
         let
-          escapeKey = 30064771129;
-          capsLockKey = 30064771113;
+          escapeKey = 30064771113;
+          capsLockKey = 30064771129;
           remap = from: to: { HIDKeyboardModifierMappingSrc = from; HIDKeyboardModifierMappingDst = to; };
         in
         [
-          (remap escapeKey capsLockKey)
+          # (remap escapeKey capsLockKey)
           (remap capsLockKey escapeKey)
         ];
     };
