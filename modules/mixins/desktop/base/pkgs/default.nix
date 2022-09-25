@@ -13,7 +13,7 @@
       # media
       exiftool # EXIF data
       feh # image viewer
-      imagemagick7 # image manipulation tools
+      imagemagick # image manipulation tools
       ffmpeg # audio/video manipulation
       ghostscript # to support imagemagick
       gimp # image editor
