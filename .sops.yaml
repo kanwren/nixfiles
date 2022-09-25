@@ -1,0 +1,7 @@
+keys:
+  - &admin_homepi_gpg D855E3E902651FB56CF192CF8561EEEAB6231D2E
+creation_rules:
+  - path_regex: hosts/homepi/secrets/.+$
+    key_groups:
+      - pgp:
+        - *admin_homepi_gpg

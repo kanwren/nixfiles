@@ -110,7 +110,7 @@
               sops-nix.packages.${system}.sops-init-gpg-key
             ];
             sopsPGPKeyDirs = [
-              "./secrets/keys/users"
+              "./keys/hosts"
             ];
           };
 
