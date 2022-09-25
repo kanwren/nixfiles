@@ -10,6 +10,9 @@ nixpkgs.lib.nixosSystem rec {
     {
       nix.registry.nixpkgs.flake = nixpkgs;
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+      nixpkgs.overlays = [
+        self.overlays.realias-util-linux
+      ];
     }
 
     inputs.home-manager.nixosModules.home-manager
