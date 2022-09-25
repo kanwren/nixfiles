@@ -10,7 +10,7 @@
 
     # cargo extensions
     cargo-cache
-    cargo-download
+    # cargo-download
     cargo-feature
     cargo-watch
     cargo-wipe

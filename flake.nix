@@ -107,7 +107,8 @@
               # sops-nix
               sops-nix.packages.${system}.sops-import-keys-hook
               sops-nix.packages.${system}.ssh-to-pgp
-              sops-nix.packages.${system}.sops-init-gpg-key
+              # TODO: re-add once utillinux issue is fixed
+              # sops-nix.packages.${system}.sops-init-gpg-key
             ];
             sopsPGPKeyDirs = [
               "./keys/hosts"
