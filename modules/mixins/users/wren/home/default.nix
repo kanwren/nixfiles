@@ -5,7 +5,6 @@ self:
 {
   home-manager.users.wren = {
     imports = [
-      self.hmModules.btop
       self.hmModules.spicetify
 
       ./bash

@@ -1,15 +1,14 @@
 { pkgs, self, ... }:
 
 {
+  xdg.configFile."btop/themes/catppuccin.theme".source = "${self.packages.${pkgs.system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";
+
   programs.btop = {
     enable = true;
 
-    themes = {
-      catppuccin = "${self.packages.${pkgs.system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";
-    };
-    defaultTheme = "catppuccin";
+    settings = {
+      color_theme = "catppuccin";
 
-    config = {
       #* If the theme set background should be shown, set to false if you want terminal background transparency.
       theme_background = true;
 
