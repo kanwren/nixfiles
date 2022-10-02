@@ -14,6 +14,7 @@
       "vboxusers"
       "libvirtd"
       "wireshark"
+      "dialout"
     ];
     createHome = true;
     shell = pkgs.zsh;
