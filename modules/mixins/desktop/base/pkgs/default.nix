@@ -25,6 +25,7 @@
       # apps
       firefox
       qalculate-gtk # graphical calculator
+      plover.dev # steno
     ];
   };
 }
