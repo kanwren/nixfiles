@@ -2,7 +2,7 @@
 
 {
   services.yabai = {
-    enable = true;
+    enable = false;
     enableScriptingAddition = false;
     package = pkgs.yabai;
 
