@@ -3,7 +3,7 @@
 {
   services.skhd = {
     # https://github.com/foreverd34d/.dotfiles/blob/master/skhd/skhdrc
-    enable = true;
+    enable = false;
     # note: not all of this works without disabling SIP
     skhdConfig = with pkgs; ''
       ctrl + alt - t : yabai -m config layout bsp
