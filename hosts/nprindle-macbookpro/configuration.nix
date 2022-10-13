@@ -44,6 +44,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      gnused
       btop
       ripgrep
       direnv
@@ -52,6 +53,7 @@
       bat
       fzf
       jq
+      yq
       dive
       fd
       sd
