@@ -16,14 +16,12 @@ rec {
   catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { inherit (sources) catppuccin-btop-src; };
   catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { inherit (sources) catppuccin-spicetify-src; };
   catppuccin-twemoji-hearts = pkgs.callPackage ./misc/catppuccin-twemoji-hearts {
-    inherit (scripts) generate-heart-emoji;
+    inherit generate-heart-emoji;
   };
 
   # scripts
-  scripts = lib.recurseIntoAttrs {
-    lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
-    add-rpath = pkgs.callPackage ./scripts/add-rpath { inherit addmeta; };
-    generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
-  };
+  lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
+  add-rpath = pkgs.callPackage ./scripts/add-rpath { inherit addmeta; };
+  generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
 }
 

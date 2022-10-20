@@ -7,11 +7,11 @@ let
 in
 
 runCommand "catppuccin-spicetify" { } ''
-  THEME_DIR=$out/share/spicetify/Themes/catppuccin
+  THEME_DIR=$out/share/spicetify/Themes
   EXT_DIR=$out/share/spicetify/Extensions
 
   mkdir -p $THEME_DIR $EXT_DIR
 
-  cp ${src}/catppuccin.js $EXT_DIR
-  cp ${src}/user.css ${src}/color.ini $THEME_DIR
+  cp ${src}/js/* $EXT_DIR
+  cp -r ${src}/catppuccin-* $THEME_DIR
 ''

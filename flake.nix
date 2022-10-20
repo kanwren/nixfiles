@@ -149,7 +149,7 @@
             ];
           };
 
-          packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs sources; });
+          packages = import ./pkgs { inherit pkgs sources; };
 
           formatter = pkgs.nixpkgs-fmt;
 

@@ -10,8 +10,9 @@ in
   programs.spicetify = {
     enable = true;
 
-    currentTheme = "catppuccin";
-    extensions = [ "catppuccin.js" ];
+    currentTheme = "catppuccin-mocha";
+    colorScheme = "lavender";
+    extensions = [ "catppuccin-mocha.js" ];
 
     addons = [ catppuccin ];
   };

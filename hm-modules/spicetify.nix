@@ -23,7 +23,7 @@ let
   spicetifyConfig = {
     Setting = {
       check_spicetify_upgrade = false;
-      color_scheme = "base";
+      color_scheme = cfg.colorScheme;
       inject_css = true;
       overwrite_assets = false;
       prefs_path = "PREFS_PATH";
@@ -121,6 +121,14 @@ with lib;
         default = null;
         description = ''
           The name of the theme to use, provided by one of the addons.
+        '';
+      };
+
+      colorScheme = mkOption {
+        type = types.str;
+        default = "base";
+        description = ''
+          The name of the color scheme to use.
         '';
       };
 
