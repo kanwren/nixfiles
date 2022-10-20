@@ -1,4 +1,6 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }
+, sources
+}:
 
 let
   inherit (pkgs) lib;
@@ -7,12 +9,12 @@ let
   });
 in
 rec {
-  catppuccin-kitty = pkgs.callPackage ./misc/catppuccin-kitty { };
-  catppuccin-tmux = pkgs.callPackage ./misc/catppuccin-tmux { };
-  catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { };
-  catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { };
-  catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { };
-  catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { };
+  catppuccin-kitty = pkgs.callPackage ./misc/catppuccin-kitty { inherit (sources) catppuccin-kitty-src; };
+  catppuccin-tmux = pkgs.callPackage ./misc/catppuccin-tmux { inherit (sources) catppuccin-tmux-src; };
+  catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { inherit (sources) catppuccin-zathura-src; };
+  catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { inherit (sources) catppuccin-cava-src; };
+  catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { inherit (sources) catppuccin-btop-src; };
+  catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { inherit (sources) catppuccin-spicetify-src; };
   catppuccin-twemoji-hearts = pkgs.callPackage ./misc/catppuccin-twemoji-hearts {
     inherit (scripts) generate-heart-emoji;
   };

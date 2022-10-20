@@ -46,6 +46,31 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    catppuccin-btop-src = {
+      url = "github:catppuccin/btop";
+      flake = false;
+    };
+    catppuccin-cava-src = {
+      url = "github:catppuccin/cava";
+      flake = false;
+    };
+    catppuccin-kitty-src = {
+      url = "github:catppuccin/kitty";
+      flake = false;
+    };
+    catppuccin-spicetify-src = {
+      url = "github:catppuccin/spicetify";
+      flake = false;
+    };
+    catppuccin-tmux-src = {
+      url = "github:catppuccin/tmux";
+      flake = false;
+    };
+    catppuccin-zathura-src = {
+      url = "github:catppuccin/zathura";
+      flake = false;
+    };
   };
 
   outputs =
@@ -60,9 +85,18 @@
     , nixos-wsl
     , sops-nix
     , nvim-configs
+    , catppuccin-btop-src
+    , catppuccin-cava-src
+    , catppuccin-kitty-src
+    , catppuccin-spicetify-src
+    , catppuccin-tmux-src
+    , catppuccin-zathura-src
     }@inputs:
     let
       recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
+      sources = {
+        inherit (inputs) catppuccin-btop-src catppuccin-cava-src catppuccin-kitty-src catppuccin-spicetify-src catppuccin-tmux-src catppuccin-zathura-src;
+      };
     in
     recursiveMergeAttrs [
       {
@@ -115,7 +149,7 @@
             ];
           };
 
-          packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs; });
+          packages = flake-utils.lib.flattenTree (import ./pkgs { inherit pkgs sources; });
 
           formatter = pkgs.nixpkgs-fmt;
 
