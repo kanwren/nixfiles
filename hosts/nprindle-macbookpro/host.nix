@@ -8,9 +8,9 @@ darwin.lib.darwinSystem {
   system = "aarch64-darwin";
 
   modules = [
+    inputs.home-manager.darwinModules.home-manager
     self.darwinModules.oh-my-zsh
     self.darwinModules.starship
-    self.nixosModules.mixins.base.starship
 
     {
       nix.registry.nixpkgs.flake = nixpkgs;
@@ -22,6 +22,9 @@ darwin.lib.darwinSystem {
         inherit self;
       };
     }
+
+    self.nixosModules.mixins.home-manager-common
+    self.nixosModules.mixins.base.starship
 
     ./configuration.nix
   ];

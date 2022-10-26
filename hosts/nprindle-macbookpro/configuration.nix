@@ -4,8 +4,6 @@
   imports = [
     ./nix.nix
     ./shells.nix
-    ./yabai.nix
-    ./skhd.nix
   ];
 
   system = {
@@ -105,5 +103,17 @@
     fonts = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
     ];
+  };
+
+  home-manager.users.nprindle = {
+    imports = [
+      self.hmModules.mixins.btop
+      self.hmModules.mixins.kitty
+    ];
+
+    home = {
+      stateVersion = "22.11";
+      sessionPath = [ "$HOME/bin" ];
+    };
   };
 }
