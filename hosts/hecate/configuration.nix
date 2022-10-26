@@ -1,6 +1,12 @@
+{ self }:
+
 { pkgs, ... }:
 
 {
+  imports = [
+    (import ./users { inherit self; })
+  ];
+
   system.stateVersion = "22.11";
 
   boot = {

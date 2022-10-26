@@ -1,4 +1,6 @@
-{ pkgs, self, ... }:
+{ self }:
+
+{ pkgs, ... }:
 
 {
   xdg.configFile."btop/themes/catppuccin.theme".source = "${self.packages.${pkgs.system}.catppuccin-btop}/share/btop/themes/catppuccin_mocha.theme";

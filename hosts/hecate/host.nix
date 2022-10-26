@@ -32,7 +32,7 @@ nixpkgs.lib.nixosSystem rec {
 
     (with self.nixosModules.mixins; [
       base.full
-      home-manager
+      home-manager-common
 
       desktop.base
       desktop.x.i3
@@ -40,12 +40,10 @@ nixpkgs.lib.nixosSystem rec {
       desktop.bluetooth
       desktop.virtualisation
 
-      users.wren.full
-
       tailscale
     ])
 
     ./hardware-configuration.nix
-    ./configuration.nix
+    (import ./configuration.nix { inherit self; })
   ];
 }

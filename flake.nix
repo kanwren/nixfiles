@@ -117,10 +117,10 @@
         overlays = import ./overlays;
 
         # NixOS modules
-        nixosModules = import ./modules self;
+        nixosModules = import ./modules { inherit self; };
 
         # home-manager modules
-        hmModules = import ./hm-modules;
+        hmModules = import ./hm-modules { inherit self; };
 
         # nix-darwin modules
         darwinModules = import ./darwin-modules { inherit nixpkgs; };

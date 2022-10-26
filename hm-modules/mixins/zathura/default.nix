@@ -1,4 +1,6 @@
-{ self, pkgs, ... }:
+{ self }:
+
+{ pkgs, ... }:
 
 {
   programs.zathura = {

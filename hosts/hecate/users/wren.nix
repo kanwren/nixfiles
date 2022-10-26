@@ -1,36 +1,36 @@
-self:
+{ self }:
 
 { pkgs, lib, ... }:
 
 {
+  users.users.wren = {
+    initialPassword = "setup";
+    isNormalUser = true;
+    uid = 1000;
+    extraGroups = [
+      "wheel"
+      "audio"
+      "video"
+      "networkmanager"
+      "docker"
+      "vboxusers"
+      "libvirtd"
+      "wireshark"
+      "dialout"
+    ];
+    createHome = true;
+    shell = pkgs.zsh;
+
+    openssh.authorizedKeys.keys = import ../../../keys/nprindle.nix;
+  };
+
+  nix.settings.trusted-users = [ "wren" ];
+
   home-manager.users.wren = {
     imports = [
       self.hmModules.spicetify
-
-      ./bash
-      ./btop
-      ./cava
-      ./direnv
-      ./discord
-      ./dunst
-      ./firefox
-      ./flameshot
-      ./git
-      ./gpg-agent
-      ./gtk
-      ./haskell
-      ./kitty
-      ./nix
-      ./rofi
-      ./rust
-      ./spotify
-      ./tmux
-      ./vscode
-      ./zathura
-      ./zsh
+      self.hmModules.mixins.full
     ];
-
-    _module.args = { inherit self; };
 
     home = {
       stateVersion = "22.11";

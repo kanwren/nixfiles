@@ -1,4 +1,6 @@
-{ pkgs, self, ... }:
+{ self }:
+
+{ pkgs, ... }:
 
 {
   home.packages = [ pkgs.cava ];

@@ -1,4 +1,6 @@
-{ pkgs, self, ... }:
+{ self }:
+
+{ pkgs, ... }:
 
 {
   programs.tmux = {
