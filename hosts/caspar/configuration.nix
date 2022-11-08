@@ -42,6 +42,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      cachix
       gnused
       btop
       ripgrep

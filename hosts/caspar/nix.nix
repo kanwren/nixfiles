@@ -8,6 +8,9 @@
     settings = {
       sandbox = true;
       extra-sandbox-paths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
+      substituters = [ "https://nprindle.cachix.org" ];
+      trusted-public-keys = [ "nprindle.cachix.org-1:hRW0f/n4hCZZzTzYJO9olDjJ+8MB4VpknEGpiVCxpWo=" ];
+      trusted-users = [ "nprindle" ];
     };
   };
 
