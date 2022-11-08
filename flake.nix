@@ -110,7 +110,7 @@
         };
 
         darwinConfigurations = {
-          "nprindle-macbookpro" = import ./hosts/nprindle-macbookpro/host.nix inputs;
+          caspar = import ./hosts/caspar/host.nix inputs;
         };
 
         # Nixpkgs overlays
