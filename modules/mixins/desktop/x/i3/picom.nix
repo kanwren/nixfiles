@@ -3,7 +3,6 @@
     enable = true;
     vSync = true;
     backend = "glx";
-    experimentalBackends = true;
 
     settings = {
       blur = {
