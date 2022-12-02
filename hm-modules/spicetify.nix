@@ -59,45 +59,42 @@ let
     Patch = { };
   };
 
-  spotify = pkgs.spotify.override (old: {
-    spotify-unwrapped =
-      old.spotify-unwrapped.overrideAttrs (oldAttrs: {
-        nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ pkgs.spicetify-cli ];
-        postInstall = (oldAttrs.postInstall or "") + ''
-          export HOME=$TMP
-          spicetifyDir=$(dirname "$(spicetify-cli -c)")
+  spotify = pkgs.spotify.overrideAttrs (oldAttrs: {
+    nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ pkgs.spicetify-cli ];
+    postInstall = (oldAttrs.postInstall or "") + ''
+      export HOME=$TMP
+      spicetifyDir=$(dirname "$(spicetify-cli -c)")
 
-          # Themes
-          ${
-            lib.strings.concatMapStringsSep "\n" (addon:
-              ''
-                # Extensions
-                for f in ${addon}/share/spicetify/Extensions/*.js; do
-                  name=`basename $f`
-                  echo "Linking extension $name from $f"
-                  ln -s $f $spicetifyDir/Extensions/$name
-                done
+      # Themes
+      ${
+        lib.strings.concatMapStringsSep "\n" (addon:
+          ''
+            # Extensions
+            for f in ${addon}/share/spicetify/Extensions/*.js; do
+              name=`basename $f`
+              echo "Linking extension $name from $f"
+              ln -s $f $spicetifyDir/Extensions/$name
+            done
 
-                # Themes
-                for f in ${addon}/share/spicetify/Themes/*; do
-                  name=`basename $f`
-                  echo "Linking theme $name from $f"
-                  ln -s $f $spicetifyDir/Themes/$name
-                done
-              ''
-            ) cfg.addons
-          }
+            # Themes
+            for f in ${addon}/share/spicetify/Themes/*; do
+              name=`basename $f`
+              echo "Linking theme $name from $f"
+              ln -s $f $spicetifyDir/Themes/$name
+            done
+          ''
+        ) cfg.addons
+      }
 
-          touch $out/prefs
-          cp -f ${mkSpicetifyConfigFile spicetifyConfig} $spicetifyDir/config-xpui.ini
+      touch $out/prefs
+      cp -f ${mkSpicetifyConfigFile spicetifyConfig} $spicetifyDir/config-xpui.ini
 
-          substituteInPlace $spicetifyDir/config-xpui.ini \
-            --replace "PREFS_PATH" "$out/prefs" \
-            --replace "SPOTIFY_PATH" "$out/share/spotify"
+      substituteInPlace $spicetifyDir/config-xpui.ini \
+        --replace "PREFS_PATH" "$out/prefs" \
+        --replace "SPOTIFY_PATH" "$out/share/spotify"
 
-          spicetify-cli backup apply
-        '';
-      });
+      spicetify-cli backup apply
+    '';
   });
 in
 
