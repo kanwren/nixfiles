@@ -1,5 +1,5 @@
 # Initialize a config with
-# $ nix flake init -t 'github:nprindle/nixfiles#nixos-shell'
+# $ nix flake init -t 'github:kanwren/nixfiles#nixos-shell'
 # Edit the config, then run with
 # $ nix run 'github:Mic92/nixos-shell' -- --flake '.#vm'
 

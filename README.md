@@ -53,8 +53,8 @@ $ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
 Alternatively, some installers are exported by default:
 
 ```
-$ nix build 'github:nprindle/nixfiles#packages.x86_64-linux.install-iso'
-$ nix build 'github:nprindle/nixfiles#packages.aarch64-linux.sd-aarch64-installer'
+$ nix build 'github:kanwren/nixfiles#packages.x86_64-linux.install-iso'
+$ nix build 'github:kanwren/nixfiles#packages.aarch64-linux.sd-aarch64-installer'
 ```
 
 ### sops-nix

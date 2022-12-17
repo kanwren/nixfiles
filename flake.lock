@@ -318,15 +318,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1666201965,
-        "narHash": "sha256-PhaucoB9AUtcpe//kvWOC9JV6zQ4oMjP0hWJFiAuv9E=",
-        "owner": "nprindle",
+        "lastModified": 1671052349,
+        "narHash": "sha256-FgicOYLdP84V/Lma/NeobLTx3/GrFnheAw9zHNfrEsI=",
+        "owner": "kanwren",
         "repo": "nvim-configs",
-        "rev": "b04f99557df6555746fe966460718fcccb460fb9",
+        "rev": "d6e1bb60a6adc3ae0bddd0c8800790696266ebdc",
         "type": "github"
       },
       "original": {
-        "owner": "nprindle",
+        "owner": "kanwren",
         "repo": "nvim-configs",
         "type": "github"
       }

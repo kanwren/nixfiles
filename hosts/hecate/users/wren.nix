@@ -21,7 +21,7 @@
     createHome = true;
     shell = pkgs.zsh;
 
-    openssh.authorizedKeys.keys = import ../../../keys/nprindle.nix;
+    openssh.authorizedKeys.keys = import ../../../keys/kanwren.nix;
   };
 
   nix.settings.trusted-users = [ "wren" ];

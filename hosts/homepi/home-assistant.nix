@@ -43,7 +43,7 @@ in
   };
 
   security.acme = {
-    defaults.email = "nprindle18@gmail.com";
+    defaults.email = "nicole@wren.systems";
     acceptTerms = true;
   };
 

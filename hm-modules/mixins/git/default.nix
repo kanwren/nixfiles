@@ -6,8 +6,8 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
 
-    userName = "Nicole Prindle";
-    userEmail = "nprindle18@gmail.com";
+    userName = "Nicole Wren";
+    userEmail = "nicole@wren.systems";
 
     ignores = [
       "tags"
@@ -86,13 +86,13 @@
     lfs.enable = true;
 
     signing = {
-      key = "nprindle18@gmail.com";
+      key = "nicole@wren.systems";
       signByDefault = true;
     };
   };
 
   home.sessionVariables = {
-    GPGKEY = "nprindle18@gmail.com";
+    GPGKEY = "nicole@wren.systems";
   };
 }
 

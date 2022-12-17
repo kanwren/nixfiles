@@ -1,5 +1,5 @@
 {
-  description = "nprindle's NixOS configurations and other Nix tools";
+  description = "kanwren's NixOS configurations and other Nix tools";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -40,7 +40,7 @@
     };
 
     nvim-configs = {
-      url = "github:nprindle/nvim-configs";
+      url = "github:kanwren/nvim-configs";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
