@@ -106,7 +106,7 @@
     ];
   };
 
-  home-manager.users.nprindle = {
+  home-manager.users.wrenn = {
     imports = [
       self.hmModules.mixins.btop
       self.hmModules.mixins.kitty
