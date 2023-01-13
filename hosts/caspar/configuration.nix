@@ -67,6 +67,10 @@
       jo
       httpie
       kitty
+      helix
+      moreutils
+      just
+      exiftool
     ];
 
     variables = {

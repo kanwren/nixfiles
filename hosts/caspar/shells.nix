@@ -14,6 +14,7 @@
       cdAliases // {
         vi = "nvim";
         vim = "nvim";
+        x = "hx";
         cat = "${pkgs.bat}/bin/bat";
         ls = "${pkgs.exa}/bin/exa --git";
         l = "${pkgs.exa}/bin/exa --git -lah";
