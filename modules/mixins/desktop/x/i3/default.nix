@@ -16,7 +16,8 @@
   services.xserver = {
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3-gaps;
+      package = pkgs.i3;
+
       configFile = pkgs.substituteAll {
         src = ./i3config/i3config;
         spill_container_script = pkgs.substituteAll {
