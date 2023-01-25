@@ -163,4 +163,9 @@
         inherit nixpkgs nixos-generators;
       })
     ];
+
+  nixConfig = {
+    extra-substituters = [ "https://kanwren.cachix.org" ];
+    extra-trusted-public-keys = [ "kanwren.cachix.org-1:uMS7ZtVOdof/PU46BAyehmNDD/P6qCGhYEvYP7X8YfE=" ];
+  };
 }
