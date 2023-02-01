@@ -14,7 +14,8 @@
     keyMode = "vi";
     historyLimit = 10000;
     extraConfig = ''
-      source-file ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.conf
+      set -g @catppuccin_flavour mocha
+      run-shell ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.tmux
 
       set -g default-shell ${pkgs.zsh}/bin/zsh
 
