@@ -64,6 +64,7 @@
       watch
       gitAndTools.gitFull
       gitAndTools.gh
+      bitwarden-cli
       jo
       httpie
       kitty
@@ -71,6 +72,7 @@
       moreutils
       just
       exiftool
+      rustup
     ];
 
     variables = {
@@ -87,7 +89,9 @@
       enableFzf = true;
 
       extraConfig = ''
-        source-file ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.conf
+        set -g @catppuccin_flavour mocha
+        run-shell ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.tmux
+
         set -g default-shell ${pkgs.zsh}/bin/zsh
         set-option -sa terminal-overrides ',xterm-kitty:RGB'
         set-window-option -g automatic-rename on
