@@ -43,7 +43,8 @@
   environment = {
     systemPackages = with pkgs; [
       cachix
-      gnused
+      gnused # bsd sed has incompatible cli
+      diffutils # bsd diff incompatibilities cause problems
       btop
       ripgrep
       direnv
