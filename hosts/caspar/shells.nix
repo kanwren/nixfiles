@@ -86,7 +86,7 @@
         emulate zsh -c "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
         # h
-        eval "$(${pkgs.h}/bin/h --setup ~/Development)"
+        eval "$(${pkgs.h}/bin/h --setup ~/Development/code)"
         eval "$(${pkgs.h}/bin/up --setup)"
 
         # history
