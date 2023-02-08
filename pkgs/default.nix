@@ -23,5 +23,8 @@ rec {
   lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
   add-rpath = pkgs.callPackage ./scripts/add-rpath { inherit addmeta; };
   generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
+
+  # tools
+  slides-full = pkgs.callPackage ./tools/slides { };
 }
 
