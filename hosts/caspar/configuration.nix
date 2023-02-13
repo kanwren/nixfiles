@@ -45,6 +45,8 @@
       cachix
       gnused # bsd sed has incompatible cli
       diffutils # bsd diff incompatibilities cause problems
+      moreutils
+      exiftool
       btop
       ripgrep
       direnv
@@ -60,19 +62,20 @@
       wget
       tldr
       cht-sh
+      shellcheck
       tree
       unar
       watch
       gitAndTools.gitFull
       gitAndTools.gh
+      lazygit
       bitwarden-cli
       jo
       httpie
       kitty
       helix
-      moreutils
+      pandoc
       just
-      exiftool
       rustup
     ];
 
@@ -118,12 +121,23 @@
   home-manager.users.wrenn = {
     imports = [
       self.hmModules.mixins.btop
-      self.hmModules.mixins.kitty
     ];
 
     home = {
       stateVersion = "22.11";
       sessionPath = [ "$HOME/bin" ];
+    };
+
+    programs.kitty = {
+      enable = true;
+      extraConfig = ''
+        ${builtins.readFile ./kitty.conf}
+        include ${self.packages.${pkgs.system}.catppuccin-kitty}/mocha.conf
+      '';
+    };
+
+    programs.nushell = {
+      enable = true;
     };
   };
 }
