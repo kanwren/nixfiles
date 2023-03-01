@@ -44,6 +44,7 @@
     systemPackages = with pkgs; [
       cachix
       gnused # bsd sed has incompatible cli
+      gnugrep
       diffutils # bsd diff incompatibilities cause problems
       moreutils
       exiftool
