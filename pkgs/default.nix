@@ -10,6 +10,7 @@ let
 in
 rec {
   catppuccin-kitty = pkgs.callPackage ./misc/catppuccin-kitty { inherit (sources) catppuccin-kitty-src; };
+  catppuccin-k9s = pkgs.callPackage ./misc/catppuccin-k9s { inherit (sources) catppuccin-k9s-src; };
   catppuccin-tmux = pkgs.callPackage ./misc/catppuccin-tmux { inherit (sources) catppuccin-tmux-src; };
   catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { inherit (sources) catppuccin-zathura-src; };
   catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { inherit (sources) catppuccin-cava-src; };

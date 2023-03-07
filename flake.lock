@@ -32,6 +32,22 @@
         "type": "github"
       }
     },
+    "catppuccin-k9s-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1666514940,
+        "narHash": "sha256-GrRCOwCgM8BFhY8TzO3/WDTUnGtqkhvlDWE//ox2GxI=",
+        "owner": "catppuccin",
+        "repo": "k9s",
+        "rev": "322598e19a4270298b08dc2765f74795e23a1615",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "k9s",
+        "type": "github"
+      }
+    },
     "catppuccin-kitty-src": {
       "flake": false,
       "locked": {
@@ -335,6 +351,7 @@
       "inputs": {
         "catppuccin-btop-src": "catppuccin-btop-src",
         "catppuccin-cava-src": "catppuccin-cava-src",
+        "catppuccin-k9s-src": "catppuccin-k9s-src",
         "catppuccin-kitty-src": "catppuccin-kitty-src",
         "catppuccin-spicetify-src": "catppuccin-spicetify-src",
         "catppuccin-tmux-src": "catppuccin-tmux-src",

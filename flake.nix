@@ -59,6 +59,10 @@
       url = "github:catppuccin/kitty";
       flake = false;
     };
+    catppuccin-k9s-src = {
+      url = "github:catppuccin/k9s";
+      flake = false;
+    };
     catppuccin-spicetify-src = {
       url = "github:catppuccin/spicetify";
       flake = false;
@@ -88,6 +92,7 @@
     , catppuccin-btop-src
     , catppuccin-cava-src
     , catppuccin-kitty-src
+    , catppuccin-k9s-src
     , catppuccin-spicetify-src
     , catppuccin-tmux-src
     , catppuccin-zathura-src
@@ -95,7 +100,7 @@
     let
       recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
       sources = {
-        inherit (inputs) catppuccin-btop-src catppuccin-cava-src catppuccin-kitty-src catppuccin-spicetify-src catppuccin-tmux-src catppuccin-zathura-src;
+        inherit (inputs) catppuccin-btop-src catppuccin-cava-src catppuccin-kitty-src catppuccin-k9s-src catppuccin-spicetify-src catppuccin-tmux-src catppuccin-zathura-src;
       };
     in
     recursiveMergeAttrs [
