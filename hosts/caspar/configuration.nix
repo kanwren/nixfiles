@@ -42,10 +42,14 @@
 
   environment = {
     systemPackages = with pkgs; [
-      cachix
-      gnused # bsd sed has incompatible cli
+      # bsd incompatibilities :<
+      gnused
       gnugrep
-      diffutils # bsd diff incompatibilities cause problems
+      gnutar
+      diffutils
+      findutils
+
+      cachix
       moreutils
       exiftool
       btop
