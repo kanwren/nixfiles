@@ -33,7 +33,7 @@
           buildPhase = "make clean && HOME=. make";
         };
 
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = [ tex-env ];
         };
       }
