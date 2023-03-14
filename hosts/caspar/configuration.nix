@@ -74,7 +74,6 @@
       gitAndTools.gitFull
       gitAndTools.gh
       lazygit
-      bitwarden-cli
       jo
       httpie
       kitty
