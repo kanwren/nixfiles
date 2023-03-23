@@ -26,8 +26,11 @@
           clock-format = "%I:%M %p";
 
           theme = {
-            name = "Catppuccin-Purple-Dark";
-            package = pkgs.catppuccin-gtk;
+            name = "Catppuccin-Mocha-Standard-Lavender-Dark";
+            package = pkgs.catppuccin-gtk.override {
+              accents = [ "lavender" ];
+              variant = "mocha";
+            };
           };
 
           iconTheme = {
