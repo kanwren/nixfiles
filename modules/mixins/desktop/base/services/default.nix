@@ -4,8 +4,10 @@
   services = {
     openssh = {
       enable = true;
-      forwardX11 = true;
       allowSFTP = true;
+      settings = {
+        X11Forwarding = true;
+      };
     };
 
     # Bluetooth manager (or use bluetoothctl, but this has a nice applet)

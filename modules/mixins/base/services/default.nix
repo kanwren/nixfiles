@@ -4,8 +4,10 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "prohibit-password";
-      passwordAuthentication = false;
+      settings = {
+        PermitRootLogin = "prohibit-password";
+        PasswordAuthentication = false;
+      };
     };
   };
 

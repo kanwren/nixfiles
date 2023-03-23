@@ -8,6 +8,6 @@ in
 
 runCommand "catppuccin-kitty" { } ''
   mkdir -p "$out"
-  cp ${src}/*.conf "$out"
+  cp ${src}/themes/*.conf "$out"
 ''
 
