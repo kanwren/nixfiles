@@ -14,7 +14,6 @@ My NixOS configurations and other Nix files :snowflake:
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake
 - [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
-- [`secrets/`](secrets/): Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix)
 - [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
 ### Hosts
@@ -55,31 +54,6 @@ Alternatively, some installers are exported by default:
 ```
 $ nix build 'github:kanwren/nixfiles#packages.x86_64-linux.install-iso'
 $ nix build 'github:kanwren/nixfiles#packages.aarch64-linux.sd-aarch64-installer'
-```
-
-### sops-nix
-
-When editing sops files, keys in `secrets/keys/users` should automatically be
-picked up when using the dev shell. To use a specific key for a file, set
-`SOPS_PGP_FP` to the key's fingerprint.
-
-To generate a PGP key for a new machine named `$HOSTNAME`:
-
-```
-# Drop into shell with sops-nix tools
-$ sudo nix develop
-
-# Generate the key
-$ sops-init-gpg-key --hostname $HOSTNAME --gpghome /var/lib/sops
-
-# Put generated key in secrets/keys/users/$HOSTNAME.asc
-```
-
-To import an existing armored private key `$HOSTNAME.asc`:
-
-```
-$ sudo nix develop
-$ GNUPGHOME=/var/lib/sops gpg --import $HOSTNAME.asc
 ```
 
 ### Manual setup

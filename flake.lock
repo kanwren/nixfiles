@@ -291,38 +291,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-homepi": {
-      "locked": {
-        "lastModified": 1655470064,
-        "narHash": "sha256-sELkMX4YGAoH78ci1mCBpW0ZSjqEMVzs9kSQz4gRAJs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "f919a40e544da31a3b4b42e87cf30a5078c2b09c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "f919a40e544da31a3b4b42e87cf30a5078c2b09c",
-        "type": "github"
-      }
-    },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1679163677,
-        "narHash": "sha256-VC0tc3EjJZFPXgucFQAYMIHce5nJWYR0kVCk4TVg6gg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c3912035d00ef755ab19394488b41feab95d2e40",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "release-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nvim-configs": {
       "inputs": {
         "flake-utils": [
@@ -363,30 +331,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-homepi": "nixpkgs-homepi",
-        "nvim-configs": "nvim-configs",
-        "sops-nix": "sops-nix"
-      }
-    },
-    "sops-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-stable": "nixpkgs-stable"
-      },
-      "locked": {
-        "lastModified": 1679377997,
-        "narHash": "sha256-O8rmc/b/qgNgoHj2tL5+3Ovkj7A+Sok7gazRoWbpnqg=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "d8827a8368c307fbc6ed594c9a31d619e7360bed",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "type": "github"
+        "nvim-configs": "nvim-configs"
       }
     },
     "utils": {

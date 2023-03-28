@@ -4,9 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    # pinned from nixos-22.05-aarch64
-    nixpkgs-homepi.url = "github:NixOS/nixpkgs/f919a40e544da31a3b4b42e87cf30a5078c2b09c";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,11 +29,6 @@
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
-    };
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nvim-configs = {
@@ -80,14 +72,12 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-homepi
     , home-manager
     , darwin
     , nixos-hardware
     , flake-utils
     , nixos-generators
     , nixos-wsl
-    , sops-nix
     , nvim-configs
     , catppuccin-btop-src
     , catppuccin-cava-src
@@ -108,8 +98,6 @@
         nixosConfigurations = {
           # main dev laptop
           hecate = import ./hosts/hecate/host.nix inputs;
-
-          homepi = import ./hosts/homepi/host.nix inputs;
 
           wsl = import ./hosts/wsl/host.nix inputs;
         };
@@ -143,14 +131,6 @@
               # formatting
               pkgs.lefthook
               self.formatter.${system}
-              # sops-nix
-              sops-nix.packages.${system}.sops-import-keys-hook
-              sops-nix.packages.${system}.ssh-to-pgp
-              # TODO: re-add once utillinux issue is fixed
-              # sops-nix.packages.${system}.sops-init-gpg-key
-            ];
-            sopsPGPKeyDirs = [
-              "./keys/hosts"
             ];
           };
 
