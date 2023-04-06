@@ -44,10 +44,11 @@
         shopt -s checkjobs
         shopt -s histappend
         shopt -s cmdhist
-        HISTCONTROL=ignoreboth
-        HISTSIZE=1000000
-        HISTFILESIZE=1000000
-        HISTIGNORE="ls:cd:exit:history"
+        export HISTFILE="$HOME/.bash_history"
+        export HISTCONTROL=ignoreboth
+        export HISTSIZE=1000000
+        export HISTFILESIZE=1000000
+        export HISTIGNORE="ls:cd:exit:history"
       '';
     };
 
