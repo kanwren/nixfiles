@@ -164,17 +164,6 @@
             cp -r ${pkgs.zsh-vi-mode}/share/zsh-vi-mode "$out"/share/zsh/plugins/zsh-vi-mode
           '')
         ];
-
-        # $ZSH/oh-my-zsh.sh should be source in ~/.zshrc, due to invasive shell
-        # setup that runs at the beginning of ~/.zshrc. it's good to also
-        # protect environment.shellAliases from being overwritten by wrapping
-        # the load in
-        # ```
-        # save_aliases=$(alias -L)
-        # ...
-        # eval $save_aliases; unset save_aliases
-        # ```
-        doLoad = false;
       };
     };
   };
