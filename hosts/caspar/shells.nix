@@ -1,5 +1,14 @@
 { pkgs, self, lib, ... }:
 
+let
+  commonInit = ''
+    # ~/bin
+    export PATH="$HOME/bin''${PATH:+:$PATH}"
+
+    # other system paths /opt/local/bin
+    export PATH="$HOME/bin:''${PATH:+$PATH:}/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin"
+  '';
+in
 {
   environment = {
     shellAliases =
@@ -33,6 +42,8 @@
       enable = true;
       enableCompletion = true;
       interactiveShellInit = ''
+        ${commonInit}
+
         if [ `ulimit -n` -lt 8192 ]; then
           ulimit -n 8192
         fi
@@ -60,11 +71,31 @@
       enableSyntaxHighlighting = true;
       enableFzfHistory = true;
       shellInit = ''
-        typeset -U path
+        typeset -U path PATH
 
         if [ `ulimit -n` -lt 8192 ]; then
           ulimit -n 8192
         fi
+
+        ${commonInit}
+      '';
+      loginShellInit = ''
+        # set up homebrew env
+        if command -v /opt/homebrew/bin/brew &>/dev/null; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+
+          export HOMEBREW_NO_ANALYTICS=1
+
+          if command -v brew &>/dev/null; then
+            # Used for C pre-processor/#include. Confirm paths with `clang -x c -v -E /dev/null`
+            export CPATH="$(brew --prefix)/include''${CPATH:+:$CPATH}"
+
+            # Used by linker. Confirm paths with `clang -Xlinker -v`
+            export LIBRARY_PATH="$(brew --prefix)/lib''${LIBRARY_PATH:+:$LIBRARY_PATH}"
+          fi
+        fi
+
+        export GPG_TTY="$(tty)"
       '';
       interactiveShellInit = ''
         # syntax highlighting (pkgs.zsh-syntax-highlighting sourced by enableSyntaxHighlighting)
