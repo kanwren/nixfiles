@@ -170,7 +170,6 @@ in
         plugins = [
           "bazel"
           "colored-man-pages"
-          "command-not-found"
           "docker"
           "fzf"
           "git"

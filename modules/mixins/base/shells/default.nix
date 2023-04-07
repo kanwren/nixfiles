@@ -118,7 +118,6 @@ in
           "zsh-vi-mode" # "vi-mode"
           "safe-paste" # prevent pasted code from running before review
           "last-working-dir" # switches new shells to last working dir, adds 'lwd'
-          "command-not-found" # shows packages that provide missing commands
           "nix-shell" # lets nix-shell use zsh
           "colored-man-pages" # colors man pages
 
@@ -216,8 +215,6 @@ in
         ${utilityFunctions}
       '';
     };
-
-    command-not-found.enable = true;
   };
 
   environment.systemPackages = with pkgs; [ direnv h ];
