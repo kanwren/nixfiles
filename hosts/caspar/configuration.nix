@@ -48,6 +48,7 @@
       gnutar
       diffutils
       findutils
+      bc
 
       cachix
       moreutils
@@ -60,6 +61,7 @@
       bat
       fzf
       jq
+      jiq
       yq
       dive
       fd
@@ -74,12 +76,16 @@
       gitAndTools.gitFull
       gitAndTools.gh
       lazygit
+      certstrap
       jo
       httpie
       kitty
       helix
       pandoc
+      gnumake
+      entr
       just
+      qpdf
       rustup
     ];
 
