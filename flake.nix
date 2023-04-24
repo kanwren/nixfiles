@@ -67,6 +67,14 @@
       url = "github:catppuccin/zathura";
       flake = false;
     };
+    k8split-src = {
+      url = "github:brendanjryan/k8split";
+      flake = false;
+    };
+    envtpl-src = {
+      url = "github:subfuzion/envtpl";
+      flake = false;
+    };
   };
 
   outputs =
@@ -86,11 +94,22 @@
     , catppuccin-spicetify-src
     , catppuccin-tmux-src
     , catppuccin-zathura-src
+    , k8split-src
+    , envtpl-src
     }@inputs:
     let
       recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
       sources = {
-        inherit (inputs) catppuccin-btop-src catppuccin-cava-src catppuccin-kitty-src catppuccin-k9s-src catppuccin-spicetify-src catppuccin-tmux-src catppuccin-zathura-src;
+        inherit (inputs)
+          catppuccin-btop-src
+          catppuccin-cava-src
+          catppuccin-kitty-src
+          catppuccin-k9s-src
+          catppuccin-spicetify-src
+          catppuccin-tmux-src
+          catppuccin-zathura-src
+          k8split-src
+          envtpl-src;
       };
     in
     recursiveMergeAttrs [

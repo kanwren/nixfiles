@@ -27,5 +27,7 @@ rec {
 
   # tools
   slides-full = pkgs.callPackage ./tools/slides { };
+  k8split = pkgs.callPackage ./tools/k8split { inherit (sources) k8split-src; };
+  envtpl = pkgs.callPackage ./tools/envtpl { inherit (sources) envtpl-src; };
 }
 

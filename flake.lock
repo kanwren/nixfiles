@@ -132,6 +132,22 @@
         "type": "github"
       }
     },
+    "envtpl-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673465151,
+        "narHash": "sha256-MI556F8/v2DcAg8PzRY/Bg2Iw6iluVped5i+yxAt9Qo=",
+        "owner": "subfuzion",
+        "repo": "envtpl",
+        "rev": "7140fa02fb9d668b217d68b8e1e5e2fb75efd779",
+        "type": "github"
+      },
+      "original": {
+        "owner": "subfuzion",
+        "repo": "envtpl",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -181,6 +197,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "k8split-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609383848,
+        "narHash": "sha256-0cbTjzVRSYhopFyv+JgXoXgYugKgtur+8cgirhLJS98=",
+        "owner": "brendanjryan",
+        "repo": "k8split",
+        "rev": "7469c28221ff3e9a7d3fd20581a35005ddfd6d58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "brendanjryan",
+        "repo": "k8split",
         "type": "github"
       }
     },
@@ -325,8 +357,10 @@
         "catppuccin-tmux-src": "catppuccin-tmux-src",
         "catppuccin-zathura-src": "catppuccin-zathura-src",
         "darwin": "darwin",
+        "envtpl-src": "envtpl-src",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "k8split-src": "k8split-src",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
