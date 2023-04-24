@@ -1,5 +1,5 @@
 {
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
   };
 }
