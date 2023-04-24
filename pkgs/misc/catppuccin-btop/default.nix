@@ -8,6 +8,6 @@ in
 
 runCommand "catppuccin-btop.theme" { } ''
   mkdir -p "$out"/share/btop/themes
-  cp ${src}/*.theme "$out"/share/btop/themes
+  cp ${src}/themes/*.theme "$out"/share/btop/themes
 ''
 
