@@ -48,9 +48,11 @@
       gnutar
       diffutils
       findutils
+      patch
       bc
 
       cachix
+      nix-index
       moreutils
       exiftool
       btop
@@ -60,12 +62,14 @@
       exa
       bat
       fzf
+      fd
+      sd
       jq
       jiq
       yq
       dive
-      fd
-      sd
+      self.packages.${pkgs.system}.k8split
+      self.packages.${pkgs.system}.envtpl
       wget
       tldr
       cht-sh
