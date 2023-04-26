@@ -81,6 +81,10 @@ in
           source $ZSH/oh-my-zsh.sh
         ''}
         # end oh-my-zsh configs
+
+        # hack to unclobber aliases, because this ends up after the aliases in
+        # nix-darwin shell init
+        ${config.system.build.setAliases.text}
       '';
   };
 }
