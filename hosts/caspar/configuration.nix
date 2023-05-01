@@ -86,7 +86,6 @@
       kitty
       helix
       pandoc
-      gnumake
       entr
       just
       qpdf
