@@ -7,6 +7,8 @@
       fira-code
       fira-mono
       source-code-pro
+      atkinson-hyperlegible
+      inter
     ];
   };
 }
