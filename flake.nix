@@ -145,8 +145,8 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          devShells.default = pkgs.mkShell {
-            nativeBuildInputs = [
+          devShells.default = pkgs.mkShellNoCC {
+            packages = [
               # formatting
               pkgs.lefthook
               self.formatter.${system}
