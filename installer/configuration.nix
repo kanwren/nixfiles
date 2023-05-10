@@ -37,7 +37,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "curses";
+      pinentryFlavor = "tty";
     };
     bash.enableCompletion = true;
   };

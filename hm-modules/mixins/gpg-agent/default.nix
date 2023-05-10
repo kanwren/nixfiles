@@ -4,7 +4,7 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "gtk2";
+    pinentryFlavor = "tty";
 
     defaultCacheTtl = 7 * 24 * 60 * 60; # one week
     defaultCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;
