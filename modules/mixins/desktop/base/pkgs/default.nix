@@ -24,6 +24,7 @@
 
       # apps
       firefox
+      obsidian
       qalculate-gtk # graphical calculator
       plover.dev # steno
     ];
