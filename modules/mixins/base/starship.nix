@@ -26,6 +26,9 @@
         tag_disabled = false;
         tag_symbol = "";
       };
+      kubernetes = {
+        disabled = false;
+      };
     };
   };
 }
