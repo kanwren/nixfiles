@@ -20,6 +20,8 @@ rec {
     inherit generate-heart-emoji;
   };
 
+  wd-fish = pkgs.fishPlugins.callPackage ./misc/wd-fish { inherit (sources) wd-fish-src; };
+
   # scripts
   lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
   add-rpath = pkgs.callPackage ./scripts/add-rpath { inherit addmeta; };

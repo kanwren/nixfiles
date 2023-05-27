@@ -367,7 +367,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nvim-configs": "nvim-configs"
+        "nvim-configs": "nvim-configs",
+        "wd-fish-src": "wd-fish-src"
       }
     },
     "systems": {
@@ -382,6 +383,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "wd-fish-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1668432021,
+        "narHash": "sha256-pRTEU9T+WkFxTdeZR1EZgW9FCeBsb3VbUvwFD27ZkZ4=",
+        "owner": "fischerling",
+        "repo": "plugin-wd",
+        "rev": "ac46fb36724fa17d97965f9829ae29c61ec1e109",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fischerling",
+        "repo": "plugin-wd",
         "type": "github"
       }
     }

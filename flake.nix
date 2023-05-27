@@ -75,6 +75,11 @@
       url = "github:subfuzion/envtpl";
       flake = false;
     };
+
+    wd-fish-src = {
+      url = "github:fischerling/plugin-wd";
+      flake = false;
+    };
   };
 
   outputs =
@@ -96,6 +101,7 @@
     , catppuccin-zathura-src
     , k8split-src
     , envtpl-src
+    , wd-fish-src
     }@inputs:
     let
       recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
@@ -109,7 +115,8 @@
           catppuccin-tmux-src
           catppuccin-zathura-src
           k8split-src
-          envtpl-src;
+          envtpl-src
+          wd-fish-src;
       };
     in
     recursiveMergeAttrs [

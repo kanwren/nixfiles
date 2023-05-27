@@ -38,6 +38,7 @@ in
     systemPackages = with pkgs; [
       fishPlugins.fzf-fish
       fishPlugins.foreign-env
+      self.packages.${pkgs.system}.wd-fish
     ];
 
     variables.LC_CTYPE = "en_US.UTF-8";
