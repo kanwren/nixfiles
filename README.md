@@ -18,8 +18,8 @@ My NixOS configurations and other Nix files :snowflake:
 
 ### Hosts
 
-- [`hecate`](hosts/hecate/): My main laptop
-- [`homepi`](hosts/homepi/): My Raspberry Pi running [Home Assistant](https://www.home-assistant.io/)
+- [`hecate`](hosts/hecate/): Main laptop
+- [`caspar`](hosts/caspar/): M1 Mac
 
 #### Mixins
 
@@ -96,3 +96,12 @@ theming. Here are some things that may need to be done manually:
         - [Tabby cat](https://addons.mozilla.org/en-US/firefox/addon/tabby-cat-friend/)
 - Wallpapers: https://github.com/catppuccin/wallpapers
   - Update wallpaper with `betterlockscreen -u ...` and `betterlockscreen -w`
+
+For MacOS:
+
+- Install Nix: `sh <(curl -L "https://nixos.org/nix/install")`
+- Build the system: `nix build '.#darwinConfigurations.caspar.system' --extra-experimental-features 'nix-command flakes ca-derivations'`
+- Switch into the system: `./result/sw/bin/darwin-rebuild switch --flake '.#caspar'`
+- Update the login shell: `echo "/run/current-system/sw/bin/fish" | sudo tee -a /etc/shells && chsh -s /run/current-system/sw/bin/fish`
+- Update the hostname: `sudo scutil --set HostName ''; sudo scutil --set LocalHostName caspar; sudo scutil --set ComputerName caspar`
+
