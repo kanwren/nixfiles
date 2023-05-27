@@ -35,6 +35,11 @@ in
       lsa = "${pkgs.exa}/bin/exa --git -lh";
     };
 
+    systemPackages = with pkgs; [
+      fishPlugins.fzf-fish
+      fishPlugins.foreign-env
+    ];
+
     variables.LC_CTYPE = "en_US.UTF-8";
   };
 
