@@ -8,33 +8,34 @@ let
     # other system paths /opt/local/bin
     export PATH="$HOME/bin:''${PATH:+$PATH:}/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin"
   '';
+
+  cdAliases = builtins.listToAttrs (builtins.map
+    (n: {
+      name = ".${toString n}";
+      value = "cd ${builtins.concatStringsSep "/" (builtins.genList (_: "..") n)}";
+    })
+    (lib.lists.range 1 9));
 in
 {
   environment = {
-    shellAliases =
-      let
-        repeat = n: x: builtins.genList (_: x) n;
-        mkCdAlias = n: {
-          name = ".${toString n}";
-          value = "cd ${builtins.concatStringsSep "/" (repeat n "..")}";
-        };
-        cdAliases = { ".." = "cd .."; } // builtins.listToAttrs (builtins.map mkCdAlias (lib.lists.range 1 9));
-      in
-      cdAliases // {
-        vi = "nvim";
-        vim = "nvim";
-        x = "hx";
-        cat = "${pkgs.bat}/bin/bat";
-        ls = "${pkgs.exa}/bin/exa --git";
-        l = "${pkgs.exa}/bin/exa --git -lah";
-        la = "${pkgs.exa}/bin/exa --git -lah";
-        ll = "${pkgs.exa}/bin/exa --git -lh";
-        lsa = "${pkgs.exa}/bin/exa --git -lh";
-      };
+    # set login shell to fish
+    loginShell = "${pkgs.fish}/bin/fish -l";
+    variables.SHELL = "${pkgs.fish}/bin/fish";
 
-    variables = {
-      LC_CTYPE = "en_US.UTF-8";
+    shellAliases = cdAliases // {
+      vi = "nvim";
+      vim = "nvim";
+      g = "git";
+      k = "kubectl";
+      cat = "${pkgs.bat}/bin/bat";
+      ls = "${pkgs.exa}/bin/exa --git";
+      l = "${pkgs.exa}/bin/exa --git -lah";
+      la = "${pkgs.exa}/bin/exa --git -lah";
+      ll = "${pkgs.exa}/bin/exa --git -lh";
+      lsa = "${pkgs.exa}/bin/exa --git -lh";
     };
+
+    variables.LC_CTYPE = "en_US.UTF-8";
   };
 
   programs = {
@@ -195,6 +196,42 @@ in
           '')
         ];
       };
+    };
+
+    fish = {
+      enable = true;
+      loginShellInit = ''
+        fish_add_path -aP /usr/local/bin /usr/local/sbin /opt/local/bin
+
+        # set up homebrew env
+        if command -v /opt/homebrew/bin/brew >/dev/null 2>&1
+          /opt/homebrew/bin/brew shellenv | source
+
+          set -gx HOMEBREW_NO_ANALYTICS 1
+
+          if command -v brew >/dev/null 2>&1
+            # Used for C pre-processor/#include. Confirm paths with `clang -x c -v -E /dev/null`
+            if set -q CPATH
+              set -gx CPATH (brew --prefix)"/include:$CPATH"
+            else
+              set -gx CPATH (brew --prefix)/include
+            end
+
+            # Used by linker. Confirm paths with `clang -Xlinker -v`
+            if set -q LIBRARY_PATH
+              set -gx LIBRARY_PATH "(brew --prefix)/lib:$LIBRARY_PATH"
+            else
+              set -gx LIBRARY_PATH (brew --prefix)/lib
+            end
+          end
+        end
+
+        set -gx GPG_TTY (tty)
+      '';
+      interactiveShellInit = ''
+        fish_add_path -pP "$HOME/bin"
+        direnv hook fish | source
+      '';
     };
   };
 }
