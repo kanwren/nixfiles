@@ -237,6 +237,28 @@ in
       interactiveShellInit = ''
         fish_add_path -pP "$HOME/bin"
         direnv hook fish | source
+
+        function h
+            if set -l target (command h --resolve "$HOME/Development/code" $argv)
+                if [ $target != (pwd) ]
+                    echo $target
+                    cd $target
+                end
+            else
+                return $status
+            end
+        end
+
+        function up
+            if set -l target (command up $argv)
+                if [ $target != (pwd) ]
+                    echo $target
+                    cd $target
+                end
+            else
+                return $status
+            end
+        end
       '';
     };
   };
