@@ -17,6 +17,8 @@ in
   ];
 
   programs = {
+    command-not-found.enable = false;
+
     zsh = {
       enable = true;
       enableCompletion = true;
