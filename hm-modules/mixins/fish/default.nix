@@ -3,7 +3,16 @@
     enable = true;
     interactiveShellInit = ''
       # set prompt to '; '
-      function fish_prompt; echo -n '; '; end
+      function fish_prompt
+        if [ $status = 0 ]
+          set_color --bold green
+        else
+          set_color --bold red
+        end
+        printf '; '
+        set_color normal
+      end
+
       function fish_mode_prompt; end
 
       # don't greet
