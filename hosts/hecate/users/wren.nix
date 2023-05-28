@@ -1,6 +1,6 @@
 { self }:
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   users.users.wren = {
@@ -19,7 +19,7 @@
       "dialout"
     ];
     createHome = true;
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
 
     openssh.authorizedKeys.keys = import ../../../keys/kanwren.nix;
   };

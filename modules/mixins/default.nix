@@ -2,7 +2,7 @@
 
 {
   # a base system
-  base = import ./base;
+  base = import ./base { inherit self; };
 
   # enable tailscale
   tailscale = import ./tailscale;

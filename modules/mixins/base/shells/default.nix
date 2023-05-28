@@ -1,26 +1,14 @@
-{ pkgs, ... }:
+{ self }:
+
+{ pkgs, lib, ... }:
 
 let
-  # Utility functions that work in both bash and zsh
-  utilityFunctions = ''
-    # cd into the output of a nix build without making a local symlink
-    function nix-explore() {
-      if ! nix build "$1" --no-link -v; then
-        return $?
-      fi
-
-      if ! _nix_explore_path_info="$(nix path-info "$1")"; then
-        return $?
-      fi
-
-      if [ $(echo "$_nix_explore_path_info" | wc -l) -eq 1 ]; then
-        cd "$_nix_explore_path_info"
-      else
-        >&2 echo "Error: couldn't get unique path info"
-        >&2 echo "$_nix_explore_path_info"
-      fi
-    }
-  '';
+  cdAliases = builtins.listToAttrs (builtins.map
+    (n: {
+      name = ".${toString n}";
+      value = "cd ${builtins.concatStringsSep "/" (builtins.genList (_: "..") n)}";
+    })
+    (lib.lists.range 1 9));
 in
 
 {
@@ -83,33 +71,33 @@ in
           source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
         }
 
-        ${utilityFunctions}
+        function nix-explore() {
+          if ! nix build "$1" --no-link -v; then
+            return $?
+          fi
+
+          if ! _nix_explore_path_info="$(nix path-info "$1")"; then
+            return $?
+          fi
+
+          if [ $(echo "$_nix_explore_path_info" | wc -l) -eq 1 ]; then
+            cd "$_nix_explore_path_info"
+          else
+            >&2 echo "Error: couldn't get unique path info"
+            >&2 echo "$_nix_explore_path_info"
+          fi
+        }
       '';
 
-      shellAliases =
-        let
-          mkCdAlias = n: {
-            name = ".${toString n}";
-            value = "cd " + builtins.concatStringsSep "/" (builtins.genList (_: "..") n);
-          };
-          range = start: end: builtins.genList (x: x + start) (end - start + 1);
-          # Alias ".2" to "cd ../..", ".3" to "cd ../../..", etc.
-          # ".1"/".." is still needed even with zsh's autocd, since "cd .." works
-          # even if your current directory no longer exists
-          cdAliases = map mkCdAlias (range 1 9) ++ [{
-            name = "..";
-            value = "cd ..";
-          }];
-        in
-        builtins.listToAttrs cdAliases // {
-          # aliases for alternate utilities
-          ls = "${pkgs.exa}/bin/exa --git";
-          cat = "${pkgs.bat}/bin/bat";
-          ping = "${pkgs.prettyping}/bin/prettyping";
+      shellAliases = cdAliases // {
+        # aliases for alternate utilities
+        ls = "${pkgs.exa}/bin/exa --git";
+        cat = "${pkgs.bat}/bin/bat";
+        ping = "${pkgs.prettyping}/bin/prettyping";
 
-          # normalize path by resolving symlinks
-          norm = ''cd "$(readlink -f .)"'';
-        };
+        # normalize path by resolving symlinks
+        norm = ''cd "$(readlink -f .)"'';
+      };
 
       ohMyZsh = {
         enable = true;
@@ -212,11 +200,67 @@ in
           PS1='\u@\h:\w\$ '
         fi
 
-        ${utilityFunctions}
+        function nix-explore() {
+          if ! nix build "$1" --no-link -v; then
+            return $?
+          fi
+
+          if ! _nix_explore_path_info="$(nix path-info "$1")"; then
+            return $?
+          fi
+
+          if [ $(echo "$_nix_explore_path_info" | wc -l) -eq 1 ]; then
+            cd "$_nix_explore_path_info"
+          else
+            >&2 echo "Error: couldn't get unique path info"
+            >&2 echo "$_nix_explore_path_info"
+          fi
+        }
+      '';
+    };
+
+    fish = {
+      enable = true;
+      shellAliases = cdAliases // {
+        ls = "${pkgs.exa}/bin/exa --git";
+        cat = "${pkgs.bat}/bin/bat";
+        ping = "${pkgs.prettyping}/bin/prettyping";
+        g = "git";
+      };
+      interactiveShellInit = ''
+        direnv hook fish | source
+
+        function h
+            if set -l target (command h --resolve "$HOME/code" $argv)
+                if [ $target != (pwd) ]
+                    echo $target
+                    cd $target
+                end
+            else
+                return $status
+            end
+        end
+
+        function up
+            if set -l target (command up $argv)
+                if [ $target != (pwd) ]
+                    echo $target
+                    cd $target
+                end
+            else
+                return $status
+            end
+        end
       '';
     };
   };
 
-  environment.systemPackages = with pkgs; [ direnv h ];
+  environment.systemPackages = with pkgs; [
+    direnv
+    h
+    fishPlugins.fzf-fish
+    fishPlugins.foreign-env
+    self.packages.${pkgs.system}.wd-fish
+  ];
 }
 

@@ -1,3 +1,5 @@
+{ self }:
+
 let
   modules = {
     boot = ./boot;
@@ -6,7 +8,7 @@ let
     pkgs = ./pkgs;
     security = ./security;
     services = ./services;
-    shells = ./shells;
+    shells = import ./shells { inherit self; };
     time = ./time;
     users = ./users;
     networking = ./networking;
