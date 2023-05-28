@@ -8,6 +8,7 @@ let
     direnv = import ./direnv;
     discord = import ./discord;
     dunst = import ./dunst;
+    fish = import ./fish;
     firefox = import ./firefox;
     flameshot = import ./flameshot;
     git = import ./git;
