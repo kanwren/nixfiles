@@ -80,7 +80,6 @@
       gitAndTools.gitFull
       gitAndTools.gh
       lazygit
-      certstrap
       jo
       httpie
       kitty
@@ -90,6 +89,9 @@
       just
       qpdf
       rustup
+
+      certstrap
+      awscli2
     ];
 
     variables = {
