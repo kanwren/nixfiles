@@ -66,7 +66,7 @@
       sd
       jq
       jiq
-      yq
+      yq-go
       dive
       self.packages.${pkgs.system}.k8split
       self.packages.${pkgs.system}.envtpl
