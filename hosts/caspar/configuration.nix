@@ -53,6 +53,7 @@
 
       cachix
       nix-index
+      curl
       moreutils
       exiftool
       btop
