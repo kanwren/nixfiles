@@ -232,6 +232,9 @@ in
           end
         end
 
+        # Give NixOS paths priority over brew and system paths
+        fish_add_path --move --prepend --path $HOME/.nix-profile/bin /etc/profiles/per-user/$USER/bin /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+
         set -gx GPG_TTY (tty)
       '';
       interactiveShellInit = ''
