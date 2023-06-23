@@ -7,6 +7,10 @@
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
 
+  specialArgs = {
+    inherit self;
+  };
+
   modules = [
     inputs.home-manager.darwinModules.home-manager
     self.darwinModules.oh-my-zsh
@@ -15,12 +19,6 @@ darwin.lib.darwinSystem {
     {
       nix.registry.nixpkgs.flake = nixpkgs;
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-    }
-
-    {
-      config._module.args = {
-        inherit self;
-      };
     }
 
     self.nixosModules.mixins.home-manager-common
