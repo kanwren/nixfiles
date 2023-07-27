@@ -187,6 +187,7 @@
         mkexec = "update-index --chmod=+x";
         root = "rev-parse --show-toplevel";
         ignored = "ls-files --others --exclude-standard";
+        tag-sort = "tag --sort=v:refname";
 
         alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
         ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
