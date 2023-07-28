@@ -136,6 +136,10 @@
     ];
   };
 
+  users.users.wrenn = {
+    home = "/Users/wrenn";
+  };
+
   home-manager.users.wrenn = {
     imports = [
       self.hmModules.mixins.btop
