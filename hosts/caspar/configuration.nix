@@ -56,6 +56,7 @@
       curl
       moreutils
       exiftool
+      hyperfine
       btop
       ripgrep
       direnv
