@@ -67,11 +67,7 @@
       fd
       sd
       jq
-      jiq
       yq-go
-      dive
-      self.packages.${pkgs.system}.k8split
-      self.packages.${pkgs.system}.envtpl
       wget
       tldr
       cht-sh
@@ -94,6 +90,11 @@
 
       certstrap
       awscli2
+      aws-iam-authenticator
+      dive
+      self.packages.${pkgs.system}.envtpl
+      kubeval
+      self.packages.${pkgs.system}.k8split
     ];
 
     variables = {
