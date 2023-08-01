@@ -16,7 +16,7 @@
           remap = from: to: { HIDKeyboardModifierMappingSrc = from; HIDKeyboardModifierMappingDst = to; };
         in
         [
-          # (remap escapeKey capsLockKey)
+          (remap escapeKey capsLockKey)
           (remap capsLockKey escapeKey)
         ];
     };
