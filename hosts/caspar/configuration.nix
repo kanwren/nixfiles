@@ -87,6 +87,7 @@
       just
       qpdf
       rustup
+      tz
 
       certstrap
       awscli2
