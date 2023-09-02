@@ -34,7 +34,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          buildInputs = [ tex-env ];
+          packages = [ tex-env ];
         };
       }
     ));

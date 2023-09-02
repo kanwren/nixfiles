@@ -13,7 +13,7 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [ tectonic ];
+          packages = with pkgs; [ tectonic ];
         };
       }
     ));
