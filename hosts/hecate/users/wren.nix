@@ -28,7 +28,6 @@
 
   home-manager.users.wren = {
     imports = [
-      self.hmModules.spicetify
       self.hmModules.mixins.full
     ];
 

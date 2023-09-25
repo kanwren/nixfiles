@@ -19,7 +19,7 @@ let
     nix = import ./nix;
     rofi = import ./rofi;
     rust = import ./rust;
-    spotify = import ./spotify { inherit self; };
+    spotify = import ./spotify;
     tmux = import ./tmux { inherit self; };
     vscode = import ./vscode;
     zathura = import ./zathura { inherit self; };

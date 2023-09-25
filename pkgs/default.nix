@@ -15,7 +15,6 @@ rec {
   catppuccin-zathura = pkgs.callPackage ./misc/catppuccin-zathura { inherit (sources) catppuccin-zathura-src; };
   catppuccin-cava = pkgs.callPackage ./misc/catppuccin-cava { inherit (sources) catppuccin-cava-src; };
   catppuccin-btop = pkgs.callPackage ./misc/catppuccin-btop { inherit (sources) catppuccin-btop-src; };
-  catppuccin-spicetify = pkgs.callPackage ./misc/catppuccin-spicetify { inherit (sources) catppuccin-spicetify-src; };
   catppuccin-twemoji-hearts = pkgs.callPackage ./misc/catppuccin-twemoji-hearts {
     inherit generate-heart-emoji;
   };

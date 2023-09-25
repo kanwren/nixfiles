@@ -64,22 +64,6 @@
         "type": "github"
       }
     },
-    "catppuccin-spicetify-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1694000027,
-        "narHash": "sha256-XqsPnr0BiTHKgz6G6YOPT8+iSJMxkKHD2MEJBVdZk6w=",
-        "owner": "catppuccin",
-        "repo": "spicetify",
-        "rev": "dc3d4b24dcdd2fc3a8aa716d6280047c1928c029",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "spicetify",
-        "type": "github"
-      }
-    },
     "catppuccin-tmux-src": {
       "flake": false,
       "locked": {
@@ -355,7 +339,6 @@
         "catppuccin-cava-src": "catppuccin-cava-src",
         "catppuccin-k9s-src": "catppuccin-k9s-src",
         "catppuccin-kitty-src": "catppuccin-kitty-src",
-        "catppuccin-spicetify-src": "catppuccin-spicetify-src",
         "catppuccin-tmux-src": "catppuccin-tmux-src",
         "catppuccin-zathura-src": "catppuccin-zathura-src",
         "darwin": "darwin",
