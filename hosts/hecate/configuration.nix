@@ -30,6 +30,8 @@
     };
   };
 
+  services.tailscale.extraUpFlags = [ "--advertise-exit-node" ];
+
   hardware = {
     opengl = {
       enable = true;
