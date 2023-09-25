@@ -61,7 +61,7 @@
       ripgrep
       direnv
       h
-      exa
+      eza
       bat
       fzf
       fd

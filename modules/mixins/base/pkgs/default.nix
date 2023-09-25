@@ -26,7 +26,7 @@
       ripgrep
       fd
       sd
-      exa
+      eza
       fzf
       wget
       curl

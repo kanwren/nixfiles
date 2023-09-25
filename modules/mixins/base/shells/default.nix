@@ -93,7 +93,7 @@ in
 
       shellAliases = cdAliases // {
         # aliases for alternate utilities
-        ls = "${pkgs.exa}/bin/exa --git";
+        ls = "${pkgs.eza}/bin/eza --git";
         cat = "${pkgs.bat}/bin/bat";
         ping = "${pkgs.prettyping}/bin/prettyping";
 
@@ -224,7 +224,7 @@ in
     fish = {
       enable = true;
       shellAliases = cdAliases // {
-        ls = "${pkgs.exa}/bin/exa --git";
+        ls = "${pkgs.eza}/bin/eza --git";
         cat = "${pkgs.bat}/bin/bat";
         ping = "${pkgs.prettyping}/bin/prettyping";
         g = "git";

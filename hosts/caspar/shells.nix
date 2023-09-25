@@ -28,11 +28,11 @@ in
       g = "git";
       k = "kubectl";
       cat = "${pkgs.bat}/bin/bat";
-      ls = "${pkgs.exa}/bin/exa --git";
-      l = "${pkgs.exa}/bin/exa --git -lah";
-      la = "${pkgs.exa}/bin/exa --git -lah";
-      ll = "${pkgs.exa}/bin/exa --git -lh";
-      lsa = "${pkgs.exa}/bin/exa --git -lh";
+      ls = "${pkgs.eza}/bin/eza --git";
+      l = "${pkgs.eza}/bin/eza --git -lah";
+      la = "${pkgs.eza}/bin/eza --git -lah";
+      ll = "${pkgs.eza}/bin/eza --git -lh";
+      lsa = "${pkgs.eza}/bin/eza --git -lh";
     };
 
     systemPackages = with pkgs; [
