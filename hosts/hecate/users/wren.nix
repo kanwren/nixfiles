@@ -20,8 +20,6 @@
     ];
     createHome = true;
     shell = pkgs.fish;
-
-    openssh.authorizedKeys.keys = import ../../../keys/kanwren.nix;
   };
 
   nix.settings.trusted-users = [ "wren" ];
