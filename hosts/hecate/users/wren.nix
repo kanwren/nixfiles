@@ -57,7 +57,6 @@
         filelight # disk usage visualization
         libreoffice
         slack
-        teams
         insomnia # graphical REST API client
         anki # flashcards
       ];
