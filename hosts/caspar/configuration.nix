@@ -51,7 +51,7 @@
       patch
       bc
 
-      cachix
+      # cachix
       nix-index
       curl
       moreutils
