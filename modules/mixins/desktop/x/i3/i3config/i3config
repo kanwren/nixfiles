@@ -138,6 +138,8 @@
         bindsym 6     exec "setxkbmap -variant colemak";                                   mode "default"
         bindsym 7     exec "setxkbmap -layout us,apl -variant ,dyalog -option grp:switch"; mode "default"
 
+        bindsym e     exec "setxkbmap -layout epo"; mode "default"
+
         bindsym Escape mode "default"
     }
 # }}}
