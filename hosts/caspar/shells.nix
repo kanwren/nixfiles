@@ -211,34 +211,35 @@ in
 
         # set up homebrew env
         if command -v /opt/homebrew/bin/brew >/dev/null 2>&1
-          /opt/homebrew/bin/brew shellenv | source
-
           set -gx HOMEBREW_NO_ANALYTICS 1
+          set -gx HOMEBREW_PREFIX "/opt/homebrew"
+          set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar"
+          set -gx HOMEBREW_REPOSITORY "/opt/homebrew"
 
-          if command -v brew >/dev/null 2>&1
-            # Used for C pre-processor/#include. Confirm paths with `clang -x c -v -E /dev/null`
-            if set -q CPATH
-              set -gx CPATH (brew --prefix)"/include:$CPATH"
-            else
-              set -gx CPATH (brew --prefix)/include
-            end
+          # Used for C pre-processor/#include. Confirm paths with `clang -x c -v -E /dev/null`
+          not set -q CPATH; and set CPATH ""
+          set -gx CPATH /opt/homebrew/include:"$CPATH"
 
-            # Used by linker. Confirm paths with `clang -Xlinker -v`
-            if set -q LIBRARY_PATH
-              set -gx LIBRARY_PATH "(brew --prefix)/lib:$LIBRARY_PATH"
-            else
-              set -gx LIBRARY_PATH (brew --prefix)/lib
-            end
-          end
+          # Used by linker. Confirm paths with `clang -Xlinker -v`
+          not set -q LIBRARY_PATH; and set LIBRARY_PATH ""
+          set -gx LIBRARY_PATH /opt/homebrew/lib:"$LIBRARY_PATH"
+
+          not set -q MANPATH; and set MANPATH ""
+          set -gx MANPATH /opt/homebrew/share/man:"$MANPATH"
+
+          not set -q INFOPATH; and set INFOPATH ""
+          set -gx INFOPATH /opt/homebrew/share/info:"$INFOPATH"
+
+          fish_add_path -p /opt/homebrew/bin /opt/homebrew/sbin
         end
 
-        # Give NixOS paths priority over brew and system paths
-        fish_add_path --move --prepend --path $HOME/.nix-profile/bin /etc/profiles/per-user/$USER/bin /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+        # give NixOS paths priority over brew and system paths
+        fish_add_path -p $HOME/.nix-profile/bin /etc/profiles/per-user/$USER/bin /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
 
         set -gx GPG_TTY (tty)
       '';
       interactiveShellInit = ''
-        fish_add_path -pP "$HOME/bin"
+        fish_add_path -p "$HOME/bin"
         direnv hook fish | source
 
         function h
