@@ -148,6 +148,7 @@
         {
           devShells.default = pkgs.mkShellNoCC {
             packages = [
+              pkgs.just
               # formatting
               pkgs.lefthook
               self.formatter.${system}
