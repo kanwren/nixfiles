@@ -1,10 +1,10 @@
 { self
 , nixpkgs
-, darwin
+, nix-darwin
 , ...
 }@inputs:
 
-darwin.lib.darwinSystem {
+nix-darwin.lib.darwinSystem {
   system = "aarch64-darwin";
 
   specialArgs = {
