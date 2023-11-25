@@ -98,11 +98,3 @@ theming. Here are some things that may need to be done manually:
 - Wallpapers: <https://github.com/catppuccin/wallpapers>
   - Update wallpaper with `betterlockscreen -u ...` and `betterlockscreen -w`
 
-For MacOS:
-
-- Install Nix: `sh <(curl -L "https://nixos.org/nix/install")`
-- Build the system: `nix build '.#darwinConfigurations.caspar.system' --extra-experimental-features 'nix-command flakes ca-derivations'`
-- Switch into the system: `./result/sw/bin/darwin-rebuild switch --flake '.#caspar'`
-- Update the login shell: `echo "/run/current-system/sw/bin/fish" | sudo tee -a /etc/shells && chsh -s /run/current-system/sw/bin/fish`
-- Update the hostname: `sudo scutil --set HostName ''; sudo scutil --set LocalHostName caspar; sudo scutil --set ComputerName caspar`
-
