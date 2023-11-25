@@ -23,6 +23,7 @@
       ntfsprogs
 
       # CLI tools
+      bat
       ripgrep
       fd
       sd
