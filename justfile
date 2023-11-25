@@ -1,4 +1,5 @@
 use_system_rebuild := "false"
+use_sudo := "true"
 
 default:
     @just --list
@@ -8,7 +9,7 @@ hecate-system:
     nix build --no-link '.#nixosConfigurations.hecate.config.system.build.toplevel'
 
 hecate COMMAND='build': hecate-system
-    {{ quote(if use_system_rebuild == "true" { 'nixos-rebuild' } else { `nix build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'` / "sw" / "bin" / "nixos-rebuild" }) }} --flake '.#hecate' {{ quote(COMMAND) }}
+    {{ if use_sudo == "true" { if COMMAND =~ "^boot|switch|test$" { "sudo " } else { "" } } else { "" } }}{{ quote(if use_system_rebuild == "true" { 'nixos-rebuild' } else { `nix build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'` / "sw" / "bin" / "nixos-rebuild" }) }} --flake '.#hecate' {{ quote(COMMAND) }}
 
 [private]
 caspar-system:
