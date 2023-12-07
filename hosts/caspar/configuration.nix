@@ -55,6 +55,7 @@
       nix-index
       curl
       moreutils
+      (lib.hiPrio (parallel-full.override { willCite = true; })) # conflicts with 'parallel' from moreutils
       exiftool
       hyperfine
       btop
