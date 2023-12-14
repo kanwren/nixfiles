@@ -27,7 +27,7 @@ nix_executable := "nix"
 nix_command := nix_executable + (if use_experimental_features == "true" { " --experimental-features 'nix-command flakes'" } else { "" }) + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
 
 # Show this list
-list-recipes:
+_list-recipes:
     @just --list --unsorted --list-prefix '    '
     @echo "Variables:"
     @just --evaluate | while IFS= read line; do echo "    $line"; done
