@@ -168,6 +168,10 @@ in
         function zvm_after_init() {
           source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
         }
+
+        # prompt
+        PROMPT='%(?.%F{green}.%F{red})%B;%b%f '
+        RPROMPT=
       '';
 
       ohMyZsh = {
