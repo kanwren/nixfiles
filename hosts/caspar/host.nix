@@ -14,7 +14,6 @@ nix-darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     self.darwinModules.oh-my-zsh
-    self.darwinModules.starship
 
     {
       nix.registry.nixpkgs.flake = nixpkgs;
@@ -22,7 +21,6 @@ nix-darwin.lib.darwinSystem {
     }
 
     self.nixosModules.mixins.home-manager-common
-    self.nixosModules.mixins.base.starship
 
     ./configuration.nix
   ];
