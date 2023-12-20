@@ -178,6 +178,23 @@ in
         set -gx GPG_TTY (tty)
       '';
 
+      promptInit = ''
+        function fish_prompt
+            if test $status = 0
+                set_color --bold green
+            else
+                set_color --bold red
+            end
+            printf '; '
+            set_color normal
+        end
+
+        # disable vi mode prompt indicator
+        function fish_mode_prompt; end
+
+        set -gx fish_greeting ""
+      '';
+
       interactiveShellInit = ''
         fish_add_path -p "$HOME/bin"
         direnv hook fish | source
