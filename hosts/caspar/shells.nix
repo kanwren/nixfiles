@@ -134,8 +134,9 @@ in
 
         bindkey -v
         export KEYTIMEOUT=1
+      '';
 
-        # prompt
+      promptInit = ''
         PROMPT='%(?.%F{green}.%F{red})%B;%b%f '
         RPROMPT=
       '';
