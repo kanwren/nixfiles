@@ -23,14 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     nvim-configs = {
       url = "github:kanwren/nvim-configs";
       inputs = {
@@ -86,7 +78,6 @@
     , nixos-hardware
     , flake-utils
     , nixos-generators
-    , nixos-wsl
     , nvim-configs
     , catppuccin-btop-src
     , catppuccin-cava-src
@@ -118,8 +109,6 @@
         nixosConfigurations = {
           # main dev laptop
           hecate = import ./hosts/hecate/host.nix inputs;
-
-          wsl = import ./hosts/wsl/host.nix inputs;
         };
 
         darwinConfigurations = {
