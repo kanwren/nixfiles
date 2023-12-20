@@ -124,9 +124,6 @@
         # home-manager modules
         hmModules = import ./hm-modules { inherit self; };
 
-        # nix-darwin modules
-        darwinModules = import ./darwin-modules { inherit nixpkgs; };
-
         # custom templates
         templates = import ./templates;
       }

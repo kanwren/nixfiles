@@ -13,7 +13,6 @@ nix-darwin.lib.darwinSystem {
 
   modules = [
     inputs.home-manager.darwinModules.home-manager
-    self.darwinModules.oh-my-zsh
 
     {
       nix.registry.nixpkgs.flake = nixpkgs;

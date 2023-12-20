@@ -116,7 +116,6 @@
         set -g @catppuccin_flavour mocha
         run-shell ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.tmux
 
-        set -g default-shell ${pkgs.zsh}/bin/zsh
         set-option -sa terminal-overrides ',xterm-kitty:RGB'
         set-window-option -g automatic-rename on
         setw -g monitor-activity on

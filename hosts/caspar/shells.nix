@@ -1,14 +1,6 @@
 { pkgs, self, lib, ... }:
 
 let
-  commonInit = ''
-    # ~/bin
-    export PATH="$HOME/bin''${PATH:+:$PATH}"
-
-    # other system paths /opt/local/bin
-    export PATH="$HOME/bin:''${PATH:+$PATH:}/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin"
-  '';
-
   cdAliases = builtins.listToAttrs (builtins.map
     (n: {
       name = ".${toString n}";
@@ -25,14 +17,8 @@ in
     shellAliases = cdAliases // {
       vi = "nvim";
       vim = "nvim";
-      g = "git";
-      k = "kubectl";
-      cat = "${pkgs.bat}/bin/bat";
       ls = "${pkgs.eza}/bin/eza --git";
-      l = "${pkgs.eza}/bin/eza --git -lah";
-      la = "${pkgs.eza}/bin/eza --git -lah";
-      ll = "${pkgs.eza}/bin/eza --git -lh";
-      lsa = "${pkgs.eza}/bin/eza --git -lh";
+      cat = "${pkgs.bat}/bin/bat";
     };
 
     systemPackages = with pkgs; [
@@ -49,7 +35,7 @@ in
       enable = true;
       enableCompletion = true;
       interactiveShellInit = ''
-        ${commonInit}
+        export PATH="$HOME/bin:''${PATH:+$PATH:}/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin"
 
         if [ `ulimit -n` -lt 8192 ]; then
           ulimit -n 8192
@@ -67,6 +53,8 @@ in
         export HISTSIZE=1000000
         export HISTFILESIZE=1000000
         export HISTIGNORE="ls:cd:exit:history"
+
+        PS1='; '
       '';
     };
 
@@ -77,6 +65,7 @@ in
       enableFzfGit = true;
       enableSyntaxHighlighting = true;
       enableFzfHistory = true;
+
       shellInit = ''
         typeset -U path PATH
 
@@ -84,8 +73,9 @@ in
           ulimit -n 8192
         fi
 
-        ${commonInit}
+        export PATH="$HOME/bin:''${PATH:+$PATH:}/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin"
       '';
+
       loginShellInit = ''
         # set up homebrew env
         if command -v /opt/homebrew/bin/brew &>/dev/null; then
@@ -104,6 +94,7 @@ in
 
         export GPG_TTY="$(tty)"
       '';
+
       interactiveShellInit = ''
         # syntax highlighting (pkgs.zsh-syntax-highlighting sourced by enableSyntaxHighlighting)
         export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
@@ -144,70 +135,15 @@ in
         bindkey -v
         export KEYTIMEOUT=1
 
-        export FZF_BASE="${pkgs.fzf}/share/fzf"
-
-        # See github:spwhitt/nix-zsh-completions/issues/32
-        function _nix() {
-          local ifs_bk="$IFS"
-          local input=("''${(Q)words[@]}")
-          IFS=$'\n'$'\t'
-          local res=($(NIX_GET_COMPLETIONS=$((CURRENT - 1)) "$input[@]"))
-          IFS="$ifs_bk"
-          local tpe="$res[1]"
-          local suggestions=(''${res:1})
-          if [[ "$tpe" == filenames ]]; then
-            compadd -fa suggestions
-          else
-            compadd -a suggestions
-          fi
-        }
-        compdef _nix nix
-
-        # Fix fzf not being loaded with zsh-vi-mode
-        # See https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
-        function zvm_after_init() {
-          source "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/fzf/fzf.plugin.zsh"
-        }
-
         # prompt
         PROMPT='%(?.%F{green}.%F{red})%B;%b%f '
         RPROMPT=
       '';
-
-      ohMyZsh = {
-        enable = true;
-        plugins = [
-          "bazel"
-          "colored-man-pages"
-          "docker"
-          "fzf"
-          "git"
-          "gh"
-          "golang"
-          "kubectl"
-          "last-working-dir"
-          "nix-shell"
-          "ripgrep"
-          "safe-paste"
-          "wd"
-          "z"
-          "zsh-vi-mode"
-        ];
-        customPkgs = [
-          (pkgs.runCommand "zsh-nix-shell" { } ''
-            mkdir -p "$out"/share/zsh/plugins
-            cp -r ${pkgs.zsh-nix-shell}/share/zsh-nix-shell "$out"/share/zsh/plugins/nix-shell
-          '')
-          (pkgs.runCommand "zsh-vi-mode" { } ''
-            mkdir -p "$out"/share/zsh/plugins
-            cp -r ${pkgs.zsh-vi-mode}/share/zsh-vi-mode "$out"/share/zsh/plugins/zsh-vi-mode
-          '')
-        ];
-      };
     };
 
     fish = {
       enable = true;
+
       loginShellInit = ''
         fish_add_path -aP /usr/local/bin /usr/local/sbin /opt/local/bin
 
@@ -240,6 +176,7 @@ in
 
         set -gx GPG_TTY (tty)
       '';
+
       interactiveShellInit = ''
         fish_add_path -p "$HOME/bin"
         direnv hook fish | source
