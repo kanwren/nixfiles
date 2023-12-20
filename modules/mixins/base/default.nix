@@ -12,7 +12,6 @@ let
     time = ./time;
     users = ./users;
     networking = ./networking;
-    starship = ./starship.nix;
   };
 in
 modules // {

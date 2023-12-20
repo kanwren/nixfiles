@@ -3,7 +3,6 @@
 {
   users = {
     mutableUsers = true;
-    defaultUserShell = pkgs.zsh;
   };
 }
 

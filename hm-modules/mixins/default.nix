@@ -23,7 +23,6 @@ let
     tmux = import ./tmux { inherit self; };
     vscode = import ./vscode;
     zathura = import ./zathura { inherit self; };
-    zsh = import ./zsh;
   };
 in
 modules // {
