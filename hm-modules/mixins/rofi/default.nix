@@ -17,7 +17,7 @@
 
       display-ssh = " [ssh]";
       display-run = " [run]";
-      display-drun = "異 [drun]";
+      display-drun = "󱓞 [app]";
       display-window = " [window]";
       display-combi = " [combi]";
     };
