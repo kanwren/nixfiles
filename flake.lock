@@ -32,22 +32,6 @@
         "type": "github"
       }
     },
-    "catppuccin-k9s-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1704757062,
-        "narHash": "sha256-EBDciL3F6xVFXvND+5duT+OiVDWKkFMWbOOSruQ0lus=",
-        "owner": "catppuccin",
-        "repo": "k9s",
-        "rev": "590a762110ad4b6ceff274265f2fe174c576ce96",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "k9s",
-        "type": "github"
-      }
-    },
     "catppuccin-kitty-src": {
       "flake": false,
       "locked": {
@@ -257,7 +241,6 @@
       "inputs": {
         "catppuccin-btop-src": "catppuccin-btop-src",
         "catppuccin-cava-src": "catppuccin-cava-src",
-        "catppuccin-k9s-src": "catppuccin-k9s-src",
         "catppuccin-kitty-src": "catppuccin-kitty-src",
         "catppuccin-tmux-src": "catppuccin-tmux-src",
         "catppuccin-zathura-src": "catppuccin-zathura-src",

@@ -35,10 +35,6 @@
       url = "github:catppuccin/kitty";
       flake = false;
     };
-    catppuccin-k9s-src = {
-      url = "github:catppuccin/k9s";
-      flake = false;
-    };
     catppuccin-tmux-src = {
       url = "github:catppuccin/tmux";
       flake = false;
@@ -73,7 +69,6 @@
     , catppuccin-btop-src
     , catppuccin-cava-src
     , catppuccin-kitty-src
-    , catppuccin-k9s-src
     , catppuccin-tmux-src
     , catppuccin-zathura-src
     , k8split-src
@@ -87,7 +82,6 @@
           catppuccin-btop-src
           catppuccin-cava-src
           catppuccin-kitty-src
-          catppuccin-k9s-src
           catppuccin-tmux-src
           catppuccin-zathura-src
           k8split-src

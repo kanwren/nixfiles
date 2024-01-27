@@ -95,8 +95,6 @@
       aws-iam-authenticator
       dive
       self.packages.${pkgs.system}.envtpl
-      kubeval
-      self.packages.${pkgs.system}.k8split
     ];
 
     variables = {
@@ -248,9 +246,5 @@
         "/tags"
       ];
     };
-
-    # TODO(wrenn): this gets put into `~/.config/k9s`, but I think k9s expects
-    # it in `~/Library/Application Support/k9s`.
-    xdg.configFile."k9s/skin.yml".source = "${self.packages.${pkgs.system}.catppuccin-k9s}/mocha.yml";
   };
 }
