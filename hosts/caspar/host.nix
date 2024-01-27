@@ -19,8 +19,6 @@ nix-darwin.lib.darwinSystem {
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
     }
 
-    self.nixosModules.mixins.home-manager-common
-
     ./configuration.nix
   ];
 }
