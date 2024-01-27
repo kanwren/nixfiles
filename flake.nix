@@ -23,14 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvim-configs = {
-      url = "github:kanwren/nvim-configs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     catppuccin-btop-src = {
       url = "github:catppuccin/btop";
       flake = false;
@@ -78,7 +70,6 @@
     , nixos-hardware
     , flake-utils
     , nixos-generators
-    , nvim-configs
     , catppuccin-btop-src
     , catppuccin-cava-src
     , catppuccin-kitty-src
