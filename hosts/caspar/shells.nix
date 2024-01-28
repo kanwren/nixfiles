@@ -91,8 +91,6 @@ in
             export LIBRARY_PATH="$(brew --prefix)/lib''${LIBRARY_PATH:+:$LIBRARY_PATH}"
           fi
         fi
-
-        export GPG_TTY="$(tty)"
       '';
 
       interactiveShellInit = ''
@@ -174,8 +172,6 @@ in
 
         # give NixOS paths priority over brew and system paths
         fish_add_path -p $HOME/.nix-profile/bin /etc/profiles/per-user/$USER/bin /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
-
-        set -gx GPG_TTY (tty)
       '';
 
       promptInit = ''

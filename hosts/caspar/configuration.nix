@@ -70,7 +70,6 @@
       rsync
       gitAndTools.gitFull
       gitAndTools.gh
-      certstrap
       hyperfine
       direnv
       h
@@ -79,6 +78,10 @@
       just
       watch
       entr
+      ## cryptography
+      gnupg
+      openssl
+      certstrap
       ## archival/compression
       gnutar
       gzip
@@ -128,6 +131,8 @@
       (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
     ];
   };
+
+  programs.gnupg.agent.enable = true;
 
   users.users.wrenn = {
     home = "/Users/wrenn";
