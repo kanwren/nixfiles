@@ -187,6 +187,7 @@ in
       interactiveShellInit = ''
         fish_add_path -p "$HOME/bin"
         direnv hook fish | source
+        frum init | source
 
         function h
             if set -l target (command h --resolve "$HOME/Development/code" $argv)
