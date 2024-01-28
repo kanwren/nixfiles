@@ -129,6 +129,7 @@
       delve
       python3
       rustup
+      self.packages.${pkgs.system}.frum
       shellcheck
 
       # media tools

@@ -27,5 +27,6 @@ rec {
   # tools
   slides-full = pkgs.callPackage ./tools/slides { };
   envtpl = pkgs.callPackage ./tools/envtpl { inherit (sources) envtpl-src; };
+  frum = pkgs.callPackage ./tools/frum { };
 }
 
