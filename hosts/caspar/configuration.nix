@@ -62,10 +62,12 @@
       findutils
       patch
       netcat
+      socat
       nmap
       bc
       wget
       curl
+      grpcurl
       moreutils
       (lib.hiPrio (parallel-full.override { willCite = true; })) # conflicts with 'parallel' from moreutils
       tree
@@ -81,24 +83,33 @@
       h
       tldr
       cht-sh
-      just
       watch
       entr
-      ## cryptography
+      ## build systems/task runners/etc.
+      gnumake
+      autoconf
+      automake
+      cmake
+      bazelisk
+      just
+      ## cryptography and pki
       gnupg
       openssl
       certstrap
+      certigo
       ## archival/compression
       gnutar
       gzip
       xz
+      lz4
       zstd
       unar
-      ## data format manipulation
+      ## data and manipulation
       jq
       jo
       yq-go
       crudini
+      sqlite
       ## TUI stuff
       tz
       btop
@@ -111,6 +122,7 @@
       ## AWS
       awscli2
       aws-iam-authenticator
+      #ssm-session-manager-plugin
       ## programming language support
       pkg-config
       go_1_20
@@ -130,6 +142,14 @@
     variables = {
       EDITOR = "nvim";
     };
+
+    shellAliases = {
+      cat = "bat";
+      ls = "eza --git";
+      vi = "nvim";
+      vim = "nvim";
+      bazel = "bazelisk";
+    };
   };
 
   fonts = {
@@ -139,6 +159,22 @@
   };
 
   programs.gnupg.agent.enable = true;
+
+  homebrew = {
+    enable = true;
+    brews = [
+      "awscurl"
+      "ollama"
+      "pueue"
+    ];
+    casks = [
+      "amethyst"
+      "kitty"
+      "plover"
+      "talon"
+      "gimp"
+    ];
+  };
 
   users.users.wrenn = {
     home = "/Users/wrenn";

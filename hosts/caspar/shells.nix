@@ -14,13 +14,6 @@ in
     loginShell = "${pkgs.fish}/bin/fish -l";
     variables.SHELL = "${pkgs.fish}/bin/fish";
 
-    shellAliases = cdAliases // {
-      vi = "nvim";
-      vim = "nvim";
-      ls = "${pkgs.eza}/bin/eza --git";
-      cat = "${pkgs.bat}/bin/bat";
-    };
-
     systemPackages = with pkgs; [
       fishPlugins.fzf-fish
       fishPlugins.foreign-env
