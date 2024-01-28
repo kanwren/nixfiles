@@ -106,6 +106,8 @@
         # NixOS modules
         nixosModules = import ./modules { inherit self; };
 
+        darwinModules = import ./darwin-modules { inherit self; };
+
         # home-manager modules
         hmModules = import ./hm-modules { inherit self; };
 

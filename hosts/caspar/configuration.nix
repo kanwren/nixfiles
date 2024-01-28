@@ -158,13 +158,21 @@
     ];
   };
 
-  programs.gnupg.agent.enable = true;
+  programs = {
+    gnupg.agent.enable = true;
+  };
+
+  services = {
+    ollama = {
+      enable = true;
+      logFile = "/var/tmp/ollama.log";
+    };
+  };
 
   homebrew = {
     enable = true;
     brews = [
       "awscurl"
-      "ollama"
       "pueue"
     ];
     casks = [
