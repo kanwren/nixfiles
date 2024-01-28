@@ -6,6 +6,12 @@
     ./shells.nix
   ];
 
+  networking = {
+    computerName = "caspar";
+    hostName = "caspar.local";
+    localHostName = "caspar";
+  };
+
   system = {
     keyboard = {
       enableKeyMapping = true;

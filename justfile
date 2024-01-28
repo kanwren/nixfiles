@@ -92,7 +92,7 @@ install-nix force="false":
     if {{ if force == "true" { "true" } else { "! command -v nix" } }}; then {{ if os() == "linux" { "sh <(curl -L https://nixos.org/nix/install) --daemon" } else { if os() == "macos" { "sh <(curl -L https://nixos.org/nix/install)" } else { error("unsupported OS: " + quote(os())) } } }}; fi
 
 # Bootstrap caspar
-bootstrap-caspar: (install-nix) (caspar "switch") (change-shell "fish") (macos-change-hostname "caspar")
+bootstrap-caspar: (install-nix) (caspar "switch") (change-shell "fish")
 
 # Helpers
 
@@ -119,10 +119,3 @@ change-shell SHELL:
     if test "$current_shell" != "$new_shell"; then
         chsh -s "$new_shell"
     fi
-
-[private]
-macos-change-hostname HOSTNAME:
-    {{ if os() == "macos" { "" } else { error("recipe macos-change-hostname is not supported on " + os()) } }}
-    sudo scutil --set HostName ''
-    sudo scutil --set LocalHostName {{ quote(HOSTNAME) }}
-    sudo scutil --set ComputerName {{ quote(HOSTNAME) }}
