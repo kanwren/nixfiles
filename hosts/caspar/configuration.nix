@@ -167,13 +167,16 @@
       enable = true;
       logFile = "/var/tmp/ollama.log";
     };
+    pueue = {
+      enable = true;
+      logFile = "/var/tmp/pueued.log";
+    };
   };
 
   homebrew = {
     enable = true;
     brews = [
       "awscurl"
-      "pueue"
     ];
     casks = [
       "amethyst"
