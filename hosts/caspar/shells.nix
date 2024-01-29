@@ -21,6 +21,8 @@ in
     ];
 
     variables.LC_CTYPE = "en_US.UTF-8";
+
+    shellAliases = cdAliases;
   };
 
   programs = {
