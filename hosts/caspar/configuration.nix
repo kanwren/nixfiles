@@ -92,6 +92,10 @@
       automake
       cmake
       bazelisk
+      (runCommandNoCCLocal "bazel-bazelisk-alias" { } ''
+        mkdir -p "$out/bin"
+        ln -s "${bazelisk}/bin/bazelisk" "$out/bin/bazel"
+      '')
       just
       ## cryptography and pki
       gnupg
@@ -153,7 +157,6 @@
       ls = "eza --git";
       vi = "nvim";
       vim = "nvim";
-      bazel = "bazelisk";
     };
   };
 
