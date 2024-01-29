@@ -96,6 +96,27 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1706422804,
+        "narHash": "sha256-+ypK8QbE9RBe0sK4lAM4+8H4K85BB3BsDKMD7WbykBU=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "ce6fec88804dfd11e610cfd04333c23abeae80a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -111,6 +132,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "frum-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1638115123,
+        "narHash": "sha256-efMiZGNNsewPChnOz4+VpqsE4sU2GWnxAaqR6yvxX2M=",
+        "owner": "TaKO8Ki",
+        "repo": "frum",
+        "rev": "ffc76de236aae595f389de1c89c87ce996cd52c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TaKO8Ki",
+        "repo": "frum",
         "type": "github"
       }
     },
@@ -147,6 +184,26 @@
       "original": {
         "owner": "brendanjryan",
         "repo": "k8split",
+        "type": "github"
+      }
+    },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1698420672,
+        "narHash": "sha256-/TdeHMPRjjdJub7p7+w55vyABrsJlt5QkznPYy55vKA=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "aeb58d5e8faead8980a807c840232697982d47b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmattia",
+        "repo": "naersk",
         "type": "github"
       }
     },
@@ -245,14 +302,34 @@
         "catppuccin-tmux-src": "catppuccin-tmux-src",
         "catppuccin-zathura-src": "catppuccin-zathura-src",
         "envtpl-src": "envtpl-src",
+        "fenix": "fenix",
         "flake-utils": "flake-utils",
+        "frum-src": "frum-src",
         "home-manager": "home-manager",
         "k8split-src": "k8split-src",
+        "naersk": "naersk",
         "nix-darwin": "nix-darwin",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "wd-fish-src": "wd-fish-src"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706352756,
+        "narHash": "sha256-6K5rK1b2APQfXOrC+Hm+0QcyfPVt+TV81Q6Fd/QjMlQ=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "7219414e81810fd4d967136c4a0650523892c157",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "systems": {

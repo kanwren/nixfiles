@@ -23,6 +23,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    naersk = {
+      url = "github:nmattia/naersk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    frum-src = {
+      url = "github:TaKO8Ki/frum";
+      flake = false;
+    };
     catppuccin-btop-src = {
       url = "github:catppuccin/btop";
       flake = false;
@@ -66,6 +80,9 @@
     , nixos-hardware
     , flake-utils
     , nixos-generators
+    , fenix
+    , naersk
+    , frum-src
     , catppuccin-btop-src
     , catppuccin-cava-src
     , catppuccin-kitty-src
@@ -79,6 +96,9 @@
       recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
       sources = {
         inherit (inputs)
+          fenix
+          naersk
+          frum-src
           catppuccin-btop-src
           catppuccin-cava-src
           catppuccin-kitty-src

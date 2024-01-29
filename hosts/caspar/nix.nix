@@ -7,7 +7,7 @@
     '';
     settings = {
       sandbox = true;
-      extra-sandbox-paths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
+      extra-sandbox-paths = [ "/private/tmp" "/private/var/tmp" "/private/etc" "/usr/bin/env" ];
       trusted-users = [ "wrenn" ];
     };
   };
