@@ -75,6 +75,7 @@
       eza
       bat
       fzf
+      fd
       rsync
       gitAndTools.gitFull
       gitAndTools.gh
