@@ -138,6 +138,9 @@
       imagemagick
       pandoc
       qpdf
+
+      # macos stuff
+      pinentry_mac
     ];
 
     variables = {
