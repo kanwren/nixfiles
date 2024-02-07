@@ -35,25 +35,15 @@ for a specific system.
 
 ### `installer`
 
-`installer/` contains a custom installer configuration. This can be built
-manually via [nixos-generators](https://github.com/nix-community/nixos-generators).
-For example, if building on an `x86_64-linux` system:
+`installer/` contains a custom installer configuration, built with [nixos-generators](https://github.com/nix-community/nixos-generators).
+The `justfile` contains a recipe for building installers:
 
 ```
 # x86_64-linux installer iso
-$ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
-    -f install-iso -c installer/configuration.nix
+$ just build-nixos-installer x86_64-linux ./installer/configuration.nix
 
 # aarch64-linux installer sd image (requires 'boot.binfmt.emulatedSystems = [ "aarch64-linux" ];')
-$ nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
-    -f sd-aarch64-installer --system aarch64-linux -c installer/configuration.nix
-```
-
-Alternatively, some installers are exported by default:
-
-```
-$ nix build 'github:kanwren/nixfiles#packages.x86_64-linux.install-iso'
-$ nix build 'github:kanwren/nixfiles#packages.aarch64-linux.sd-aarch64-installer'
+$ just build-nixos-installer aarch64-linux ./installer/configuration.nix
 ```
 
 ### Manual setup
