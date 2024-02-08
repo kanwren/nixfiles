@@ -127,7 +127,7 @@
       ## AWS
       awscli2
       aws-iam-authenticator
-      #ssm-session-manager-plugin
+      (ssm-session-manager-plugin.overrideAttrs { doCheck = false; })
       ## programming language support
       pkg-config
       go_1_20
