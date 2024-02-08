@@ -259,6 +259,7 @@
           ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
         };
         extraConfig = {
+          credential.helper = "osxkeychain";
           gist.private = true;
           color = {
             diff = "auto";
