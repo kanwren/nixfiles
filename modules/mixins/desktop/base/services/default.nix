@@ -19,7 +19,12 @@
     gnome.gnome-keyring.enable = true;
 
     atd.enable = true;
+
+    keybase.enable = true;
+    kbfs.enable = true;
   };
+
+  environment.systemPackages = [ pkgs.keybase-gui ];
 
   # open port 631 for cups
   networking.firewall = {
