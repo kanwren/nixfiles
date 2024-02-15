@@ -130,7 +130,7 @@
       (ssm-session-manager-plugin.overrideAttrs { doCheck = false; })
       ## programming language support
       pkg-config
-      go_1_20
+      go_1_22
       delve
       python3
       rustup
