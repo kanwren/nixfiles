@@ -306,6 +306,7 @@
           ".rbx"
           "node_modules"
           "/tags"
+          ".jj"
         ];
       };
     };
