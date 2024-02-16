@@ -11,7 +11,4 @@
     # Podman
     podman.enable = true;
   };
-
-  # Singularity
-  programs.singularity.enable = true;
 }
