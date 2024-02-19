@@ -15,6 +15,7 @@ let
     gpg-agent = import ./gpg-agent;
     gtk = import ./gtk;
     haskell = import ./haskell;
+    jujutsu = import ./jujutsu;
     kitty = import ./kitty { inherit self; };
     nix = import ./nix;
     rofi = import ./rofi;
