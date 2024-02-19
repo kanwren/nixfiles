@@ -7,6 +7,11 @@ nixpkgs.lib.nixosSystem rec {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
+    # Pass this flake recurisvely as a module input 'flake'
+    {
+      _module.args.flake = self;
+    }
+
     {
       nix.registry.nixpkgs.flake = nixpkgs;
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
@@ -30,20 +35,7 @@ nixpkgs.lib.nixosSystem rec {
       }
     ])
 
-    (with self.nixosModules.mixins; [
-      base.full
-      home-manager-common
-
-      desktop.base
-      desktop.x.i3
-      desktop.audio
-      desktop.bluetooth
-      desktop.virtualisation
-
-      tailscale
-    ])
-
     ./hardware-configuration.nix
-    (import ./configuration.nix { inherit self; })
+    ./configuration.nix
   ];
 }

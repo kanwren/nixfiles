@@ -1,6 +1,4 @@
-{ self }:
-
-{ pkgs, lib, ... }:
+{ pkgs, lib, flake, ... }:
 
 let
   cdAliases = builtins.listToAttrs (builtins.map
@@ -94,7 +92,7 @@ in
     h
     fishPlugins.fzf-fish
     fishPlugins.foreign-env
-    self.packages.${pkgs.system}.wd-fish
+    flake.packages.${pkgs.system}.wd-fish
   ];
 }
 

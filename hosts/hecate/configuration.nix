@@ -1,10 +1,22 @@
-{ self }:
-
 { pkgs, ... }:
 
 {
   imports = [
-    (import ./users { inherit self; })
+    ./audio
+    ./bluetooth
+    ./boot
+    ./i18n
+    ./networking
+    ./nix
+    ./pkgs
+    ./security
+    ./services
+    ./shells
+    ./tailscale
+    ./time
+    ./users
+    ./virtualisation
+    ./x
   ];
 
   system.stateVersion = "22.11";

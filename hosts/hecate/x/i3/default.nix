@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../base
     ./picom.nix
     ./redshift.nix
   ];

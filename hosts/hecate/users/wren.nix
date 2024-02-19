@@ -1,6 +1,4 @@
-{ self }:
-
-{ pkgs, ... }:
+{ pkgs, flake, ... }:
 
 {
   users.users.wren = {
@@ -26,7 +24,7 @@
 
   home-manager.users.wren = {
     imports = [
-      self.hmModules.mixins.full
+      flake.hmModules.mixins.full
     ];
 
     home = {

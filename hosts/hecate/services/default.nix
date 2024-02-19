@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   services = {
@@ -6,6 +6,8 @@
       enable = true;
       allowSFTP = true;
       settings = {
+        PermitRootLogin = "prohibit-password";
+        PasswordAuthentication = false;
         X11Forwarding = true;
       };
     };
@@ -26,19 +28,25 @@
 
   environment.systemPackages = [ pkgs.keybase-gui ];
 
-  # open port 631 for cups
-  networking.firewall = {
-    allowedTCPPorts = [ 631 ];
-    allowedUDPPorts = [ 631 ];
-  };
-
   programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "tty";
+    };
+
     nm-applet.enable = true;
 
     wireshark = {
       enable = true;
       package = pkgs.wireshark-qt;
     };
+  };
+
+  # open port 631 for cups
+  networking.firewall = {
+    allowedTCPPorts = [ 631 ];
+    allowedUDPPorts = [ 631 ];
   };
 }
 
