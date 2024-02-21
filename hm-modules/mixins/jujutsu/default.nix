@@ -12,7 +12,15 @@
         pager = "less -RF";
         paginate = "auto";
         diff-editor = ":builtin";
-        default-command = "log";
+        default-command = "worklog";
+      };
+
+      revsets = {
+        log = "@ | ancestors(immutable_heads().., 2) | heads(immutable_heads())";
+      };
+
+      aliases = {
+        "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
       };
 
       revset-aliases = {
