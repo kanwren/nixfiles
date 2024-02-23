@@ -14,9 +14,10 @@ in
     loginShell = "${pkgs.fish}/bin/fish -l";
     variables.SHELL = "${pkgs.fish}/bin/fish";
 
-    systemPackages = with pkgs; [
-      fishPlugins.fzf-fish
-      fishPlugins.foreign-env
+    systemPackages = [
+      pkgs.zoxide
+      pkgs.fishPlugins.fzf-fish
+      pkgs.fishPlugins.foreign-env
       self.packages.${pkgs.system}.wd-fish
     ];
 
@@ -48,6 +49,8 @@ in
         export HISTSIZE=1000000
         export HISTFILESIZE=1000000
         export HISTIGNORE="ls:cd:exit:history"
+
+        eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
 
         PS1='; '
       '';
@@ -107,7 +110,8 @@ in
       interactiveShellInit = ''
         fish_add_path -p "$HOME/bin"
         direnv hook fish | source
-        frum init | source
+        "${self.packages.${pkgs.system}.frum}/bin/frum" init | source
+        "${pkgs.zoxide}/bin/zoxide" init fish | source
 
         function h
             if set -l target (command h --resolve "$HOME/Development/code" $argv)
