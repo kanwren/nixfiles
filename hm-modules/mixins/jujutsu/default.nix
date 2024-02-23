@@ -12,6 +12,7 @@
         pager = "less -RF";
         paginate = "auto";
         diff-editor = ":builtin";
+        merge-editor = "vimdiff";
         default-command = "worklog";
       };
 
