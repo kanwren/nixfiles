@@ -31,6 +31,10 @@
         "fork(x, y)" = "heads(::x & ::y)::(x | y)"; # the bases of x and y, along with the paths to x and y; bases(x, y) | lr(x, y)
         "lr(x, y)" = "(::x ~ ::y) | (::y ~ ::x)"; # lr(x, y) is what 'git log' calls x...y
 
+        # work utilities
+        "named()" = "::(branches() | remote_branches() | tags() | trunk() | @ | git_head())";
+        "anon()" = "~named()";
+
         # commit info
         "user(x)" = "author(x) | committer(x)";
         "mine" =
