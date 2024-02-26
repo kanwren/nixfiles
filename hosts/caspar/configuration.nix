@@ -212,6 +212,9 @@
       home = {
         stateVersion = "22.11";
         sessionPath = [ "$HOME/bin" ];
+        packages = lib.flatten [
+          (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
+        ];
       };
 
       programs.kitty = {
@@ -234,19 +237,14 @@
           s = "status";
           cane = "commit --amend --no-edit";
           amend = "commit --amend";
-          pf = "push --force-with-lease";
           diffc = "diff --cached";
           conflicts = "diff --name-status --diff-filter=U";
-          difff = "diff --diff-filter";
-          diffno = "diff --name-only"; # diff file names only; for example, "git diffno --diff-filter=U | xargs vim"
-          diffnof = "diff --name-only --diff-filter";
           ff = "merge --ff-only";
           rh = "reset --hard";
           ri = "rebase --interactive";
           ls = "log --oneline";
-          lg = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
-          graph = "log --graph --oneline";
           lr = "log --left-right --graph --oneline";
+          graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
           changed = "show --name-status --oneline";
           mkexec = "update-index --chmod=+x";
           root = "rev-parse --show-toplevel";
