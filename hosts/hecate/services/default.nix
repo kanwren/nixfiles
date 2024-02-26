@@ -23,10 +23,7 @@
     atd.enable = true;
 
     keybase.enable = true;
-    kbfs.enable = true;
   };
-
-  environment.systemPackages = [ pkgs.keybase-gui ];
 
   programs = {
     gnupg.agent = {
