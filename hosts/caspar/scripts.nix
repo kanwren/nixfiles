@@ -77,6 +77,7 @@ in
     '
   '';
 
+  # Move the first change to a position after the second change.
   jj-relocate = pkgs.writers.writeBashBin "jj-relocate" ''
     set -euo pipefail
 
@@ -95,5 +96,21 @@ in
     if [ -n "$(change_ids "children($2) ~ ($1)")" ]; then
       jj rebase --source "all:children($2) ~ ($1)" --destination "$1"
     fi
+  '';
+
+  # List the change IDs for a revset ('@' by default)
+  jj-id = pkgs.writers.writeBashBin "jj-id" ''
+    set -euo pipefail
+    [ $# -le 1 ] || { echo "usage: $0 [<revision>]"; exit 1; }
+    jj log --revisions "''${1-@}" --no-graph --template 'change_id ++ "\n"'
+  '';
+
+  # Add empty commits before and after a commit, to guarantees that a commit has
+  # only one parent and only one child.
+  jj-isolate = pkgs.writers.writeBashBin "jj-isolate" ''
+    set -euo pipefail
+    [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
+    jj new --no-edit --insert-before "$1"
+    jj new --no-edit --insert-after "$1"
   '';
 }
