@@ -230,9 +230,6 @@
           signByDefault = true;
           key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
         };
-        includes = [
-          { path = "~/.gitconfig.local"; }
-        ];
         aliases = {
           s = "status";
           cane = "commit --amend --no-edit";
