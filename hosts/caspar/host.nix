@@ -19,7 +19,7 @@ nix-darwin.lib.darwinSystem {
 
     {
       nix.registry.nixpkgs.flake = nixpkgs;
-      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+      nix.nixPath = nixpkgs.lib.mkForce [ "nixpkgs=${nixpkgs}" ];
     }
 
     ./configuration.nix
