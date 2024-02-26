@@ -89,10 +89,10 @@ reindex: _validate-variables
 
 # Run the nix installer
 install-nix force="false":
-    if {{ if force == "true" { "true" } else { "! command -v nix" } }}; then {{ if os() == "linux" { "sh <(curl -L https://nixos.org/nix/install) --daemon" } else { if os() == "macos" { "sh <(curl -L https://nixos.org/nix/install)" } else { error("unsupported OS: " + quote(os())) } } }}; fi
+    if {{ if force == "true" { "true" } else { "! command -v nix" } }}; then {{ "curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install" }}; fi
 
 # Bootstrap caspar
-bootstrap-caspar: (install-nix) (caspar "switch") (change-shell "fish")
+bootstrap-caspar: install-nix (caspar "switch") (change-shell "fish")
 
 # Helpers
 
