@@ -79,8 +79,21 @@ in
 
   jj-relocate = pkgs.writers.writeBashBin "jj-relocate" ''
     set -euo pipefail
+
+    change_ids() {
+      jj log --revisions "$1" --no-graph --template 'change_id ++ "\n"'
+    }
+
     [ $# -eq 2 ] || { echo "usage: $0 <source> <destination>"; exit 1; }
+    [ -z "$(change_ids "$1")" ] && { echo "revision not found: $1"; exit 1; }
+    [ -z "$(change_ids "$2")" ] && { echo "revision not found: $2"; exit 1; }
+
+    # move 1 on top of 2
     jj rebase --revision "$1" --destination "$2"
-    jj rebase --source "all:children($2) ~ ($1)" --destination "$1"
+
+    # move children of 2 on top of 1, if there are any
+    if [ -n "$(change_ids "children($2) ~ ($1)")" ]; then
+      jj rebase --source "all:children($2) ~ ($1)" --destination "$1"
+    fi
   '';
 }
