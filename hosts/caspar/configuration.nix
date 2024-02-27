@@ -96,6 +96,7 @@
         mkdir -p "$out/bin"
         ln -s "${bazelisk}/bin/bazelisk" "$out/bin/bazel"
       '')
+      buildozer
       just
       ## cryptography and pki
       gnupg
@@ -121,6 +122,7 @@
       ## Docker/Kubernetes
       dive
       kubectl
+      k9s
       kubernetes-helm
       self.packages.${pkgs.system}.envtpl
       gomplate
