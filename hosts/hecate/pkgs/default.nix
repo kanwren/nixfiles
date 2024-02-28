@@ -67,7 +67,6 @@
       gnupg
 
       # desktop applications
-
       kitty # terminal
 
       # system management and other tools

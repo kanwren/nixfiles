@@ -36,25 +36,17 @@
         # CLI/TUI stuff
         h # quick directory jumping
         tokei # count lines of code
-        shellcheck # check shell scripts
         btop # activity monitor
         gitAndTools.gh # github client
-        jo # json generation
-        httpie # command line HTTP client
         miniserve # serve files/directories over HTTP
         ngrok # expose tunnels to local servers
         qrencode # generate QR codes
-
-        # development
-        tectonic
-        graphviz
 
         # applications
         xfce.thunar # file browser
         bitwarden # password manager
         filelight # disk usage visualization
         libreoffice
-        slack
         anki # flashcards
       ];
     };
