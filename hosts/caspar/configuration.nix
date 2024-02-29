@@ -250,7 +250,7 @@
           changed = "show --name-status --oneline";
           mkexec = "update-index --chmod=+x";
           root = "rev-parse --show-toplevel";
-          ignored = "ls-files --others --exclude-standard";
+          ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
           tag-sort = "tag --sort=v:refname";
 
           alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
