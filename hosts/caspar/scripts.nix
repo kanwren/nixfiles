@@ -62,7 +62,7 @@ in
     make -pRrq | awk -v RS= -F: '/(^|\n)# Files(\n|$)/,/(^|\n)# Finished Make data base/ {if ($1 !~ "^[#.]") {print $1}}' | sort | grep '^[[:alnum:]]'
   '';
 
-  nix-meta = pkgs.writers.writeBashBin "nix-meta" ''
+  "nix.meta" = pkgs.writers.writeBashBin "nix.meta" ''
     set -euo pipefail
     ${addDepsToPath [ pkgs.jq ]}
     nix eval "$1".meta --json | jq -r '
@@ -78,7 +78,7 @@ in
   '';
 
   # Move the first change to a position after the second change.
-  jj-relocate = pkgs.writers.writeBashBin "jj-relocate" ''
+  "jj.relocate" = pkgs.writers.writeBashBin "jj.relocate" ''
     set -euo pipefail
 
     change_ids() {
@@ -99,7 +99,7 @@ in
   '';
 
   # List the change IDs for a revset ('@' by default)
-  jj-id = pkgs.writers.writeBashBin "jj-id" ''
+  "jj.id" = pkgs.writers.writeBashBin "jj.id" ''
     set -euo pipefail
     [ $# -le 1 ] || { echo "usage: $0 [<revision>]"; exit 1; }
     jj log --revisions "''${1-@}" --no-graph --template 'change_id ++ "\n"'
@@ -107,7 +107,7 @@ in
 
   # Add empty commits before and after a commit, to guarantees that a commit has
   # only one parent and only one child.
-  jj-isolate = pkgs.writers.writeBashBin "jj-isolate" ''
+  "jj.isolate" = pkgs.writers.writeBashBin "jj.isolate" ''
     set -euo pipefail
     [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
     jj new --no-edit --insert-before "$1"
