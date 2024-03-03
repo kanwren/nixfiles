@@ -78,7 +78,7 @@ in
   '';
 
   # Move the first change to a position after the second change.
-  "jj.relocate" = pkgs.writers.writeBashBin "jj.relocate" ''
+  "jj.pluck" = pkgs.writers.writeBashBin "jj.pluck" ''
     set -euo pipefail
 
     change_ids() {
