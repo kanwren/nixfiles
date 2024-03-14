@@ -102,7 +102,7 @@ in
   "jj.id" = pkgs.writers.writeBashBin "jj.id" ''
     set -euo pipefail
     [ $# -le 1 ] || { echo "usage: $0 [<revision>]"; exit 1; }
-    jj log --revisions "''${1-@}" --no-graph --template 'change_id ++ "\n"'
+    jj log --revisions "''${1-@}" --no-graph --template 'change_id ++ "\n"' | tac
   '';
 
   # Add empty commits before and after a commit, to guarantees that a commit has
