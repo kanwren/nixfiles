@@ -29,7 +29,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "tty";
+      pinentryPackage = pkgs.pinentry;
     };
 
     nm-applet.enable = true;

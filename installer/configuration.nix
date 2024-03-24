@@ -37,7 +37,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "tty";
+      pinentryPackage = pkgs.pinentry;
     };
     bash.enableCompletion = true;
   };

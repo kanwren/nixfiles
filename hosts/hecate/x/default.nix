@@ -16,7 +16,9 @@
       touchpad.naturalScrolling = true;
     };
 
-    layout = "us";
-    xkbOptions = "caps:escape"; # TODO: set good compose key
+    xkb = {
+      layout = "us";
+      options = "caps:escape"; # TODO: set good compose key
+    };
   };
 }
