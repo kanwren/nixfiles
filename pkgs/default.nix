@@ -23,6 +23,7 @@ rec {
   # scripts
   lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
   generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
+  jj-helpers = pkgs.callPackage ./scripts/jj-helpers { };
 
   # tools
   slides-full = pkgs.callPackage ./tools/slides { };
