@@ -20,6 +20,8 @@ nixpkgs.lib.nixosSystem rec {
 
     inputs.home-manager.nixosModules.home-manager
 
+    self.nixosModules.pueue
+
     # hardware modules
     (with inputs.nixos-hardware.nixosModules; [
       common-pc-laptop

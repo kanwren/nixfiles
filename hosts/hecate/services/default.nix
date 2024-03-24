@@ -23,6 +23,8 @@
     atd.enable = true;
 
     keybase.enable = true;
+
+    pueue.enable = true;
   };
 
   programs = {
