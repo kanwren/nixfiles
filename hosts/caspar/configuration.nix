@@ -216,6 +216,7 @@
         sessionPath = [ "$HOME/bin" ];
         packages = lib.flatten [
           (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
+          self.packages.${pkgs.system}.jj-helpers
         ];
       };
 
