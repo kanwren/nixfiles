@@ -50,5 +50,14 @@
         anki # flashcards
       ];
     };
+
+    programs.jujutsu.settings = {
+      user.email = "nicole@wren.systems";
+      signing = {
+        sign-all = true;
+        backend = "gpg";
+        key = "07B776B0672AF6A4CF629919F1A41BE43E4EAA99";
+      };
+    };
   };
 }

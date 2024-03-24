@@ -3,10 +3,7 @@
     enable = true;
 
     settings = {
-      user = {
-        name = "Nicole Wren";
-        email = "nicole@wren.systems";
-      };
+      user.name = "Nicole Wren";
 
       ui = {
         pager = "less -RF";

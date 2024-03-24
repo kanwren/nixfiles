@@ -309,7 +309,7 @@
       };
 
       programs.jujutsu.settings = {
-        user.email = lib.mkForce "wrenn@squareup.com";
+        user.email = "wrenn@squareup.com";
         signing = {
           sign-all = true;
           backend = "gpg";
