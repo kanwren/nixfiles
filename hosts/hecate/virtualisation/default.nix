@@ -1,6 +1,5 @@
 {
   virtualisation = {
-    # Docker
     docker = {
       enable = true;
       autoPrune = {
@@ -8,7 +7,5 @@
         dates = "weekly";
       };
     };
-    # Podman
-    podman.enable = true;
   };
 }

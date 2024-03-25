@@ -6,25 +6,21 @@
   system.autoUpgrade.enable = false;
 
   nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-derivations
-
-      keep-outputs = true
-      keep-derivations = true
-    '';
+    settings = {
+      experimental-features = [ "ca-derivations" ];
+      keep-outputs = true;
+      keep-derivations = true;
+      trusted-users = [ "root" ];
+    };
 
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-
-    settings.trusted-users = [ "root" ];
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;
 }

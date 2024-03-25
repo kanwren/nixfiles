@@ -2,8 +2,12 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "both";
-    extraUpFlags = [ "--ssh" ];
+    extraUpFlags = [
+      "--ssh"
+      "--advertise-exit-node"
+    ];
   };
+
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" ];
   };

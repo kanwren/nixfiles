@@ -8,18 +8,31 @@ nixpkgs.lib.nixosSystem rec {
 
   modules = nixpkgs.lib.flatten [
     # Pass this flake recurisvely as a module input 'flake'
-    {
-      _module.args.flake = self;
-    }
+    { _module.args.flake = self; }
 
+    # Bootstrapping
     {
-      nix.registry.nixpkgs.flake = nixpkgs;
-      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-      nixpkgs.overlays = [ ];
+      networking.hostName = "hecate";
+
+      system.stateVersion = "22.11";
+
+      # Set up flakes, inject nixpkgs, and remove impure components
+      nix = {
+        # Enable flakes
+        settings.experimental-features = [ "nix-command" "flakes" ];
+
+        # The global flake registry's nixpkgs should be the system nixpkgs
+        registry.nixpkgs.flake = nixpkgs;
+
+        # '<nixpkgs>' should be the system nixpkgs
+        nixPath = [ "nixpkgs=${nixpkgs}" ];
+
+        # Disable channels
+        channel.enable = false;
+      };
     }
 
     inputs.home-manager.nixosModules.home-manager
-
     self.nixosModules.pueue
 
     # hardware modules

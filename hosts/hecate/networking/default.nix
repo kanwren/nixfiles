@@ -10,6 +10,10 @@
     #
     # The list of interfaces can be obtained in /sys/class/net/*
     useDHCP = false;
+    interfaces = {
+      enp2s0.useDHCP = true;
+      wlp3s0.useDHCP = true;
+    };
 
     firewall = {
       enable = true;

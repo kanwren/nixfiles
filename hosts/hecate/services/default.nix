@@ -16,7 +16,10 @@
     blueman.enable = true;
 
     # cups
-    printing.enable = true;
+    printing = {
+      enable = true;
+      openFirewall = true;
+    };
 
     gnome.gnome-keyring.enable = true;
 
@@ -35,17 +38,6 @@
     };
 
     nm-applet.enable = true;
-
-    wireshark = {
-      enable = true;
-      package = pkgs.wireshark-qt;
-    };
-  };
-
-  # open port 631 for cups
-  networking.firewall = {
-    allowedTCPPorts = [ 631 ];
-    allowedUDPPorts = [ 631 ];
   };
 }
 
