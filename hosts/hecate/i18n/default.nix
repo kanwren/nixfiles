@@ -15,6 +15,8 @@
         engines = with pkgs.ibus-engines; [
           libpinyin
           kkc
+          table
+          table-chinese
         ];
       };
     };
