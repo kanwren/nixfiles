@@ -34,7 +34,7 @@
 
         # commit info
         "user(x)" = "author(x) | committer(x)";
-        "mine" =
+        "mine()" =
           let
             names = [
               "Nicole Wren"
