@@ -14,6 +14,10 @@
     libinput = {
       enable = true;
       touchpad.naturalScrolling = true;
+      mouse = {
+        accelProfile = "adaptive";
+        accelSpeed = "1.0";
+      };
     };
 
     xkb = {
