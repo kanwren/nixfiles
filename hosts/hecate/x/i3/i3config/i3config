@@ -106,12 +106,12 @@
         bindsym Escape mode "default"
     }
     mode "mons" {
-        bindsym o exec mons -o;        mode "default"
-        bindsym s exec mons -s;        mode "default"
-        bindsym t exec mons -e top;    mode "default"
-        bindsym l exec mons -e left;   mode "default"
-        bindsym r exec mons -e right;  mode "default"
-        bindsym b exec mons -e bottom; mode "default"
+        bindsym o exec "mons -o;        ~/.fehbg"; mode "default"
+        bindsym s exec "mons -s;        ~/.fehbg"; mode "default"
+        bindsym t exec "mons -e top;    ~/.fehbg"; mode "default"
+        bindsym l exec "mons -e left;   ~/.fehbg"; mode "default"
+        bindsym r exec "mons -e right;  ~/.fehbg"; mode "default"
+        bindsym b exec "mons -e bottom; ~/.fehbg"; mode "default"
         bindsym Escape mode "default"
     }
     mode "system" {
