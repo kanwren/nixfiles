@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,26 +37,6 @@
 
     frum-src = {
       url = "github:TaKO8Ki/frum";
-      flake = false;
-    };
-    catppuccin-btop-src = {
-      url = "github:catppuccin/btop";
-      flake = false;
-    };
-    catppuccin-cava-src = {
-      url = "github:catppuccin/cava";
-      flake = false;
-    };
-    catppuccin-kitty-src = {
-      url = "github:catppuccin/kitty";
-      flake = false;
-    };
-    catppuccin-tmux-src = {
-      url = "github:catppuccin/tmux";
-      flake = false;
-    };
-    catppuccin-zathura-src = {
-      url = "github:catppuccin/zathura";
       flake = false;
     };
     k8split-src = {
@@ -80,14 +62,10 @@
     , nixos-hardware
     , flake-utils
     , nixos-generators
+    , catppuccin
     , fenix
     , naersk
     , frum-src
-    , catppuccin-btop-src
-    , catppuccin-cava-src
-    , catppuccin-kitty-src
-    , catppuccin-tmux-src
-    , catppuccin-zathura-src
     , k8split-src
     , envtpl-src
     , wd-fish-src
@@ -99,11 +77,6 @@
           fenix
           naersk
           frum-src
-          catppuccin-btop-src
-          catppuccin-cava-src
-          catppuccin-kitty-src
-          catppuccin-tmux-src
-          catppuccin-zathura-src
           k8split-src
           envtpl-src
           wd-fish-src;

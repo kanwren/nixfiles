@@ -3,8 +3,8 @@
 let
   modules = {
     bash = import ./bash;
-    btop = import ./btop { inherit self; };
-    cava = import ./cava { inherit self; };
+    btop = import ./btop;
+    cava = import ./cava;
     direnv = import ./direnv;
     discord = import ./discord;
     dunst = import ./dunst;
@@ -16,14 +16,16 @@ let
     gtk = import ./gtk;
     haskell = import ./haskell;
     jujutsu = import ./jujutsu;
-    kitty = import ./kitty { inherit self; };
+    kitty = import ./kitty;
     nix = import ./nix;
     rofi = import ./rofi;
     rust = import ./rust;
     spotify = import ./spotify;
-    tmux = import ./tmux { inherit self; };
+    tmux = import ./tmux;
     vscode = import ./vscode;
-    zathura = import ./zathura { inherit self; };
+    zathura = import ./zathura;
+
+    catppuccin = import ./catppuccin { inherit self; };
   };
 in
 modules // {

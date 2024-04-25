@@ -1,5 +1,3 @@
-{ self }:
-
 { pkgs, ... }:
 
 {
@@ -14,9 +12,6 @@
     keyMode = "vi";
     historyLimit = 10000;
     extraConfig = ''
-      set -g @catppuccin_flavour mocha
-      run-shell ${self.packages.${pkgs.system}.catppuccin-tmux}/catppuccin.tmux
-
       set-option -sa terminal-overrides ',xterm-kitty:RGB'
 
       # Set prefix to M-Space (shortcut doesn't support M-)
