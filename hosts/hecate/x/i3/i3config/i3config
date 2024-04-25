@@ -331,11 +331,31 @@
 # }}}
 
 # bar {{{
+    # from catppuccin mocha
+    set $base #1e1e2e
+    set $text #cdd6f4
+    set $pink #f5c2e7
+    set $lavender #b4befe
+    set $blue #89b4fa
+    set $red #f38ba8
+
     bar {
-        status_command i3status
+        status_command i3status -c @i3status_config@
         hidden_state hide
         mode dock
         modifier $mod
+        colors {
+            background         #131020
+            statusline         $text
+            focused_statusline $text
+            separator          $text
+            focused_separator  $text
+            focused_workspace  $base $pink $base
+            active_workspace   $base $base $blue
+            inactive_workspace $base $base $text
+            urgent_workspace   $base $base $red
+            binding_mode       $base $lavender $base
+        }
     }
 
     bindsym $mod+u bar mode toggle
