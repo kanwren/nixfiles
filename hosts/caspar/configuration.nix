@@ -207,6 +207,7 @@
 
     users.wrenn = {
       imports = [
+        self.inputs.catppuccin.homeManagerModules.catppuccin
         self.hmModules.mixins.btop
         self.hmModules.mixins.jujutsu
       ];
@@ -222,10 +223,8 @@
 
       programs.kitty = {
         enable = true;
-        extraConfig = ''
-          ${builtins.readFile ./kitty.conf}
-          include ${self.packages.${pkgs.system}.catppuccin-kitty}/mocha.conf
-        '';
+        catppuccin.enable = true;
+        extraConfig = builtins.readFile ./kitty.conf;
       };
 
       programs.git = {
