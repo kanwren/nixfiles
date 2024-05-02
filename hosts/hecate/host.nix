@@ -11,7 +11,7 @@ nixpkgs.lib.nixosSystem rec {
     { _module.args.flake = self; }
 
     # Bootstrapping
-    {
+    ({ config, ... }: {
       networking.hostName = "hecate";
 
       system.stateVersion = "22.11";
@@ -26,11 +26,12 @@ nixpkgs.lib.nixosSystem rec {
 
         # '<nixpkgs>' should be the system nixpkgs
         nixPath = [ "nixpkgs=${nixpkgs}" ];
+        settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
 
         # Disable channels
         channel.enable = false;
       };
-    }
+    })
 
     inputs.home-manager.nixosModules.home-manager
     self.nixosModules.pueue
