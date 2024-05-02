@@ -22,14 +22,14 @@
         src = ./i3config/i3config;
 
         spill_container_script = pkgs.substituteAll {
-          src = ./i3config/spill_container.sh;
+          src = ./i3config/spill_container.bash;
           isExecutable = true;
           inherit (pkgs) runtimeShell jq;
           i3 = config.services.xserver.windowManager.i3.package;
         };
 
         pick_game_script = pkgs.substituteAll {
-          src = ./i3config/pick_game.sh;
+          src = ./i3config/pick_game.bash;
           isExecutable = true;
           inherit (pkgs) rofi;
         };

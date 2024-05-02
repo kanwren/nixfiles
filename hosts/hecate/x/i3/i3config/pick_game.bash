@@ -1,3 +1,6 @@
+#! @runtimeShell@
+# shellcheck shell=bash
+
 # Pick a game with rofi. This assumes the specific directory convention I like
 # to use with games, where ~/Games/sources contains the game distributions, and
 # ~/Games/games contains the unpacked game directories, each of which should
@@ -14,9 +17,10 @@ PATH="@rofi@/bin${PATH:+:${PATH}}"
 
 set -euo pipefail
 
-game="$(ls "$HOME"/Games/games | rofi -dmenu -p " [game]")"
-if [ "$?" -eq 0 ]; then
-  cd "$HOME"/Games/games/"$game"
-  ./play
-fi
+main() {
+	declare -r game="$(find ~/Games/games -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | rofi -dmenu -p " [game]")"
+	declare -r game_path=~/Games/games/"$game"
+	[ -x "${game_path}/play" ] && cd "${game_path}" && ./play
+}
 
+main
