@@ -68,6 +68,7 @@
       wget
       curl
       grpcurl
+      httpie
       moreutils
       (lib.hiPrio (parallel-full.override { willCite = true; })) # conflicts with 'parallel' from moreutils
       tree
@@ -135,6 +136,7 @@
       go_1_22
       delve
       python3
+      pipx
       rustup
       self.packages.${pkgs.system}.frum
       shellcheck
