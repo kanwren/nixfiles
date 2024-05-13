@@ -18,7 +18,6 @@
 
   programs = {
     command-not-found.enable = false;
-    bash.enable = true;
     fish.enable = true;
   };
 }
