@@ -1,4 +1,4 @@
-{ lib, symlinkJoin, writers, coreutils, jq, gnumake, gawk, gnugrep }:
+{ lib, symlinkJoin, writers }:
 
 symlinkJoin {
   name = "jj-helpers";
