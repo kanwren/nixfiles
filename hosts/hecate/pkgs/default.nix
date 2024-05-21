@@ -46,7 +46,6 @@
       dos2unix
       entr # run commands when files change
       ctags # source code location indexing
-      jq # JSON processor
       # compression
       gnutar
       gzip

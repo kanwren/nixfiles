@@ -1,9 +1,11 @@
-{ pkgs, self, lib, ... }:
+{ pkgs, self, lib, config, ... }:
 
+let
+  homebrewPrefix = lib.strings.removeSuffix "/bin" (builtins.toString config.homebrew.brewPrefix);
+in
 {
   imports = [
     ./nix.nix
-    ./shells.nix
   ];
 
   networking = {
@@ -47,121 +49,121 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      # nix stuff
-      nix-index
-      nix-tree
-      nix-diff
-
-      # CLI/TUI utils
-      gnugrep
-      gnused
-      gawk
-      coreutils
-      diffutils
-      findutils
-      patch
-      netcat
-      socat
-      nmap
-      bc
-      wget
-      curl
-      grpcurl
-      httpie
-      moreutils
-      (lib.hiPrio (parallel-full.override { willCite = true; })) # conflicts with 'parallel' from moreutils
-      tree
-      ripgrep
-      eza
-      bat
-      fzf
-      fd
-      rsync
-      gitAndTools.gitFull
-      gitAndTools.gh
-      hyperfine
-      direnv
-      h
-      tldr
-      cht-sh
-      watch
-      entr
-      ## build systems/task runners/etc.
-      gnumake
-      autoconf
-      automake
-      cmake
-      bazelisk
-      (runCommandNoCCLocal "bazel-bazelisk-alias" { } ''
-        mkdir -p "$out/bin"
-        ln -s "${bazelisk}/bin/bazelisk" "$out/bin/bazel"
-      '')
-      buildozer
-      just
-      ## cryptography and pki
-      gnupg
-      openssl
-      certstrap
-      certigo
-      ## archival/compression
-      gnutar
-      gzip
-      xz
-      lz4
-      zstd
-      unar
-      ## data and manipulation
-      jq
-      jo
-      yq-go
-      crudini
-      sqlite
-      ## TUI stuff
-      tz
-      btop
-      ## Docker/Kubernetes
-      dive
-      kubectl
-      k9s
-      kubernetes-helm
-      self.packages.${pkgs.system}.envtpl
-      gomplate
-      ## AWS
-      awscli2
-      aws-iam-authenticator
-      (ssm-session-manager-plugin.overrideAttrs { doCheck = false; })
-      ## programming language support
-      pkg-config
-      go_1_22
-      delve
-      python3
-      pipx
-      rustup
-      self.packages.${pkgs.system}.frum
-      shellcheck
-
-      # media tools
-      ffmpeg
-      exiftool
-      imagemagick
-      pandoc
-      qpdf
-
-      # macos stuff
-      pinentry_mac
-    ];
+    loginShell = "${config.environment.variables.SHELL} --login";
 
     variables = {
+      LC_CTYPE = "en_US.UTF-8";
       EDITOR = "nvim";
+      SHELL = "${pkgs.fish}/bin/fish";
+
+      HOMEBREW_NO_ANALYTICS = "1";
+      HOMEBREW_PREFIX = homebrewPrefix;
+      HOMEBREW_CELLAR = "${homebrewPrefix}/Cellar";
+      HOMEBREW_REPOSITORY = homebrewPrefix;
     };
 
-    shellAliases = {
-      cat = "bat";
-      ls = "eza --git";
-      vi = "nvim";
-      vim = "nvim";
-    };
+    systemPackages = [
+      # nix stuff
+      pkgs.nix-index
+      pkgs.nix-tree
+      pkgs.nix-diff
+
+      # CLI/TUI utils
+      pkgs.gnugrep
+      pkgs.gnused
+      pkgs.gawk
+      pkgs.coreutils
+      pkgs.diffutils
+      pkgs.findutils
+      pkgs.patch
+      pkgs.netcat
+      pkgs.socat
+      pkgs.nmap
+      pkgs.bc
+      pkgs.wget
+      pkgs.curl
+      pkgs.grpcurl
+      pkgs.httpie
+      pkgs.moreutils
+      (lib.hiPrio (pkgs.parallel-full.override {
+        willCite = true;
+      })) # conflicts with 'parallel' from moreutils
+      pkgs.tree
+      pkgs.ripgrep
+      pkgs.eza
+      pkgs.bat
+      pkgs.fzf
+      pkgs.fd
+      pkgs.rsync
+      pkgs.gitAndTools.gitFull
+      pkgs.hyperfine
+      pkgs.tldr
+      pkgs.cht-sh
+      pkgs.watch
+      pkgs.entr
+      ## build systems/task runners/etc.
+      pkgs.gnumake
+      pkgs.autoconf
+      pkgs.automake
+      pkgs.cmake
+      pkgs.bazelisk
+      (pkgs.runCommandNoCCLocal "bazel-bazelisk-alias" { } ''
+        mkdir -p "$out/bin"
+        ln -s "${pkgs.bazelisk}/bin/bazelisk" "$out/bin/bazel"
+      '')
+      pkgs.buildozer
+      pkgs.just
+      ## cryptography and pki
+      pkgs.gnupg
+      pkgs.openssl
+      pkgs.certstrap
+      pkgs.certigo
+      ## archival/compression
+      pkgs.gnutar
+      pkgs.gzip
+      pkgs.xz
+      pkgs.lz4
+      pkgs.zstd
+      pkgs.unar
+      ## data and manipulation
+      pkgs.jo
+      pkgs.yq-go
+      pkgs.crudini
+      pkgs.sqlite
+      ## TUI stuff
+      pkgs.tz
+      ## Docker/Kubernetes
+      pkgs.dive
+      pkgs.kubectl
+      pkgs.k9s
+      pkgs.kubernetes-helm
+      self.packages.${pkgs.system}.envtpl
+      pkgs.gomplate
+      ## AWS
+      pkgs.awscli2
+      pkgs.aws-iam-authenticator
+      (pkgs.ssm-session-manager-plugin.overrideAttrs {
+        doCheck = false;
+      })
+      ## programming language support
+      pkgs.pkg-config
+      pkgs.delve
+      pkgs.python3
+      pkgs.pipx
+      pkgs.rustup
+      self.packages.${pkgs.system}.frum
+      pkgs.shellcheck
+
+      # media tools
+      pkgs.ffmpeg
+      pkgs.exiftool
+      pkgs.imagemagick
+      pkgs.pandoc
+      pkgs.qpdf
+
+      # macos stuff
+      pkgs.pinentry_mac
+    ];
   };
 
   fonts = {
@@ -171,6 +173,8 @@
   };
 
   programs = {
+    bash.enable = true;
+    fish.enable = true;
     gnupg.agent.enable = true;
   };
 
@@ -187,9 +191,11 @@
 
   homebrew = {
     enable = true;
+
     brews = [
       "awscurl"
     ];
+
     casks = [
       "amethyst"
       "kitty"
@@ -209,26 +215,109 @@
 
     users.wrenn = {
       imports = [
-        self.inputs.catppuccin.homeManagerModules.catppuccin
+        self.hmModules.mixins.bash
         self.hmModules.mixins.btop
+        self.hmModules.mixins.catppuccin
+        self.hmModules.mixins.direnv
+        self.hmModules.mixins.fish
+        self.hmModules.mixins.gh
+        self.hmModules.mixins.h
+        self.hmModules.mixins.jq
         self.hmModules.mixins.jujutsu
+        self.hmModules.mixins.zoxide
       ];
 
       home = {
         stateVersion = "22.11";
-        sessionPath = [
-          "$HOME/bin"
-          "$HOME/.local/bin"
-        ];
+
+        sessionVariables = {
+          TFENV_ARCH = "arm64";
+        };
+
         packages = lib.flatten [
           (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
           self.packages.${pkgs.system}.jj-helpers
         ];
+
+        shellAliases = lib.mergeAttrsList [
+          {
+            cat = "bat";
+            ls = "eza --git";
+            vi = "nvim";
+            vim = "nvim";
+          }
+          (builtins.listToAttrs
+            (builtins.map
+              (n: {
+                name = ".${toString n}";
+                value = "cd ${builtins.concatStringsSep "/" (builtins.genList (_: "..") n)}";
+              })
+              (lib.lists.range 1 9)))
+        ];
+      };
+
+      # extra fish init on top of fish mixin
+      programs.fish = {
+        loginShellInit = ''
+          fish_add_path --move --prepend --path \
+              "/usr/local/bin" \
+              "/usr/local/sbin" \
+              "/opt/local/bin"
+
+          # set up extra homebrew variables
+          if command --search ${homebrewPrefix}/bin/brew >/dev/null 2>&1
+              # Used for C pre-processor/#include. Confirm paths with `clang -x c -v -E /dev/null`
+              not set -q CPATH; and set CPATH ""
+              set --global --export CPATH ${homebrewPrefix}/include:"$CPATH"
+
+              # Used by linker. Confirm paths with `clang -Xlinker -v`
+              not set -q LIBRARY_PATH; and set LIBRARY_PATH ""
+              set --global --export LIBRARY_PATH ${homebrewPrefix}/lib:"$LIBRARY_PATH"
+
+              not set -q MANPATH; and set MANPATH ""
+              set --global --export MANPATH ${homebrewPrefix}/share/man:"$MANPATH"
+
+              not set -q INFOPATH; and set INFOPATH ""
+              set --global --export INFOPATH ${homebrewPrefix}/share/info:"$INFOPATH"
+
+              fish_add_path --move --prepend --path \
+                  "${homebrewPrefix}/bin" \
+                  "${homebrewPrefix}/sbin"
+          end
+
+          # give NixOS paths priority over brew and system paths
+          fish_add_path --move --prepend --path ${
+            lib.strings.concatMapStringsSep " " (p: builtins.toJSON "${p}/bin")
+              config.environment.profiles
+          }
+
+          fish_add_path --move --prepend --path \
+              "$HOME/bin" \
+              "$HOME/.local/bin" \
+              "$HOME/Development/go/bin" \
+              "$HOME/.docker/bin" \
+              "$HOME/.krew/bin"
+
+          set fish_user_paths $fish_user_paths
+        '';
+
+        interactiveShellInit = ''
+          "${self.packages.${pkgs.system}.frum}/bin/frum" init | source
+        '';
+      };
+
+      programs.h = {
+        codeRoot = "$HOME/Development/code";
+      };
+
+      programs.go = {
+        enable = true;
+        package = pkgs.go_1_22;
+        goPath = "$HOME/Development/go";
       };
 
       programs.kitty = {
         enable = true;
-        catppuccin.enable = true;
         extraConfig = builtins.readFile ./kitty.conf;
       };
 

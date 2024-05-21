@@ -1,6 +1,17 @@
+{ self }:
+
+{ pkgs, ... }:
+
 {
+  home.packages = [
+    pkgs.fishPlugins.foreign-env
+    pkgs.fishPlugins.fzf-fish
+    self.packages.${pkgs.system}.wd-fish
+  ];
+
   programs.fish = {
     enable = true;
+
     interactiveShellInit = ''
       # set prompt to '; '
       function fish_prompt
@@ -22,7 +33,10 @@
       fish_vi_key_bindings
 
       # restore last directory when new shell is opened
-      set -q fish_most_recent_dir; and [ -d "$fish_most_recent_dir" ]; and cd "$fish_most_recent_dir"
+      set --query fish_most_recent_dir
+      and test -d "$fish_most_recent_dir"
+      and cd "$fish_most_recent_dir"
+
       function save_dir --on-variable PWD
         set -U fish_most_recent_dir $PWD
       end

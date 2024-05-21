@@ -39,8 +39,6 @@
         # CLI/TUI stuff
         h # quick directory jumping
         tokei # count lines of code
-        btop # activity monitor
-        gitAndTools.gh # github client
         miniserve # serve files/directories over HTTP
         ngrok # expose tunnels to local servers
         qrencode # generate QR codes
