@@ -216,7 +216,10 @@
 
       home = {
         stateVersion = "22.11";
-        sessionPath = [ "$HOME/bin" ];
+        sessionPath = [
+          "$HOME/bin"
+          "$HOME/.local/bin"
+        ];
         packages = lib.flatten [
           (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
           self.packages.${pkgs.system}.jj-helpers
