@@ -25,7 +25,7 @@
     shellAliases = { };
 
     initExtra = ''
-      test "$(ulimit --file-descriptor-count)" -lt 8192 && ulimit --file-descriptor-count 8192
+      test "$(ulimit -n)" -lt 8192 && ulimit -n 8192
       set -o vi
       PS='; '
       bind -m vi-insert "\C-l":clear-screen
