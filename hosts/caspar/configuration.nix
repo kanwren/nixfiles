@@ -179,10 +179,6 @@ in
   };
 
   services = {
-    ollama = {
-      enable = true;
-      logFile = "/var/tmp/ollama.log";
-    };
     pueue = {
       enable = true;
       logFile = "/var/tmp/pueued.log";

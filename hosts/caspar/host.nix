@@ -12,7 +12,6 @@ nix-darwin.lib.darwinSystem {
   };
 
   modules = [
-    self.darwinModules.ollama
     self.darwinModules.pueue
 
     inputs.home-manager.darwinModules.home-manager
