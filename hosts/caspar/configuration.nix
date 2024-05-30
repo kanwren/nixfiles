@@ -300,7 +300,33 @@ in
         interactiveShellInit = ''
           "${self.packages.${pkgs.system}.frum}/bin/frum" init | source
         '';
+
+        functions = {
+          "use-java" = {
+            description = "Switch JAVA_HOME to the given Java version";
+            body = ''
+              set --local argc (count $argv)
+
+              if test $argc -eq 0
+                set --local java_version (path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort -Vr | fzf)
+                or return $status
+                set --global --export JAVA_HOME (/usr/libexec/java_home --version $java_version)
+              else if test $argc -eq 1
+                set --local java_version $argv[1]
+                set --global --export JAVA_HOME (/usr/libexec/java_home --version $java_version)
+                printf 'using %s\n' $JAVA_HOME
+              else
+                printf 'usage: use-java [<version>]\n'
+                return 1
+              end
+            '';
+          };
+        };
       };
+
+      xdg.configFile."fish/completions/use-java.fish".source = pkgs.writeText "use-java" ''
+        complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
+      '';
 
       programs.h = {
         codeRoot = "$HOME/Development/code";

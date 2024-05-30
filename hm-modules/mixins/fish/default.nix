@@ -56,6 +56,7 @@ in
         jq = "${pkgs.jq}/bin/jq";
       in
       {
+        # Misc shell utilities
         "last_argument" = {
           description = "Get the last argument to the last command in the history";
           body = ''
@@ -63,6 +64,8 @@ in
             printf '%s\n' "$result[-1]"
           '';
         };
+
+        # AWS CLI utility functions
         "asp" = {
           description = "Switch AWS profiles";
           body = ''
@@ -100,25 +103,6 @@ in
             set --query AWS_SECRET_ACCESS_KEY; and set --erase AWS_SECRET_ACCESS_KEY
             set --query AWS_SESSION_TOKEN;     and set --erase AWS_SESSION_TOKEN
             return 0
-          '';
-        };
-        "use-java" = {
-          description = "Switch JAVA_HOME to the given Java version";
-          body = ''
-            set --local argc (count $argv)
-
-            if test $argc -eq 0
-              set --local java_version (path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort -Vr | fzf)
-              or return $status
-              set --global --export JAVA_HOME (/usr/libexec/java_home --version $java_version)
-            else if test $argc -eq 1
-              set --local java_version $argv[1]
-              set --global --export JAVA_HOME (/usr/libexec/java_home --version $java_version)
-              printf 'using %s\n' $JAVA_HOME
-            else
-              printf 'usage: use-java [<version>]\n'
-              return 1
-            end
           '';
         };
       };
@@ -220,9 +204,6 @@ in
       value.source = value;
     })
     {
-      "use-java" = pkgs.writeText "use-java" ''
-        complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
-      '';
       "docker" = "${pkgs.docker.src}/contrib/completion/fish/docker.fish";
     };
 }
