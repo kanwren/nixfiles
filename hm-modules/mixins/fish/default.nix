@@ -224,13 +224,5 @@ in
         complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
       '';
       "docker" = "${pkgs.docker.src}/contrib/completion/fish/docker.fish";
-      "frum" =
-        pkgs.runCommandNoCC "frum-completions"
-          {
-            nativeBuildInputs = [ self.packages.${pkgs.system}.frum ];
-          }
-          ''
-            frum completions --shell=fish > $out
-          '';
     };
 }

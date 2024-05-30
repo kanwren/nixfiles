@@ -14,6 +14,18 @@ naersk-lib.buildPackage {
   buildInputs = [ openssl_3.dev readline libyaml zlib ];
   nativeBuildInputs = [ pkg-config ];
 
+  # install completions
+  postInstall = ''
+    mkdir -p "$out/share/bash-completion/completions"
+    "$out/bin/frum" completions --shell=bash > "$out/share/bash-completion/completions/frum"
+
+    mkdir -p "$out/share/zsh/site-functions"
+    "$out/bin/frum" completions --shell=zsh > "$out/share/zsh/site-functions/_frum"
+
+    mkdir -p "$out/share/fish/vendor_completions.d"
+    "$out/bin/frum" completions --shell=fish > "$out/share/fish/vendor_completions.d/frum.fish"
+  '';
+
   meta = with lib; {
     description = "A little bit fast and modern Ruby version manager written in Rust";
     homepage = "https://github.com/TaKO8Ki/frum";
