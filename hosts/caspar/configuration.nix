@@ -97,7 +97,7 @@ in
       pkgs.rsync
       pkgs.gitAndTools.gitFull
       pkgs.hyperfine
-      pkgs.tldr
+      pkgs.tealdeer
       pkgs.cht-sh
       pkgs.watch
       pkgs.entr
