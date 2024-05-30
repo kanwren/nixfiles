@@ -196,14 +196,4 @@ in
         kubectlAbbrs
       ];
   };
-
-  # completions
-  xdg.configFile = lib.attrsets.mapAttrs'
-    (name: value: {
-      name = "fish/completions/${name}.fish";
-      value.source = value;
-    })
-    {
-      "docker" = "${pkgs.docker.src}/contrib/completion/fish/docker.fish";
-    };
 }

@@ -324,9 +324,12 @@ in
         };
       };
 
+      # fish completions
       xdg.configFile."fish/completions/use-java.fish".source = pkgs.writeText "use-java" ''
         complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
       '';
+      # Docker is installed externally; add completions manually.
+      xdg.configFile."fish/completions/docker.fish".source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
 
       programs.h = {
         codeRoot = "$HOME/Development/code";
