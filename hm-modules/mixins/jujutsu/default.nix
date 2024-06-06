@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 {
   home.sessionVariables = {
@@ -16,9 +16,25 @@
       ui = {
         pager = "less -RF";
         paginate = "auto";
-        diff-editor = ":builtin";
-        merge-editor = "vimdiff";
         default-command = "worklog";
+        diff-editor = ":builtin";
+        diff.tool = "difftastic";
+        merge-editor = "vimdiff";
+      };
+
+      merge-tools = {
+        vimdiff = {
+          program = "nvim";
+          # similar to the default, but opens files in a different order to
+          # preserve commands like `1do`.
+          merge-args = [ "-d" "-M" "$left" "$base" "$right" "$output" "-c" "$wincmd w | wincmd J | set modifiable write" ];
+          merge-tool-edits-conflict-markers = true;
+        };
+
+        difftastic = {
+          program = "${pkgs.difftastic}/bin/difft";
+          diff-args = [ "--color=always" "$left" "$right" ];
+        };
       };
 
       revsets = {
