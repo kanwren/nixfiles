@@ -1,4 +1,4 @@
-{ lib, symlinkJoin, writers }:
+{ symlinkJoin, writers }:
 
 symlinkJoin {
   name = "jj-helpers";
@@ -16,7 +16,7 @@ symlinkJoin {
       [ -z "$(change_ids "$2")" ] && { echo "revision not found: $2"; exit 1; }
 
       # move 1 on top of 2
-      jj rebase --revision "$1" --destination "$2"
+      jj rebase --revisions "$1" --destination "$2"
 
       # move children of 2 on top of 1, if there are any
       if [ -n "$(change_ids "children($2) ~ ($1)")" ]; then
