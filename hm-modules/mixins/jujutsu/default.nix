@@ -1,4 +1,12 @@
+{ config, ... }:
+
 {
+  home.sessionVariables = {
+    # FIXME: jujutsu now wants the config under `Library/Application Support`,
+    # so notify it of the current config path while home-manager conforms.
+    JJ_CONFIG = "${config.xdg.configHome}/jj/config.toml";
+  };
+
   programs.jujutsu = {
     enable = true;
 
