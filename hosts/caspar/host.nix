@@ -17,8 +17,8 @@ nix-darwin.lib.darwinSystem {
     inputs.home-manager.darwinModules.home-manager
 
     {
-      nix.registry.nixpkgs.flake = nixpkgs;
-      nix.nixPath = nixpkgs.lib.mkForce [ "nixpkgs=${nixpkgs}" ];
+      nix.registry.nixpkgs.to = { type = "path"; path = nixpkgs.outPath; };
+      nix.nixPath = nixpkgs.lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     }
 
     ./configuration.nix

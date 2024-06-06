@@ -3,7 +3,7 @@
 , ...
 }@inputs:
 
-nixpkgs.lib.nixosSystem rec {
+nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
@@ -16,20 +16,12 @@ nixpkgs.lib.nixosSystem rec {
 
       system.stateVersion = "22.11";
 
-      # Set up flakes, inject nixpkgs, and remove impure components
+      # Set up flakes and remove impure components. `nixosSystem` already
+      # injects `nixpkgs` into system flake registry and `NIX_PATH`.
       nix = {
-        # Enable flakes
         settings.experimental-features = [ "nix-command" "flakes" ];
-
-        # The global flake registry's nixpkgs should be the system nixpkgs
-        registry.nixpkgs.flake = nixpkgs;
-
-        # '<nixpkgs>' should be the system nixpkgs
-        nixPath = [ "nixpkgs=${nixpkgs}" ];
-        settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
-
-        # Disable channels
         channel.enable = false;
+        settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
       };
     })
 
