@@ -1,7 +1,7 @@
 {
   nix = {
     extraOptions = ''
-      experimental-features = nix-command flakes ca-derivations
+      experimental-features = nix-command flakes ca-derivations repl-flake
       keep-outputs = true
       keep-derivations = true
     '';

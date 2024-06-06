@@ -7,7 +7,7 @@
 
   nix = {
     settings = {
-      experimental-features = [ "ca-derivations" ];
+      experimental-features = [ "ca-derivations" "repl-flake" ];
       keep-outputs = true;
       keep-derivations = true;
       trusted-users = [ "root" ];
