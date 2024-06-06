@@ -3,7 +3,7 @@ set shell := ["/bin/sh", "-c"]
 # Use the nixos-rebuild/darwin-rebuild command from the built target system,
 # rather than the one from the current system's path
 
-use_rebuild_from_target := "true"
+use_rebuild_from_target := "false"
 
 # Use sudo for rebuild commands that require it
 
