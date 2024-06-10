@@ -1,6 +1,12 @@
+{ self }:
+
 { pkgs, config, ... }:
 
 {
+  home.packages = [
+    self.packages.${pkgs.system}.jj-helpers
+  ];
+
   home.sessionVariables = {
     # FIXME: jujutsu now wants the config under `Library/Application Support`,
     # so notify it of the current config path while home-manager conforms.

@@ -17,7 +17,7 @@ let
     gtk = import ./gtk;
     h = import ./h { inherit self; };
     haskell = import ./haskell;
-    jujutsu = import ./jujutsu;
+    jujutsu = import ./jujutsu { inherit self; };
     jq = import ./jq;
     kitty = import ./kitty;
     nix = import ./nix;

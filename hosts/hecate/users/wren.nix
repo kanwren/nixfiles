@@ -33,9 +33,6 @@
       sessionPath = [ "$HOME/bin" ];
 
       packages = with pkgs; [
-        # scripts
-        flake.packages.${pkgs.system}.jj-helpers
-
         # CLI/TUI stuff
         h # quick directory jumping
         tokei # count lines of code
