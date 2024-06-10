@@ -14,6 +14,7 @@
       user.name = "Nicole Wren";
 
       ui = {
+        allow-filesets = true;
         pager = "less -RF";
         paginate = "auto";
         default-command = "worklog";
