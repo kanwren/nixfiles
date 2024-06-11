@@ -107,5 +107,27 @@ symlinkJoin {
       fi
       jj describe "$backout"
     '';
+
+    # Generates a new change ID for a revision.
+    "jj.recreate" = writers.writeBashBin "jj.recreate" ''
+      set -euo pipefail
+
+      recreate_change() {
+        declare -r rev="$1"
+        jj new --quiet --no-edit --insert-before "$rev"
+        jj squash --quiet --revision "$rev"
+      }
+
+      main() {
+        declare -r revset="$1"
+        jj log --revisions "$revset" --no-graph --template 'change_id ++ "\n"' | tac | while read -r rev; do
+          recreate_change "$rev"
+        done
+      }
+
+      [ $# -eq 1 ] || { echo "usage: $0 <revset>"; exit 1; }
+
+      main "$@"
+    '';
   };
 }
