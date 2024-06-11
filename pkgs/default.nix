@@ -24,5 +24,6 @@ rec {
   slides-full = pkgs.callPackage ./tools/slides { };
   envtpl = pkgs.callPackage ./tools/envtpl { inherit (sources) envtpl-src; };
   frum = pkgs.callPackage ./tools/frum { inherit (sources) fenix naersk frum-src; };
+  tfenv = pkgs.callPackage ./tools/tfenv { };
 }
 

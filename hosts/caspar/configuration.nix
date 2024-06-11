@@ -153,6 +153,7 @@ in
       pkgs.rustup
       self.packages.${pkgs.system}.frum
       pkgs.shellcheck
+      self.packages.${pkgs.system}.tfenv
 
       # media tools
       pkgs.ffmpeg
