@@ -3,7 +3,6 @@
 , unixtools
 , gnugrep
 , inkscape
-, addmeta
 }:
 
 let
@@ -15,8 +14,11 @@ let
     dir = "bin";
     isExecutable = true;
   };
+  meta = {
+    description = "Generate a twemoji heart with the given color";
+  };
 in
-addmeta script {
-  description = "Generate a twemoji heart with the given color";
-}
+script.overrideAttrs (old: {
+  meta = (old.meta or { }) // meta;
+})
 

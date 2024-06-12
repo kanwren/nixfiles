@@ -1,45 +1,56 @@
-{ pkgs, ... }:
+{ config, lib, ... }:
 
+let
+  cfg = config.mixins.tmux;
+in
 {
-  programs.tmux = {
-    enable = true;
-    sensibleOnTop = true;
-    terminal = "screen-256color";
-    baseIndex = 1;
-    escapeTime = 0;
-    disableConfirmationPrompt = true;
-    clock24 = true;
-    keyMode = "vi";
-    historyLimit = 10000;
-    extraConfig = ''
-      set-option -sa terminal-overrides ',xterm-kitty:RGB'
+  options.mixins.tmux.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = config.mixins.enable;
+    description = "Whether to enable the tmux mixin";
+  };
 
-      # Set prefix to M-Space (shortcut doesn't support M-)
-      unbind C-b
-      set -g prefix M-Space
-      bind-key M-Space send-prefix
-      set -g prefix2 M-c
+  config = lib.mkIf cfg.enable {
+    programs.tmux = {
+      enable = true;
+      sensibleOnTop = true;
+      terminal = "screen-256color";
+      baseIndex = 1;
+      escapeTime = 0;
+      disableConfirmationPrompt = true;
+      clock24 = true;
+      keyMode = "vi";
+      historyLimit = 10000;
+      extraConfig = ''
+        set-option -sa terminal-overrides ',xterm-kitty:RGB'
 
-      set-window-option -g automatic-rename on
+        # Set prefix to M-Space (shortcut doesn't support M-)
+        unbind C-b
+        set -g prefix M-Space
+        bind-key M-Space send-prefix
+        set -g prefix2 M-c
 
-      # Activity monitoring
-      setw -g monitor-activity on
-      set -g visual-activity off
-      set -g display-time 4000
+        set-window-option -g automatic-rename on
 
-      # hjkl pane movements
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
+        # Activity monitoring
+        setw -g monitor-activity on
+        set -g visual-activity off
+        set -g display-time 4000
 
-      # Flip orientation of current pane with the pane before it
-      bind M-J move-pane -t '.-'
-      bind M-L move-pane -h -t '.-'
+        # hjkl pane movements
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
 
-      # Clipboard integration with xclip
-      bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
-    '';
+        # Flip orientation of current pane with the pane before it
+        bind M-J move-pane -t '.-'
+        bind M-L move-pane -h -t '.-'
+
+        # Clipboard integration with xclip
+        bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
+      '';
+    };
   };
 }
 

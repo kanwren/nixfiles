@@ -2,19 +2,33 @@
   description = "Template for a flake with a devShell";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixpkgs-unstable";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: flake-utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs }:
     let
-      pkgs = nixpkgs.legacyPackages.${system};
+      defaultSystems = [ "aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux" ];
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs
+          defaultSystems
+          (system:
+            let
+              pkgs = import nixpkgs {
+                inherit system;
+                overlays = [ self.overlays.default ];
+              };
+            in
+            f pkgs);
     in
     {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          hello
-        ];
-      };
-    });
+      overlays.default = final: prev: { };
+
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            hello
+          ];
+        };
+      });
+    };
 }

@@ -1,10 +1,16 @@
-{ envtpl-src, lib, buildGoModule }:
+{ lib, fetchFromGitHub, buildGoModule }:
 
 buildGoModule rec {
   pname = "envtpl";
-  version = "unstable";
+  version = "2.0.0";
 
-  src = envtpl-src;
+  src = fetchFromGitHub {
+    owner = "kanwren";
+    repo = "envtpl";
+    rev = "v${version}";
+    hash = "sha256-6FSsU8yJABm8mPA8MVn2TjaBQU5nJY144bgIZUrELns=";
+  };
+
   subPackages = [ "cmd/envtpl" ];
 
   vendorHash = null;

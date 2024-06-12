@@ -1,29 +1,21 @@
-{ pkgs ? import <nixpkgs> { }
-, sources
-}:
+{ pkgs ? import <nixpkgs> { } }:
 
-let
-  inherit (pkgs) lib;
-  addmeta = p: meta: p.overrideAttrs (old: {
-    meta = (old.meta or { }) // meta;
-  });
-in
 rec {
   catppuccin-twemoji-hearts = pkgs.callPackage ./misc/catppuccin-twemoji-hearts {
     inherit generate-heart-emoji;
   };
 
-  wd-fish = pkgs.fishPlugins.callPackage ./misc/wd-fish { inherit (sources) wd-fish-src; };
+  wd-fish = pkgs.fishPlugins.callPackage ./misc/wd-fish { };
 
   # scripts
-  lipsum = pkgs.callPackage ./scripts/lipsum { inherit addmeta; };
-  generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { inherit addmeta; };
+  lipsum = pkgs.callPackage ./scripts/lipsum { };
+  generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { };
   jj-helpers = pkgs.callPackage ./scripts/jj-helpers { };
 
   # tools
   slides-full = pkgs.callPackage ./tools/slides { };
-  envtpl = pkgs.callPackage ./tools/envtpl { inherit (sources) envtpl-src; };
-  frum = pkgs.callPackage ./tools/frum { inherit (sources) fenix naersk frum-src; };
+  envtpl = pkgs.callPackage ./tools/envtpl { };
+  frum = pkgs.callPackage ./tools/frum { };
   tfenv = pkgs.callPackage ./tools/tfenv { };
 }
 

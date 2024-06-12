@@ -1,4 +1,4 @@
-{ pkgs, flake, ... }:
+{ pkgs, ... }:
 
 {
   users.users.wren = {
@@ -23,10 +23,6 @@
   nix.settings.trusted-users = [ "wren" ];
 
   home-manager.users.wren = {
-    imports = [
-      flake.hmModules.mixins.full
-    ];
-
     home = {
       stateVersion = "22.11";
 
@@ -48,6 +44,8 @@
         anki # flashcards
       ];
     };
+
+    mixins.enable = true;
 
     programs.jujutsu.settings = {
       user.email = "nicole@wren.systems";

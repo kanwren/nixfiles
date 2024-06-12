@@ -2,40 +2,32 @@
   description = "A basic LaTeX project";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixpkgs-unstable";
   };
 
-  outputs = { self, nixpkgs, flake-utils, flake-compat }:
-    flake-utils.lib.eachDefaultSystem (system: (
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        docname = "main";
-        tex-env = with pkgs; texlive.combine {
-          inherit (texlive)
-            latexmk
-            # Any extra libraries here
-            # enumitem
-            scheme-small;
-        };
-      in
-      {
-        packages.default = self.packages.${system}.${docname};
+  outputs = { self, nixpkgs }:
+    let
+      defaultSystems = [ "aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux" ];
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs
+          defaultSystems
+          (system:
+            let
+              pkgs = nixpkgs.legacyPackages.${system};
+              appliedOverlay = self.overlays.default pkgs pkgs;
+            in
+            f (pkgs // appliedOverlay));
+    in
+    {
+      overlays.default = final: prev:
+        final.callPackages ./default.nix { };
 
-        packages.${docname} = pkgs.stdenv.mkDerivation {
-          name = docname;
-          src = ./.;
-          buildInputs = [ tex-env ];
-          buildPhase = "make clean && HOME=. make";
-        };
+      packages = forAllSystems (pkgs: {
+        default = pkgs.docs.main;
+      });
 
-        devShells.default = pkgs.mkShell {
-          packages = [ tex-env ];
-        };
-      }
-    ));
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.callPackage ./shell.nix { };
+      });
+    };
 }

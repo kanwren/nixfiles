@@ -1,9 +1,18 @@
-{ ... }:
+{ config, lib, ... }:
 
 # Many of the settings here intentionally mirror the global interactive shell
 # init settings
+let
+  cfg = config.mixins.bash;
+in
 {
-  programs.bash = {
+  options.mixins.bash.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = config.mixins.enable;
+    description = "Whether to enable the bash mixin";
+  };
+
+  config.programs.bash = lib.mkIf cfg.enable {
     enable = true;
 
     shellOptions = [

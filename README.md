@@ -12,7 +12,7 @@ My NixOS configurations and other Nix files :snowflake:
 - [`hm-modules/`](hm-modules/): Custom home-manager modules
 - [`darwin-modules/`](darwin-modules/): Custom nix-darwin modules
 - [`pkgs/`](pkgs/): Custom-built derivations exported from flake
-- [`installer/`](installer/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installer`](#installer) section
+- [`installers/`](installers/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installers`](#installers) section
 - [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
 - [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
 
@@ -33,9 +33,9 @@ for a specific system.
   - [`desktop/x`](modules/desktop/x): Mixins for display managers, window managers, and desktop environments
 - [`users/`](modules/users): Per-user system user settings and [home-manager](https://github.com/nix-community/home-manager/) configurations
 
-### `installer`
+### `installers`
 
-`installer/` contains a custom installer configuration, built with [nixos-generators](https://github.com/nix-community/nixos-generators).
+`installers/` contains a custom installer configuration, built with [nixos-generators](https://github.com/nix-community/nixos-generators).
 The `justfile` contains a recipe for building installers:
 
 ```

@@ -1,19 +1,30 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  cfg = config.mixins.gh;
+in
 {
-  programs.gh = {
-    enable = true;
+  options.mixins.gh.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = config.mixins.enable;
+    description = "Whether to enable the gh mixin";
+  };
 
-    extensions = [
-      pkgs.gh-copilot
-      pkgs.gh-ost
-    ];
+  config = lib.mkIf cfg.enable {
+    programs.gh = {
+      enable = true;
 
-    settings = {
-      git_protocol = "https";
-      prompt = "enabled";
-      aliases = {
-        co = "pr checkout";
+      extensions = [
+        pkgs.gh-copilot
+        pkgs.gh-ost
+      ];
+
+      settings = {
+        git_protocol = "https";
+        prompt = "enabled";
+        aliases = {
+          co = "pr checkout";
+        };
       };
     };
   };

@@ -1,15 +1,14 @@
 { self
 , nixpkgs
-, ...
-}@inputs:
+, home-manager
+, nixos-hardware
+, catppuccin
+}:
 
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
-    # Pass this flake recurisvely as a module input 'flake'
-    { _module.args.flake = self; }
-
     # Bootstrapping
     ({ config, ... }: {
       networking.hostName = "hecate";
@@ -23,13 +22,23 @@ nixpkgs.lib.nixosSystem {
         channel.enable = false;
         settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
       };
+
+      nixpkgs.overlays = [ self.overlays.default ];
     })
 
-    inputs.home-manager.nixosModules.home-manager
+    home-manager.nixosModules.home-manager
+    {
+      home-manager.sharedModules = [
+        catppuccin.homeManagerModules.catppuccin
+        self.hmModules.h
+        self.hmModules.mixins
+      ];
+    }
+
     self.nixosModules.pueue
 
     # hardware modules
-    (with inputs.nixos-hardware.nixosModules; [
+    (with nixos-hardware.nixosModules; [
       common-pc-laptop
       common-pc-laptop-ssd
       common-cpu-amd

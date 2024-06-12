@@ -1,19 +1,30 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  cfg = config.mixins.rust;
+in
 {
-  home.sessionPath = [
-    "$HOME/.cargo/bin"
-  ];
+  options.mixins.rust.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = config.mixins.enable;
+    description = "Whether to enable the rust mixin";
+  };
 
-  home.packages = with pkgs; [
-    rustup
+  config = lib.mkIf cfg.enable {
+    home.sessionPath = [
+      "$HOME/.cargo/bin"
+    ];
 
-    # cargo extensions
-    cargo-cache
-    # cargo-download
-    cargo-feature
-    cargo-watch
-    cargo-wipe
-  ];
+    home.packages = with pkgs; [
+      rustup
+
+      # cargo extensions
+      cargo-cache
+      # cargo-download
+      cargo-feature
+      cargo-watch
+      cargo-wipe
+    ];
+  };
 }
 

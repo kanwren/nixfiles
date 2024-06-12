@@ -1,15 +1,20 @@
-{ system, openssl_3, readline, libyaml, zlib, pkg-config, fenix, naersk, frum-src, lib }:
+{ lib, fetchFromGitHub, openssl_3, readline, libyaml, zlib, pkg-config, fenix, naersk }:
 
 let
-  toolchain = fenix.packages.${system}.minimal.toolchain;
-  naersk-lib = naersk.lib.${system}.override {
+  toolchain = fenix.minimal.toolchain;
+  naersk-lib = naersk.override {
     cargo = toolchain;
     rustc = toolchain;
   };
 in
 naersk-lib.buildPackage {
   pname = "frum";
-  src = frum-src;
+  src = fetchFromGitHub {
+    owner = "TaKO8Ki";
+    repo = "frum";
+    rev = "ffc76de236aae595f389de1c89c87ce996cd52c3";
+    hash = "sha256-efMiZGNNsewPChnOz4+VpqsE4sU2GWnxAaqR6yvxX2M=";
+  };
 
   buildInputs = [ openssl_3.dev readline libyaml zlib ];
   nativeBuildInputs = [ pkg-config ];

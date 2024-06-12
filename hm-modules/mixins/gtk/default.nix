@@ -1,27 +1,38 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  cfg = config.mixins.gtk;
+in
 {
-  gtk = {
-    enable = true;
-    font = {
-      name = "FiraCode Nerd Font Mono";
-    };
-    theme = {
-      name = "Catppuccin-Mocha-Standard-Lavender-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "lavender" ];
-        variant = "mocha";
-      };
-    };
-    iconTheme = {
-      name = "Papirus";
-      package = pkgs.papirus-icon-theme;
-    };
+  options.mixins.gtk.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = config.mixins.enable;
+    description = "Whether to enable the gtk mixin";
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk";
+  config = lib.mkIf cfg.enable {
+    gtk = {
+      enable = true;
+      font = {
+        name = "FiraCode Nerd Font Mono";
+      };
+      theme = {
+        name = "Catppuccin-Mocha-Standard-Lavender-Dark";
+        package = pkgs.catppuccin-gtk.override {
+          accents = [ "lavender" ];
+          variant = "mocha";
+        };
+      };
+      iconTheme = {
+        name = "Papirus";
+        package = pkgs.papirus-icon-theme;
+      };
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk";
+    };
   };
 }
 

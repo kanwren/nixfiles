@@ -16,8 +16,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,24 +32,6 @@
       url = "github:nmattia/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    frum-src = {
-      url = "github:TaKO8Ki/frum";
-      flake = false;
-    };
-    k8split-src = {
-      url = "github:brendanjryan/k8split";
-      flake = false;
-    };
-    envtpl-src = {
-      url = "github:subfuzion/envtpl";
-      flake = false;
-    };
-
-    wd-fish-src = {
-      url = "github:fischerling/plugin-wd";
-      flake = false;
-    };
   };
 
   outputs =
@@ -60,81 +40,91 @@
     , home-manager
     , nix-darwin
     , nixos-hardware
-    , flake-utils
     , nixos-generators
     , catppuccin
     , fenix
     , naersk
-    , frum-src
-    , k8split-src
-    , envtpl-src
-    , wd-fish-src
     }@inputs:
     let
-      recursiveMergeAttrs = nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate { };
-      sources = {
-        inherit (inputs)
-          fenix
-          naersk
-          frum-src
-          k8split-src
-          envtpl-src
-          wd-fish-src;
-      };
+      defaultSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs
+          defaultSystems
+          (system:
+            let
+              pkgs = import nixpkgs {
+                inherit system;
+                overlays = [ self.overlays.default ];
+              };
+            in
+            f pkgs);
     in
-    recursiveMergeAttrs [
-      {
-        nixosConfigurations = {
-          # main dev laptop
-          hecate = import ./hosts/hecate/host.nix inputs;
+    {
+      nixosConfigurations = {
+        hecate = import ./hosts/hecate/host.nix {
+          inherit self nixpkgs home-manager nixos-hardware catppuccin;
         };
+      };
 
-        darwinConfigurations = {
-          caspar = import ./hosts/caspar/host.nix inputs;
+      darwinConfigurations = {
+        caspar = import ./hosts/caspar/host.nix {
+          inherit self nixpkgs nix-darwin home-manager catppuccin;
         };
+      };
 
-        # Nixpkgs overlays
-        overlays = import ./overlays;
+      # Nixpkgs overlays
+      overlays = {
+        default = nixpkgs.lib.composeManyExtensions [
+          fenix.overlays.default
+          naersk.overlay
+          (final: prev: import ./pkgs { pkgs = final; })
+        ];
 
-        # NixOS modules
-        nixosModules = import ./modules { inherit self; };
+        installers = final: prev: final.callPackages ./installers { inherit nixos-generators; };
+      } // import ./overlays;
 
-        darwinModules = import ./darwin-modules { inherit self; };
+      packages = forAllSystems (pkgs: {
+        inherit (pkgs)
+          catppuccin-twemoji-hearts
+          envtpl
+          frum
+          generate-heart-emoji
+          jj-helpers
+          lipsum
+          slides-full
+          tfenv
+          wd-fish;
+      });
 
-        # home-manager modules
-        hmModules = import ./hm-modules { inherit self; };
+      nixosModules = import ./modules;
 
-        # custom templates
-        templates = import ./templates;
-      }
-      (flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ] (system: (
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          devShells.default = pkgs.mkShellNoCC {
-            packages = [
-              pkgs.just
-              # formatting
-              pkgs.lefthook
-              self.formatter.${system}
-            ];
-          };
+      darwinModules = import ./darwin-modules;
 
-          packages = import ./pkgs { inherit pkgs sources; };
+      hmModules = import ./hm-modules;
 
-          formatter = pkgs.nixpkgs-fmt;
+      # custom templates
+      templates = import ./templates;
 
-          checks.check-format = pkgs.runCommand "check-format" { buildInputs = [ self.formatter.${system} ]; } ''
-            nixpkgs-fmt --check ${./.}
-            touch "$out"
-          '';
-        }
-      )))
-      (import ./installer/installers.nix {
-        inherit nixpkgs nixos-generators;
-      })
-    ];
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShellNoCC {
+          packages = [
+            pkgs.just
+            # formatting
+            pkgs.lefthook
+            self.formatter.${pkgs.system}
+          ];
+        };
+      });
+
+      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
+
+      checks = forAllSystems (pkgs: {
+        check-format = pkgs.runCommand "check-format" { buildInputs = [ self.formatter.${pkgs.system} ]; } ''
+          nixpkgs-fmt --check ${./.}
+          touch "$out"
+        '';
+      });
+    };
 
   nixConfig = {
     extra-substituters = [ "https://kanwren.cachix.org" ];

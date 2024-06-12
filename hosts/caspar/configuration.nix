@@ -137,7 +137,7 @@ in
       pkgs.kubectl
       pkgs.k9s
       pkgs.kubernetes-helm
-      self.packages.${pkgs.system}.envtpl
+      pkgs.envtpl
       pkgs.gomplate
       ## AWS
       pkgs.awscli2
@@ -151,9 +151,9 @@ in
       pkgs.python3
       pkgs.pipx
       pkgs.rustup
-      self.packages.${pkgs.system}.frum
+      pkgs.frum
       pkgs.shellcheck
-      self.packages.${pkgs.system}.tfenv
+      pkgs.tfenv
 
       # media tools
       pkgs.ffmpeg
@@ -211,19 +211,6 @@ in
     useUserPackages = true;
 
     users.wrenn = {
-      imports = [
-        self.hmModules.mixins.bash
-        self.hmModules.mixins.btop
-        self.hmModules.mixins.catppuccin
-        self.hmModules.mixins.direnv
-        self.hmModules.mixins.fish
-        self.hmModules.mixins.gh
-        self.hmModules.mixins.h
-        self.hmModules.mixins.jq
-        self.hmModules.mixins.jujutsu
-        self.hmModules.mixins.zoxide
-      ];
-
       home = {
         stateVersion = "22.11";
 
@@ -250,6 +237,19 @@ in
               })
               (lib.lists.range 1 9)))
         ];
+      };
+
+      mixins = {
+        bash.enable = true;
+        btop.enable = true;
+        catppuccin.enable = true;
+        direnv.enable = true;
+        fish.enable = true;
+        gh.enable = true;
+        h.enable = true;
+        jq.enable = true;
+        jujutsu.enable = true;
+        zoxide.enable = true;
       };
 
       # extra fish init on top of fish mixin
@@ -298,7 +298,7 @@ in
         '';
 
         interactiveShellInit = ''
-          "${self.packages.${pkgs.system}.frum}/bin/frum" init | source
+          "${pkgs.frum}/bin/frum" init | source
         '';
 
         functions = {

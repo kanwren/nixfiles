@@ -1,6 +1,4 @@
-{ self }:
-
 {
-  mixins = import ./mixins { inherit self; };
+  mixins = import ./mixins;
   h = import ./h.nix;
 }

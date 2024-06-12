@@ -7,19 +7,31 @@
   description = "Template for nixos-shell VMs";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     nixos-shell.url = "github:Mic92/nixos-shell";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixos-shell, flake-utils }:
+  outputs = { self, nixpkgs, nixos-shell }:
     let
-      inherit (nixpkgs) lib;
+      defaultSystems = [ "aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux" ];
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs
+          defaultSystems
+          (system:
+            let
+              pkgs = nixpkgs.legacyPackages.${system};
+            in
+            f pkgs);
     in
     {
-      nixosConfigurations.vm = lib.makeOverridable lib.nixosSystem {
+      overlays.nixos-shell = final: prev: {
+        nixos-shell = nixos-shell.packages.${prev.system}.nixos-shell;
+      };
+
+      nixosConfigurations.vm = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ({ pkgs, config, lib, ... }: {
+          ({ pkgs, ... }: {
             environment.systemPackages = with pkgs; [ vim ];
 
             nixos-shell.mounts = {
@@ -59,22 +71,18 @@
           nixos-shell.nixosModules.nixos-shell
         ];
       };
-    }
-    //
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        apps.default = {
+
+      apps = forAllSystems (pkgs: {
+        default = {
           type = "app";
           program = "${pkgs.writeShellScript "nixos-shell" ''
             if [ $# -eq 0 ]; then
-              ${nixos-shell.defaultPackage.${system}}/bin/nixos-shell --flake '.#vm'
+              ${pkgs.nixos-shell}/bin/nixos-shell --flake '.#vm'
             else
-              ${nixos-shell.defaultPackage.${system}}/bin/nixos-shell $@
+              ${pkgs.nixos-shell}/bin/nixos-shell $@
             fi
           ''}";
         };
       });
+    };
 }

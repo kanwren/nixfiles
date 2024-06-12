@@ -3,7 +3,6 @@
 , unixtools
 , curl
 , jq
-, addmeta
 }:
 
 let
@@ -15,8 +14,10 @@ let
     dir = "bin";
     isExecutable = true;
   };
+  meta = {
+    description = "Generate lorem ipsum text";
+  };
 in
-addmeta script {
-  description = "Generate lorem ipsum text";
-}
-
+script.overrideAttrs (old: {
+  meta = (old.meta or { }) // meta;
+})
