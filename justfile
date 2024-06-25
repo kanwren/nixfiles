@@ -44,9 +44,10 @@ hecate command="build": _validate-variables hecate-system
 caspar-system: _validate-variables
     {{ nix_command }} build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'
 
-# Run a darwin-rebuild command on caspar
+# Run a darwin-rebuild command on caspar (note that activate requires using
+# darwin-rebuild from target)
 caspar command="build": _validate-variables caspar-system
-    {{ quote(if use_rebuild_from_target == "false" { 'darwin-rebuild' } else { `nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild" }) }} --flake '.#caspar' {{ quote(command) }}
+    {{ quote(if (if command == "activate" { "true" } else { use_rebuild_from_target }) == "false" { 'darwin-rebuild' } else { `nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild" }) }} --flake '.#caspar' {{ quote(command) }}
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
 update-inputs: _validate-variables
