@@ -167,11 +167,9 @@ in
     ];
   };
 
-  fonts = {
-    fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
-    ];
-  };
+  fonts.packages = [
+    (pkgs.nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
+  ];
 
   programs = {
     bash.enable = true;
