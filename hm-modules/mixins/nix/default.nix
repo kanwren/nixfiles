@@ -17,7 +17,6 @@ in
     home.packages = with pkgs; [
       comma
       nix-tree
-      nix-top
     ];
   };
 }
