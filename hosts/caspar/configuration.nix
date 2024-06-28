@@ -1,4 +1,4 @@
-{ pkgs, self, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   homebrewPrefix = lib.strings.removeSuffix "/bin" (builtins.toString config.homebrew.brewPrefix);
@@ -328,6 +328,7 @@ in
             use-java.source = pkgs.writeText "use-java" ''
               complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
             '';
+            aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
             # Docker is installed externally; add completions manually.
             docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
           };
