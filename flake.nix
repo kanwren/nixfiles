@@ -74,7 +74,7 @@
 
       darwinConfigurations = {
         caspar = import ./hosts/caspar/host.nix {
-          inherit self nixpkgs nix-darwin home-manager catppuccin;
+          inherit self nixpkgs lix-module nix-darwin home-manager catppuccin;
         };
       };
 
