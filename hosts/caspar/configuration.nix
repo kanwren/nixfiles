@@ -322,12 +322,17 @@ in
         };
       };
 
-      # fish completions
-      xdg.configFile."fish/completions/use-java.fish".source = pkgs.writeText "use-java" ''
-        complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
-      '';
-      # Docker is installed externally; add completions manually.
-      xdg.configFile."fish/completions/docker.fish".source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+      xdg.configFile =
+        let
+          extra-fish-completions = lib.mapAttrs' (name: value: { name = "fish/completions/${name}.fish"; value = value; }) {
+            use-java.source = pkgs.writeText "use-java" ''
+              complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
+            '';
+            # Docker is installed externally; add completions manually.
+            docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+          };
+        in
+        extra-fish-completions;
 
       programs.h = {
         codeRoot = "$HOME/Development/code";
