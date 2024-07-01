@@ -6,6 +6,8 @@
       ls = "${pkgs.eza}/bin/eza --git";
       cat = "${pkgs.bat}/bin/bat";
       ping = "${pkgs.prettyping}/bin/prettyping";
+      xy = "xclip -selection clip -in";
+      xp = "xclip -selection clip -out";
     }
     (builtins.listToAttrs
       (builtins.map
