@@ -1,5 +1,6 @@
 { self
 , nixpkgs
+, lix-module
 , home-manager
 , nixos-hardware
 , catppuccin
@@ -25,6 +26,8 @@ nixpkgs.lib.nixosSystem {
 
       nixpkgs.overlays = [ self.overlays.default ];
     })
+
+    lix-module.nixosModules.default
 
     home-manager.nixosModules.home-manager
     {
