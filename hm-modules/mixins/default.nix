@@ -27,6 +27,7 @@
     ./spotify
     ./tmux
     ./vscode
+    ./yazi
     ./zathura
     ./zoxide
   ];

@@ -81,6 +81,7 @@
             bindsym v exec kitty vim;            mode "default"
             bindsym b exec firefox;              mode "default"
             bindsym f exec thunar;               mode "default"
+            bindsym y exec kitty fish -C y;      mode "default"
             bindsym d exec Discord;              mode "default"
             bindsym l exec slack;                mode "default"
             bindsym s exec spotify;              mode "default"
