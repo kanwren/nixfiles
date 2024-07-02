@@ -17,7 +17,7 @@ in
         name = "FiraCode Nerd Font Mono";
       };
       theme = {
-        name = "Catppuccin-Mocha-Standard-Lavender-Dark";
+        name = "catppuccin-mocha-lavender-standard+default";
         package = pkgs.catppuccin-gtk.override {
           accents = [ "lavender" ];
           variant = "mocha";
