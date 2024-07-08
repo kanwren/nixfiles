@@ -19,9 +19,9 @@ symlinkJoin {
       jj rebase --revisions "$1" --destination "$2"
 
       # move children of 2 on top of 1, if there are any
-      if [ -n "$(change_ids "children($2) ~ ($1)")" ]; then
-        jj rebase --source "all:children($2) ~ ($1)" --destination "$1"
-      fi
+      change_ids "children($2) ~ ($1)" | while read -r child; do
+        jj rebase --source "$child" --destination "all:parents($child) ~ ($2) | ($1)"
+      done
     '';
 
     # List the change IDs for a revset ('@' by default)
@@ -94,9 +94,9 @@ symlinkJoin {
       jj describe "$backout" --message "backout of splitter"
 
       # Rebase children of $orig onto the backout
-      if [ -n "$(change_ids "children($orig) ~ ($splitter)")" ]; then
-        jj rebase --source "all:children($orig) ~ ($splitter)" --destination "$backout"
-      fi
+      change_ids "children($orig) ~ ($splitter)" | while read -r child; do
+        jj rebase --source "$child" --destination "all:parents($child) ~ $orig | $backout"
+      done
 
       # Squash the splitter with its parent
       jj squash --revision "$splitter"
