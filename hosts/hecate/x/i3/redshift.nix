@@ -1,9 +1,6 @@
 { ... }:
 
 {
-  location.provider = "geoclue2";
-  services.localtimed.enable = true;
-
   services.redshift = {
     enable = true;
     executable = "/bin/redshift-gtk";
