@@ -1,43 +1,89 @@
 { symlinkJoin, writers }:
 
+let
+  jj-helpers-lib = writers.writeBash "jj-helpers-lib" ''
+    shopt -s -o errexit nounset pipefail
+
+    change_ids() {
+      jj log --revisions "$1" --reversed --no-graph --template 'change_id ++ "\n"'
+    }
+
+    change_id() {
+      declare ids
+      ids="$(change_ids "$1")"
+      if [ "$(wc -l <<<"$ids")" -ne 1 ]; then
+        echo "invalid revset: $1 should have exactly one revision" >&2
+        return 1
+      fi
+      printf '%s\n' "$ids"
+    }
+
+    description() {
+      jj log --revisions "$1" --no-graph --template 'description'
+    }
+
+    revset() {
+      change_ids "$1" | jq --null-input --raw-input --raw-output '
+        [inputs] | if length == 0 then "empty()" else join("|") end
+      '
+    }
+  '';
+in
+
 symlinkJoin {
   name = "jj-helpers";
   paths = builtins.attrValues {
     # Move the first change to a position after the second change.
     "jj.pluck" = writers.writeBashBin "jj.pluck" ''
-      set -euo pipefail
+      source ${jj-helpers-lib}
 
-      change_ids() {
-        jj log --revisions "$1" --no-graph --template 'change_id ++ "\n"'
+      main() {
+        declare rev target
+        rev="$(change_id "$1")"
+        target="$(change_id "$2")"
+
+        # move 1 on top of 2
+        jj rebase --revisions "''${rev}" --destination "''${target}"
+
+        # move children of 2 on top of 1, if there are any
+        change_ids "children(''${target}) ~ (''${rev})" | while read -r child; do
+          jj rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | (''${rev})"
+        done
       }
 
       [ $# -eq 2 ] || { echo "usage: $0 <source> <destination>"; exit 1; }
-      [ -z "$(change_ids "$1")" ] && { echo "revision not found: $1"; exit 1; }
-      [ -z "$(change_ids "$2")" ] && { echo "revision not found: $2"; exit 1; }
 
-      # move 1 on top of 2
-      jj rebase --revisions "$1" --destination "$2"
-
-      # move children of 2 on top of 1, if there are any
-      change_ids "children($2) ~ ($1)" | while read -r child; do
-        jj rebase --source "$child" --destination "all:parents($child) ~ ($2) | ($1)"
-      done
+      main "$@"
     '';
 
     # List the change IDs for a revset ('@' by default)
     "jj.id" = writers.writeBashBin "jj.id" ''
-      set -euo pipefail
+      source ${jj-helpers-lib}
+
+      main() {
+        change_ids "''${1-@}"
+      }
+
       [ $# -le 1 ] || { echo "usage: $0 [<revision>]"; exit 1; }
-      jj log --revisions "''${1-@}" --no-graph --template 'change_id ++ "\n"' | tac
+
+      main "$@"
     '';
 
     # Add empty commits before and after a commit, to guarantees that a commit has
     # only one parent and only one child.
     "jj.isolate" = writers.writeBashBin "jj.isolate" ''
-      set -euo pipefail
+      source ${jj-helpers-lib}
+
+      main() {
+        declare target
+        target="$(change_id "$1")"
+        jj new --no-edit --insert-before "''${target}"
+        jj new --no-edit --insert-after "''${target}"
+      }
+
       [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
-      jj new --no-edit --insert-before "$1"
-      jj new --no-edit --insert-after "$1"
+
+      main "$@"
     '';
 
     # Given a revision 'splitter', like so:
@@ -60,68 +106,54 @@ symlinkJoin {
     # (since 'change + Δsplitter + -Δsplitter = change'), and squashing 'change'
     # with 'splitter'.
     "jj.apply-split" = writers.writeBashBin "jj.apply-split" ''
-      set -euxo pipefail
+      source ${jj-helpers-lib}
+      shopt -s -o xtrace
 
-      change_ids() {
-        jj log --revisions "$1" --no-graph --template 'change_id ++ "\n"'
-      }
+      main() {
+        declare splitter orig
+        splitter="$(change_id "$1")"
+        orig="$(change_id "parents($splitter)")"
 
-      description() {
-        jj log --revisions "$1" --no-graph --template 'description'
-      }
+        declare -i squash_automessage=0
+        [ -z "$(description "''${splitter}")" ] && squash_automessage=1
+        [ -z "$(description "''${orig}")" ]     && squash_automessage=1
 
-      revset() {
-        printf '%s%s' 'empty()' "$(jj log --revisions "$1" --no-graph --template '" | " ++ change_id')"
+        # Invert the changes in $splitter
+        declare old_splitter_children new_splitter_children backout
+        old_splitter_children="$(revset "children(''${splitter})")"
+        jj backout --revision "''${splitter}" --destination "''${splitter}"
+        new_splitter_children="$(revset "children(''${splitter})")"
+        backout="$(change_id "($new_splitter_children) ~ ($old_splitter_children)")"
+        jj describe "''${backout}" --message "backout of splitter"
+
+        # Rebase children of $orig onto the backout
+        change_ids "children(''${orig}) ~ (''${splitter})" | while read -r child; do
+          jj rebase --source "$child" --destination "all:parents($child) ~ ''${orig} | ''${backout}"
+        done
+
+        # Squash the splitter with its parent
+        jj squash --revision "''${splitter}"
+
+        # Rewrite the messages for the first and second halves
+        if [ "''${squash_automessage}" -eq 1 ]; then
+          jj describe "''${orig}"
+        fi
+        jj describe "''${backout}"
       }
 
       [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
 
-      declare -r splitter="$1"
-      declare -r orig="$(change_ids "parents($splitter)")"
-
-      [ "$(change_ids "$splitter" | wc -l)" -ne 1 ] && { echo "invalid splitter: $splitter should have exactly one revision"; exit 1; }
-      [ "$(wc -l <<<"$orig")" -ne 1 ] && { echo "invalid splitter: $splitter should have exactly one parent"; exit 1; }
-
-      declare squash_automessage=0
-      [ -z "$(description "$splitter")" ] && squash_automessage=1
-      [ -z "$(description "$orig")" ]     && squash_automessage=1
-
-      # Invert the changes in $splitter
-      declare -r old_splitter_children="$(revset "children($splitter)")"
-      jj backout --revision "$splitter" --destination "$splitter"
-      declare -r new_splitter_children="$(revset "children($splitter)")"
-      declare -r backout="$(change_ids "($new_splitter_children) ~ ($old_splitter_children)")"
-      jj describe "$backout" --message "backout of splitter"
-
-      # Rebase children of $orig onto the backout
-      change_ids "children($orig) ~ ($splitter)" | while read -r child; do
-        jj rebase --source "$child" --destination "all:parents($child) ~ $orig | $backout"
-      done
-
-      # Squash the splitter with its parent
-      jj squash --revision "$splitter"
-
-      # Rewrite the messages for the first and second halves
-      if [ "$squash_automessage" -eq 1 ]; then
-        jj describe "$orig"
-      fi
-      jj describe "$backout"
+      main "$@"
     '';
 
     # Generates a new change ID for a revision.
     "jj.recreate" = writers.writeBashBin "jj.recreate" ''
-      set -euo pipefail
-
-      recreate_change() {
-        declare -r rev="$1"
-        jj new --quiet --no-edit --insert-before "$rev"
-        jj squash --quiet --revision "$rev"
-      }
+      source ${jj-helpers-lib}
 
       main() {
-        declare -r revset="$1"
-        jj log --revisions "$revset" --no-graph --template 'change_id ++ "\n"' | tac | while read -r rev; do
-          recreate_change "$rev"
+        change_ids "$1" | while read -r rev; do
+          jj new --quiet --no-edit --insert-before "$rev"
+          jj squash --quiet --revision "$rev"
         done
       }
 
