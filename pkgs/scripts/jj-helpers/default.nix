@@ -161,5 +161,23 @@ symlinkJoin {
 
       main "$@"
     '';
+
+    # Run a command at every revision in a revset
+    "jj.run" = writers.writeBashBin "jj.run" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        declare -r revset="$1"
+        declare -ra cmd=("''${@:2}")
+        change_ids "''${revset}" | while read -r rev; do
+          jj edit "''${rev}"
+          "''${cmd[@]}"
+        done
+      }
+
+      [ $# -ge 2 ] || { echo "usage: $0 <revset> <command> <args>..."; exit 1; }
+
+      main "$@"
+    '';
   };
 }
