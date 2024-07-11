@@ -33,11 +33,25 @@ in
 symlinkJoin {
   name = "jj-helpers";
   paths = builtins.attrValues {
-    # Move the first change to a position after the second change.
-    "jj.pluck" = writers.writeBashBin "jj.pluck" ''
+    # Move the first change to a position before or after the second change.
+    "jj.reorder" = writers.writeBashBin "jj.reorder" ''
       source ${jj-helpers-lib}
 
-      main() {
+      usage() { echo "usage: $0 <source> (before|after) <destination>"; }
+
+      before() {
+        declare rev target
+        rev="$(change_id "$1")"
+        target="$(change_id "$2")"
+
+        # move 1 on top of 2's parents
+        jj rebase --revisions "''${rev}" --destination "all:parents(''${target})"
+
+        # move 2 and descendants on top of 1
+        jj rebase --source "''${target}" --destination "''${rev}"
+      }
+
+      after() {
         declare rev target
         rev="$(change_id "$1")"
         target="$(change_id "$2")"
@@ -51,9 +65,13 @@ symlinkJoin {
         done
       }
 
-      [ $# -eq 2 ] || { echo "usage: $0 <source> <destination>"; exit 1; }
+      [ $# -eq 3 ] || { usage; exit 1; }
 
-      main "$@"
+      case "''${2}" in
+        after) after "''${1}" "''${3}" ;;
+        before) before "''${1}" "''${3}" ;;
+        *) echo "invalid position: ''${2}"; usage; exit 1 ;;
+      esac
     '';
 
     # List the change IDs for a revset ('@' by default)
