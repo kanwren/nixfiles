@@ -10,7 +10,7 @@
     };
     temperature = {
       day = 6500;
-      night = 2700;
+      night = 3200;
     };
   };
 }
