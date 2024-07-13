@@ -11,8 +11,17 @@
 #   nix run 'github:nix-community/nixos-generators#nixos-generate' -- \
 #     -f sd-aarch64-installer --system aarch64-linux -c configuration.nix
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  my-vim = pkgs.vim_configurable.customize {
+    name = "vim";
+    vimrcConfig = {
+      packages.vim-package-group.start = with pkgs.vimPlugins; [ vim-nix vim-surround ];
+      customRC = builtins.readFile ./minimal.vimrc;
+    };
+  };
+in
 {
   system.stateVersion = "22.11";
 
@@ -39,34 +48,31 @@
       enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry;
     };
-    bash.enableCompletion = true;
+    bash.completion.enable = true;
   };
 
-  users.users.root.password = "nixos";
+  users.users.root = {
+    password = "nixos";
+    initialHashedPassword = lib.mkForce null;
+  };
 
   environment = {
     variables.EDITOR = "vim";
 
-    systemPackages = with pkgs; [
-      (pkgs.vim_configurable.customize {
-        name = "vim";
-        vimrcConfig = {
-          packages.vim-package-group.start = with pkgs.vimPlugins; [ vim-nix vim-surround ];
-          customRC = builtins.readFile ./minimal.vimrc;
-        };
-      })
-      (writeShellScriptBin "locate-nixfiles" "echo ${../.}")
+    systemPackages = [
+      my-vim
+      (pkgs.writeShellScriptBin "locate-nixfiles" "echo ${../.}")
 
-      git
-      tmux
-      parted
-      unixtools.fdisk
-      ripgrep
-      fzf
-      wget
-      curl
-      gnupg
-      mkpasswd
+      pkgs.git
+      pkgs.tmux
+      pkgs.parted
+      pkgs.unixtools.fdisk
+      pkgs.ripgrep
+      pkgs.fzf
+      pkgs.wget
+      pkgs.curl
+      pkgs.gnupg
+      pkgs.mkpasswd
     ];
   };
 
