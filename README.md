@@ -4,49 +4,25 @@
 
 My NixOS configurations and other Nix files :snowflake:
 
-### Overview
+## Hosts
 
-- [`flake.nix`](flake.nix): Flakes for each configuration, outputs for libs/modules/packages, and a dev shell for working with secrets.
-- [`modules/`](modules/): Custom NixOS modules; see the [`mixins`](#mixins) section
-- [`hosts/`](hosts/): Configuration for each of my NixOS machines
-- [`hm-modules/`](hm-modules/): Custom home-manager modules
-- [`darwin-modules/`](darwin-modules/): Custom nix-darwin modules
-- [`pkgs/`](pkgs/): Custom-built derivations exported from flake
-- [`installers/`](installers/): Minimal custom installer configuration using [nixos-generators](https://github.com/nix-community/nixos-generators); see the [`installers`](#installers) section
-- [`overlays/`](overlays/): Nixpkgs overlays for overriding or adding packages
-- [`templates/`](templates/): Various templates that can be used with the `nix flake init/new` subcommands
+- [`hecate`](hosts/hecate/)
+- [`caspar`](hosts/caspar/)
 
-### Hosts
-
-- [`hecate`](hosts/hecate/): Main laptop
-- [`caspar`](hosts/caspar/): M1 Mac
-
-#### Mixins
-
-Most of the code for building configurations is split into mixins, which are
-NixOS modules that configure part of a system according to my preferences.
-Mixins can be mixed-and-matched and composed together to create the base config
-for a specific system.
-
-- [`base/`](modules/base): The common base of all of my systems, with essential packages, services, and settings
-- [`desktop/`](modules/desktop): Different mixins for creating a development workstation on a (usually graphical) computer
-  - [`desktop/x`](modules/desktop/x): Mixins for display managers, window managers, and desktop environments
-- [`users/`](modules/users): Per-user system user settings and [home-manager](https://github.com/nix-community/home-manager/) configurations
-
-### `installers`
+## `installers`
 
 `installers/` contains a custom installer configuration, built with [nixos-generators](https://github.com/nix-community/nixos-generators).
 The `justfile` contains a recipe for building installers:
 
 ```
 # x86_64-linux installer iso
-$ just build-nixos-installer x86_64-linux ./installer/configuration.nix
+$ just build-nixos-installer x86_64-linux ./installers/configuration.nix
 
 # aarch64-linux installer sd image (requires 'boot.binfmt.emulatedSystems = [ "aarch64-linux" ];')
-$ just build-nixos-installer aarch64-linux ./installer/configuration.nix
+$ just build-nixos-installer aarch64-linux ./installers/configuration.nix
 ```
 
-### Manual setup
+## Manual setup
 
 Some things cannot be set up automatically, especially some of the Catppuccin
 theming. Here are some things that may need to be done manually:
@@ -72,9 +48,11 @@ theming. Here are some things that may need to be done manually:
         - [Tab session manager](https://addons.mozilla.org/en-US/firefox/addon/tab-session-manager/)
         - [Tree style tab](https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/)
           - [TST Indent Line](https://addons.mozilla.org/en-US/firefox/addon/tst-indent-line/)
-          - [TST Lock tree collapsed](https://addons.mozilla.org/en-US/firefox/addon/tst-lock-tree-collapsed/)
+          - [TST Lock Tree Collapsed](https://addons.mozilla.org/en-US/firefox/addon/tst-lock-tree-collapsed/)
+          - [TST More Tree Commands](https://addons.mozilla.org/en-US/firefox/addon/tst-more-tree-commands/)
           - [TST Tab Drag Handle](https://addons.mozilla.org/en-US/firefox/addon/tst-tab-drag-handle/)
           - [TST-MiddleClick](https://addons.mozilla.org/en-US/firefox/addon/tst-middleclick/)
+          - [Tab Unloader for Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/tab-unload-for-tree-style-tab/)
           - [Move unloaded tabs for Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/move-unloaded-tabs-for-tst/)
           - [Bookmark Tree for Tree Style Tab](https://addons.mozilla.org/en-US/firefox/addon/bookmark-tree-for-tst/)
       - Site enhancements:
