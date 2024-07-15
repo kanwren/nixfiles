@@ -27,6 +27,21 @@ let
         [inputs] | if length == 0 then "empty()" else join("|") end
       '
     }
+
+    escape() {
+      if [ "$(printf '%q' "''${1}")" = "''${1}" ]; then
+        printf '%s' "''${1}"
+      else
+        printf "'%s'" "''${1//\'/\'\"\'\"\'}"
+      fi
+    }
+
+    jj.log() {
+      printf '\x1b[1;32m$ jj'
+      for arg in "$@"; do printf " %s" "$(escape "''${arg}")"; done
+      printf '\x1b[0m\n'
+      jj "$@"
+    }
   '';
 in
 
@@ -37,7 +52,7 @@ symlinkJoin {
     "jj.reorder" = writers.writeBashBin "jj.reorder" ''
       source ${jj-helpers-lib}
 
-      usage() { echo "usage: $0 <source> (before|after) <destination>"; }
+      usage() { echo "usage: jj.reorder <source> (before|after) <destination>"; }
 
       before() {
         declare rev target
@@ -45,10 +60,10 @@ symlinkJoin {
         target="$(change_id "$2")"
 
         # move 1 on top of 2's parents
-        jj rebase --revisions "''${rev}" --destination "all:parents(''${target})"
+        jj.log rebase --revisions "''${rev}" --destination "all:parents(''${target})"
 
         # move 2 and descendants on top of 1
-        jj rebase --source "''${target}" --destination "''${rev}"
+        jj.log rebase --source "''${target}" --destination "''${rev}"
       }
 
       after() {
@@ -57,11 +72,11 @@ symlinkJoin {
         target="$(change_id "$2")"
 
         # move 1 on top of 2
-        jj rebase --revisions "''${rev}" --destination "''${target}"
+        jj.log rebase --revisions "''${rev}" --destination "''${target}"
 
         # move children of 2 on top of 1, if there are any
         change_ids "children(''${target}) ~ (''${rev})" | while read -r child; do
-          jj rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | (''${rev})"
+          jj.log rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | (''${rev})"
         done
       }
 
@@ -82,7 +97,20 @@ symlinkJoin {
         change_ids "''${1-@}"
       }
 
-      [ $# -le 1 ] || { echo "usage: $0 [<revision>]"; exit 1; }
+      [ $# -le 1 ] || { echo "usage: jj.id [<revision>]"; exit 1; }
+
+      main "$@"
+    '';
+
+    # List the change IDs for a revset ('@' by default)
+    "jj.branch" = writers.writeBashBin "jj.branch" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj log --revisions "$1" --no-graph --template 'branches.map(|b| b ++ "\n").join("")'
+      }
+
+      [ $# -le 1 ] || { echo "usage: jj.branch [<revision>]"; exit 1; }
 
       main "$@"
     '';
@@ -95,11 +123,11 @@ symlinkJoin {
       main() {
         declare target
         target="$(change_id "$1")"
-        jj new --no-edit --insert-before "''${target}"
-        jj new --no-edit --insert-after "''${target}"
+        jj.log new --no-edit --insert-before "''${target}"
+        jj.log new --no-edit --insert-after "''${target}"
       }
 
-      [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
+      [ $# -eq 1 ] || { echo "usage: jj.isolate <revision>"; exit 1; }
 
       main "$@"
     '';
@@ -139,27 +167,27 @@ symlinkJoin {
         # Invert the changes in $splitter
         declare old_splitter_children new_splitter_children backout
         old_splitter_children="$(revset "children(''${splitter})")"
-        jj backout --revision "''${splitter}" --destination "''${splitter}"
+        jj.log backout --revision "''${splitter}" --destination "''${splitter}"
         new_splitter_children="$(revset "children(''${splitter})")"
         backout="$(change_id "($new_splitter_children) ~ ($old_splitter_children)")"
-        jj describe "''${backout}" --message "backout of splitter"
+        jj.log describe "''${backout}" --message "backout of splitter"
 
         # Rebase children of $orig onto the backout
         change_ids "children(''${orig}) ~ (''${splitter})" | while read -r child; do
-          jj rebase --source "$child" --destination "all:parents($child) ~ ''${orig} | ''${backout}"
+          jj.log rebase --source "$child" --destination "all:parents($child) ~ ''${orig} | ''${backout}"
         done
 
         # Squash the splitter with its parent
-        jj squash --revision "''${splitter}"
+        jj.log squash --revision "''${splitter}"
 
         # Rewrite the messages for the first and second halves
         if [ "''${squash_automessage}" -eq 1 ]; then
-          jj describe "''${orig}"
+          jj.log describe "''${orig}"
         fi
-        jj describe "''${backout}"
+        jj.log describe "''${backout}"
       }
 
-      [ $# -eq 1 ] || { echo "usage: $0 <revision>"; exit 1; }
+      [ $# -eq 1 ] || { echo "usage: jj.apply-split <revision>"; exit 1; }
 
       main "$@"
     '';
@@ -170,12 +198,12 @@ symlinkJoin {
 
       main() {
         change_ids "$1" | while read -r rev; do
-          jj new --quiet --no-edit --insert-before "$rev"
-          jj squash --quiet --revision "$rev"
+          jj.log new --quiet --no-edit --insert-before "$rev"
+          jj.log squash --quiet --revision "$rev"
         done
       }
 
-      [ $# -eq 1 ] || { echo "usage: $0 <revset>"; exit 1; }
+      [ $# -eq 1 ] || { echo "usage: jj.recreate <revset>"; exit 1; }
 
       main "$@"
     '';
@@ -188,12 +216,73 @@ symlinkJoin {
         declare -r revset="$1"
         declare -ra cmd=("''${@:2}")
         change_ids "''${revset}" | while read -r rev; do
-          jj edit "''${rev}"
+          jj.log edit "''${rev}"
           "''${cmd[@]}"
         done
       }
 
-      [ $# -ge 2 ] || { echo "usage: $0 <revset> <command> <args>..."; exit 1; }
+      [ $# -ge 2 ] || { echo "usage: jj.run <revset> <command> <args>..."; exit 1; }
+
+      main "$@"
+    '';
+
+    "jj.flow.manage" = writers.writeBashBin "jj.flow.manage" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj.log rebase --source 'flow' --destination 'all:flow- | ('"''${1}"')'
+      }
+
+      [ $# -eq 1 ] || { echo "usage: jj.flow.manage <revset>"; exit 1; }
+
+      main "$@"
+    '';
+
+    "jj.flow.unmanage" = writers.writeBashBin "jj.flow.unmanage" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj.log rebase --source 'flow' --destination 'all:flow- ~ ('"''${1}"')'
+      }
+
+      [ $# -eq 1 ] || { echo "usage: jj.flow.unmanage <revset>"; exit 1; }
+
+      main "$@"
+    '';
+
+    "jj.flow.remanage" = writers.writeBashBin "jj.flow.remanage" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj.log rebase --source 'flow' --destination 'all:flow- ~ ('"''${1}"') | ('"''${2}"')'
+      }
+
+      [ $# -eq 2 ] || { echo "usage: jj.flow.remanage <from> <to>"; exit 1; }
+
+      main "$@"
+    '';
+
+    "jj.flow.rebase" = writers.writeBashBin "jj.flow.rebase" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        declare -r target="''${1-trunk()}"
+        jj.log rebase --source 'all:roots(('"''${target}"')..flow)' --destination "''${target}"
+      }
+
+      [ $# -le 1 ] || { echo "usage: jj.flow.rebase [<target>]"; exit 1; }
+
+      main "$@"
+    '';
+
+    "jj.flow.push" = writers.writeBashBin "jj.flow.push" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj.log git push --revisions 'all:trunk()..parents(flow)'
+      }
+
+      [ $# -eq 0 ] || { echo "usage: jj.flow.push"; exit 1; }
 
       main "$@"
     '';
