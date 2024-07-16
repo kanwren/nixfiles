@@ -230,7 +230,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log rebase --source 'flow' --destination 'all:flow- | ('"''${1}"')'
+        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
       }
 
       [ $# -eq 1 ] || { echo "usage: jj.flow.manage <revset>"; exit 1; }
@@ -242,7 +242,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log rebase --source 'flow' --destination 'all:flow- ~ ('"''${1}"')'
+        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) ~ ('"''${1}"')'
       }
 
       [ $# -eq 1 ] || { echo "usage: jj.flow.unmanage <revset>"; exit 1; }
@@ -254,7 +254,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log rebase --source 'flow' --destination 'all:flow- ~ ('"''${1}"') | ('"''${2}"')'
+        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) ~ ('"''${1}"') | ('"''${2}"')'
       }
 
       [ $# -eq 2 ] || { echo "usage: jj.flow.remanage <from> <to>"; exit 1; }
@@ -267,7 +267,7 @@ symlinkJoin {
 
       main() {
         declare -r target="''${1-trunk()}"
-        jj.log rebase --source 'all:roots(('"''${target}"')..flow)' --destination "''${target}"
+        jj.log rebase --source 'all:roots(('"''${target}"')..branches(exact:"flow"))' --destination "''${target}"
       }
 
       [ $# -le 1 ] || { echo "usage: jj.flow.rebase [<target>]"; exit 1; }
@@ -279,7 +279,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log git push --revisions 'all:trunk()..parents(flow)'
+        jj.log git push --revisions 'all:trunk()..parents(branches(exact:"flow"))'
       }
 
       [ $# -eq 0 ] || { echo "usage: jj.flow.push"; exit 1; }
