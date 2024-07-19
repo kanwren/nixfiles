@@ -36,6 +36,12 @@ let
       fi
     }
 
+    register_rollback_instructions() {
+      local op
+      op="$(jj operation log --no-graph --template 'if(self.current_operation(), self.id().short(), "")')"
+      trap 'printf '"'"'\x1b[1;33mTo roll back these changes, run:\x1b[0m\n\t\x1b[1;32mjj operation restore %s\x1b[0m\n'"'"' "'"''${op}"'"' EXIT
+    }
+
     jj.log() {
       printf '\x1b[1;32m$ jj'
       for arg in "$@"; do printf " %s" "$(escape "''${arg}")"; done
@@ -80,13 +86,19 @@ symlinkJoin {
         done
       }
 
+      main() {
+        register_rollback_instructions
+
+        case "''${2}" in
+          after) after "''${1}" "''${3}" ;;
+          before) before "''${1}" "''${3}" ;;
+          *) echo "invalid position: ''${2}"; usage; exit 1 ;;
+        esac
+      }
+
       [ $# -eq 3 ] || { usage; exit 1; }
 
-      case "''${2}" in
-        after) after "''${1}" "''${3}" ;;
-        before) before "''${1}" "''${3}" ;;
-        *) echo "invalid position: ''${2}"; usage; exit 1 ;;
-      esac
+      main "$@"
     '';
 
     # List the change IDs for a revset ('@' by default)
@@ -152,8 +164,10 @@ symlinkJoin {
       shopt -s -o xtrace
 
       main() {
+        register_rollback_instructions
+
         declare splitter orig
-        splitter="$(change_id "$1")"
+        splitter="$(change_id "''${1-@}")"
         orig="$(change_id "parents($splitter)")"
 
         declare -i squash_automessage=0
@@ -183,7 +197,7 @@ symlinkJoin {
         jj.log describe "''${backout}"
       }
 
-      [ $# -eq 1 ] || { echo "usage: jj.apply-split <revision>"; exit 1; }
+      [ $# -le 1 ] || { echo "usage: jj.apply-split [<revision>]"; exit 1; }
 
       main "$@"
     '';
@@ -193,6 +207,8 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
+        register_rollback_instructions
+
         declare -r revset="$1"
         declare -ra cmd=("''${@:2}")
         change_ids "''${revset}" | while read -r rev; do
@@ -210,6 +226,8 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
+        register_rollback_instructions
+
         if [ -n "$(change_ids 'present(branches(exact:"flow"))')" ]; then
           jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
         else
@@ -231,6 +249,8 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
+        register_rollback_instructions
+
         local num_parents
 
         # If there are no parents now, we're done
