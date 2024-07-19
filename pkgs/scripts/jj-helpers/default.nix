@@ -192,22 +192,6 @@ symlinkJoin {
       main "$@"
     '';
 
-    # Generates a new change ID for a revision.
-    "jj.recreate" = writers.writeBashBin "jj.recreate" ''
-      source ${jj-helpers-lib}
-
-      main() {
-        change_ids "$1" | while read -r rev; do
-          jj.log new --quiet --no-edit --insert-before "$rev"
-          jj.log squash --quiet --revision "$rev"
-        done
-      }
-
-      [ $# -eq 1 ] || { echo "usage: jj.recreate <revset>"; exit 1; }
-
-      main "$@"
-    '';
-
     # Run a command at every revision in a revset
     "jj.run" = writers.writeBashBin "jj.run" ''
       source ${jj-helpers-lib}
