@@ -230,7 +230,16 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
+        if [ -n "$(change_ids 'present(branches(exact:"flow"))')" ]; then
+          jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
+        else
+          local old_children new_children flow_commit
+          old_children="$(revset 'children('"''${1}"')')"
+          jj.log new --no-edit "all:''${1}"
+          new_children="$(revset 'children('"''${1}"')')"
+          flow_commit="$(change_id "(''${new_children}) ~ (''${old_children})")"
+          jj.log branch create flow --revision "''${flow_commit}"
+        fi
       }
 
       [ $# -eq 1 ] || { echo "usage: jj.flow.manage <revset>"; exit 1; }
@@ -242,6 +251,24 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
+        local num_parents
+
+        # If there are no parents now, we're done
+        if [ "$(change_ids 'parents(present(branches(exact:"flow")))' | wc -l)" -eq 0 ]; then
+          printf '%s\n' 'nothing to do'
+          return
+        fi
+
+        # If removing the argument would remove all parents, delete the branch
+        if [ "$(change_ids 'parents(branches(exact:"flow")) ~ ('"''${1}"')' | wc -l)" -eq 0 ]; then
+          if [ -n "$(change_ids 'branches(exact:"flow") & empty() & description(exact:"")')" ]; then
+            jj.log abandon 'branches(exact:"flow")'
+          fi
+          jj.log branch delete flow
+          return
+        fi
+
+        # Otherwise, just remove the given parents
         jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) ~ ('"''${1}"')'
       }
 
