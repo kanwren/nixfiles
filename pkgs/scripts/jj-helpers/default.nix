@@ -132,23 +132,6 @@ symlinkJoin {
       main "$@"
     '';
 
-    # Add empty commits before and after a commit, to guarantees that a commit has
-    # only one parent and only one child.
-    "jj.isolate" = writers.writeBashBin "jj.isolate" ''
-      source ${jj-helpers-lib}
-
-      main() {
-        declare target
-        target="$(change_id "$1")"
-        jj.log new --no-edit --insert-before "''${target}"
-        jj.log new --no-edit --insert-after "''${target}"
-      }
-
-      [ $# -eq 1 ] || { echo "usage: jj.isolate <revision>"; exit 1; }
-
-      main "$@"
-    '';
-
     # Given a revision 'splitter', like so:
     #
     #   base - change - rest
