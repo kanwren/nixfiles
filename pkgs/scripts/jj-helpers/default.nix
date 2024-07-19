@@ -5,11 +5,7 @@ let
     shopt -s -o errexit nounset pipefail
 
     change_ids() {
-      jj log --revisions "$1" --reversed --no-graph --template 'change_id ++ "\n"'
-    }
-
-    commit_ids() {
-      jj log --revisions "$1" --reversed --no-graph --template 'commit_id ++ "\n"'
+      jj log --revisions "$1" --reversed --no-graph --template 'change_id.short() ++ "\n"'
     }
 
     change_id() {
@@ -98,7 +94,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        change_ids "''${1-@}"
+        jj log --revisions "''${1-@}" --reversed --no-graph --template 'change_id ++ "\n"'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.id [<revision>]"; exit 1; }
@@ -111,7 +107,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        commit_ids "''${1-@}"
+        jj log --revisions "''${1-@}" --reversed --no-graph --template 'commit_id ++ "\n"'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.commit [<revision>]"; exit 1; }
