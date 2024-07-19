@@ -59,28 +59,28 @@ symlinkJoin {
       usage() { echo "usage: jj.reorder <source> (before|after) <destination>"; }
 
       before() {
-        declare rev target
-        rev="$(change_id "$1")"
+        declare revs target
+        revs="$(revset "$1")"
         target="$(change_id "$2")"
 
         # move 1 on top of 2's parents
-        jj.log rebase --revisions "''${rev}" --destination "all:parents(''${target})"
+        jj.log rebase --revisions "''${revs}" --destination "all:parents(''${target})"
 
         # move 2 and descendants on top of 1
-        jj.log rebase --source "''${target}" --destination "''${rev}"
+        jj.log rebase --source "''${target}" --destination "all:heads(''${revs})"
       }
 
       after() {
-        declare rev target
-        rev="$(change_id "$1")"
+        declare revs target
+        revs="$(revset "$1")"
         target="$(change_id "$2")"
 
         # move 1 on top of 2
-        jj.log rebase --revisions "''${rev}" --destination "''${target}"
+        jj.log rebase --revisions "''${revs}" --destination "''${target}"
 
         # move children of 2 on top of 1, if there are any
-        change_ids "children(''${target}) ~ (''${rev})" | while read -r child; do
-          jj.log rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | (''${rev})"
+        change_ids "children(''${target}) ~ (''${revs})" | while read -r child; do
+          jj.log rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | heads(''${revs})"
         done
       }
 
