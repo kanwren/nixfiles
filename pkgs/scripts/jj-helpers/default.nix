@@ -8,6 +8,10 @@ let
       jj log --revisions "$1" --reversed --no-graph --template 'change_id ++ "\n"'
     }
 
+    commit_ids() {
+      jj log --revisions "$1" --reversed --no-graph --template 'commit_id ++ "\n"'
+    }
+
     change_id() {
       declare ids
       ids="$(change_ids "$1")"
@@ -102,12 +106,25 @@ symlinkJoin {
       main "$@"
     '';
 
-    # List the change IDs for a revset ('@' by default)
+    # List the commit IDs for a revset ('@' by default)
+    "jj.commit" = writers.writeBashBin "jj.commit" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        commit_ids "''${1-@}"
+      }
+
+      [ $# -le 1 ] || { echo "usage: jj.commit [<revision>]"; exit 1; }
+
+      main "$@"
+    '';
+
+    # List the branch names for a revset ('@' by default)
     "jj.branch" = writers.writeBashBin "jj.branch" ''
       source ${jj-helpers-lib}
 
       main() {
-        jj log --revisions "$1" --no-graph --template 'branches.map(|b| b ++ "\n").join("")'
+        jj log --revisions "''${1-@}" --no-graph --template 'branches.map(|b| b.name() ++ "\n").join("")'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.branch [<revision>]"; exit 1; }
