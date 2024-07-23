@@ -11,7 +11,7 @@ let
     change_id() {
       declare ids
       ids="$(change_ids "$1")"
-      if [ "$(wc -l <<<"$ids")" -ne 1 ]; then
+      if [ "$(echo "$ids" | wc -l)" -ne 1 ]; then
         echo "invalid revset: $1 should have exactly one revision" >&2
         return 1
       fi
@@ -228,7 +228,10 @@ symlinkJoin {
       main() {
         register_rollback_instructions
 
-        if [ -n "$(change_ids 'present(branches(exact:"flow"))')" ]; then
+        local flow
+        flow="$(change_ids 'present(branches(exact:"flow"))')"
+
+        if [ -n "''${flow}" ]; then
           jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
         else
           local old_children new_children flow_commit
@@ -251,17 +254,20 @@ symlinkJoin {
       main() {
         register_rollback_instructions
 
-        local num_parents
+        local num_parents flow_empty
 
         # If there are no parents now, we're done
-        if [ "$(change_ids 'parents(present(branches(exact:"flow")))' | wc -l)" -eq 0 ]; then
+        num_parents="$(change_ids 'parents(present(branches(exact:"flow")))' | wc -l)"
+        if [ "''${num_parents}" -eq 0 ]; then
           printf '%s\n' 'nothing to do'
           return
         fi
 
         # If removing the argument would remove all parents, delete the branch
-        if [ "$(change_ids 'parents(branches(exact:"flow")) ~ ('"''${1}"')' | wc -l)" -eq 0 ]; then
-          if [ -n "$(change_ids 'branches(exact:"flow") & empty() & description(exact:"")')" ]; then
+        num_parents="$(change_ids 'parents(branches(exact:"flow")) ~ ('"''${1}"')' | wc -l)"
+        if [ "''${num_parents}" -eq 0 ]; then
+          flow_empty="$(change_ids 'branches(exact:"flow") & empty() & description(exact:"")')"
+          if [ -n "''${flow_empty}" ]; then
             jj.log abandon 'branches(exact:"flow")'
           fi
           jj.log branch delete flow
