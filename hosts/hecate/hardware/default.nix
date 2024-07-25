@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  sound.enable = true;
-
   hardware = {
     graphics = {
       enable = true;
