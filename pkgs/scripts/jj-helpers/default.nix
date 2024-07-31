@@ -42,10 +42,19 @@ let
       trap 'printf '"'"'\x1b[1;33mTo roll back these changes, run:\x1b[0m\n\t\x1b[1;32mjj operation restore %s\x1b[0m\n'"'"' "'"''${op}"'"' EXIT
     }
 
-    jj.log() {
-      printf '\x1b[1;32m$ jj'
-      for arg in "$@"; do printf " %s" "$(escape "''${arg}")"; done
+    log_lit_command() {
+      printf '\x1b[1;32m$ %s\x1b[0m\n' "''${1}"
+    }
+
+    log_command() {
+      printf '\x1b[1;32m$ '
+      printf '%s' "$(escape "''${1}")"
+      for arg in "''${@:2}"; do printf ' %s' "$(escape "''${arg}")"; done
       printf '\x1b[0m\n'
+    }
+
+    jj.log() {
+      log_command jj "$@"
       jj "$@"
     }
   '';
@@ -213,6 +222,11 @@ symlinkJoin {
         declare -ra cmd=("''${@:2}")
         change_ids "''${revset}" | while read -r rev; do
           jj.log edit "''${rev}"
+
+          log_lit_command 'cd "$(jj workspace root)"'
+          cd "$(jj workspace root)"
+
+          log_command "''${cmd[@]}"
           "''${cmd[@]}"
         done
       }
