@@ -222,6 +222,18 @@ symlinkJoin {
       main "$@"
     '';
 
+    "jj.flow" = writers.writeBashBin "jj.flow" ''
+      source ${jj-helpers-lib}
+
+      main() {
+        jj.log new 'branches(exact:"flow")'
+      }
+
+      [ $# -eq 0 ] || { echo "usage: jj.flow"; exit 1; }
+
+      main "$@"
+    '';
+
     "jj.flow.manage" = writers.writeBashBin "jj.flow.manage" ''
       source ${jj-helpers-lib}
 
