@@ -11,5 +11,6 @@
     longitude = -118.243683;
   };
 
-  services.localtimed.enable = true;
+  # TODO: temporarily broken
+  services.localtimed.enable = false;
 }
