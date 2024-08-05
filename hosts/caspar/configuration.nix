@@ -164,6 +164,9 @@ in
 
       # macos stuff
       pkgs.pinentry_mac
+
+      # misc
+      pkgs.jira-cli-go
     ];
   };
 
@@ -331,6 +334,7 @@ in
             aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
             # Docker is installed externally; add completions manually.
             docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+            jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
           };
         in
         extra-fish-completions;
