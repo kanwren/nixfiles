@@ -62,7 +62,7 @@ in
           "lr(x, y)" = "(::x ~ ::y) | (::y ~ ::x)"; # lr(x, y) is what 'git log' calls x...y
 
           # work utilities
-          "named()" = "::(branches() | remote_branches() | tags() | trunk() | @ | git_head())";
+          "named()" = "ancestors(branches() | remote_branches() | tags() | trunk())";
           "anon()" = "~named()";
 
           # commit info
