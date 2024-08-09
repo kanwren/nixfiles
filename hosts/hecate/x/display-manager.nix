@@ -10,7 +10,7 @@
         clock-format = "%I:%M %p";
 
         theme = {
-          name = "catppuccin-mocha-lavender-standard+default";
+          name = "catppuccin-mocha-lavender-standard";
           package = pkgs.catppuccin-gtk.override {
             accents = [ "lavender" ];
             variant = "mocha";
