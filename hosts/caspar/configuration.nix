@@ -148,8 +148,6 @@ in
       ## programming language support
       pkgs.pkg-config
       pkgs.delve
-      pkgs.python3
-      pkgs.pipx
       pkgs.rustup
       pkgs.frum
       pkgs.shellcheck
