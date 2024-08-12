@@ -152,6 +152,8 @@ in
       pkgs.frum
       pkgs.shellcheck
       pkgs.tfenv
+      ## version control
+      pkgs.pre-commit
 
       # media tools
       pkgs.ffmpeg
