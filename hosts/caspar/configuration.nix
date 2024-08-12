@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./nix.nix
+    ./certs.nix
   ];
 
   networking = {
