@@ -71,7 +71,7 @@
       # system management and other tools
       brightnessctl
       mons
-      xclip # X clipboard access
+      xsel # X clipboard access
 
       # media
       exiftool # EXIF data

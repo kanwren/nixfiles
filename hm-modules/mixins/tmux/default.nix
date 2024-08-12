@@ -47,8 +47,8 @@ in
         bind M-J move-pane -t '.-'
         bind M-L move-pane -h -t '.-'
 
-        # Clipboard integration with xclip
-        bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -f -selection primary | xclip -i -selection clipboard"
+        # Clipboard integration with xsel
+        bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'xsel -ib'
       '';
     };
   };
