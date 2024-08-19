@@ -86,9 +86,6 @@ in
       pkgs.grpcurl
       pkgs.httpie
       pkgs.moreutils
-      (lib.hiPrio (pkgs.parallel-full.override {
-        willCite = true;
-      })) # conflicts with 'parallel' from moreutils
       pkgs.tree
       pkgs.ripgrep
       pkgs.eza
