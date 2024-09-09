@@ -186,7 +186,7 @@ symlinkJoin {
         # Invert the changes in $splitter
         declare old_splitter_children new_splitter_children backout
         old_splitter_children="$(revset "children(''${splitter})")"
-        jj.log backout --revision "''${splitter}" --destination "''${splitter}"
+        jj.log backout --revisions "''${splitter}" --destination "''${splitter}"
         new_splitter_children="$(revset "children(''${splitter})")"
         backout="$(change_id "($new_splitter_children) ~ ($old_splitter_children)")"
         jj.log describe "''${backout}" --message "backout of splitter"
