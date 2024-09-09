@@ -170,7 +170,6 @@ symlinkJoin {
     # with 'splitter'.
     "jj.apply-split" = writers.writeBashBin "jj.apply-split" ''
       source ${jj-helpers-lib}
-      shopt -s -o xtrace
 
       main() {
         register_rollback_instructions
