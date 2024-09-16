@@ -1,4 +1,8 @@
 {
+  system.stateVersion = 5;
+
+  ids.gids.nixbld = 30000;
+
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations repl-flake
