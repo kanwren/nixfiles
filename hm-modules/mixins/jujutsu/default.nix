@@ -88,7 +88,7 @@ in
         template-aliases = { };
 
         git = {
-          push-branch-prefix = "kanwren/push-";
+          push-branch-prefix = lib.mkDefault "kanwren/push-";
         };
       };
     };
