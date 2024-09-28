@@ -126,72 +126,115 @@ in
               expansion = "printf '%s\\n'";
             };
           };
-          bazelAbbrs = {
-            "baq" = { position = "command"; expansion = "bazel aquery"; };
-            "bb" = { position = "command"; expansion = "bazel build"; };
-            "bcq" = { position = "command"; expansion = "bazel cquery"; };
-            "bcqf" = { position = "command"; expansion = "bazel cquery --output files"; };
-            "bq" = { position = "command"; expansion = "bazel query"; };
-            "bqb" = { position = "command"; expansion = "bazel query --output build"; };
-            "bqlk" = { position = "command"; expansion = "bazel query --output label_kind"; };
-            "br" = { position = "command"; expansion = "bazel run"; };
-            "bt" = { position = "command"; expansion = "bazel test"; };
+          bazelAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "baq" = "bazel aquery";
+            "bb" = "bazel build";
+            "bcq" = "bazel cquery";
+            "bcqf" = "bazel cquery --output files";
+            "bq" = "bazel query";
+            "bqb" = "bazel query --output build";
+            "bqlk" = "bazel query --output label_kind";
+            "br" = "bazel run";
+            "bt" = "bazel test";
           };
-          gitAbbrs = {
-            "g" = { position = "command"; expansion = "git"; };
-            "ga" = { position = "command"; expansion = "git add"; };
-            "gb" = { position = "command"; expansion = "git branch"; };
-            "gc" = { position = "command"; expansion = "git commit"; };
-            "gd" = { position = "command"; expansion = "git diff"; };
-            "gl" = { position = "command"; expansion = "git log"; };
-            "gp" = { position = "command"; expansion = "git pull"; };
-            "gpf" = { position = "command"; expansion = "git push --force-with-lease"; };
-            "gr" = { position = "command"; expansion = "git rebase"; };
-            "gra" = { position = "command"; expansion = "git rebase --abort"; };
-            "grc" = { position = "command"; expansion = "git rebase --continue"; };
-            "gro" = { position = "command"; expansion = "git rebase --onto"; };
-            "gri" = { position = "command"; expansion = "git rebase --interactive"; };
-            "grs" = { position = "command"; expansion = "git restore"; };
-            "gsh" = { position = "command"; expansion = "git show"; };
-            "gst" = { position = "command"; expansion = "git status"; };
-            "gsw" = { position = "command"; expansion = "git switch"; };
-            "gswc" = { position = "command"; expansion = "git switch --create"; };
-            "gswd" = { position = "command"; expansion = "git switch --detach"; };
-            "gx" = { position = "command"; expansion = "git reset"; };
-            "gxm" = { position = "command"; expansion = "git reset --mixed"; };
-            "gxh" = { position = "command"; expansion = "git reset --hard"; };
-            "gxs" = { position = "command"; expansion = "git reset --soft"; };
+          gitAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "g" = "git";
+            "ga" = "git add";
+            "gb" = "git branch";
+            "gc" = "git commit";
+            "gd" = "git diff";
+            "gl" = "git log";
+            "gp" = "git pull";
+            "gpf" = "git push --force-with-lease";
+            "gr" = "git rebase";
+            "gra" = "git rebase --abort";
+            "grc" = "git rebase --continue";
+            "gro" = "git rebase --onto";
+            "gri" = "git rebase --interactive";
+            "grs" = "git restore";
+            "gsh" = "git show";
+            "gst" = "git status";
+            "gsw" = "git switch";
+            "gswc" = "git switch --create";
+            "gswd" = "git switch --detach";
+            "gx" = "git reset";
+            "gxm" = "git reset --mixed";
+            "gxh" = "git reset --hard";
+            "gxs" = "git reset --soft";
           };
-          goAbbrs = {
-            "gob" = { position = "command"; expansion = "go build"; };
-            "gog" = { position = "command"; expansion = "go get"; };
-            "goi" = { position = "command"; expansion = "go install"; };
-            "gom" = { position = "command"; expansion = "go mod"; };
-            "gomi" = { position = "command"; expansion = "go mod init"; };
-            "gomt" = { position = "command"; expansion = "go mod tidy"; };
-            "gor" = { position = "command"; expansion = "go run"; };
-            "got" = { position = "command"; expansion = "go test"; };
+          goAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "gob" = "go build";
+            "gog" = "go get";
+            "goi" = "go install";
+            "gom" = "go mod";
+            "gomi" = "go mod init";
+            "gomt" = "go mod tidy";
+            "gor" = "go run";
+            "got" = "go test";
           };
-          kittyAbbrs = {
-            "kssh" = { position = "command"; expansion = "kitten ssh"; };
-            "icat" = { position = "command"; expansion = "kitten icat --align=left"; };
+          kittyAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "kssh" = "kitten ssh";
+            "icat" = "kitten icat --align=left";
           };
-          kubectlAbbrs = {
-            "k" = { position = "command"; expansion = "kubectl"; };
-            "kaf" = { position = "command"; expansion = "kubectl apply --filename"; };
-            "kc" = { position = "command"; expansion = "kubectx"; };
-            "kcc" = { position = "command"; expansion = "kubectl config current-context"; };
-            "kcp" = { position = "command"; expansion = "kubectl cp"; };
-            "kcu" = { position = "command"; expansion = "kubectl config unset current-context"; };
-            "kd" = { position = "command"; expansion = "kubectl describe"; };
-            "krm" = { position = "command"; expansion = "kubectl delete"; };
-            "ked" = { position = "command"; expansion = "kubectl edit"; };
-            "kg" = { position = "command"; expansion = "kubectl get"; };
-            "kl" = { position = "command"; expansion = "kubectl logs"; };
-            "kn" = { position = "command"; expansion = "kubens"; };
-            "knc" = { position = "command"; expansion = "kubens --current"; };
-            "knu" = { position = "command"; expansion = "kubectl config unset contexts.(kubectl config current-context).namespace"; };
-            "kx" = { position = "command"; expansion = "kubectl exec --stdin=true --tty=true"; };
+          kubectlAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "k" = "kubectl";
+            "kaf" = "kubectl apply --filename";
+            "kc" = "kubectx";
+            "kcc" = "kubectl config current-context";
+            "kcp" = "kubectl cp";
+            "kcu" = "kubectl config unset current-context";
+            "kd" = "kubectl describe";
+            "krm" = "kubectl delete";
+            "ked" = "kubectl edit";
+            "kg" = "kubectl get";
+            "kl" = "kubectl logs";
+            "kn" = "kubens";
+            "knc" = "kubens --current";
+            "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
+            "kx" = "kubectl exec --stdin=true --tty=true";
+          };
+          jjAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+            "jc" = "jj commit";
+            "jsp" = "jj split";
+            "jsq" = "jj squash";
+            "jab" = "jj abandon";
+            "jbo" = "jj backout";
+            "jb" = "jj branch";
+            "jbm" = "jj branch move";
+            "jbt" = "jj branch track";
+            "jbl" = "jj branch list";
+            "jbc" = "jj branch create";
+            "jbd" = "jj branch delete";
+            "jbr" = "jj branch rename";
+            "jd" = "jj describe";
+            "jdf" = "jj diff";
+            "je" = "jj edit";
+            "jf" = "jj file";
+            "jfs" = "jj file show";
+            "jfl" = "jj file list";
+            "jfc" = "jj file chmod";
+            "jn" = "jj new";
+            "jne" = "jj new --no-edit";
+            "jna" = "jj new --no-edit --insert-after";
+            "jnb" = "jj new --no-edit --insert-before";
+            "jg" = "jj git";
+            "jgf" = "jj git fetch";
+            "jgp" = "jj git push";
+            "jl" = "jj log";
+            "jlr" = "jj log --revisions";
+            "jo" = "jj operation";
+            "jop" = "jj opertaion";
+            "jou" = "jj operation undo";
+            "jor" = "jj operation restore";
+            "jos" = "jj operation show";
+            "jrs" = "jj restore";
+            "jr" = "jj rebase";
+            "jrb" = "jj rebase";
+            "jsh" = "jj show";
+            "js" = "jj show";
+            "jt" = "jj tag";
+            "jtl" = "jj tag list";
+            "jus" = "jj unsquash";
           };
         in
         lib.attrsets.mergeAttrsList [
@@ -199,6 +242,7 @@ in
           bazelAbbrs
           gitAbbrs
           goAbbrs
+          jjAbbrs
           kittyAbbrs
           kubectlAbbrs
         ];
