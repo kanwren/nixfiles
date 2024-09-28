@@ -48,9 +48,12 @@ nixpkgs.lib.nixosSystem {
       common-gpu-nvidia
       {
         # configure the bus IDs for common-gpu-nvidia
-        hardware.nvidia.prime = {
-          intelBusId = "PCI:5:0:0";
-          nvidiaBusId = "PCI:1:0:0";
+        hardware.nvidia = {
+          prime = {
+            intelBusId = "PCI:5:0:0";
+            nvidiaBusId = "PCI:1:0:0";
+          };
+          open = false;
         };
       }
     ])
