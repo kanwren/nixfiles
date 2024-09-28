@@ -97,8 +97,9 @@
         networkmanagerapplet
         blueman
         mate.mate-media
-        # Media controls (pactl is provided by pulseaudio)
+        # Media controls
         playerctl
+        alsa-utils
       ];
     };
   };

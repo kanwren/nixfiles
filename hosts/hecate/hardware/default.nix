@@ -14,18 +14,20 @@
 
     trackpoint.enable = true;
 
-    pulseaudio = {
-      enable = true;
-      # Bluetooth is only available in the full build
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-    };
-
     bluetooth = {
       enable = true;
       powerOnBoot = true;
       package = pkgs.bluez;
     };
+  };
+
+  # Audio
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   # Enable touchpad
