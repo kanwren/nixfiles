@@ -21,7 +21,7 @@ _list-recipes:
 
 # Run a nixos-rebuild command on hecate
 hecate command="build":
-    {{ if command =~ "^boot|switch|test$" { "sudo " } else { "" } }}nixos-rebuild --flake '.#hecate' {{ quote(command) }}
+    {{ if command =~ "^boot|switch|test$" { "sudo " } else { "" } }}nixos-rebuild --print-build-logs --flake '.#hecate' {{ quote(command) }}
 
 # Run a darwin-rebuild command on caspar (note that activate requires using darwin-rebuild from target)
 caspar command="build":
