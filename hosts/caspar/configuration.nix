@@ -148,6 +148,7 @@ in
       pkgs.delve
       pkgs.rustup
       pkgs.frum
+      pkgs.fnm
       pkgs.shellcheck
       pkgs.tfenv
       ## version control
@@ -298,6 +299,7 @@ in
 
         interactiveShellInit = ''
           "${pkgs.frum}/bin/frum" init | source
+          "${pkgs.fnm}/bin/fnm" env | source
         '';
 
         functions = {
