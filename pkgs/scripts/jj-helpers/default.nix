@@ -24,7 +24,7 @@ let
 
     revset() {
       change_ids "$1" | jq --null-input --raw-input --raw-output '
-        [inputs] | if length == 0 then "empty()" else join("|") end
+        [inputs] | if length == 0 then "none()" else join("|") end
       '
     }
 
@@ -291,7 +291,7 @@ symlinkJoin {
         # If removing the argument would remove all parents, delete the branch
         num_parents="$(change_ids 'parents(branches(exact:"flow")) ~ ('"''${1}"')' | wc -l)"
         if [ "''${num_parents}" -eq 0 ]; then
-          flow_empty="$(change_ids 'branches(exact:"flow") & empty() & description(exact:"")')"
+          flow_empty="$(change_ids 'branches(exact:"flow") & none() & description(exact:"")')"
           if [ -n "''${flow_empty}" ]; then
             jj.log abandon 'branches(exact:"flow")'
           fi
