@@ -5,7 +5,7 @@ let
     shopt -s -o errexit nounset pipefail
 
     change_ids() {
-      jj log --revisions "$1" --reversed --no-graph --template 'change_id.short() ++ "\n"'
+      jj log --ignore-working-copy --revisions "$1" --reversed --no-graph --template 'change_id.short() ++ "\n"'
     }
 
     change_id() {
@@ -19,7 +19,7 @@ let
     }
 
     description() {
-      jj log --revisions "$1" --no-graph --template 'description'
+      jj log --ignore-working-copy --revisions "$1" --no-graph --template 'description'
     }
 
     revset() {
@@ -115,7 +115,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj log --revisions "''${1-@}" --reversed --no-graph --template 'change_id ++ "\n"'
+        jj log --ignore-working-copy --revisions "''${1-@}" --reversed --no-graph --template 'change_id ++ "\n"'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.id [<revision>]"; exit 1; }
@@ -128,7 +128,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj log --revisions "''${1-@}" --reversed --no-graph --template 'commit_id ++ "\n"'
+        jj log --ignore-working-copy --revisions "''${1-@}" --reversed --no-graph --template 'commit_id ++ "\n"'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.commit [<revision>]"; exit 1; }
@@ -141,7 +141,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj log --revisions "''${1-@}" --no-graph --template 'branches.map(|b| b.name() ++ "\n").join("")'
+        jj log --ignore-working-copy --revisions "''${1-@}" --no-graph --template 'branches.map(|b| b.name() ++ "\n").join("")'
       }
 
       [ $# -le 1 ] || { echo "usage: jj.branch [<revision>]"; exit 1; }
