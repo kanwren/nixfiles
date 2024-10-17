@@ -136,15 +136,15 @@ symlinkJoin {
       main "$@"
     '';
 
-    # List the branch names for a revset ('@' by default)
-    "jj.branch" = writers.writeBashBin "jj.branch" ''
+    # List the bookmark names for a revset ('@' by default)
+    "jj.bookmark" = writers.writeBashBin "jj.bookmark" ''
       source ${jj-helpers-lib}
 
       main() {
-        jj log --ignore-working-copy --revisions "''${1-@}" --no-graph --template 'branches.map(|b| b.name() ++ "\n").join("")'
+        jj log --ignore-working-copy --revisions "''${1-@}" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")'
       }
 
-      [ $# -le 1 ] || { echo "usage: jj.branch [<revision>]"; exit 1; }
+      [ $# -le 1 ] || { echo "usage: jj.bookmark [<revision>]"; exit 1; }
 
       main "$@"
     '';
@@ -239,7 +239,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log new 'branches(exact:"flow")'
+        jj.log new 'bookmarks(exact:"flow")'
       }
 
       [ $# -eq 0 ] || { echo "usage: jj.flow"; exit 1; }
@@ -254,17 +254,17 @@ symlinkJoin {
         register_rollback_instructions
 
         local flow
-        flow="$(change_ids 'present(branches(exact:"flow"))')"
+        flow="$(change_ids 'present(bookmarks(exact:"flow"))')"
 
         if [ -n "''${flow}" ]; then
-          jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) | ('"''${1}"')'
+          jj.log rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) | ('"''${1}"')'
         else
           local old_children new_children flow_commit
           old_children="$(revset 'children('"''${1}"')')"
           jj.log new --no-edit "all:''${1}"
           new_children="$(revset 'children('"''${1}"')')"
           flow_commit="$(change_id "(''${new_children}) ~ (''${old_children})")"
-          jj.log branch create flow --revision "''${flow_commit}"
+          jj.log bookmark create flow --revision "''${flow_commit}"
         fi
       }
 
@@ -282,25 +282,25 @@ symlinkJoin {
         local num_parents flow_empty
 
         # If there are no parents now, we're done
-        num_parents="$(change_ids 'parents(present(branches(exact:"flow")))' | wc -l)"
+        num_parents="$(change_ids 'parents(present(bookmarks(exact:"flow")))' | wc -l)"
         if [ "''${num_parents}" -eq 0 ]; then
           printf '%s\n' 'nothing to do'
           return
         fi
 
-        # If removing the argument would remove all parents, delete the branch
-        num_parents="$(change_ids 'parents(branches(exact:"flow")) ~ ('"''${1}"')' | wc -l)"
+        # If removing the argument would remove all parents, delete the bookmark
+        num_parents="$(change_ids 'parents(bookmarks(exact:"flow")) ~ ('"''${1}"')' | wc -l)"
         if [ "''${num_parents}" -eq 0 ]; then
-          flow_empty="$(change_ids 'branches(exact:"flow") & none() & description(exact:"")')"
+          flow_empty="$(change_ids 'bookmarks(exact:"flow") & none() & description(exact:"")')"
           if [ -n "''${flow_empty}" ]; then
-            jj.log abandon 'branches(exact:"flow")'
+            jj.log abandon 'bookmarks(exact:"flow")'
           fi
-          jj.log branch delete flow
+          jj.log bookmark delete flow
           return
         fi
 
         # Otherwise, just remove the given parents
-        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) ~ ('"''${1}"')'
+        jj.log rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"''${1}"')'
       }
 
       [ $# -eq 1 ] || { echo "usage: jj.flow.unmanage <revset>"; exit 1; }
@@ -312,7 +312,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log rebase --source 'branches(exact:"flow")' --destination 'all:parents(branches(exact:"flow")) ~ ('"''${1}"') | ('"''${2}"')'
+        jj.log rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"''${1}"') | ('"''${2}"')'
       }
 
       [ $# -eq 2 ] || { echo "usage: jj.flow.remanage <from> <to>"; exit 1; }
@@ -325,7 +325,7 @@ symlinkJoin {
 
       main() {
         declare -r target="''${1-trunk()}"
-        jj.log rebase --source 'all:roots(('"''${target}"')..branches(exact:"flow"))' --destination "''${target}"
+        jj.log rebase --source 'all:roots(('"''${target}"')..bookmarks(exact:"flow"))' --destination "''${target}"
       }
 
       [ $# -le 1 ] || { echo "usage: jj.flow.rebase [<target>]"; exit 1; }
@@ -337,7 +337,7 @@ symlinkJoin {
       source ${jj-helpers-lib}
 
       main() {
-        jj.log git push --revisions 'all:trunk()..parents(branches(exact:"flow"))'
+        jj.log git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow"))'
       }
 
       [ $# -eq 0 ] || { echo "usage: jj.flow.push"; exit 1; }

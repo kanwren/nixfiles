@@ -62,7 +62,7 @@ in
           "lr(x, y)" = "(::x ~ ::y) | (::y ~ ::x)"; # lr(x, y) is what 'git log' calls x...y
 
           # work utilities
-          "named()" = "branches() | remote_branches() | tags() | trunk()";
+          "named()" = "bookmarks() | remote_bookmarks() | tags() | trunk()";
           "merged()" = "ancestors(named())";
           "unmerged()" = "~merged()";
 
@@ -88,7 +88,7 @@ in
         template-aliases = { };
 
         git = {
-          push-branch-prefix = lib.mkDefault "kanwren/push-";
+          push-bookmark-prefix = lib.mkDefault "kanwren/push-";
           private-commits = lib.mkDefault ''description(glob:"XXX:*")'';
         };
       };

@@ -196,14 +196,14 @@ in
           jjAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
             "jab" = "jj abandon";
             "jam" = "jj amend";
-            "jb" = "jj branch";
-            "jbc" = "jj branch create";
-            "jbd" = "jj branch delete";
-            "jbl" = "jj branch list";
-            "jbm" = "jj branch move";
+            "jb" = "jj bookmark";
+            "jbc" = "jj bookmark create";
+            "jbd" = "jj bookmark delete";
+            "jbl" = "jj bookmark list";
+            "jbm" = "jj bookmark move";
             "jbo" = "jj backout";
-            "jbr" = "jj branch rename";
-            "jbt" = "jj branch track";
+            "jbr" = "jj bookmark rename";
+            "jbt" = "jj bookmark track";
             "jc" = "jj commit";
             "jd" = "jj describe";
             "jdf" = "jj diff";
