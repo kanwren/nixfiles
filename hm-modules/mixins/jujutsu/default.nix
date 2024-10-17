@@ -89,6 +89,7 @@ in
 
         git = {
           push-branch-prefix = lib.mkDefault "kanwren/push-";
+          private-commits = lib.mkDefault ''description(glob:"XXX:*")'';
         };
       };
     };
