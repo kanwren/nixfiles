@@ -2,7 +2,7 @@
 
 # startup programs {{{
     exec --no-startup-id compton
-    exec --no-startup-id copyq
+    exec --no-startup-id @copyq_launch_script@
     exec --no-startup-id nm-applet
     exec --no-startup-id blueman-applet
     exec --no-startup-id mate-volume-control-status-icon

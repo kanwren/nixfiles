@@ -34,7 +34,13 @@
         pick_game_script = pkgs.substituteAll {
           src = ./i3config/pick_game.bash;
           isExecutable = true;
-          inherit (pkgs) rofi;
+          inherit (pkgs) runtimeShell rofi;
+        };
+
+        copyq_launch_script = pkgs.substituteAll {
+          src = ./i3config/copyq_launch.bash;
+          isExecutable = true;
+          inherit (pkgs) runtimeShell copyq;
         };
 
         i3status_config = pkgs.writeText "i3status.conf" ''
