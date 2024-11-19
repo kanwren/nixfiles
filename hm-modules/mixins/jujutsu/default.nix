@@ -13,6 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.jj-helpers
+      pkgs.difftastic
     ];
 
     programs.jujutsu = {
@@ -41,7 +42,7 @@ in
           };
 
           difftastic = {
-            program = "${pkgs.difftastic}/bin/difft";
+            program = "difft";
             diff-args = [ "--color=always" "$left" "$right" ];
           };
         };
