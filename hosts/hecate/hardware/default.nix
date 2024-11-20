@@ -10,6 +10,8 @@
       ];
     };
 
+    nvidia-container-toolkit.enable = true;
+
     acpilight.enable = true;
 
     trackpoint.enable = true;
