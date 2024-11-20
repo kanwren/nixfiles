@@ -28,6 +28,11 @@
     keybase.enable = true;
 
     pueue.enable = true;
+
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+    };
   };
 
   programs = {
