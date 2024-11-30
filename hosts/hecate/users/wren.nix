@@ -24,7 +24,7 @@
 
   home-manager.users.wren = {
     home = {
-      stateVersion = "22.11";
+      stateVersion = "24.11";
 
       sessionPath = [ "$HOME/bin" ];
 
