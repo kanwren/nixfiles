@@ -24,6 +24,7 @@
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixlib.follows = "nixpkgs";
     };
 
     catppuccin.url = "github:catppuccin/nix";
@@ -50,7 +51,7 @@
     , catppuccin
     , fenix
     , naersk
-    }@inputs:
+    }:
     let
       defaultSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f:

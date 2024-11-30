@@ -23,8 +23,9 @@ _list-recipes:
 hecate command="build":
     {{ if command =~ "^boot|switch|test$" { "sudo " } else { "" } }}nixos-rebuild --print-build-logs --flake '.#hecate' {{ quote(command) }}
 
-# Run a darwin-rebuild command on caspar (note that activate requires using darwin-rebuild from target)
+# Run a darwin-rebuild command on caspar
 caspar command="build":
+    # Note that activate requires using darwin-rebuild from target
     {{ quote(if command == "activate" { `nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild" } else { 'darwin-rebuild' }) }} --flake '.#caspar' {{ quote(command) }}
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
