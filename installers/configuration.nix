@@ -64,7 +64,7 @@ in
       (pkgs.writeShellScriptBin "locate-nixfiles" "echo ${../.}")
 
       pkgs.git
-      pkgs.tmux
+      pkgs.zellij
       pkgs.parted
       pkgs.unixtools.fdisk
       pkgs.ripgrep

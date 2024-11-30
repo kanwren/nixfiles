@@ -33,7 +33,6 @@
       curl
       sshfs
       git
-      tmux # terminal multiplexer
       whois
       linuxPackages.perf # profiling
       # help, docs

@@ -25,10 +25,10 @@
     ./rofi
     ./rust
     ./spotify
-    ./tmux
     ./vscode
     ./yazi
     ./zathura
+    ./zellij
     ./zoxide
   ];
 

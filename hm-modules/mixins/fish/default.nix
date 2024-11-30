@@ -81,8 +81,6 @@ in
               set -l fzf_query $commandline[2]
               set -l prefix $commandline[3]
 
-              test -n "$FZF_TMUX_HEIGHT"; or set FZF_TMUX_HEIGHT 40%
-
               set -l result
               begin
                 set -lx FZF_DEFAULT_OPTS (__fzf_defaults "--reverse")
@@ -158,8 +156,11 @@ in
           };
         };
 
-      shellAbbrs =
+      shellAbbrs = lib.attrsets.mergeAttrsList (builtins.attrValues (
         let
+          commandAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; });
+        in
+        {
           miscAbbrs = {
             ",," = {
               position = "anywhere";
@@ -170,7 +171,7 @@ in
               expansion = "printf '%s\\n'";
             };
           };
-          bazelAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          bazelAbbrs = commandAbbrs {
             "baq" = "bazel aquery";
             "bb" = "bazel build";
             "bcq" = "bazel cquery";
@@ -181,7 +182,7 @@ in
             "br" = "bazel run";
             "bt" = "bazel test";
           };
-          gitAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          gitAbbrs = commandAbbrs {
             "g" = "git";
             "ga" = "git add";
             "gb" = "git branch";
@@ -206,7 +207,7 @@ in
             "gxh" = "git reset --hard";
             "gxs" = "git reset --soft";
           };
-          goAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          goAbbrs = commandAbbrs {
             "gob" = "go build";
             "gog" = "go get";
             "goi" = "go install";
@@ -216,11 +217,11 @@ in
             "gor" = "go run";
             "got" = "go test";
           };
-          kittyAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          kittyAbbrs = commandAbbrs {
             "kssh" = "kitten ssh";
             "icat" = "kitten icat --align=left";
           };
-          kubectlAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          kubectlAbbrs = commandAbbrs {
             "k" = "kubectl";
             "kaf" = "kubectl apply --filename";
             "kc" = "kubectx";
@@ -237,7 +238,7 @@ in
             "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
             "kx" = "kubectl exec --stdin=true --tty=true";
           };
-          jjAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; }) {
+          jjAbbrs = commandAbbrs {
             "jab" = "jj abandon";
             "jam" = "jj amend";
             "jb" = "jj bookmark";
@@ -281,16 +282,16 @@ in
             "jtl" = "jj tag list";
             "jus" = "jj unsquash";
           };
-        in
-        lib.attrsets.mergeAttrsList [
-          miscAbbrs
-          bazelAbbrs
-          gitAbbrs
-          goAbbrs
-          jjAbbrs
-          kittyAbbrs
-          kubectlAbbrs
-        ];
+          zellijAbbrs = commandAbbrs {
+            "zj" = "zellij";
+            "zjr" = "zellij run --";
+            "zje" = "zellij edit";
+            "zjl" = "zellij list-sessions";
+            "zja" = "zellij attach";
+            "zjk" = "zellij kill-session";
+          };
+        }
+      ));
     };
   };
 }
