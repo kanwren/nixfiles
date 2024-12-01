@@ -2,7 +2,8 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    # TODO: https://github.com/NixOS/nixpkgs/issues/357643 requires 6.11
+    kernelPackages = pkgs.linuxPackages_6_11;
 
     loader = {
       systemd-boot.enable = true;
