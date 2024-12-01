@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   users.users.wren = {
@@ -46,6 +46,8 @@
     };
 
     mixins.enable = true;
+    # TODO: https://github.com/NixOS/nixpkgs/pull/355948
+    mixins.cava.enable = lib.mkForce false;
 
     programs.jujutsu.settings = {
       user.email = "nicole@wren.systems";
