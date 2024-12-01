@@ -19,14 +19,22 @@ _list-recipes:
     @echo "Variables:"
     @just --evaluate | while IFS= read line; do echo "    $line"; done
 
+[private]
+hecate-system:
+    {{ nix_command }} build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'
+
 # Run a nixos-rebuild command on hecate
-hecate command="build":
-    {{ if command =~ "^boot|switch|test$" { "sudo " } else { "" } }}nixos-rebuild --print-build-logs --flake '.#hecate' {{ quote(command) }}
+hecate command="build": hecate-system
+    {{ if command =~ "^boot|switch|test$" { "sudo " } else { "" } }}{{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'` / "sw" / "bin" / "nixos-rebuild") }} --flake '.#hecate' {{ quote(command) }}
+
+[private]
+caspar-system:
+    {{ nix_command }} build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'
 
 # Run a darwin-rebuild command on caspar
-caspar command="build":
+caspar command="build": caspar-system
     # Note that activate requires using darwin-rebuild from target
-    {{ quote(if command == "activate" { `nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild" } else { 'darwin-rebuild' }) }} --flake '.#caspar' {{ quote(command) }}
+    {{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild" ) }} --flake '.#caspar' {{ quote(command) }}
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
 update-inputs:
