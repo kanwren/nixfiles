@@ -170,7 +170,8 @@ in
   };
 
   fonts.packages = [
-    (pkgs.nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
+    pkgs.nerdfonts.fira-mono
+    pkgs.nerdfonts.fira-code
   ];
 
   programs = {

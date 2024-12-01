@@ -3,7 +3,8 @@
 {
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" ]; })
+      nerd-fonts.fira-mono
+      nerd-fonts.fira-code
       fira-code
       fira-mono
       source-code-pro
