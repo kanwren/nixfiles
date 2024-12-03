@@ -42,7 +42,7 @@ in
           };
 
           difftastic = {
-            program = "difft";
+            program = "${pkgs.difftastic}/bin/difft";
             diff-args = [ "--color=always" "$left" "$right" ];
           };
         };
