@@ -432,6 +432,7 @@ in
           "node_modules"
           "/tags"
           ".jj"
+          ".direnv/"
         ];
       };
 
