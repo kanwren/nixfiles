@@ -9,7 +9,8 @@ in
   system.activationScripts.extraActivation.text = ''
     printf 'Generating ${certFile}...\n'
 
-    declare cert_tmpfile="$(mktemp /tmp/cert-XXXXXXXXXX.pem)"
+    declare cert_tmpfile
+    cert_tmpfile="$(mktemp /tmp/cert-XXXXXXXXXX.pem)"
 
     declare current_cert=""
     declare purpose=""
@@ -20,7 +21,7 @@ in
     declare -i expired=0
     declare -i nonroot=0
     declare -i errored=0
-    declare -i unverified=0
+    declare -i untrusted=0
 
     while read -r line; do
       # Starting a new cert
