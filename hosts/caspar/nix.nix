@@ -20,7 +20,6 @@
 
   services = {
     nix-daemon.enable = true;
-    activate-system.enable = true;
   };
 
   environment.etc."nix/user-sandbox.sb".text = ''

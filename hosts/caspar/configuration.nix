@@ -50,8 +50,6 @@ in
   };
 
   environment = {
-    loginShell = "${config.environment.variables.SHELL} --login";
-
     variables = {
       LC_CTYPE = "en_US.UTF-8";
       EDITOR = "nvim";
@@ -170,8 +168,8 @@ in
   };
 
   fonts.packages = [
-    pkgs.nerdfonts.fira-mono
-    pkgs.nerdfonts.fira-code
+    pkgs.nerd-fonts.fira-mono
+    pkgs.nerd-fonts.fira-code
   ];
 
   programs = {
