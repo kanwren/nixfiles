@@ -175,6 +175,7 @@ in
   programs = {
     bash.enable = true;
     fish.enable = true;
+    zsh.enable = false;
     gnupg.agent.enable = true;
   };
 
