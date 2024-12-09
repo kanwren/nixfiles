@@ -16,8 +16,6 @@ nix-darwin.lib.darwinSystem {
       nixpkgs.overlays = [ self.overlays.default ];
     }
 
-    lix-module.nixosModules.default
-
     self.darwinModules.pueue
 
     home-manager.darwinModules.home-manager
