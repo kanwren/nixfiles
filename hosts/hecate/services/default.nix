@@ -33,6 +33,12 @@
       enable = true;
       acceleration = "cuda";
     };
+
+    open-webui = {
+      enable = true;
+      port = 8005;
+      host = "0.0.0.0";
+    };
   };
 
   programs = {
