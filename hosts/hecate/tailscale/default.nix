@@ -11,4 +11,6 @@
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" ];
   };
+
+  systemd.services.tailscaled.after = [ "systemd-networkd-wait-online.service" ];
 }
