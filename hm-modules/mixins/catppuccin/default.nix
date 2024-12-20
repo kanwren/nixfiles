@@ -13,15 +13,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    catppuccin.flavor = "mocha";
-
     xdg.enable = true;
 
-    programs.btop.catppuccin.enable = true;
-    programs.cava.catppuccin.enable = true;
-    programs.kitty.catppuccin.enable = true;
-    programs.yazi.catppuccin.enable = true;
-    programs.zathura.catppuccin.enable = true;
-    programs.zellij.catppuccin.enable = true;
+    catppuccin = {
+      flavor = "mocha";
+
+      btop.enable = true;
+      cava.enable = true;
+      kitty.enable = true;
+      yazi.enable = true;
+      zathura.enable = true;
+      zellij.enable = true;
+    };
   };
 }
