@@ -1,6 +1,10 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 
 {
+  imports = [
+    ./ollama.nix
+  ];
+
   services = {
     openssh = {
       enable = true;
@@ -28,17 +32,6 @@
     keybase.enable = true;
 
     pueue.enable = true;
-
-    ollama = {
-      enable = true;
-      acceleration = "cuda";
-    };
-
-    open-webui = {
-      enable = true;
-      port = 8005;
-      host = "0.0.0.0";
-    };
   };
 
   programs = {
