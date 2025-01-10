@@ -117,6 +117,7 @@
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShellNoCC {
           packages = [
+            pkgs.bashInteractive
             pkgs.just
             # formatting
             pkgs.lefthook
