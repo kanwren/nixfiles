@@ -237,6 +237,11 @@ in
               })
               (lib.lists.range 1 9)))
         ];
+
+        file = {
+          # force-overwrite files that like to get stepped on by automation
+          ".bashrc".force = true;
+        };
       };
 
       mixins = {
