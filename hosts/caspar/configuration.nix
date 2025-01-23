@@ -392,6 +392,10 @@ in
         extraConfig = {
           credential.helper = "osxkeychain";
           gist.private = true;
+          core = {
+            editor = "nvim";
+            autocrlf = false;
+          };
           color = {
             diff = "auto";
             status = "auto";
@@ -411,21 +415,25 @@ in
           pull.ff = "only";
           push.default = "simple";
           diff = {
+            tool = "nvimdiff";
             renames = true;
             indentHeuristic = "on";
           };
+          difftool.prompt = false;
           rebase = {
             autosquash = true;
             autostash = true;
           };
           merge = {
             summary = true;
+            tool = "nvimdiff";
             conflictstyle = "diff3";
           };
           mergetool = {
             prompt = false;
             keepBackup = false;
           };
+          advice.addEmptyPathspec = false;
         };
         ignores = [
           "*.iml"

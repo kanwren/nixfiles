@@ -71,25 +71,49 @@ in
       };
 
       extraConfig = {
-        gist.private = true;
         credential.helper = "manager";
+        gist.private = true;
         core = {
           editor = "nvim";
           autocrlf = false;
         };
+        color = {
+          diff = "auto";
+          status = "auto";
+          branch = "auto";
+          interactive = "auto";
+        };
+        log.mailmap = true;
         init.defaultBranch = "main";
-        diff.tool = "vimdiff";
+        branch.autosetupmerge = true;
+        filter.lfs = {
+          clean = "git-lfs clean -- %f";
+          smudge = "git-lfs smudge -- %f";
+          process = "git-lfs filter-process";
+          required = true;
+        };
+        rerere.enabled = 1;
+        pull.ff = "only";
+        push.default = "simple";
+        diff = {
+          tool = "nvimdiff";
+          renames = true;
+          indentHeuristic = "on";
+        };
         difftool.prompt = false;
+        rebase = {
+          autosquash = true;
+          autostash = true;
+        };
         merge = {
-          tool = "vimdiff";
+          summary = true;
+          tool = "nvimdiff";
           conflictstyle = "diff3";
         };
         mergetool = {
           prompt = false;
           keepBackup = false;
         };
-        push.default = "simple";
-        pull.ff = "only";
         advice.addEmptyPathspec = false;
       };
 
