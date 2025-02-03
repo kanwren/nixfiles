@@ -223,7 +223,7 @@ symlinkJoin {
           jj.log edit "''${rev}"
 
           log_lit_command 'cd "$(jj workspace root)"'
-          cd "$(jj workspace root)"
+          cd "$(jj --ignore-working-copy workspace root)"
 
           log_command "''${cmd[@]}"
           "''${cmd[@]}"
@@ -261,7 +261,7 @@ symlinkJoin {
         else
           local old_children new_children flow_commit
           old_children="$(revset 'children('"''${1}"')')"
-          jj.log new --no-edit "all:''${1}"
+          jj.log new --no-edit "all:''${1}" --message 'XXX:flow'
           new_children="$(revset 'children('"''${1}"')')"
           flow_commit="$(change_id "(''${new_children}) ~ (''${old_children})")"
           jj.log bookmark create flow --revision "''${flow_commit}"
