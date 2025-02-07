@@ -120,7 +120,7 @@ in
       lfs.enable = true;
 
       signing = {
-        key = "nicole@wren.systems";
+        key = "002937658A2F43138C3B267E339C3A5C672CEA46";
         signByDefault = true;
       };
     };

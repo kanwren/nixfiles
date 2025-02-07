@@ -51,7 +51,7 @@
       signing = {
         sign-all = true;
         backend = "gpg";
-        key = "07B776B0672AF6A4CF629919F1A41BE43E4EAA99";
+        key = "002937658A2F43138C3B267E339C3A5C672CEA46";
       };
     };
   };
