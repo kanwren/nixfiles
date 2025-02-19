@@ -8,4 +8,6 @@
       };
     };
   };
+
+  programs.fuse.userAllowOther = true;
 }
