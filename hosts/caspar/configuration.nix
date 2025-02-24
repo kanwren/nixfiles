@@ -37,6 +37,7 @@ in
         show-process-indicators = true;
         showhidden = true;
         mru-spaces = false;
+        expose-group-apps = true;
       };
 
       finder = {
@@ -45,6 +46,14 @@ in
         ShowStatusBar = true;
         ShowPathbar = true;
         FXEnableExtensionChangeWarning = false;
+      };
+
+      spaces = {
+        spans-displays = true;
+      };
+
+      NSGlobalDomain = {
+        NSWindowShouldDragOnGesture = true;
       };
     };
   };
@@ -194,7 +203,7 @@ in
     ];
 
     casks = [
-      "amethyst"
+      "nikitabobko/tap/aerospace"
       "kitty"
       "plover"
       "talon"
@@ -238,10 +247,8 @@ in
               (lib.lists.range 1 9)))
         ];
 
-        file = {
-          # force-overwrite files that like to get stepped on by automation
-          ".bashrc".force = true;
-        };
+        # force-overwrite files that like to get stepped on by automation
+        file.".bashrc".force = true;
       };
 
       mixins = {
@@ -330,19 +337,27 @@ in
         };
       };
 
-      xdg.configFile =
-        let
-          extra-fish-completions = lib.mapAttrs' (name: value: { name = "fish/completions/${name}.fish"; value = value; }) {
-            use-java.source = pkgs.writeText "use-java" ''
-              complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
-            '';
-            aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
-            # Docker is installed externally; add completions manually.
-            docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
-            jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
-          };
-        in
-        extra-fish-completions;
+      xdg.configFile = builtins.foldl' (acc: as: acc // as) { } [
+        {
+          # aerospace configuration
+          "aerospace/aerospace.toml".source = ./aerospace.toml;
+        }
+
+        (
+          let
+            extra-fish-completions = lib.mapAttrs' (name: value: { name = "fish/completions/${name}.fish"; value = value; }) {
+              use-java.source = pkgs.writeText "use-java" ''
+                complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
+              '';
+              aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
+              # Docker is installed externally; add completions manually.
+              docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+              jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
+            };
+          in
+          extra-fish-completions
+        )
+      ];
 
       programs.h = {
         codeRoot = "$HOME/Development/code";
