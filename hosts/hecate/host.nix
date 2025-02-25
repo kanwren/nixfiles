@@ -3,6 +3,8 @@
 , lix-module
 , home-manager
 , nixos-hardware
+, sops-nix
+, tsnsrv
 , catppuccin
 }:
 
@@ -37,6 +39,13 @@ nixpkgs.lib.nixosSystem {
         self.hmModules.mixins
       ];
     }
+
+    sops-nix.nixosModules.sops
+    {
+      sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    }
+
+    tsnsrv.nixosModules.default
 
     self.nixosModules.pueue
 

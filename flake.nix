@@ -23,10 +23,20 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixlib.follows = "nixpkgs";
+    };
+
+    tsnsrv = {
+      url = "github:boinkor-net/tsnsrv";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     catppuccin.url = "github:catppuccin/nix";
@@ -49,7 +59,9 @@
     , home-manager
     , nix-darwin
     , nixos-hardware
+    , sops-nix
     , nixos-generators
+    , tsnsrv
     , catppuccin
     , fenix
     , naersk
@@ -71,7 +83,7 @@
     {
       nixosConfigurations = {
         hecate = import ./hosts/hecate/host.nix {
-          inherit self nixpkgs lix-module home-manager nixos-hardware catppuccin;
+          inherit self nixpkgs lix-module home-manager nixos-hardware sops-nix tsnsrv catppuccin;
         };
       };
 
@@ -122,6 +134,10 @@
             # formatting
             pkgs.lefthook
             self.formatter.${pkgs.system}
+
+            # sops
+            pkgs.sops
+            pkgs.ssh-to-age
           ];
         };
       });

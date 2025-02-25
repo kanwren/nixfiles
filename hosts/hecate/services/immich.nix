@@ -23,6 +23,32 @@ in
   };
   systemd.services.immich-server.serviceConfig.Restart = "on-failure";
 
+  # Expose immich to tailnet via tsnsrv
+  sops.secrets."immich/tsnsrv-ts-authkey" = {
+    sopsFile = ../secrets/tsnsrv-immich.txt;
+    format = "binary";
+    mode = "0440";
+    owner = immichUser;
+    group = immichGroup;
+  };
+  services.tsnsrv = {
+    enable = true;
+    services.immich = {
+      urlParts = {
+        protocol = "http";
+        host = "127.0.0.1";
+        port = config.services.immich.port;
+      };
+      authKeyPath = config.sops.secrets."immich/tsnsrv-ts-authkey".path;
+      supplementalGroups = [ immichGroup ];
+    };
+  };
+  systemd.services.tsnsrv-immich = {
+    wants = [ "tailscaled.service" "sops-nix.service" ];
+    after = [ "tailscaled.service" "sops-nix.service" ];
+    serviceConfig.Restart = "on-failure";
+  };
+
   # Mount NAS over CIFS as the backing image store for immich
   users = {
     # Give the immich user/group an explicit uid/gid so we can reference it in
