@@ -68,12 +68,17 @@ in
       "x-systemd.mount-timeout=5s"
       "uid=${intToString config.users.users.${immichUser}.uid}"
       "gid=${intToString config.users.groups.${immichGroup}.gid}"
-      "credentials=/mnt/.immich_credentials"
+      "credentials=${config.sops.secrets."immich/nas-credentials".path}"
       # credentials format:
       # ```
       # username=...
       # password=...
       # ```
     ];
+  };
+  sops.secrets."immich/nas-credentials" = {
+    sopsFile = ../secrets/nas-credentials.txt;
+    format = "binary";
+    mode = "0440";
   };
 }
