@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  intToString = n:
-    if builtins.isInt n then
-      builtins.toString n
-    else
-      builtins.throw "intToString: not an int: ${n}";
+  intToString = n: assert builtins.isInt n; builtins.toString n;
 
   nasPhotosMount = "/mnt/immich";
   nasHost = "gwenas.ghost-bowfin.ts.net";
