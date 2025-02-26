@@ -1,7 +1,10 @@
 keys:
-  - &admin_homepi_gpg D855E3E902651FB56CF192CF8561EEEAB6231D2E
+  - &admin_wren 002937658A2F43138C3B267E339C3A5C672CEA46
+  - &server_hecate age1876258czl0uvhzywdnsvn5gkhapc06xg8hxcwyqtrhp5xkphv5ksx7j03h
 creation_rules:
-  - path_regex: hosts/homepi/secrets/.+$
+  - path_regex: hosts/hecate/secrets/.+$
     key_groups:
       - pgp:
-        - *admin_homepi_gpg
+        - *admin_wren
+        age:
+        - *server_hecate

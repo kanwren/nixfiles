@@ -3,6 +3,7 @@
 {
   imports = [
     ./ollama.nix
+    ./immich.nix
   ];
 
   services = {
