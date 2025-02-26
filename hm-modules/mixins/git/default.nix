@@ -71,8 +71,12 @@ in
       };
 
       extraConfig = {
-        credential.helper = "manager";
-        gist.private = true;
+        credential = {
+          helper = "manager";
+        };
+        gist = {
+          private = true;
+        };
         core = {
           editor = "nvim";
           autocrlf = false;
@@ -83,38 +87,76 @@ in
           branch = "auto";
           interactive = "auto";
         };
-        log.mailmap = true;
-        init.defaultBranch = "main";
-        branch.autosetupmerge = true;
+        column = {
+          ui = "auto";
+        };
+        log = {
+          mailmap = true;
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        branch = {
+          sort = "-committerdate";
+          autosetupmerge = true;
+        };
+        tag = {
+          sort = "version:refname";
+        };
         filter.lfs = {
           clean = "git-lfs clean -- %f";
           smudge = "git-lfs smudge -- %f";
           process = "git-lfs filter-process";
           required = true;
         };
-        rerere.enabled = 1;
-        pull.ff = "only";
-        push.default = "simple";
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
+        commit = {
+          verbose = true;
+        };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        pull = {
+          ff = "only";
+        };
+        push = {
+          default = "simple";
+          autoSetupRemote = true;
+          followTags = true;
+        };
         diff = {
+          algorithm = "histogram";
           tool = "nvimdiff";
           renames = true;
           indentHeuristic = "on";
+          colorMoved = "plain";
+          mnemonicPrefix = true;
         };
-        difftool.prompt = false;
+        difftool = {
+          prompt = false;
+        };
         rebase = {
-          autosquash = true;
-          autostash = true;
+          autoSquash = true;
+          autoStash = true;
+          updateRefs = true;
         };
         merge = {
           summary = true;
           tool = "nvimdiff";
-          conflictstyle = "diff3";
+          conflictstyle = "zdiff3";
         };
         mergetool = {
           prompt = false;
           keepBackup = false;
         };
-        advice.addEmptyPathspec = false;
+        advice = {
+          addEmptyPathspec = false;
+        };
       };
 
       lfs.enable = true;
