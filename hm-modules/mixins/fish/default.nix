@@ -65,6 +65,13 @@ in
           jq = "${pkgs.jq}/bin/jq";
         in
         {
+          "=" = {
+            description = "Yield the arguments";
+            body = ''
+              printf '%s\n' $argv
+            '';
+          };
+
           # Misc shell utilities
           "last_argument" = {
             description = "Get the last argument to the last command in the history";
