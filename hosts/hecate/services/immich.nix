@@ -40,8 +40,8 @@ in
     };
   };
   systemd.services.tsnsrv-immich = {
-    wants = [ "tailscaled.service" "sops-nix.service" ];
-    after = [ "tailscaled.service" "sops-nix.service" ];
+    wants = [ "tailscaled.service" "sops-nix.service" "immich-server.service" ];
+    after = [ "tailscaled.service" "sops-nix.service" "immich-server.service" ];
     serviceConfig.Restart = "on-failure";
   };
 
@@ -76,5 +76,9 @@ in
     sopsFile = ../secrets/nas-credentials.txt;
     format = "binary";
     mode = "0440";
+  };
+  systemd.services.immich-server = {
+    wants = [ "mnt-immich.mount" ];
+    after = [ "mnt-immich.mount" ];
   };
 }
