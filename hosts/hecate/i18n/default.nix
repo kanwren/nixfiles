@@ -15,7 +15,8 @@
       ibus = {
         engines = with pkgs.ibus-engines; [
           libpinyin
-          kkc
+          # TODO: build failing
+          # kkc
           table
           table-chinese
         ];

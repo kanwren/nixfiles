@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   users.users.wren = {
@@ -38,7 +38,7 @@
         # applications
         xfce.thunar # file browser
         bitwarden # password manager
-        filelight # disk usage visualization
+        kdePackages.filelight # disk usage visualization
         libreoffice
         anki # flashcards
       ];
