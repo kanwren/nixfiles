@@ -4,6 +4,7 @@
   ids.gids.nixbld = 30000;
 
   nix = {
+    enable = true;
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
       keep-outputs = true
@@ -17,10 +18,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
-  services = {
-    nix-daemon.enable = true;
-  };
 
   environment.etc."nix/user-sandbox.sb".text = ''
     (version 1)
