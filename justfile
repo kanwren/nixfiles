@@ -1,7 +1,10 @@
 set shell := ["/bin/sh", "-c"]
 
-# Extra flags to pass to the nix command, e.g. '--print-build-logs' or
-# '--keep-going'
+# Verbose builds: print everything and don't exit early on failure
+
+v := ""
+
+# Extra flags to pass to the nix command
 
 extra_nix_flags := ""
 
@@ -11,7 +14,7 @@ nix_executable := "nix"
 
 # The final nix command
 
-nix_command := nix_executable + " --experimental-features 'nix-command flakes'" + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
+nix_command := nix_executable + " --experimental-features 'nix-command flakes'" + (if v != "" { " --print-build-logs --keep-going" } else { "" }) + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
 
 # Show this list
 _list-recipes:
