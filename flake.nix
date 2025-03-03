@@ -2,9 +2,7 @@
   description = "kanwren's NixOS configurations and other Nix tools";
 
   inputs = {
-    # TODO: temporarily pinned to avoid Linux 6.12.5
-    # Example issue: https://discussion.fedoraproject.org/t/f41-kernel-6-12-5-weird-issue/140434/4
-    nixpkgs.url = "github:NixOS/nixpkgs?rev=f910ead97e12ba7736181230bb74f8b2dc0f464e";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
@@ -39,7 +37,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     fenix = {
       url = "github:nix-community/fenix";

@@ -2,7 +2,6 @@
 
 {
   boot = {
-    # TODO: https://github.com/NixOS/nixpkgs/issues/357643 requires 6.11
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "nvidia_drm.fbdev=1" ];
 
