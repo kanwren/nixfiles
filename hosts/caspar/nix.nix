@@ -1,7 +1,7 @@
 {
   system.stateVersion = 5;
 
-  ids.gids.nixbld = 30000;
+  ids.gids.nixbld = 350;
 
   nix = {
     enable = true;
