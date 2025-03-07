@@ -3,13 +3,13 @@
 {
   imports = [
     ./bash
+    ./browsers
     ./btop
     ./catppuccin
     ./cava
     ./direnv
     ./discord
     ./dunst
-    ./firefox
     ./fish
     ./flameshot
     ./gh

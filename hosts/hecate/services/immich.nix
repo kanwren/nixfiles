@@ -11,6 +11,11 @@ let
   immichGroup = config.services.immich.group;
 in
 {
+  environment.systemPackages = [
+    pkgs.immich-cli
+    pkgs.cifs-utils
+  ];
+
   services.immich = {
     enable = true;
     # accelerationDevices = null;
@@ -52,7 +57,6 @@ in
     users.${immichUser}.uid = 989;
     groups.${immichGroup}.gid = 983;
   };
-  environment.systemPackages = [ pkgs.cifs-utils ];
   fileSystems."${nasPhotosMount}" = {
     device = "//${nasHost}/${nasShare}";
     fsType = "cifs";

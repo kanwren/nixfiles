@@ -8,6 +8,8 @@
       patchelf
       nix-index
       nix-prefetch-git
+      nixpkgs-fmt
+      sqlite-interactive
 
       # core utils
       binutils-unwrapped
@@ -34,7 +36,9 @@
       sshfs
       git
       whois
-      linuxPackages.perf # profiling
+      # profiling
+      linuxPackages.perf
+      hyperfine
       # help, docs
       man-pages
       tldr
@@ -43,6 +47,7 @@
       tree
       file
       dos2unix
+      xxd
       entr # run commands when files change
       ctags # source code location indexing
       # compression
@@ -54,7 +59,6 @@
       xz
       unrar
       unar # compression multitool
-
       # math
       bc
       libqalculate
@@ -63,6 +67,8 @@
       openssl
       mkpasswd
       gnupg
+      gocryptfs
+      cryptor
 
       # desktop applications
       kitty # terminal
@@ -83,11 +89,6 @@
       qpdf # PDF manipulation tool
       mpv # multimedia viewer
       simplescreenrecorder # screen recording
-
-      # apps
-      firefox
-      obsidian
-      qalculate-gtk # graphical calculator
     ];
 
     variables = {

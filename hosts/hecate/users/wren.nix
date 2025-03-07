@@ -39,7 +39,11 @@
         xfce.thunar # file browser
         bitwarden # password manager
         kdePackages.filelight # disk usage visualization
-        libreoffice
+        signal-desktop # messaging
+        obsidian # note taking
+        libreoffice # office suite
+        musescore # music composition
+        qalculate-gtk # graphical calculator
         anki # flashcards
       ];
     };

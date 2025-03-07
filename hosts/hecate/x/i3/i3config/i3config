@@ -82,9 +82,7 @@
             bindsym v exec kitty vim;            mode "default"
             bindsym b exec firefox;              mode "default"
             bindsym f exec thunar;               mode "default"
-            bindsym y exec kitty fish -C y;      mode "default"
             bindsym d exec Discord;              mode "default"
-            bindsym l exec slack;                mode "default"
             bindsym s exec spotify;              mode "default"
             bindsym p exec bitwarden;            mode "default"
             bindsym g exec "@pick_game_script@"; mode "default"
@@ -160,7 +158,6 @@
 
     # automatic marks {{{
         for_window [class="^discord$"] mark d
-        for_window [class="^Slack$"] mark l
         for_window [class="^Spotify$"] mark s
         for_window [class="^Bitwarden$"] mark p
     # }}}
