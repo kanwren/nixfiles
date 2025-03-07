@@ -18,7 +18,7 @@ in
 
   services.immich = {
     enable = true;
-    # accelerationDevices = null;
+    accelerationDevices = null;
     mediaLocation = nasPhotosMount;
     host = "127.0.0.1";
   };
