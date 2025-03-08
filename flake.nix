@@ -32,11 +32,6 @@
       inputs.nixlib.follows = "nixpkgs";
     };
 
-    tsnsrv = {
-      url = "github:boinkor-net/tsnsrv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,7 +57,6 @@
     , nixos-hardware
     , sops-nix
     , nixos-generators
-    , tsnsrv
     , catppuccin
     , fenix
     , naersk
@@ -84,7 +78,7 @@
     {
       nixosConfigurations = {
         hecate = import ./hosts/hecate/host.nix {
-          inherit self nixpkgs lix-module home-manager nixos-hardware sops-nix tsnsrv catppuccin;
+          inherit self nixpkgs lix-module home-manager nixos-hardware sops-nix catppuccin;
         };
       };
 

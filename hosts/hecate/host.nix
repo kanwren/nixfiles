@@ -4,7 +4,6 @@
 , home-manager
 , nixos-hardware
 , sops-nix
-, tsnsrv
 , catppuccin
 }:
 
@@ -44,8 +43,6 @@ nixpkgs.lib.nixosSystem {
     {
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     }
-
-    tsnsrv.nixosModules.default
 
     self.nixosModules.pueue
 
