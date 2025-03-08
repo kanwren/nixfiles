@@ -11,7 +11,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    programs.zellij.enable = true;
+    programs.zellij = {
+      enable = true;
+    };
+
+    home.sessionVariables = {
+      ZELLIJ_AUTO_ATTACH = "true";
+      ZELLIJ_AUTO_EXIT = "true";
+    };
 
     # NOTE: the home-manager toKDL generator represents node children as an
     # attrset, which is the wrong type for KDL's model (can't repeat keys, and

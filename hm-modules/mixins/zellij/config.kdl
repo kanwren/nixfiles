@@ -1,4 +1,5 @@
 theme "catppuccin-mocha"
+pane_frames false
 
 default_mode "locked"
 
