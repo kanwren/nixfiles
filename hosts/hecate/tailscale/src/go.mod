@@ -1,6 +1,8 @@
 module caddy
 
-go 1.23.6
+go 1.23.1
+
+toolchain go1.23.6
 
 require (
 	github.com/caddyserver/caddy/v2 v2.9.1
