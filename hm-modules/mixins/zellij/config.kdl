@@ -170,6 +170,7 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" "tab" "entersearch" "renametab" "renamepane" {
         bind "t" { SwitchToMode "tab"; }
+        bind "Ctrl e" { EditScrollback; SwitchToMode "locked"; }
     }
     shared_except "locked" "tab" "scroll" "entersearch" "renametab" "renamepane" {
         bind "s" { SwitchToMode "scroll"; }
