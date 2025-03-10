@@ -22,7 +22,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.fishPlugins.foreign-env
-      pkgs.fishPlugins.fzf-fish
+      (pkgs.fishPlugins.fzf-fish.overrideAttrs { doCheck = false; })
       pkgs.wd-fish
       kubectx-kube-plugin
     ];

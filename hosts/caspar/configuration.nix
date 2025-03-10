@@ -371,6 +371,7 @@ in
 
       programs.kitty = {
         enable = true;
+        package = pkgs.kitty.overrideAttrs { doInstallCheck = false; };
         extraConfig = builtins.readFile ./kitty.conf;
         shellIntegration.mode = "enabled";
       };
