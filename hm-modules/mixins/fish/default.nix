@@ -296,6 +296,7 @@ in
             "zjl" = "zellij list-sessions";
             "zja" = "zellij attach";
             "zjk" = "zellij kill-session";
+            "zjd" = "zellij delete-all-sessions";
           };
         }
       ));
