@@ -28,7 +28,7 @@ hecate-system:
 
 # Run a nixos-rebuild command on hecate
 hecate command="build": hecate-system
-    {{ if command =~ "^boot|switch|test|dry-activate$" { "sudo " } else { "" } }}{{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'` / "sw" / "bin" / "nixos-rebuild") }} --flake '.#hecate' {{ quote(command) }}
+    {{ if command =~ "^(boot|switch|test|dry-activate)$" { "sudo " } else { "" } }}{{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'` / "sw" / "bin" / "nixos-rebuild") }} --flake '.#hecate' {{ quote(command) }}
 
 [private]
 caspar-system:
