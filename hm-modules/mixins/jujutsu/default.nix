@@ -90,7 +90,7 @@ in
 
         git = {
           push-bookmark-prefix = lib.mkDefault "kanwren/push-";
-          private-commits = lib.mkDefault ''description(glob:"XXX:*")'';
+          private-commits = lib.mkDefault ''description(glob-i:"XXX:*")'';
         };
       };
     };
