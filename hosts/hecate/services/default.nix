@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./ollama.nix
+    ./llm.nix
     ./photos.nix
   ];
 
