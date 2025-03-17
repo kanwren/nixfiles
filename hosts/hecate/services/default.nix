@@ -3,7 +3,7 @@
 {
   imports = [
     ./ollama.nix
-    ./immich.nix
+    ./photos.nix
   ];
 
   services = {

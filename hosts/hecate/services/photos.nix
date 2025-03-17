@@ -24,24 +24,6 @@ in
   };
   systemd.services.immich-server.serviceConfig.Restart = "on-failure";
 
-  # Expose immich to tailnet via Caddy
-  services.tscaddy = {
-    enable = true;
-    nodes.immich = {
-      host = "https://immich.swallow-chickadee.ts.net";
-      target = "http://127.0.0.1:${intToString config.services.immich.port}";
-      authKeyFile = config.sops.secrets."caddy/immich-ts-authkey".path;
-      dependencies = [ "immich-server.service" ];
-    };
-  };
-  sops.secrets."caddy/immich-ts-authkey" = {
-    sopsFile = ../secrets/caddy-ts-authkey-immich.txt;
-    format = "binary";
-    mode = "0440";
-    owner = config.services.caddy.user;
-    group = config.services.caddy.group;
-  };
-
   # Mount NAS over CIFS as the backing image store for immich
   users = {
     # Give the immich user/group an explicit uid/gid so we can reference it in
@@ -76,5 +58,20 @@ in
   systemd.services.immich-server = {
     wants = [ "mnt-immich.mount" ];
     after = [ "mnt-immich.mount" ];
+  };
+
+  # Expose immich to tailnet via Caddy
+  services.tscaddy.nodes.immich = {
+    host = "https://immich.swallow-chickadee.ts.net";
+    target = "http://127.0.0.1:${intToString config.services.immich.port}";
+    authKeyFile = config.sops.secrets."caddy/immich-ts-authkey".path;
+    dependencies = [ "immich-server.service" ];
+  };
+  sops.secrets."caddy/immich-ts-authkey" = {
+    sopsFile = ../secrets/caddy-ts-authkey-immich.txt;
+    format = "binary";
+    mode = "0440";
+    owner = config.services.caddy.user;
+    group = config.services.caddy.group;
   };
 }
