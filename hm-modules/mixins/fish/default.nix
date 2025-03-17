@@ -68,7 +68,9 @@ in
           "=" = {
             description = "Yield the arguments";
             body = ''
-              printf '%s\n' $argv
+              if test (count $argv) -gt 0
+                printf '%s\n' $argv
+              end
             '';
           };
 
@@ -172,10 +174,6 @@ in
             ",," = {
               position = "anywhere";
               function = "last_argument";
-            };
-            "lines" = {
-              position = "command";
-              expansion = "printf '%s\\n'";
             };
           };
           bazelAbbrs = commandAbbrs {
