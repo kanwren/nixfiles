@@ -4,10 +4,17 @@ let
   cfg = config.mixins.zellij;
 in
 {
-  options.mixins.zellij.enable = lib.mkOption {
-    type = lib.types.bool;
-    default = config.mixins.enable;
-    description = "Whether to enable the zellij mixin";
+  options.mixins.zellij = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = config.mixins.enable;
+      description = "Whether to enable the zellij mixin";
+    };
+    enableShellIntegration = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to enable zellij shell integration";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -16,8 +23,8 @@ in
     };
 
     home.sessionVariables = {
-      ZELLIJ_AUTO_ATTACH = "true";
-      ZELLIJ_AUTO_EXIT = "true";
+      ZELLIJ_AUTO_ATTACH = if cfg.enableShellIntegration then "true" else "false";
+      ZELLIJ_AUTO_EXIT = if cfg.enableShellIntegration then "true" else "false";
     };
 
     # NOTE: the home-manager toKDL generator represents node children as an
