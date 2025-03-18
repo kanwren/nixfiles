@@ -140,7 +140,6 @@ in
       ## Docker/Kubernetes
       pkgs.dive
       pkgs.kubectl
-      pkgs.k9s
       pkgs.kubernetes-helm
       pkgs.envtpl
       pkgs.gomplate
@@ -261,6 +260,7 @@ in
         h.enable = true;
         jq.enable = true;
         jujutsu.enable = true;
+        k9s.enable = true;
         zellij.enable = true;
         zoxide.enable = true;
       };
