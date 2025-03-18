@@ -20,6 +20,7 @@ in
 
       btop.enable = true;
       cava.enable = true;
+      k9s.enable = true;
       kitty.enable = true;
       yazi.enable = true;
       zathura.enable = true;

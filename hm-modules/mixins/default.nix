@@ -20,6 +20,7 @@
     ./haskell
     ./jq
     ./jujutsu
+    ./k9s
     ./kitty
     ./nix
     ./rofi
