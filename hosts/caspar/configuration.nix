@@ -261,6 +261,7 @@ in
         h.enable = true;
         jq.enable = true;
         jujutsu.enable = true;
+        zellij.enable = true;
         zoxide.enable = true;
       };
 
