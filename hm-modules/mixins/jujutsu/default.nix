@@ -86,6 +86,21 @@ in
             builtins.concatStringsSep " | " (builtins.map toAuthor (emails ++ names));
         };
 
+        templates = {
+          draft_commit_description = ''
+            concat(
+              description,
+              surround(
+                "\nJJ: Files:\n", "",
+                indent("JJ:     ", diff.summary()),
+              ),
+              "\n",
+              "JJ: ignore-rest\n",
+              diff.git(),
+            )
+          '';
+        };
+
         template-aliases = { };
 
         git = {
