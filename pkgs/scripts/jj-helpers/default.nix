@@ -63,53 +63,6 @@ in
 symlinkJoin {
   name = "jj-helpers";
   paths = builtins.attrValues {
-    # Move the first change to a position before or after the second change.
-    "jj.reorder" = writers.writeBashBin "jj.reorder" ''
-      source ${jj-helpers-lib}
-
-      usage() { echo "usage: jj.reorder <source> (before|after) <destination>"; }
-
-      before() {
-        declare revs target
-        revs="$(revset "$1")"
-        target="$(change_id "$2")"
-
-        # move 1 on top of 2's parents
-        jj.log rebase --revisions "''${revs}" --destination "all:parents(''${target})"
-
-        # move 2 and descendants on top of 1
-        jj.log rebase --source "''${target}" --destination "all:heads(''${revs})"
-      }
-
-      after() {
-        declare revs target
-        revs="$(revset "$1")"
-        target="$(change_id "$2")"
-
-        # move 1 on top of 2
-        jj.log rebase --revisions "''${revs}" --destination "''${target}"
-
-        # move children of 2 on top of 1, if there are any
-        change_ids "children(''${target}) ~ (''${revs})" | while read -r child; do
-          jj.log rebase --source "''${child}" --destination "all:parents(''${child}) ~ (''${target}) | heads(''${revs})"
-        done
-      }
-
-      main() {
-        register_rollback_instructions
-
-        case "''${2}" in
-          after) after "''${1}" "''${3}" ;;
-          before) before "''${1}" "''${3}" ;;
-          *) echo "invalid position: ''${2}"; usage; exit 1 ;;
-        esac
-      }
-
-      [ $# -eq 3 ] || { usage; exit 1; }
-
-      main "$@"
-    '';
-
     # List the change IDs for a revset ('@' by default)
     "jj.id" = writers.writeBashBin "jj.id" ''
       source ${jj-helpers-lib}
