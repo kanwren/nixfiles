@@ -10,7 +10,6 @@ rec {
   # scripts
   lipsum = pkgs.callPackage ./scripts/lipsum { };
   generate-heart-emoji = pkgs.callPackage ./scripts/generate-heart-emoji { };
-  jj-helpers = pkgs.callPackage ./scripts/jj-helpers { };
 
   # tools
   slides-full = pkgs.callPackage ./tools/slides { };

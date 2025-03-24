@@ -105,7 +105,6 @@
           envtpl
           frum
           generate-heart-emoji
-          jj-helpers
           lipsum
           slides-full
           tfenv
