@@ -21,7 +21,7 @@ nix-darwin.lib.darwinSystem {
     home-manager.darwinModules.home-manager
     {
       home-manager.sharedModules = [
-        catppuccin.homeManagerModules.catppuccin
+        catppuccin.homeModules.catppuccin
         self.hmModules.h
         self.hmModules.mixins
       ];

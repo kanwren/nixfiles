@@ -33,7 +33,7 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.home-manager
     {
       home-manager.sharedModules = [
-        catppuccin.homeManagerModules.catppuccin
+        catppuccin.homeModules.catppuccin
         self.hmModules.h
         self.hmModules.mixins
       ];
