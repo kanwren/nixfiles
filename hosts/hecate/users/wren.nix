@@ -28,6 +28,11 @@
 
       sessionPath = [ "$HOME/bin" ];
 
+      sessionVariables = {
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+      };
+
       packages = with pkgs; [
         # CLI/TUI stuff
         h # quick directory jumping

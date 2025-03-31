@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   environment = {
@@ -90,11 +90,6 @@
       mpv # multimedia viewer
       simplescreenrecorder # screen recording
     ];
-
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
   };
 }
 
