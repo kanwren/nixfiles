@@ -96,13 +96,5 @@
       VISUAL = "nvim";
     };
   };
-
-  nixpkgs.config.permittedInsecurePackages = [
-    # https://github.com/NixOS/nixpkgs/issues/273611
-    (lib.throwIf
-      (lib.versionOlder "1.5.3" pkgs.obsidian.version)
-      "obsidian-${pkgs.obsidian.version} no longer requires exception for EOL electron-25.9.0"
-      "electron-25.9.0")
-  ];
 }
 
