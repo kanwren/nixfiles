@@ -15,7 +15,7 @@ nixpkgs.lib.nixosSystem {
     ({ config, ... }: {
       networking.hostName = "hecate";
 
-      system.stateVersion = "24.11";
+      system.stateVersion = "25.05";
 
       # Set up flakes and remove impure components. `nixosSystem` already
       # injects `nixpkgs` into system flake registry and `NIX_PATH`.
