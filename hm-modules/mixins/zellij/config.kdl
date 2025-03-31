@@ -1,6 +1,8 @@
 theme "catppuccin-mocha"
 pane_frames false
 
+show_startup_tips false
+
 default_mode "locked"
 
 keybinds clear-defaults=true {
