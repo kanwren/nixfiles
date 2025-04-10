@@ -157,67 +157,6 @@ in
               main "$@"
             '';
 
-            # Given a revision 'splitter', like so:
-            #
-            #   base - change - rest
-            #             \
-            #              splitter
-            #
-            # Treat that revision as a change to back out its parent to
-            # the first half of a change, and use this to split the parent into a first
-            # and second half, like this:
-            #
-            #   base - change1 - change2 - rest
-            #
-            # Where:
-            # - change1 - base = splitter - base
-            # - change2 - base = change - base
-            #
-            # This is done by backing out 'splitter', rebasing 'rest' onto that backout
-            # (since 'change + Δsplitter + -Δsplitter = change'), and squashing 'change'
-            # with 'splitter'.
-            "apply-split" = mkBashAlias "apply-split" /* bash */ ''
-              source ${jj-helpers-lib}
-
-              main() {
-                register_rollback_instructions
-
-                declare splitter orig
-                splitter="$(change_id "''${1-@}")"
-                orig="$(change_id "parents($splitter)")"
-
-                declare -i squash_automessage=0
-                [ -z "$(description "''${splitter}")" ] && squash_automessage=1
-                [ -z "$(description "''${orig}")" ]     && squash_automessage=1
-
-                # Invert the changes in $splitter
-                declare old_splitter_children new_splitter_children backout
-                old_splitter_children="$(revset "children(''${splitter})")"
-                log_and_run jj backout --revisions "''${splitter}" --destination "''${splitter}"
-                new_splitter_children="$(revset "children(''${splitter})")"
-                backout="$(change_id "($new_splitter_children) ~ ($old_splitter_children)")"
-                log_and_run jj describe "''${backout}" --message "backout of splitter"
-
-                # Rebase children of $orig onto the backout
-                change_ids "children(''${orig}) ~ (''${splitter})" | while read -r child; do
-                  log_and_run jj rebase --source "$child" --destination "all:parents($child) ~ ''${orig} | ''${backout}"
-                done
-
-                # Squash the splitter with its parent
-                log_and_run jj squash --revision "''${splitter}"
-
-                # Rewrite the messages for the first and second halves
-                if [ "''${squash_automessage}" -eq 1 ]; then
-                  log_and_run jj describe "''${orig}"
-                fi
-                log_and_run jj describe "''${backout}"
-              }
-
-              [ $# -le 1 ] || { echo "usage: jj apply-split [<revision>]"; exit 1; }
-
-              main "$@"
-            '';
-
             # Run a command at every revision in a revset
             # TODO: replace when `jj run` isn't a stub anymore
             "run-job" = mkBashAlias "run-job" /* bash */ ''
