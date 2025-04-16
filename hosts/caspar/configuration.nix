@@ -71,6 +71,9 @@ in
     };
 
     systemPackages = [
+      # macos stuff
+      pkgs.pinentry_mac
+
       # nix stuff
       pkgs.nix-index
       pkgs.nix-tree
@@ -87,7 +90,9 @@ in
       pkgs.netcat
       pkgs.socat
       pkgs.nmap
+      pkgs.ffmpeg
       pkgs.bc
+      pkgs.libqalculate
       pkgs.wget
       pkgs.curl
       pkgs.grpcurl
@@ -105,7 +110,6 @@ in
       pkgs.tealdeer
       pkgs.cht-sh
       pkgs.watch
-      pkgs.entr
       ## build systems/task runners/etc.
       pkgs.gnumake
       pkgs.autoconf
@@ -131,7 +135,6 @@ in
       pkgs.zstd
       pkgs.unar
       ## data and manipulation
-      pkgs.jo
       pkgs.yq-go
       pkgs.crudini
       pkgs.sqlite
@@ -141,8 +144,7 @@ in
       pkgs.dive
       pkgs.kubectl
       pkgs.kubernetes-helm
-      pkgs.envtpl
-      pkgs.gomplate
+      pkgs.skopeo
       ## AWS
       pkgs.awscli2
       pkgs.aws-iam-authenticator
@@ -159,18 +161,7 @@ in
       pkgs.tfenv
       ## version control
       pkgs.pre-commit
-
-      # media tools
-      pkgs.ffmpeg
-      pkgs.exiftool
-      pkgs.imagemagick
-      pkgs.pandoc
-      pkgs.qpdf
-
-      # macos stuff
-      pkgs.pinentry_mac
-
-      # misc
+      ## misc
       pkgs.jira-cli-go
     ];
   };
