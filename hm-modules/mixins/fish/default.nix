@@ -300,6 +300,14 @@ in
             "jt" = "jj tag";
             "jtl" = "jj tag list";
             "jv" = "jj parallelize";
+            "jw" = "jj flow";
+            "jwt" = "jj flow tip";
+            "jwca" = "jj flow changes add";
+            "jwcr" = "jj flow changes remove";
+            "jwcm" = "jj flow changes move";
+            "jwr" = "jj flow rebase";
+            "jwrt" = "jj flow rebase 'trunk()'";
+            "jwp" = "jj flow push";
             "jz" = "jj restore";
             "jzd" = "jj restore --restore-descendants";
           };
