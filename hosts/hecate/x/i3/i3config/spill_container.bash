@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! @runtimeShell@
 # shellcheck shell=bash
 
 PATH="@i3@/bin:@jq@/bin${PATH:+:${PATH}}"

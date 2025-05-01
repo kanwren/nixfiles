@@ -21,26 +21,30 @@
       enable = true;
       package = pkgs.i3;
 
-      configFile = pkgs.substituteAll {
-        src = ./i3config/i3config;
-
-        spill_container_script = pkgs.substituteAll {
+      configFile = pkgs.replaceVars ./i3config/i3config {
+        spill_container_script = pkgs.replaceVarsWith {
           src = ./i3config/spill_container.bash;
           isExecutable = true;
-          inherit (pkgs) runtimeShell jq;
-          i3 = config.services.xserver.windowManager.i3.package;
+          replacements = {
+            inherit (pkgs) runtimeShell jq;
+            i3 = config.services.xserver.windowManager.i3.package;
+          };
         };
 
-        pick_game_script = pkgs.substituteAll {
+        pick_game_script = pkgs.replaceVarsWith {
           src = ./i3config/pick_game.bash;
           isExecutable = true;
-          inherit (pkgs) runtimeShell rofi;
+          replacements = {
+            inherit (pkgs) runtimeShell rofi;
+          };
         };
 
-        copyq_launch_script = pkgs.substituteAll {
+        copyq_launch_script = pkgs.replaceVarsWith {
           src = ./i3config/copyq_launch.bash;
           isExecutable = true;
-          inherit (pkgs) runtimeShell copyq;
+          replacements = {
+            inherit (pkgs) runtimeShell copyq;
+          };
         };
 
         i3status_config = pkgs.writeText "i3status.conf" ''

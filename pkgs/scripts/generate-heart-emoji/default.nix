@@ -1,4 +1,4 @@
-{ substituteAll
+{ replaceVarsWith
 , runtimeShell
 , unixtools
 , gnugrep
@@ -6,13 +6,15 @@
 }:
 
 let
-  script = substituteAll {
+  script = replaceVarsWith {
     name = "generate-heart-emoji";
     src = ./generate_heart_emoji.sh;
-    inherit runtimeShell gnugrep inkscape;
-    inherit (unixtools) getopt;
     dir = "bin";
     isExecutable = true;
+    replacements = {
+      inherit runtimeShell gnugrep inkscape;
+      inherit (unixtools) getopt;
+    };
   };
   meta = {
     description = "Generate a twemoji heart with the given color";

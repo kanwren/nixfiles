@@ -14,7 +14,7 @@ in
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      pinentryPackage = pkgs.pinentry;
+      pinentry.package = pkgs.pinentry;
 
       defaultCacheTtl = 7 * 24 * 60 * 60; # one week
       defaultCacheTtlSsh = config.services.gpg-agent.defaultCacheTtl;

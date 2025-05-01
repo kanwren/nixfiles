@@ -1,4 +1,4 @@
-{ substituteAll
+{ replaceVarsWith
 , runtimeShell
 , unixtools
 , curl
@@ -6,13 +6,15 @@
 }:
 
 let
-  script = substituteAll {
+  script = replaceVarsWith {
     name = "lipsum";
     src = ./lipsum.sh;
-    inherit runtimeShell curl jq;
-    inherit (unixtools) getopt;
     dir = "bin";
     isExecutable = true;
+    replacements = {
+      inherit runtimeShell curl jq;
+      inherit (unixtools) getopt;
+    };
   };
   meta = {
     description = "Generate lorem ipsum text";
