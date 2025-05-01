@@ -214,7 +214,7 @@ in
                 else
                   local old_children new_children flow_commit
                   old_children="$(revset 'children('"$argc_revset"')')"
-                  log_and_run jj new --no-edit 'all:'"$argc_revset" --message 'XXX:flow'
+                  log_and_run jj new --no-edit 'all:'"$argc_revset" --message 'xxx:flow'
                   new_children="$(revset 'children('"$argc_revset"')')"
                   flow_commit="$(change_id '('"$new_children"') ~ ('"$old_children"')')"
                   log_and_run jj bookmark create flow --revision "$flow_commit"
@@ -325,7 +325,7 @@ in
 
         git = {
           push-bookmark-prefix = lib.mkDefault "kanwren/push-";
-          private-commits = lib.mkDefault ''description(glob-i:"XXX:*")'';
+          private-commits = lib.mkDefault ''description(regex:"^[xX]+:")'';
         };
       };
     };
