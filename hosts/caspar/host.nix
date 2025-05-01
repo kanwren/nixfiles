@@ -1,6 +1,5 @@
 { self
 , nixpkgs
-, lix-module
 , nix-darwin
 , home-manager
 , catppuccin

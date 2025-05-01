@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +46,6 @@
   outputs =
     { self
     , nixpkgs
-    , lix-module
     , home-manager
     , nix-darwin
     , nixos-hardware
@@ -78,13 +72,13 @@
     {
       nixosConfigurations = {
         hecate = import ./hosts/hecate/host.nix {
-          inherit self nixpkgs lix-module home-manager nixos-hardware sops-nix catppuccin;
+          inherit self nixpkgs home-manager nixos-hardware sops-nix catppuccin;
         };
       };
 
       darwinConfigurations = {
         caspar = import ./hosts/caspar/host.nix {
-          inherit self nixpkgs lix-module nix-darwin home-manager catppuccin;
+          inherit self nixpkgs nix-darwin home-manager catppuccin;
         };
       };
 
