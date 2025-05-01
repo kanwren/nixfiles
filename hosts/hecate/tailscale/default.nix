@@ -16,7 +16,5 @@
     trustedInterfaces = [ "tailscale0" ];
   };
 
-  systemd.services.tailscaled.after = [ "systemd-networkd-wait-online.service" ];
-
   services.tscaddy.enable = true;
 }
