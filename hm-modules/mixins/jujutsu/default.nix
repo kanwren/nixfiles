@@ -325,7 +325,7 @@ in
 
         git = {
           push-bookmark-prefix = lib.mkDefault "kanwren/push-";
-          private-commits = lib.mkDefault ''description(regex:"^[xX]+:")'';
+          private-commits = lib.mkDefault ''description(regex:"^[xX]+:") | description(glob-i:"^wip:")'';
         };
       };
     };
