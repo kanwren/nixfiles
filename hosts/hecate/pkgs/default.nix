@@ -26,6 +26,7 @@
 
       # CLI tools
       bat
+      bat-extras.core
       ripgrep
       fd
       sd

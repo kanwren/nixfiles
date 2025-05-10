@@ -3,9 +3,9 @@
 {
   environment.shellAliases = lib.mergeAttrsList [
     {
-      ls = "${pkgs.eza}/bin/eza --git";
-      cat = "${pkgs.bat}/bin/bat";
+      l = "${pkgs.eza}/bin/eza --git";
       ping = "${pkgs.prettyping}/bin/prettyping";
+      show = "${pkgs.bat}/bin/bat";
     }
     (builtins.listToAttrs
       (builtins.map

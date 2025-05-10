@@ -102,6 +102,7 @@ in
       pkgs.ripgrep
       pkgs.eza
       pkgs.bat
+      pkgs.bat-extras.core
       pkgs.fzf
       pkgs.fd
       pkgs.rsync
@@ -223,8 +224,8 @@ in
 
         shellAliases = lib.mergeAttrsList [
           {
-            cat = "bat";
-            ls = "eza --git";
+            l = "${pkgs.eza}/bin/eza --git";
+            show = "${pkgs.bat}/bin/bat";
             vi = "nvim";
             vim = "nvim";
           }
