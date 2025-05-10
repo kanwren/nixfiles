@@ -2,11 +2,11 @@
 
 buildGoModule rec {
   pname = "caddy-with-extensions";
-  version = "unstable-2025-03-07";
+  version = "unstable-2025-05-10";
   src = ./.;
 
   runVend = true;
-  vendorHash = "sha256-D6L5mFchyWz48zrdS/VwzmtycGAMyI+gkdHk/sWiJYg=";
+  vendorHash = "sha256-jrY0NpI27mcTGZ+qTw7fyRsHllpCsnESk1J0l+0riro=";
 
   ldflags = [
     "-s"
