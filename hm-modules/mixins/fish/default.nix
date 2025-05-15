@@ -83,6 +83,14 @@ in
             '';
           };
 
+          _pfor_expand = {
+            description = "Expand a pfor command";
+            body = ''
+              set varname (string replace --regex '.*?\\.' ''' $argv[1])
+              echo 'parallel -j10 -kq fish -c \'set '$varname' $argv[1]; %\' {}'
+            '';
+          };
+
           fzf_git_branch_widget = {
             description = "List and insert git branches";
             body = ''
@@ -174,6 +182,12 @@ in
             ",," = {
               position = "anywhere";
               function = "last_argument";
+            };
+            "pfor" = {
+              position = "command";
+              function = "_pfor_expand";
+              regex = ''pfor\..+'';
+              setCursor = "%";
             };
           };
           bazelAbbrs = commandAbbrs {
