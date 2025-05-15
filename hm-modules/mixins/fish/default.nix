@@ -86,8 +86,24 @@ in
           _pfor_expand = {
             description = "Expand a pfor command";
             body = ''
-              set varname (string replace --regex '.*?\\.' ''' $argv[1])
-              echo 'parallel -j10 -kq fish -c \'set '$varname' $argv[1]; %\' {}'
+              set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
+              set result 'parallel'
+              if test (count $varname) -gt 1
+                set result "$result"' -C'"'"' '"'"
+              end
+              set result "$result"' -j10 -kq fish -c '"'"
+              for i in (seq 1 (count $varname))
+                set result "$result"'set '$varname[$i]' $argv['$i']; '
+              end
+              set result "$result%'"
+              if test (count $varname) -gt 1
+                for i in (seq 1 (count $varname))
+                  set result "$result"' {'$i'}'
+                end
+              else
+                  set result "$result"' {}'
+              end
+              printf '%s' "$result"
             '';
           };
 
