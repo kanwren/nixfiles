@@ -20,6 +20,7 @@
       findutils
       findutils.locate
       zlib
+      parallel
       # filesystem tools
       parted
       ntfsprogs
