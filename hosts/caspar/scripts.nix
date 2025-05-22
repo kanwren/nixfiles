@@ -7,6 +7,14 @@ let
 in
 
 {
+  # (Re)-process a shell script with [argc](https://github.com/sigoden/argc) to
+  # insert static argument parsing code, without a dependency on argc itself
+  reargc = pkgs.writers.writeBashBin "reargc" ''
+    set -euo pipefail
+    test $# -eq 1 || { printf 'usage: %s <file>\n' "$0"; exit 1; }
+    "${pkgs.argc}/bin/argc" --argc-build "$1" "$1"
+  '';
+
   # Generate a fake go.mod/go.sum in a package in a monorepo, so that the
   # versioned dependency tree for a subpackage can be pruned and analyzed directly.
   #
