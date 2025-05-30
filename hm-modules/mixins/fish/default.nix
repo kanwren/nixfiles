@@ -75,14 +75,6 @@ in
           };
 
           # Misc shell utilities
-          "last_argument" = {
-            description = "Get the last argument to the last command in the history";
-            body = ''
-              printf '%s' "$history[1]" | read --array --tokenize result
-              printf '%s\n' "$result[-1]"
-            '';
-          };
-
           _pfor_expand = {
             description = "Expand a pfor command";
             body = ''
@@ -195,10 +187,6 @@ in
         in
         {
           miscAbbrs = {
-            ",," = {
-              position = "anywhere";
-              function = "last_argument";
-            };
             "pfor" = {
               position = "command";
               function = "_pfor_expand";
