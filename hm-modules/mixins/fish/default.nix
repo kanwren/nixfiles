@@ -234,23 +234,6 @@ in
             "kssh" = "kitten ssh";
             "icat" = "kitten icat --align=left";
           };
-          kubectlAbbrs = commandAbbrs {
-            "k" = "kubectl";
-            "kaf" = "kubectl apply --filename";
-            "kc" = "kubectx";
-            "kcc" = "kubectl config current-context";
-            "kcp" = "kubectl cp";
-            "kcu" = "kubectl config unset current-context";
-            "kd" = "kubectl describe";
-            "krm" = "kubectl delete";
-            "ked" = "kubectl edit";
-            "kg" = "kubectl get";
-            "kl" = "kubectl logs";
-            "kn" = "kubens";
-            "knc" = "kubens --current";
-            "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
-            "kx" = "kubectl exec --stdin=true --tty=true";
-          };
           jjAbbrs = commandAbbrs {
             "j/" = "jj split";
             "j/p" = "jj split --parallel";

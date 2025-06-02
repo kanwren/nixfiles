@@ -21,6 +21,26 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.kubectl ];
 
+    programs.fish.shellAbbrs = lib.mkIf config.programs.fish.enable (lib.attrsets.mergeAttrsList [
+      {
+        "k" = "kubectl";
+        "kaf" = "kubectl apply --filename";
+        "kc" = "kubectx";
+        "kn" = "kubens";
+        "kcc" = "kubectl config current-context";
+        "kcp" = "kubectl cp";
+        "kcu" = "kubectl config unset current-context";
+        "kd" = "kubectl describe";
+        "krm" = "kubectl delete";
+        "ked" = "kubectl edit";
+        "kg" = "kubectl get";
+        "kl" = "kubectl logs";
+        "knc" = "kubens --current";
+        "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
+        "kx" = "kubectl exec --stdin=true --tty=true";
+      }
+    ]);
+
     programs.k9s = lib.mkIf cfg.k9s.enable {
       enable = true;
       plugin.plugins = {
