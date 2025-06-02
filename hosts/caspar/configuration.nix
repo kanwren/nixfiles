@@ -252,6 +252,7 @@ in
         jq.enable = true;
         jujutsu.enable = true;
         k8s.enable = true;
+        k8s.kubie.enable = true;
         zellij.enable = true;
         zoxide.enable = true;
       };
