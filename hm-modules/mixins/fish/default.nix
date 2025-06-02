@@ -2,15 +2,6 @@
 
 let
   cfg = config.mixins.fish;
-
-  # alias kubectx outputs to also be kubectl plugins
-  kubectx-kube-plugin = (pkgs.runCommandNoCCLocal "kubectx-kube-plugin" { } ''
-    mkdir -p "$out/bin"
-    ln -s "${pkgs.kubectx}/bin/kubectx" "$out/bin/kubectx"
-    ln -s "${pkgs.kubectx}/bin/kubectx" "$out/bin/kubectl-ctx"
-    ln -s "${pkgs.kubectx}/bin/kubens" "$out/bin/kubens"
-    ln -s "${pkgs.kubectx}/bin/kubens" "$out/bin/kubectl-ns"
-  '');
 in
 {
   options.mixins.fish.enable = lib.mkOption {
@@ -24,7 +15,6 @@ in
       pkgs.fishPlugins.foreign-env
       (pkgs.fishPlugins.fzf-fish.overrideAttrs { doCheck = false; })
       pkgs.wd-fish
-      kubectx-kube-plugin
     ];
 
     programs.fish = {

@@ -1,19 +1,27 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.mixins.k9s;
+  cfg = config.mixins.k8s;
 in
 {
-  options.mixins.k9s = {
+  options.mixins.k8s = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = config.mixins.enable;
-      description = "Whether to enable the k9s mixin";
+      description = "Whether to enable the Kubernetes mixin";
+    };
+
+    k9s.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to enable k9s";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    programs.k9s = {
+    home.packages = [ pkgs.kubectl ];
+
+    programs.k9s = lib.mkIf cfg.k9s.enable {
       enable = true;
       plugin.plugins = {
         editjson = {

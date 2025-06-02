@@ -143,7 +143,6 @@ in
       pkgs.tz
       ## Docker/Kubernetes
       pkgs.dive
-      pkgs.kubectl
       pkgs.kubernetes-helm
       pkgs.skopeo
       ## AWS
@@ -252,7 +251,7 @@ in
         h.enable = true;
         jq.enable = true;
         jujutsu.enable = true;
-        k9s.enable = true;
+        k8s.enable = true;
         zellij.enable = true;
         zoxide.enable = true;
       };
