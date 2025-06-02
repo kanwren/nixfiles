@@ -102,75 +102,84 @@ in
 
         aliases =
           let
-            mkExecAlias = program: [ "util" "exec" "--" program ];
-            mkBashAlias = name: text: mkExecAlias (lib.getExe (pkgs.writers.writeBashBin "jj-${name}" text));
+            mkExecAlias = program: args: [ "util" "exec" "--" program ] ++ args;
+            mkArgcBashAlias = subcommandName: text:
+              mkExecAlias
+                (lib.getExe (pkgs.writers.writeBashBin "jj" ''
+                  ${text}
+
+                  eval "$(${pkgs.argc}/bin/argc --argc-eval "$0" "$@")"
+                ''))
+                [ subcommandName ];
           in
           {
-            "ui" = mkExecAlias "${pkgs.jj-fzf}/bin/jj-fzf";
+            "ui" = mkExecAlias "${pkgs.jj-fzf}/bin/jj-fzf" [ ];
 
             "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
 
-            # List change IDs of changes in a revset (default '@')
-            "change-id" = mkBashAlias "change-id" /* bash */ ''
+            "change-id" = mkArgcBashAlias "change-id" /* bash */ ''
               source ${jj-helpers-lib}
 
-              main() {
-                if [ $# -gt 1 ]; then
-                  echo "usage: jj change-id [<revset>]" >&2
-                  return 1
-                fi
+              # @describe List change IDs of changes in a revset
+              # @meta require-tools jj,jq
 
-                jj log --ignore-working-copy --revisions "''${1-@}" --reversed --no-graph --template 'change_id ++ "\n"'
+              # @cmd List change IDs of changes in a revset
+              # @arg revset=@ The revision(s) to analyze
+              # @meta default-subcommand
+              change-id() {
+                jj log --ignore-working-copy --revisions "''${argc_revset}" --reversed --no-graph --template 'change_id ++ "\n"'
               }
-
-              main "$@"
             '';
 
-            # List commit IDs of changes in a revset (default '@')
-            "commit-id" = mkBashAlias "commit-id" /* bash */ ''
+            "commit-id" = mkArgcBashAlias "commit-id" /* bash */ ''
               source ${jj-helpers-lib}
 
-              main() {
-                if [ $# -gt 1 ]; then
-                  echo "usage: jj commit-id [<revset>]" >&2
-                  return 1
-                fi
+              # @describe List commit IDs of changes in a revset
+              # @meta require-tools jj,jq
 
-                jj log --ignore-working-copy --revisions "''${1-@}" --reversed --no-graph --template 'commit_id ++ "\n"'
+              # @cmd List commit IDs of changes in a revset
+              # @arg revset=@ The revision(s) to analyze
+              # @meta default-subcommand
+              commit-id() {
+                jj log --ignore-working-copy --revisions "''${argc_revset}" --reversed --no-graph --template 'commit_id ++ "\n"'
               }
-
-              main "$@"
             '';
 
-            # List names of bookmarks pointing to changes in a revset (default '@')
-            "bookmark-names" = mkBashAlias "bookmark-names" /* bash */ ''
+            "bookmark-names" = mkArgcBashAlias "bookmark-names" /* bash */ ''
               source ${jj-helpers-lib}
 
-              main() {
-                if [ $# -gt 1 ]; then
-                  echo "usage: jj bookmark-names [<revset>]" >&2
-                  return 1
-                fi
-                jj log --ignore-working-copy --revisions "''${1-@}" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")'
-              }
+              # @describe List names of bookmarks pointing to changes in a revset
+              # @meta require-tools jj,jq
 
-              main "$@"
+              # @cmd List names of bookmarks pointing to changes in a revset
+              # @arg revset=@ The revision(s) to analyze
+              # @meta default-subcommand
+              bookmark-names() {
+                jj log --ignore-working-copy --revisions "''${argc_revset}" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")'
+              }
             '';
 
-            # Run a command at every revision in a revset
             # TODO: replace when `jj run` isn't a stub anymore
-            "run-job" = mkBashAlias "run-job" /* bash */ ''
+            "run-job" = mkArgcBashAlias "run-job" /* bash */ ''
               source ${jj-helpers-lib}
+
+              # @describe Run a command at every revision in a revset
+              # @meta require-tools jj,jq
 
               log_lit_command() {
                 printf '\x1b[1;32m$ %s\x1b[0m\n' "''${1}"
               }
 
-              main() {
+              # @cmd Run a command at every revision in a revset
+              # @arg revset! The revisions to operate on
+              # @arg command! The command to exec
+              # @arg args* Arguments to the command
+              # @meta default-subcommand
+              run-job() {
                 register_rollback_instructions
 
-                declare -r revset="$1"
-                declare -ra cmd=("''${@:2}")
+                declare -r revset="$argc_revset"
+                declare -ra cmd=("$argc_command" "''${argc_args[@]}")
                 change_ids "''${revset}" | while read -r rev; do
                   log_and_run jj edit "''${rev}"
 
@@ -180,30 +189,30 @@ in
                   log_and_run "''${cmd[@]}"
                 done
               }
-
-              [ $# -ge 2 ] || { echo "usage: jj run-job <revset> <command> <args>..."; exit 1; }
-
-              main "$@"
             '';
 
-            "flow" = mkBashAlias "flow" /* bash */ ''
+            "flow" = mkArgcBashAlias "flow" /* bash */ ''
               source ${jj-helpers-lib}
 
               # @describe Manage a branch-of-branches for a megamerge workflow
-              # @meta require-tools jj
+              # @meta require-tools jj,jq
+
+              # @cmd Manage a branch-of-branches for a megamerge workflow
+              # @meta default-subcommand
+              flow() { :; }
 
               # @cmd Move to the tip of the flow
-              tip() {
+              flow::tip() {
                 log_and_run jj new 'bookmarks(exact:"flow")'
               }
 
               # @cmd Manage the set of changes managed by the flow
               # @alias change,c
-              changes() { :; }
+              flow::changes() { :; }
 
               # @cmd Add a revision to the changes managed by the flow
               # @arg revset! The revision to add
-              changes::add() {
+              flow::changes::add() {
                 register_rollback_instructions
 
                 local flow
@@ -224,7 +233,7 @@ in
               # @cmd Remove a revision from the changes managed by the flow
               # @alias rm
               # @arg revset! The revision to remove
-              changes::remove() {
+              flow::changes::remove() {
                 register_rollback_instructions
 
                 local num_parents flow_empty
@@ -255,24 +264,22 @@ in
               # @alias mv
               # @arg old! The revision to remove
               # @arg new! The revision to add
-              changes::move() {
+              flow::changes::move() {
                 register_rollback_instructions
                 log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
               }
 
               # @cmd Rebase all changes managed by the flow onto a destination
               # @arg destination! Revision of the new base for changes
-              rebase() {
+              flow::rebase() {
                 register_rollback_instructions
                 log_and_run jj rebase --source 'all:roots(('"$argc_destination"')..bookmarks(exact:"flow"))' --destination "$argc_destination"
               }
 
               # @cmd Push all flow-managed branches
-              push() {
+              flow::push() {
                 log_and_run jj git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow"))'
               }
-
-              eval "$(${pkgs.argc}/bin/argc --argc-eval "$0" "$@")"
             '';
           };
 
