@@ -98,6 +98,15 @@ run-job() {
     done
 }
 
+# @cmd Run pre-commit on the files changed in the specified revisions
+# @arg revset=@ The revisions for which the changed files in them should be run against pre-commit
+pre-commit() {
+    local _files
+    _files="$(jj log --revisions "${argc_revset}" --no-graph --template 'diff.files().map(|x| stringify(x.path()).escape_json())' | jq --null-input --raw-output '[inputs] | sort | unique | @sh')"
+    declare -a files="(${_files})"
+    command pre-commit run --files "${files[@]}"
+}
+
 # @cmd Manage a branch-of-branches for a megamerge workflow
 flow() { :; }
 

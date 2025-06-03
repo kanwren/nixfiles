@@ -75,6 +75,7 @@ in
             "commit-id" = mkHelpersAlias "commit-id";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
             "run-job" = mkHelpersAlias "run-job";
+            "pre-commit" = mkHelpersAlias "pre-commit";
             "flow" = mkHelpersAlias "flow";
           };
 
