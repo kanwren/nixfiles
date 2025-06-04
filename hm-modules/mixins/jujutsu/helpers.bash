@@ -128,6 +128,8 @@ flow::changes::add() {
         flow_commit="$(change_id '('"$new_children"') ~ ('"$old_children"')')"
         log_and_run jj bookmark create flow --revision "$flow_commit"
     fi
+
+    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
 }
 
 # @cmd Remove a revision from the changes managed by the flow
@@ -158,6 +160,7 @@ flow::changes::remove() {
 
     # Otherwise, just remove the given parents
     log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_revset"')'
+    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
 }
 
 # @cmd Move a change managed by the flow to a different revision
@@ -167,6 +170,7 @@ flow::changes::remove() {
 flow::changes::move() {
     register_rollback_instructions
     log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
+    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
 }
 
 # @cmd Rebase all changes managed by the flow onto a destination
