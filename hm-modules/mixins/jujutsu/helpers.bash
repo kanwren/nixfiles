@@ -59,6 +59,21 @@ log_and_run() {
     "$@"
 }
 
+# @cmd Modify the descriptions for a changeset
+# @arg expr! A structural regular expression with which to modify descriptions
+# @arg revset=@ The revision(s) whose revisions should be changed
+reword() {
+    register_rollback_instructions
+
+    declare -r revset="$argc_revset"
+    change_ids "$revset" | while read -r rev; do
+        printf 'rewording \x1b[1;33m%s\x1b[0m...\n' "${rev}"
+        old_desc="$(jj log --revisions "$rev" --no-graph --template 'description')"
+        new_desc="$(echo "$old_desc" | sregx "$argc_expr")"
+        echo "$new_desc" | jj describe "$rev" --stdin
+    done
+}
+
 # @cmd List change IDs of changes in a revset
 # @arg revset=@ The revision(s) to analyze
 change-id() {

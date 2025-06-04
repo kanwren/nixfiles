@@ -72,6 +72,7 @@ in
           {
             "ui" = mkExecAlias "${pkgs.jj-fzf}/bin/jj-fzf" [ ];
             "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
+            "reword" = mkHelpersAlias "reword";
             "change-id" = mkHelpersAlias "change-id";
             "commit-id" = mkHelpersAlias "commit-id";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
