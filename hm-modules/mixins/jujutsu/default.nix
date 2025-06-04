@@ -6,7 +6,8 @@ let
   jj-helpers =
     let
       helpersScript = pkgs.replaceVars ./helpers.bash {
-        inherit (pkgs) jujutsu;
+        jj = "${pkgs.jujutsu}/bin/jj";
+        jq = "${pkgs.jq}/bin/jq";
       };
       helpersBash = pkgs.writers.writeBashBin "jj" helpersScript;
       helpersArgcBuilt = pkgs.runCommandNoCC "argc-build-jj-helpers" { nativeBuildInputs = [ pkgs.coreutils pkgs.argc ]; } ''

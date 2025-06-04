@@ -6,7 +6,11 @@
 shopt -s -o errexit nounset pipefail
 
 jj() {
-    @jujutsu@/bin/jj "$@"
+    @jj@ "$@"
+}
+
+jq() {
+    @jq@ "$@"
 }
 
 change_ids() {
