@@ -272,11 +272,13 @@ in
             "jl" = "jj log";
             "jlr" = "jj log --revisions";
             "jm" = "jj simplify-parents";
+            "jmr" = "jj simplify-parents --revisions";
             "jn" = "jj new";
             "jna" = "jj new --no-edit --insert-after";
             "jnb" = "jj new --no-edit --insert-before";
             "jne" = "jj new --no-edit";
             "jnt" = "jj new 'trunk()'";
+            "jol" = "jj operation log";
             "jop" = "jj operation";
             "jor" = "jj operation restore";
             "jos" = "jj operation show";
