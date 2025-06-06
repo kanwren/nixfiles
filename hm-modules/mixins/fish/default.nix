@@ -294,6 +294,7 @@ in
             "jv" = "jj parallelize";
             "jw" = "jj flow";
             "jwca" = "jj flow changes add";
+            "jwcc" = "jj flow changes clean-empty";
             "jwcm" = "jj flow changes move";
             "jwcr" = "jj flow changes remove";
             "jwp" = "jj flow push";

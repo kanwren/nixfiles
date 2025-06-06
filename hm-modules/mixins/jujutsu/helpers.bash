@@ -197,6 +197,14 @@ flow::changes::move() {
     log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
 }
 
+# @cmd Clean merged changes from flow tracking post-rebase
+# @alias clean
+flow::changes::clean-empty() {
+    register_rollback_instructions
+    log_and_run jj abandon 'trunk()..parents(bookmarks(exact:"flow")) ~ connected(trunk()..parents(bookmarks(exact:"flow")) ~ empty())'
+    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
+}
+
 # @cmd Rebase all changes managed by the flow onto a destination
 # @arg destination! Revision of the new base for changes
 flow::rebase() {
