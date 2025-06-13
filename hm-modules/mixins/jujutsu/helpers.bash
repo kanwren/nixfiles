@@ -89,7 +89,7 @@ commit-id() {
 # @cmd List names of bookmarks pointing to changes in a revset
 # @arg revset=@ The revision(s) to analyze
 bookmark-names() {
-    jj log --ignore-working-copy --revisions "$argc_revset" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")'
+    jj log --ignore-working-copy --revisions "$argc_revset" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u
 }
 
 log_lit_command() {
