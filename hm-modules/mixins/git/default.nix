@@ -22,6 +22,8 @@ in
       ignores = [
         "tags"
         ".direnv/"
+        ".claude/"
+        "CLAUDE.local.md"
       ];
 
       aliases = {
