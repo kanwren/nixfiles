@@ -59,6 +59,14 @@ log_and_run() {
     "$@"
 }
 
+# @cmd Print the description of a change
+# @arg revset=@ The revision to describe
+description() {
+    local id
+    id="$(change_id "$argc_revset")"
+    jj log --ignore-working-copy --revisions "$id" --no-graph --template 'description'
+}
+
 # @cmd Modify the descriptions for a changeset
 # @arg expr! A structural regular expression with which to modify descriptions
 # @arg revset=@ The revision(s) whose revisions should be changed

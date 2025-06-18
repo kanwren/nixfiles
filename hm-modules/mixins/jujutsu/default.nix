@@ -75,6 +75,7 @@ in
             "reword" = mkHelpersAlias "reword";
             "change-id" = mkHelpersAlias "change-id";
             "commit-id" = mkHelpersAlias "commit-id";
+            "description" = mkHelpersAlias "description";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
             "run-job" = mkHelpersAlias "run-job";
             "pre-commit" = mkHelpersAlias "pre-commit";
