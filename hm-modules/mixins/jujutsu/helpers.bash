@@ -27,10 +27,6 @@ change_id() {
     printf '%s\n' "$ids"
 }
 
-description() {
-    jj log --ignore-working-copy --revisions "$1" --no-graph --template 'description'
-}
-
 revset() {
     change_ids "$1" | jq --null-input --raw-input --raw-output '
         [inputs] | if length == 0 then "none()" else join("|") end
@@ -65,6 +61,14 @@ description() {
     local id
     id="$(change_id "$argc_revset")"
     jj log --ignore-working-copy --revisions "$id" --no-graph --template 'description'
+}
+
+# @cmd Print the first line of a description of a change
+# @arg revset=@ The revision to describe
+first-line() {
+    local id
+    id="$(change_id "$argc_revset")"
+    jj log --ignore-working-copy --revisions "$id" --no-graph --template 'description.first_line()'
 }
 
 # @cmd Modify the descriptions for a changeset
