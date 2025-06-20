@@ -24,12 +24,11 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.attrsets.mergeAttrsList [
-    {
-      home.packages = [ pkgs.kubectl ];
-    }
-    (lib.mkIf cfg.kubie.enable {
-      programs.kubie = {
+  config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.kubectl ];
+
+    programs = {
+      kubie = lib.mkIf cfg.kubie.enable {
         enable = true;
         settings = {
           prompt = {
@@ -37,9 +36,27 @@ in
           };
         };
       };
-    })
-    (lib.mkIf cfg.k9s.enable {
-      programs.k9s = {
+
+      fish.shellAbbrs = lib.mkIf config.programs.fish.enable (lib.attrsets.mergeAttrsList [
+        {
+          "k" = "kubectl";
+          "kaf" = "kubectl apply --filename";
+          "kc" = "kubie ctx";
+          "kn" = "kubie ns";
+          "kcc" = "kubectl config current-context";
+          "kcp" = "kubectl cp";
+          "kcu" = "kubectl config unset current-context";
+          "kd" = "kubectl describe";
+          "krm" = "kubectl delete";
+          "ked" = "kubectl edit";
+          "kg" = "kubectl get";
+          "kl" = "kubectl logs";
+          "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
+          "kx" = "kubectl exec --stdin=true --tty=true";
+        }
+      ]);
+
+      k9s = lib.mkIf cfg.k9s.enable {
         enable = true;
         plugin.plugins = {
           editjson = {
@@ -102,25 +119,8 @@ in
           };
         };
       };
-    })
-    (lib.mkIf config.programs.fish.enable {
-      programs.fish.shellAbbrs = {
-        "k" = "kubectl";
-        "kaf" = "kubectl apply --filename";
-        "kc" = "kubie ctx";
-        "kn" = "kubie ns";
-        "kcc" = "kubectl config current-context";
-        "kcp" = "kubectl cp";
-        "kcu" = "kubectl config unset current-context";
-        "kd" = "kubectl describe";
-        "krm" = "kubectl delete";
-        "ked" = "kubectl edit";
-        "kg" = "kubectl get";
-        "kl" = "kubectl logs";
-        "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
-        "kx" = "kubectl exec --stdin=true --tty=true";
-      };
-    })
-  ]);
+    };
+
+  };
 }
 
