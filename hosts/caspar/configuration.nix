@@ -497,6 +497,8 @@ in
           "/tags"
           ".jj"
           ".direnv/"
+          ".claude/"
+          "CLAUDE.local.md"
         ];
       };
 
