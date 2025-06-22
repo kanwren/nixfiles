@@ -10,6 +10,10 @@ nix-darwin.lib.darwinSystem {
 
   modules = [
     {
+      system.configurationRevision = self.rev or self.dirtyRev or null;
+    }
+
+    {
       nix.registry.nixpkgs.to = { type = "path"; path = nixpkgs.outPath; };
       nix.nixPath = nixpkgs.lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
       nixpkgs.overlays = [ self.overlays.default ];
