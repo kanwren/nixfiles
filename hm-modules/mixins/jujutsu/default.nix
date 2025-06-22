@@ -4,18 +4,22 @@ let
   cfg = config.mixins.jujutsu;
 
   jj-helpers =
-    let
-      helpersScript = pkgs.replaceVars ./helpers.bash {
-        jj = "${pkgs.jujutsu}/bin/jj";
-        jq = "${pkgs.jq}/bin/jq";
-      };
-      helpersBash = pkgs.writers.writeBashBin "jj" helpersScript;
-      helpersArgcBuilt = pkgs.runCommandNoCC "argc-build-jj-helpers" { nativeBuildInputs = [ pkgs.coreutils pkgs.argc ]; } ''
-        orig=${lib.strings.escapeShellArg (lib.getExe helpersBash)}
+    pkgs.runCommandNoCC
+      "argc-build-jj-helpers"
+      {
+        nativeBuildInputs = [ pkgs.coreutils pkgs.argc ];
+        meta.mainProgram = "jj";
+      }
+      ''
+        orig=${
+          let helpers = pkgs.replaceVars ./helpers.bash {
+            jj = "${pkgs.jujutsu}/bin/jj";
+            jq = "${pkgs.jq}/bin/jq";
+          };
+          in lib.strings.escapeShellArg (lib.getExe (pkgs.writers.writeBashBin "jj" helpers))
+        }
         argc --argc-build "$orig" "$out/bin/$(basename "$orig")"
       '';
-    in
-    "${helpersArgcBuilt}/bin/jj";
 in
 {
   options.mixins.jujutsu.enable = lib.mkOption {
@@ -67,10 +71,10 @@ in
         aliases =
           let
             mkExecAlias = program: args: [ "util" "exec" "--" program ] ++ args;
-            mkHelpersAlias = subcommandName: mkExecAlias jj-helpers [ subcommandName ];
+            mkHelpersAlias = subcommandName: mkExecAlias (lib.getExe' jj-helpers "jj") [ subcommandName ];
           in
           {
-            "ui" = mkExecAlias "${pkgs.jj-fzf}/bin/jj-fzf" [ ];
+            "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [ ];
             "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
             "reword" = mkHelpersAlias "reword";
             "change-id" = mkHelpersAlias "change-id";
