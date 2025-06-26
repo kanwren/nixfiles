@@ -244,6 +244,7 @@ in
             "jbf" = "jj bookmark forget";
             "jbl" = "jj bookmark list";
             "jbm" = "jj bookmark move";
+            "jbn" = "jj bookmark-names";
             "jbr" = "jj bookmark rename";
             "jbs" = "jj bookmark set";
             "jbt" = "jj bookmark track";
@@ -268,6 +269,7 @@ in
             "jgf" = "jj git fetch";
             "jgi" = "jj git init";
             "jgp" = "jj git push";
+            "jid" = "jj id";
             "jk" = "jj abandon";
             "jl" = "jj log";
             "jlr" = "jj log --revisions";
