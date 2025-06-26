@@ -77,8 +77,7 @@ in
             "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [ ];
             "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
             "reword" = mkHelpersAlias "reword";
-            "change-id" = mkHelpersAlias "change-id";
-            "commit-id" = mkHelpersAlias "commit-id";
+            "id" = mkHelpersAlias "id";
             "description" = mkHelpersAlias "description";
             "first-line" = mkHelpersAlias "first-line";
             "bookmark-names" = mkHelpersAlias "bookmark-names";

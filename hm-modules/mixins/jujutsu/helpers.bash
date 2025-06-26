@@ -86,16 +86,13 @@ reword() {
     done
 }
 
-# @cmd List change IDs of changes in a revset
+# @cmd List change or commit IDs of changes in a revset
 # @arg revset=@ The revision(s) to analyze
-change-id() {
-    jj log --ignore-working-copy --revisions "$argc_revset" --reversed --no-graph --template 'change_id ++ "\n"'
-}
-
-# @cmd List commit IDs of changes in a revset
-# @arg revset=@ The revision(s) to analyze
-commit-id() {
-    jj log --ignore-working-copy --revisions "$argc_revset" --reversed --no-graph --template 'commit_id ++ "\n"'
+# @flag -c --commit Output commit IDs instead of change IDs
+id() {
+    local template="change_id"
+    [ "${argc_commit-}" = 1 ] && template="commit_id"
+    jj log --ignore-working-copy --revisions "$argc_revset" --reversed --no-graph --template "$template"' ++ "\n"'
 }
 
 # @cmd List names of bookmarks pointing to changes in a revset
