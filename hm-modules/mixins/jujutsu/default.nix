@@ -13,8 +13,9 @@ let
       ''
         orig=${
           let helpers = pkgs.replaceVars ./helpers.bash {
-            jj = "${pkgs.jujutsu}/bin/jj";
-            jq = "${pkgs.jq}/bin/jq";
+            jj = lib.getExe pkgs.jujutsu;
+            jq = lib.getExe pkgs.jq;
+            sed = lib.getExe pkgs.gnused;
           };
           in lib.strings.escapeShellArg (lib.getExe (pkgs.writers.writeBashBin "jj" helpers))
         }

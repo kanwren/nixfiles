@@ -13,6 +13,10 @@ jq() {
     @jq@ "$@"
 }
 
+sed() {
+    @sed@ "$@"
+}
+
 change_ids() {
     jj log --ignore-working-copy --revisions "$1" --reversed --no-graph --template 'change_id.short() ++ "\n"'
 }
@@ -81,7 +85,7 @@ reword() {
     change_ids "$revset" | while read -r rev; do
         printf 'rewording \x1b[1;33m%s\x1b[0m...\n' "${rev}"
         old_desc="$(jj log --revisions "$rev" --no-graph --template 'description')"
-        new_desc="$(echo "$old_desc" | sregx "$argc_expr")"
+        new_desc="$(echo "$old_desc" | sed "$argc_expr")"
         echo "$new_desc" | jj describe "$rev" --stdin
     done
 }
