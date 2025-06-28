@@ -58,7 +58,7 @@ in
 
       k9s = lib.mkIf cfg.k9s.enable {
         enable = true;
-        plugin.plugins = {
+        plugins.plugins = {
           editjson = {
             shortCut = "Shift-E";
             description = "Edit as JSON";
