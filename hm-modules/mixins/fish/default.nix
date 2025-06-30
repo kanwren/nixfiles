@@ -24,7 +24,7 @@ in
         # set prompt to '; '
         function fish_prompt
           test $status = 0; and set_color --bold green; or set_color --bold red
-          printf '; '
+          printf '$ '
           set_color normal
         end
 
