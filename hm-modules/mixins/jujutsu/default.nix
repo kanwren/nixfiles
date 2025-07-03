@@ -46,7 +46,7 @@ in
           paginate = "auto";
           default-command = "worklog";
           diff-editor = ":builtin";
-          diff.tool = "difftastic";
+          diff-formatter = "difftastic";
           merge-editor = "vimdiff";
         };
 
