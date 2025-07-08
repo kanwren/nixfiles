@@ -36,7 +36,7 @@ caspar-system:
 
 # Run a darwin-rebuild command on caspar
 caspar command="build": caspar-system
-    {{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#caspar' {{ quote(command) }}
+    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#caspar' {{ quote(command) }}
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
 update-inputs:
