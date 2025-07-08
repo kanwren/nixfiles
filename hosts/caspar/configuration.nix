@@ -16,6 +16,8 @@ in
   };
 
   system = {
+    primaryUser = "wrenn";
+
     keyboard = {
       enableKeyMapping = true;
       userKeyMapping =
