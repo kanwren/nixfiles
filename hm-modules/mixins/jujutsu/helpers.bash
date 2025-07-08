@@ -48,7 +48,7 @@ escape() {
 register_rollback_instructions() {
     local op
     op="$(jj operation log --no-graph --template 'if(self.current_operation(), self.id().short(), "")')"
-    trap 'printf '"'"'\x1b[1;33mTo roll back these changes, run:\x1b[0m\n\t\x1b[1;32mjj operation restore %s\x1b[0m\n'"'"' "'"$op"'"' EXIT
+    trap '[ "$(jj operation log --no-graph --template '"'"'if(self.current_operation(), self.id().short(), "")'"'"')" = "'"$op"'" ] || printf '"'"'\x1b[1;33mTo roll back these changes, run:\x1b[0m\n\t\x1b[1;32mjj operation restore %s\x1b[0m\n'"'"' "'"$op"'"' EXIT
 }
 
 log_and_run() {
