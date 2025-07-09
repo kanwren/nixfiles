@@ -145,7 +145,6 @@ in
       pkgs.tz
       ## Docker/Kubernetes
       pkgs.dive
-      pkgs.kubernetes-helm
       pkgs.skopeo
       ## AWS
       pkgs.awscli2

@@ -25,7 +25,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.kubectl ];
+    home.packages = [
+      pkgs.kubectl
+      pkgs.kubernetes-helm
+      pkgs.kustomize
+      pkgs.kind
+      pkgs.ctlptl
+      pkgs.tilt
+    ];
 
     programs = {
       kubie = lib.mkIf cfg.kubie.enable {
@@ -120,7 +127,5 @@ in
         };
       };
     };
-
   };
 }
-
