@@ -336,6 +336,168 @@ in
         };
       };
 
+      programs = {
+        h = {
+          codeRoot = "$HOME/Development/code";
+        };
+
+        go = {
+          enable = true;
+          package = pkgs.go_latest;
+          goPath = "Development/go";
+        };
+
+        kitty = {
+          enable = true;
+          package = pkgs.kitty.overrideAttrs { doInstallCheck = false; };
+          extraConfig = builtins.readFile ./kitty.conf;
+          shellIntegration.mode = "enabled";
+        };
+
+        git = {
+          enable = true;
+          userName = "Nicole Wren";
+          userEmail = "wrenn@squareup.com";
+          signing = {
+            signByDefault = true;
+            key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
+          };
+          aliases = {
+            s = "status";
+            cane = "commit --amend --no-edit";
+            amend = "commit --amend";
+            diffc = "diff --cached";
+            conflicts = "diff --name-status --diff-filter=U";
+            ff = "merge --ff-only";
+            rh = "reset --hard";
+            ri = "rebase --interactive";
+            ls = "log --oneline";
+            lr = "log --left-right --graph --oneline";
+            graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
+            changed = "show --name-status --oneline";
+            mkexec = "update-index --chmod=+x";
+            root = "rev-parse --show-toplevel";
+            ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
+
+            alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
+            ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+          };
+          extraConfig = {
+            credential = {
+              helper = "osxkeychain";
+            };
+            gist = {
+              private = true;
+            };
+            core = {
+              editor = "nvim";
+              autocrlf = false;
+            };
+            color = {
+              diff = "auto";
+              status = "auto";
+              branch = "auto";
+              interactive = "auto";
+            };
+            column = {
+              ui = "auto";
+            };
+            log = {
+              mailmap = true;
+            };
+            init = {
+              defaultBranch = "main";
+            };
+            branch = {
+              sort = "-committerdate";
+              autosetupmerge = true;
+            };
+            tag = {
+              sort = "version:refname";
+            };
+            filter.lfs = {
+              clean = "git-lfs clean -- %f";
+              smudge = "git-lfs smudge -- %f";
+              process = "git-lfs filter-process";
+              required = true;
+            };
+            rerere = {
+              enabled = true;
+              autoupdate = true;
+            };
+            commit = {
+              verbose = true;
+            };
+            fetch = {
+              prune = true;
+              pruneTags = true;
+              all = true;
+            };
+            pull = {
+              ff = "only";
+            };
+            push = {
+              default = "simple";
+              autoSetupRemote = true;
+              followTags = true;
+            };
+            diff = {
+              algorithm = "histogram";
+              tool = "nvimdiff";
+              renames = true;
+              indentHeuristic = "on";
+              colorMoved = "plain";
+              mnemonicPrefix = true;
+            };
+            difftool = {
+              prompt = false;
+            };
+            rebase = {
+              autoSquash = true;
+              autoStash = true;
+              updateRefs = true;
+            };
+            merge = {
+              summary = true;
+              tool = "nvimdiff";
+              conflictstyle = "zdiff3";
+            };
+            mergetool = {
+              prompt = false;
+              keepBackup = false;
+            };
+            advice = {
+              addEmptyPathspec = false;
+            };
+          };
+          ignores = [
+            "*.iml"
+            "*.swp"
+            "*.swo"
+            ".bundle"
+            ".DS_Store"
+            ".idea"
+            ".rbx"
+            "node_modules"
+            "/tags"
+            ".jj"
+            ".direnv/"
+            ".claude/"
+            "CLAUDE.local.md"
+          ];
+        };
+
+        jujutsu.settings = {
+          user.email = "wrenn@squareup.com";
+          signing = {
+            behavior = "own";
+            backend = "gpg";
+            key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
+          };
+          git.push-bookmark-prefix = "wrenn/";
+        };
+      };
+
       xdg.configFile = builtins.foldl' (acc: as: acc // as) { } [
         {
           # aerospace configuration
@@ -344,179 +506,25 @@ in
 
         (
           let
-            extra-fish-completions = lib.mapAttrs' (name: value: { name = "fish/completions/${name}.fish"; value = value; }) {
-              use-java.source = pkgs.writeText "use-java" ''
-                complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
-              '';
-              aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
-              # Docker is installed externally; add completions manually.
-              docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
-              jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
-            };
+            extra-fish-completions =
+              lib.mapAttrs'
+                (name: value: {
+                  name = "fish/completions/${name}.fish";
+                  inherit value;
+                })
+                {
+                  use-java.source = pkgs.writeText "use-java" ''
+                    complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
+                  '';
+                  aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
+                  # Docker is installed externally; add completions manually.
+                  docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+                  jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
+                };
           in
           extra-fish-completions
         )
       ];
-
-      programs.h = {
-        codeRoot = "$HOME/Development/code";
-      };
-
-      programs.go = {
-        enable = true;
-        package = pkgs.go_latest;
-        goPath = "Development/go";
-      };
-
-      programs.kitty = {
-        enable = true;
-        package = pkgs.kitty.overrideAttrs { doInstallCheck = false; };
-        extraConfig = builtins.readFile ./kitty.conf;
-        shellIntegration.mode = "enabled";
-      };
-
-      programs.git = {
-        enable = true;
-        userName = "Nicole Wren";
-        userEmail = "wrenn@squareup.com";
-        signing = {
-          signByDefault = true;
-          key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
-        };
-        aliases = {
-          s = "status";
-          cane = "commit --amend --no-edit";
-          amend = "commit --amend";
-          diffc = "diff --cached";
-          conflicts = "diff --name-status --diff-filter=U";
-          ff = "merge --ff-only";
-          rh = "reset --hard";
-          ri = "rebase --interactive";
-          ls = "log --oneline";
-          lr = "log --left-right --graph --oneline";
-          graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
-          changed = "show --name-status --oneline";
-          mkexec = "update-index --chmod=+x";
-          root = "rev-parse --show-toplevel";
-          ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
-
-          alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-          ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
-        };
-        extraConfig = {
-          credential = {
-            helper = "osxkeychain";
-          };
-          gist = {
-            private = true;
-          };
-          core = {
-            editor = "nvim";
-            autocrlf = false;
-          };
-          color = {
-            diff = "auto";
-            status = "auto";
-            branch = "auto";
-            interactive = "auto";
-          };
-          column = {
-            ui = "auto";
-          };
-          log = {
-            mailmap = true;
-          };
-          init = {
-            defaultBranch = "main";
-          };
-          branch = {
-            sort = "-committerdate";
-            autosetupmerge = true;
-          };
-          tag = {
-            sort = "version:refname";
-          };
-          filter.lfs = {
-            clean = "git-lfs clean -- %f";
-            smudge = "git-lfs smudge -- %f";
-            process = "git-lfs filter-process";
-            required = true;
-          };
-          rerere = {
-            enabled = true;
-            autoupdate = true;
-          };
-          commit = {
-            verbose = true;
-          };
-          fetch = {
-            prune = true;
-            pruneTags = true;
-            all = true;
-          };
-          pull = {
-            ff = "only";
-          };
-          push = {
-            default = "simple";
-            autoSetupRemote = true;
-            followTags = true;
-          };
-          diff = {
-            algorithm = "histogram";
-            tool = "nvimdiff";
-            renames = true;
-            indentHeuristic = "on";
-            colorMoved = "plain";
-            mnemonicPrefix = true;
-          };
-          difftool = {
-            prompt = false;
-          };
-          rebase = {
-            autoSquash = true;
-            autoStash = true;
-            updateRefs = true;
-          };
-          merge = {
-            summary = true;
-            tool = "nvimdiff";
-            conflictstyle = "zdiff3";
-          };
-          mergetool = {
-            prompt = false;
-            keepBackup = false;
-          };
-          advice = {
-            addEmptyPathspec = false;
-          };
-        };
-        ignores = [
-          "*.iml"
-          "*.swp"
-          "*.swo"
-          ".bundle"
-          ".DS_Store"
-          ".idea"
-          ".rbx"
-          "node_modules"
-          "/tags"
-          ".jj"
-          ".direnv/"
-          ".claude/"
-          "CLAUDE.local.md"
-        ];
-      };
-
-      programs.jujutsu.settings = {
-        user.email = "wrenn@squareup.com";
-        signing = {
-          behavior = "own";
-          backend = "gpg";
-          key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
-        };
-        git.push-bookmark-prefix = "wrenn/";
-      };
     };
   };
 }
