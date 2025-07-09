@@ -80,6 +80,7 @@ in
       pkgs.nix-index
       pkgs.nix-tree
       pkgs.nix-diff
+      pkgs.comma
 
       # CLI/TUI utils
       pkgs.gnugrep
@@ -88,6 +89,7 @@ in
       pkgs.coreutils
       pkgs.diffutils
       pkgs.findutils
+      pkgs.parallel
       pkgs.patch
       pkgs.netcat
       pkgs.socat
@@ -105,7 +107,9 @@ in
       pkgs.eza
       pkgs.bat
       pkgs.bat-extras.core
+      pkgs.tmux
       pkgs.fzf
+      pkgs.sd
       pkgs.fd
       pkgs.rsync
       pkgs.gitAndTools.gitFull
@@ -138,6 +142,7 @@ in
       pkgs.zstd
       pkgs.unar
       ## data and manipulation
+      pkgs.dyff
       pkgs.yq-go
       pkgs.crudini
       pkgs.sqlite
