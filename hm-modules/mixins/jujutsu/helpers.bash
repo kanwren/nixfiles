@@ -227,5 +227,5 @@ flow::rebase() {
 
 # @cmd Push all flow-managed branches
 flow::push() {
-    log_and_run jj git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow"))'
+    log_and_run jj git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow")) ~ conflicts()'
 }
