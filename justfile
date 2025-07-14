@@ -31,6 +31,14 @@ hecate command="build": hecate-system
     {{ if command =~ "^(boot|switch|test|dry-activate)$" { "sudo " } else { "" } }}nixos-rebuild --flake '.#hecate' {{ quote(command) }}
 
 [private]
+birdbox-system:
+    {{ nix_command }} build --no-link --print-out-paths '.#nixosConfigurations.birdbox.config.system.build.toplevel'
+
+# Run a nixos-rebuild command on birdbox
+birdbox command="build": birdbox-system
+    {{ if command =~ "^(boot|switch|test|dry-activate)$" { "sudo " } else { "" } }}nixos-rebuild --flake '.#birdbox' {{ quote(command) }}
+
+[private]
 caspar-system:
     {{ nix_command }} build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'
 
