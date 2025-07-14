@@ -80,6 +80,16 @@
   };
 
   services = {
+    logind = {
+      lidSwitch = "suspend";
+      lidSwitchExternalPower = "ignore";
+      lidSwitchDocked = "ignore";
+      extraConfig = ''
+        IdleAction=ignore
+        HandlePowerKey=ignore
+      '';
+    };
+
     pipewire = {
       enable = true;
       pulse.enable = true;
