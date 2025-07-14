@@ -41,6 +41,15 @@
       url = "github:nmattia/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
 
   outputs =
@@ -54,6 +63,8 @@
     , catppuccin
     , fenix
     , naersk
+    , disko
+    , impermanence
     }:
     let
       defaultSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
@@ -73,6 +84,10 @@
       nixosConfigurations = {
         hecate = import ./hosts/hecate/host.nix {
           inherit self nixpkgs home-manager nixos-hardware sops-nix catppuccin;
+        };
+
+        birdbox = import ./hosts/birdbox/host.nix {
+          inherit self nixpkgs home-manager nixos-hardware sops-nix disko impermanence;
         };
       };
 

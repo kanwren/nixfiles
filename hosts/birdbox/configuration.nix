@@ -1,0 +1,163 @@
+{ config, lib, pkgs, ... }:
+
+{
+  imports = [
+    ./disks.nix
+    ./impermanence.nix
+    ./users/default.nix
+  ];
+
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    tmp.cleanOnBoot = true;
+
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+  };
+
+  system = {
+    autoUpgrade.enable = false;
+  };
+
+  nix = {
+    settings = {
+      keep-outputs = true;
+      keep-derivations = true;
+      trusted-users = [ "root" "wren" ];
+    };
+  };
+
+  nixpkgs = {
+    config.allowUnfree = true;
+  };
+
+  networking = {
+    networkmanager.enable = true;
+    firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
+  };
+
+  time = {
+    timeZone = "America/Los_Angeles";
+  };
+
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+  };
+
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
+  security = {
+    sudo = {
+      extraConfig = ''
+        Defaults lecture = never
+      '';
+    };
+  };
+
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+
+    nix-ld = {
+      enable = true;
+    };
+
+    fuse = {
+      userAllowOther = true;
+    };
+
+    fish = {
+      enable = true;
+    };
+  };
+
+  services = {
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+
+    libinput.enable = true;
+
+    openssh = {
+      enable = true;
+      allowSFTP = true;
+      settings = {
+        PermitRootLogin = "prohibit-password";
+        PasswordAuthentication = false;
+      };
+    };
+
+    tailscale = {
+      enable = true;
+      useRoutingFeatures = "both";
+      extraUpFlags = [
+        "--ssh"
+        "--advertise-exit-node"
+      ];
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    patchelf
+    nix-index
+    nixpkgs-fmt
+    binutils-unwrapped
+    moreutils
+    usbutils
+    pciutils
+    dnsutils
+    findutils
+    findutils.locate
+    zlib
+    parallel
+    bat
+    bat-extras.core
+    ripgrep
+    fd
+    sd
+    eza
+    fzf
+    wget
+    curl
+    sshfs
+    git
+    whois
+    man-pages
+    tree
+    file
+    xxd
+    gnutar
+    gzip
+    bzip2
+    zip
+    unzip
+    xz
+    unrar
+    unar
+    bc
+    libqalculate
+    openssl
+    mkpasswd
+    gnupg
+    neovim
+  ];
+
+  users = {
+    mutableUsers = true;
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+}
+
