@@ -10,7 +10,6 @@
       "wheel"
     ];
     createHome = true;
-    openssh.authorizedKeys.keys = [ ];
-    packages = [];
+    packages = [ ];
   };
 }
