@@ -66,6 +66,10 @@ log_and_run() {
     "$@"
 }
 
+log_lit_command() {
+    printf '\x1b[1;32m$ %s\x1b[0m\n' "${1}"
+}
+
 # @cmd Print the description of a change
 # @arg revset=@ The revision to describe
 description() {
@@ -83,16 +87,24 @@ subject() {
 }
 
 # @cmd Modify the descriptions for a changeset
-# @arg expr! A structural regular expression with which to modify descriptions
-# @arg revset=@ The revision(s) whose revisions should be changed
+# @arg revset! The revision(s) whose revisions should be changed
+# @arg filter! A sed program with which to modify descriptions
 reword() {
     register_rollback_instructions
 
-    declare -r revset="$argc_revset"
+    local revset
+    revset="$argc_revset"
+
+    local filter escaped_filter
+    filter="$argc_filter"
+    escaped_filter="$(escape "$filter")"
+
+    local rev escaped_rev
     change_ids "$revset" | while read -r rev; do
-        printf 'rewording \x1b[1;33m%s\x1b[0m...\n' "${rev}"
+        escaped_rev="$(escape "$rev")"
+        log_lit_command 'jj log --revisions '"$escaped_rev"' --no-graph --template '"'"'description'"'"' | sed '"$escaped_filter"' | jj describe '"$escaped_rev"' --stdin'
         old_desc="$(jj log --revisions "$rev" --no-graph --template 'description')"
-        new_desc="$(echo "$old_desc" | sed "$argc_expr")"
+        new_desc="$(echo "$old_desc" | sed "$filter")"
         echo "$new_desc" | jj describe "$rev" --stdin
     done
 }
@@ -110,10 +122,6 @@ id() {
 # @arg revset=@ The revision(s) to analyze
 bookmark-names() {
     jj log --ignore-working-copy --revisions "$argc_revset" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u
-}
-
-log_lit_command() {
-    printf '\x1b[1;32m$ %s\x1b[0m\n' "${1}"
 }
 
 # @cmd Run a command at every revision in a revset
