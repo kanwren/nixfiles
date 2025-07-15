@@ -214,7 +214,7 @@ flow::changes::move() {
 # @alias clean
 flow::changes::clean-empty() {
     register_rollback_instructions
-    log_and_run jj abandon 'trunk()..parents(bookmarks(exact:"flow")) ~ connected(trunk()..parents(bookmarks(exact:"flow")) ~ empty())'
+    log_and_run jj abandon 'trunk()..parents(bookmarks(exact:"flow")) ~ descendants(trunk()..parents(bookmarks(exact:"flow")) ~ empty())'
     log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
 }
 
