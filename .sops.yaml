@@ -1,6 +1,7 @@
 keys:
   - &admin_wren 002937658A2F43138C3B267E339C3A5C672CEA46
   - &server_hecate age1876258czl0uvhzywdnsvn5gkhapc06xg8hxcwyqtrhp5xkphv5ksx7j03h
+  - &server_birdbox age1katxh5pva9vrhjs5rmz8sn9z2vakekl0zpf84k759m4708fugyqqjsvfq4
 creation_rules:
   - path_regex: hosts/hecate/secrets/.+$
     key_groups:
@@ -8,3 +9,9 @@ creation_rules:
         - *admin_wren
         age:
         - *server_hecate
+  - path_regex: hosts/birdbox/secrets/.+$
+    key_groups:
+      - pgp:
+        - *admin_wren
+        age:
+        - *server_birdbox

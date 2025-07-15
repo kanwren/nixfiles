@@ -43,10 +43,10 @@ nixpkgs.lib.nixosSystem {
       ];
     }
 
-    # sops-nix.nixosModules.sops
-    # {
-    #   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    # }
+    sops-nix.nixosModules.sops
+    {
+      sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    }
 
     (with nixos-hardware.nixosModules; [
       common-pc-laptop
