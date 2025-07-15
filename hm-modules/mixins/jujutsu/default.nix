@@ -94,7 +94,7 @@ in
           "vee(x, y)" = "fork_point(x | y) | (fork_point(x | y)..(x | y))";
 
           # work utilities
-          "named()" = "bookmarks() | remote_bookmarks() | tags() | trunk()";
+          "named()" = "bookmarks() | remote_bookmarks() | tags() | trunk() | @";
           "merged()" = "ancestors(named())";
           "unmerged()" = "~merged()";
 
