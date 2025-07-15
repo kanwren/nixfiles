@@ -23,9 +23,12 @@ in
       interactiveShellInit = ''
         # set prompt to '; '
         function fish_prompt
+          prompt_login
+          printf ' '
           test $status = 0; and set_color --bold green; or set_color --bold red
-          printf '$ '
+          printf '$'
           set_color normal
+          printf ' '
         end
 
         function fish_mode_prompt; end
