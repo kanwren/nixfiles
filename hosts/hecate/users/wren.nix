@@ -58,7 +58,7 @@
     programs.jujutsu.settings = {
       user.email = "nicole@wren.systems";
       signing = {
-        signing.behavior = "own";
+        behavior = "own";
         backend = "gpg";
         key = "002937658A2F43138C3B267E339C3A5C672CEA46";
       };
