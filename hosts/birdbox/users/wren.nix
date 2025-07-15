@@ -64,5 +64,9 @@
       zellij.enable = true;
       zoxide.enable = true;
     };
+
+    programs.jujutsu.settings = {
+      user.email = "nicole@wren.systems";
+    };
   };
 }
