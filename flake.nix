@@ -90,7 +90,7 @@
         };
 
         birdbox = import ./hosts/birdbox/host.nix {
-          inherit self nixpkgs home-manager nixos-hardware sops-nix disko impermanence;
+          inherit self nixpkgs home-manager nixos-hardware sops-nix disko impermanence catppuccin;
         };
       };
 

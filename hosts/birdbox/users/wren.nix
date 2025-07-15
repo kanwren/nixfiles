@@ -16,15 +16,20 @@
   home-manager.users.wren = {
     home = {
       stateVersion = "25.05";
+
       sessionPath = [ "$HOME/bin" ];
+
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
+
       packages = [ ];
+
       persistence."/persist/home/wren" = {
         allowOther = true;
         directories = [
+          "code"
           "Downloads"
           "Music"
           "Pictures"
@@ -34,9 +39,30 @@
           ".ssh"
           ".local/share/keyrings"
           ".local/share/direnv"
+          ".local/share/zoxide"
+          ".local/share/wd"
         ];
-        files = [ ];
+        files = [
+          ".local/share/fish/fish_history"
+          ".bash_history"
+        ];
       };
+    };
+
+    mixins = {
+      bash.enable = true;
+      btop.enable = true;
+      catppuccin.enable = true;
+      direnv.enable = true;
+      fish.enable = true;
+      git.enable = true;
+      gpg-agent.enable = true;
+      h.enable = true;
+      jq.enable = true;
+      jujutsu.enable = true;
+      nix.enable = true;
+      zellij.enable = true;
+      zoxide.enable = true;
     };
   };
 }

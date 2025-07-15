@@ -5,6 +5,7 @@
 , sops-nix
 , disko
 , impermanence
+, catppuccin
 }:
 
 let
@@ -30,6 +31,8 @@ nixpkgs.lib.nixosSystem {
         channel.enable = false;
         settings.nix-path = config.nix.nixPath;
       };
+
+      nixpkgs.overlays = [ self.overlays.default ];
     })
 
     disko.nixosModules.disko
@@ -40,6 +43,10 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.sharedModules = [
         impermanence.homeManagerModules.impermanence
+        catppuccin.homeModules.catppuccin
+        self.hmModules.h
+        self.hmModules.kubie
+        self.hmModules.mixins
       ];
     }
 
