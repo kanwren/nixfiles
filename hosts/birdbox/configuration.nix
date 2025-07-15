@@ -127,6 +127,7 @@
     dnsutils
     findutils
     findutils.locate
+    cifs-utils
     zlib
     parallel
     bat
