@@ -25,7 +25,11 @@ nixpkgs.lib.nixosSystem {
         settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
       };
 
-      nixpkgs.overlays = [ self.overlays.default ];
+      nixpkgs.overlays = [
+        self.overlays.default
+        # https://github.com/NixOS/nixpkgs/issues/424692
+        self.overlays.fix-open-webui
+      ];
     })
 
     home-manager.nixosModules.home-manager

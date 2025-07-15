@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +57,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-stable
     , home-manager
     , nix-darwin
     , nixos-hardware
@@ -106,6 +109,11 @@
         ];
 
         installers = final: prev: final.callPackages ./installers { inherit nixos-generators; };
+
+        fix-open-webui = final: prev: {
+          inherit (nixpkgs-stable.legacyPackages.${prev.system})
+            open-webui;
+        };
       } // import ./overlays;
 
       packages = forAllSystems (pkgs: {
