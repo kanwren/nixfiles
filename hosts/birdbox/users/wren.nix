@@ -37,6 +37,7 @@
           "Videos"
           ".gnupg"
           ".ssh"
+          ".terminfo"
           ".local/share/keyrings"
           ".local/share/direnv"
           ".local/share/zoxide"
