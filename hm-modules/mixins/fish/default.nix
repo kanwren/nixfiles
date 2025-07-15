@@ -40,8 +40,10 @@ in
           fish_prompt = {
             description = "a minimal prompt";
             body = ''
-              prompt_login
-              printf ' '
+              if set -q SSH_TTY
+                prompt_login
+                printf ' '
+              end
               test $status = 0; and set_color --bold green; or set_color --bold red
               printf '$'
               set_color normal
