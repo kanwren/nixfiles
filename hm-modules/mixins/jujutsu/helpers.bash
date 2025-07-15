@@ -69,7 +69,7 @@ description() {
 
 # @cmd Print the first line of a description of a change
 # @arg revset=@ The revision to describe
-first-line() {
+subject() {
     local id
     id="$(change_id "$argc_revset")"
     jj log --ignore-working-copy --revisions "$id" --no-graph --template 'description.first_line()'

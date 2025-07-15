@@ -80,7 +80,7 @@ in
             "reword" = mkHelpersAlias "reword";
             "id" = mkHelpersAlias "id";
             "description" = mkHelpersAlias "description";
-            "first-line" = mkHelpersAlias "first-line";
+            "subject" = mkHelpersAlias "subject";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
             "run-job" = mkHelpersAlias "run-job";
             "pre-commit" = mkHelpersAlias "pre-commit";
