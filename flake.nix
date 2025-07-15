@@ -101,7 +101,7 @@
       overlays = {
         default = nixpkgs.lib.composeManyExtensions [
           fenix.overlays.default
-          naersk.overlay
+          naersk.overlays.default
           (final: prev: import ./pkgs { pkgs = final; })
         ];
 
