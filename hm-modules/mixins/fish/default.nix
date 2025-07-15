@@ -21,21 +21,6 @@ in
       enable = true;
 
       interactiveShellInit = ''
-        # set prompt to '; '
-        function fish_prompt
-          prompt_login
-          printf ' '
-          test $status = 0; and set_color --bold green; or set_color --bold red
-          printf '$'
-          set_color normal
-          printf ' '
-        end
-
-        function fish_mode_prompt; end
-
-        # don't greet
-        function fish_greeting; end
-
         # use vi bindings
         fish_vi_key_bindings
 
@@ -43,12 +28,6 @@ in
         set --query fish_most_recent_dir
         and test -d "$fish_most_recent_dir"
         and cd "$fish_most_recent_dir"
-
-        function save_dir --on-variable PWD
-          set -U fish_most_recent_dir $PWD
-        end
-
-        bind -M insert \e\cb fzf_git_branch_widget
       '';
 
       functions =
@@ -58,6 +37,38 @@ in
           jq = "${pkgs.jq}/bin/jq";
         in
         {
+          fish_prompt = {
+            description = "a minimal prompt";
+            body = ''
+              prompt_login
+              printf ' '
+              test $status = 0; and set_color --bold green; or set_color --bold red
+              printf '$'
+              set_color normal
+              printf ' '
+            '';
+          };
+
+          fish_mode_prompt = {
+            description = "no mode prompt";
+            body = "";
+          };
+
+          fish_greeting = {
+            description = "no greeting";
+            body = "";
+          };
+
+          save_dir = {
+            description = "Save the current directory to a universal variable";
+            onVariable = "PWD";
+            body = ''
+              set -U fish_most_recent_dir $PWD
+            '';
+          };
+
+          # Misc shell utilities
+
           "=" = {
             description = "Yield the arguments";
             body = ''
@@ -67,7 +78,6 @@ in
             '';
           };
 
-          # Misc shell utilities
           _pfor_expand = {
             description = "Expand a pfor command";
             body = ''
@@ -133,6 +143,7 @@ in
           };
 
           # AWS CLI utility functions
+
           "asp" = {
             description = "Switch AWS profiles";
             body = ''
@@ -141,6 +152,7 @@ in
               set --global --export AWS_PROFILE $choice
             '';
           };
+
           "assume" = {
             description = "Assume an AWS role for a profile";
             body = ''
@@ -162,6 +174,7 @@ in
               printf 'Assumed role for profile %s\n' (string escape "$profile")
             '';
           };
+
           "unassume" = {
             description = "Un-assume an AWS role";
             body = ''
