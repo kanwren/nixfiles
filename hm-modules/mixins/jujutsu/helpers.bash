@@ -45,6 +45,13 @@ escape() {
     fi
 }
 
+trim() {
+    local str="$1"
+    str="${str#"${str%%[![:space:]]*}"}"
+    str="${str%"${str##*[![:space:]]}"}"
+    printf '%s' "$str"
+}
+
 register_rollback_instructions() {
     local op
     op="$(jj operation log --no-graph --template 'if(self.current_operation(), self.id().short(), "")')"
@@ -228,4 +235,38 @@ flow::rebase() {
 # @cmd Push all flow-managed branches
 flow::push() {
     log_and_run jj git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow")) ~ conflicts()'
+}
+
+declare -r note_prefix='NB. '
+
+# @cmd Manage notes on a revision
+note() { :; }
+
+# @cmd Add a note to a revision
+# @arg revset! Revset on which to add a note
+# @arg notes+ Notes to add
+note::add() {
+    local note
+    declare -a message_flags=()
+
+    local note="${argc_notes[0]}"
+    note="$(trim "$note")"
+    message_flags+=('--message' "$note_prefix$note")
+    for note in "${argc_notes[@]:1}"; do
+        note="$(trim "$note")"
+        message_flags+=("--message" "$note")
+    done
+
+    jj new --no-edit "$argc_revset" "${message_flags[@]}"
+}
+
+# @cmd List notes on a revision
+# @arg revset! Revisions to check
+note::list() {
+    # TODO: use a proper label
+    jj log --revisions 'children('"$argc_revset"') & notes()' --no-graph --template '
+        label("working_copy commit_id", "note") ++ " " ++ self.change_id().shortest(8) ++ ":\n"
+        ++ self.description().remove_prefix("'"$note_prefix"'").trim().lines().map(|x| "│ " ++ x).join("\n")
+        ++ "\n\n"
+    '
 }

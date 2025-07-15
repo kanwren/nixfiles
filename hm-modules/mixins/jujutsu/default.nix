@@ -81,6 +81,7 @@ in
             "id" = mkHelpersAlias "id";
             "description" = mkHelpersAlias "description";
             "subject" = mkHelpersAlias "subject";
+            "note" = mkHelpersAlias "note";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
             "run-job" = mkHelpersAlias "run-job";
             "pre-commit" = mkHelpersAlias "pre-commit";
@@ -115,6 +116,9 @@ in
               toAuthor = x: "author(exact:${builtins.toJSON x})";
             in
             builtins.concatStringsSep " | " (builtins.map toAuthor (emails ++ names));
+
+          # note utilities
+          "notes()" = ''description(glob:"NB. *")'';
         };
 
         templates = {
@@ -136,7 +140,7 @@ in
         template-aliases = { };
 
         git = {
-          private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|x+)(\\(.*\\))?:")'';
+          private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|x+)(\\(.*\\))?:") | notes()'';
         };
       };
     };
