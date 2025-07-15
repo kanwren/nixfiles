@@ -43,10 +43,7 @@
           ".local/share/zoxide"
           ".local/share/wd"
         ];
-        files = [
-          ".local/share/fish/fish_history"
-          ".bash_history"
-        ];
+        files = [ ];
       };
     };
 
