@@ -7,6 +7,10 @@
 , impermanence
 }:
 
+let
+  flakeConfig = import ../../flake.nix;
+in
+
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
 
@@ -18,7 +22,11 @@ nixpkgs.lib.nixosSystem {
       system.configurationRevision = self.rev or self.dirtyRev or null;
 
       nix = {
-        settings.experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+        settings = {
+          experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+          substituters = flakeConfig.nixConfig.extra-substituters;
+          trusted-public-keys = flakeConfig.nixConfig.extra-trusted-public-keys;
+        };
         channel.enable = false;
         settings.nix-path = config.nix.nixPath;
       };
