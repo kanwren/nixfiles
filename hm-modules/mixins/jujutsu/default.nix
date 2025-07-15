@@ -130,12 +130,12 @@ in
               diff.git(),
             )
           '';
+          git_push_bookmark = lib.mkDefault ''"kanwren/push-" ++ change_id.short()'';
         };
 
         template-aliases = { };
 
         git = {
-          push-bookmark-prefix = lib.mkDefault "kanwren/push-";
           private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|x+)(\\(.*\\))?:")'';
         };
       };
