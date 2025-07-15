@@ -65,7 +65,7 @@ check-formatting:
 
 # Run the formatter
 reformat:
-    {{ nix_command }} fmt
+    {{ nix_command }} fmt -- .
     just --unstable --fmt
 
 # List image formats supported by nixos-generators
