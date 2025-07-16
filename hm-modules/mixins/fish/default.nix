@@ -24,6 +24,10 @@ in
         # use vi bindings
         fish_vi_key_bindings
 
+        function save_dir --on-variable PWD
+          set -U fish_most_recent_dir $PWD
+        end
+
         # restore last directory when new shell is opened
         set --query fish_most_recent_dir
         and test -d "$fish_most_recent_dir"
@@ -59,14 +63,6 @@ in
           fish_greeting = {
             description = "no greeting";
             body = "";
-          };
-
-          save_dir = {
-            description = "Save the current directory to a universal variable";
-            onVariable = "PWD";
-            body = ''
-              set -U fish_most_recent_dir $PWD
-            '';
           };
 
           # Misc shell utilities
