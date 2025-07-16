@@ -140,7 +140,7 @@ in
         template-aliases = { };
 
         git = {
-          private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|x+)(\\(.*\\))?:") | notes()'';
+          private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|todo|x+)(\\(.*\\))?:") | notes()'';
         };
       };
     };
