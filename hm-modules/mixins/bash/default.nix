@@ -30,9 +30,6 @@ in
     historyControl = [ "ignorespace" "ignoredups" ];
     historyIgnore = [ "ls" "cd" "exit" "history" ];
 
-    # User-specific shell aliases
-    shellAliases = { };
-
     initExtra = ''
       test "$(ulimit -n)" -lt 8192 && ulimit -n 8192
       set -o vi

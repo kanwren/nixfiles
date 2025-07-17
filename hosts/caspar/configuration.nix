@@ -227,21 +227,10 @@ in
           (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
         ];
 
-        shellAliases = lib.mergeAttrsList [
-          {
-            l = "${pkgs.eza}/bin/eza --git";
-            show = "${pkgs.bat}/bin/bat";
-            vi = "nvim";
-            vim = "nvim";
-          }
-          (builtins.listToAttrs
-            (builtins.map
-              (n: {
-                name = ".${toString n}";
-                value = "cd ${builtins.concatStringsSep "/" (builtins.genList (_: "..") n)}";
-              })
-              (lib.lists.range 1 9)))
-        ];
+        shellAliases = {
+          vi = "nvim";
+          vim = "nvim";
+        };
 
         # force-overwrite files that like to get stepped on by automation
         file.".bashrc".force = true;
