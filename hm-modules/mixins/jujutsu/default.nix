@@ -137,7 +137,23 @@ in
           git_push_bookmark = lib.mkDefault ''"kanwren/push-" ++ change_id.short()'';
         };
 
-        template-aliases = { };
+        template-aliases = {
+          "description_json(x)" = ''
+            "{\"subject\":"
+            ++ json(x.description().first_line())
+            ++ ",\"body\":"
+            ++ json(x.description().remove_prefix(x.description().first_line()).trim().remove_suffix(stringify(x.trailers()).trim()).trim())
+            ++ ",\"trailers\":["
+            ++ x.trailers().map(|t|
+              "{\"key\":"
+              ++ json(t.key())
+              ++ ",\"value\":"
+              ++ json(t.value())
+              ++ "}"
+            ).join(",")
+            ++ "]}"
+          '';
+        };
 
         git = {
           private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|todo|x+)(\\(.*\\))?:") | notes()'';
