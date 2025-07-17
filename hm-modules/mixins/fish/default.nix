@@ -264,6 +264,7 @@ in
             "jbt" = "jj bookmark track";
             "jbu" = "jj bookmark untrack";
             "jc" = "jj commit";
+            "jcm" = "jj commit --message";
             "jcf" = "jj config";
             "jcfl" = "jj config list";
             "jd" = "jj describe";
@@ -319,6 +320,7 @@ in
             "jwt" = "jj flow tip";
             "jx" = "jj revert";
             "jz" = "jj restore";
+            "jzi" = "jj restore --interactive";
             "jzd" = "jj restore --restore-descendants";
           };
           zellijAbbrs = commandAbbrs {
