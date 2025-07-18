@@ -22,7 +22,6 @@ nixpkgs.lib.nixosSystem {
       nix = {
         settings.experimental-features = [ "nix-command" "flakes" ];
         channel.enable = false;
-        settings.nix-path = config.nix.nixPath; # workaround for https://github.com/NixOS/nix/issues/9574; NIX_PATH doesn't work when channel.enable = false sets `nix-path = ""`
       };
 
       nixpkgs.overlays = [

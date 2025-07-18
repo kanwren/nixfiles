@@ -29,7 +29,6 @@ nixpkgs.lib.nixosSystem {
           trusted-public-keys = flakeConfig.nixConfig.extra-trusted-public-keys;
         };
         channel.enable = false;
-        settings.nix-path = config.nix.nixPath;
       };
 
       nixpkgs.overlays = [ self.overlays.default ];
