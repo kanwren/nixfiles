@@ -83,7 +83,6 @@ in
             "subject" = mkHelpersAlias "subject";
             "note" = mkHelpersAlias "note";
             "bookmark-names" = mkHelpersAlias "bookmark-names";
-            "run-job" = mkHelpersAlias "run-job";
             "pre-commit" = mkHelpersAlias "pre-commit";
             "flow" = mkHelpersAlias "flow";
           };

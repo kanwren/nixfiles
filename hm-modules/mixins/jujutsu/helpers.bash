@@ -124,27 +124,6 @@ bookmark-names() {
     jj log --ignore-working-copy --revisions "$argc_revset" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u
 }
 
-# @cmd Run a command at every revision in a revset
-# @arg revset! The revisions to operate on
-# @arg command! The command to exec
-# @arg args* Arguments to the command
-run-job() {
-    # TODO: replace this when "$(jj run)" isn't a stub anymore
-
-    register_rollback_instructions
-
-    declare -r revset="$argc_revset"
-    declare -ra cmd=("$argc_command" "${argc_args[@]}")
-    change_ids "$revset" | while read -r rev; do
-        log_and_run jj edit "$rev"
-
-        log_lit_command 'cd "''$''(jj workspace root)"'
-        cd "$(jj --ignore-working-copy workspace root)" || return
-
-        log_and_run "${cmd[@]}"
-    done
-}
-
 # @cmd Run pre-commit on the files changed in the specified revisions
 # @arg revset=@ The revisions for which the changed files in them should be run against pre-commit
 pre-commit() {
