@@ -76,30 +76,6 @@ in
             '';
           };
 
-          _pfor_expand = {
-            description = "Expand a pfor command";
-            body = ''
-              set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
-              set result 'parallel'
-              if test (count $varname) -gt 1
-                set result "$result"' -C'"'"' '"'"
-              end
-              set result "$result"' -j10 -kq fish -c '"'"
-              for i in (seq 1 (count $varname))
-                set result "$result"'set '$varname[$i]' $argv['$i']; '
-              end
-              set result "$result%'"
-              if test (count $varname) -gt 1
-                for i in (seq 1 (count $varname))
-                  set result "$result"' {'$i'}'
-                end
-              else
-                  set result "$result"' {}'
-              end
-              printf '%s' "$result"
-            '';
-          };
-
           fzf_git_branch_widget = {
             description = "List and insert git branches";
             body = ''
@@ -183,14 +159,104 @@ in
               return 0
             '';
           };
+
+          # Abbreviation expansion functions
+
+          _pfor_expand = {
+            description = "Expand a pfor command";
+            body = ''
+              set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
+              set result 'parallel'
+              if test (count $varname) -gt 1
+                set result "$result"' -C'"'"' '"'"
+              end
+              set result "$result"' -j10 -kq fish -c '"'"
+              for i in (seq 1 (count $varname))
+                set result "$result"'set '$varname[$i]' $argv['$i']; '
+              end
+              set result "$result%'"
+              if test (count $varname) -gt 1
+                for i in (seq 1 (count $varname))
+                  set result "$result"' {'$i'}'
+                end
+              else
+                  set result "$result"' {}'
+              end
+              printf '%s' "$result"
+            '';
+          };
+
+          _expand_seq = {
+            description = "Expand {start..end} to (seq start end)";
+            body = ''
+              set nums (string match -rg '(.*)\\{(\\d+)\\.\\.(\\d+)\\}(.*)' $argv[1])
+              printf '%s(seq %d %d)%s' $nums
+            '';
+          };
+
+          _expand_which = {
+            description = "Expand =foo to the path to foo";
+            body = ''
+              command --search (string sub --start 2 $argv[1])
+            '';
+          };
+
+          _expand_last_command = {
+            description = "Expand the last command";
+            body = ''
+              echo $history[1]
+            '';
+          };
+
+          _expand_multidotdot = {
+            description = "Expand .n to n directories up";
+            body = ''
+              set arg $argv[1]
+              for ixs in (string match --index --regex '(?<![^/])\.[1-9]\d*(?![^/])' -- $arg)
+                  set ix (string split -- ' ' $ixs)
+                  set start $ix[1]
+                  set length $ix[2]
+                  set prefix '''
+                  test (math $start) -gt 1; and set prefix (string sub --end (math $start - 1) -- $arg)
+                  set suffix (string sub --start (math $start + $length) -- $arg)
+                  set nparts (string sub --start (math $start + 1) --length (math $length - 1) -- $arg)
+                  set dots (string repeat --count $nparts ../)
+                  set arg "$prefix$dots$suffix"
+              end
+              printf '%s!' $arg
+            '';
+          };
         };
 
       shellAbbrs = lib.attrsets.mergeAttrsList (builtins.attrValues (
         let
-          commandAbbrs = lib.attrsets.mapAttrs (k: v: { position = "command"; expansion = v; });
+          commandAbbr = cmd: {
+            position = "command";
+            expansion = cmd;
+          };
         in
         {
-          miscAbbrs = {
+          syntaxAbbrs = {
+            "expand_seq_abbr" = {
+              position = "anywhere";
+              function = "_expand_seq";
+              regex = ''.*\{\d+\.\.\d+\}.*'';
+            };
+            "expand_which_abbr" = {
+              position = "command";
+              function = "_expand_which";
+              regex = ''=\w+'';
+            };
+            "!!" = {
+              position = "anywhere";
+              function = "_expand_last_command";
+            };
+            "multidotdot_abbr" = {
+              position = "anywhere";
+              function = "_expand_multidotdot";
+              regex = ''(?<![^/])\.[1-9]\d*(?![^/])'';
+              setCursor = "!";
+            };
             "pfor" = {
               position = "command";
               function = "_pfor_expand";
@@ -198,139 +264,158 @@ in
               setCursor = "%";
             };
           };
-          bazelAbbrs = commandAbbrs {
-            "baq" = "bazel aquery";
-            "bb" = "bazel build";
-            "bcq" = "bazel cquery";
-            "bcqf" = "bazel cquery --output files";
-            "bq" = "bazel query";
-            "bqb" = "bazel query --output build";
-            "bqlk" = "bazel query --output label_kind";
-            "br" = "bazel run";
-            "bt" = "bazel test";
+          findAbbrs = {
+            "find1" = {
+              position = "command";
+              setCursor = "%";
+              expansion = "find % -mindepth 1 -maxdepth 1";
+            };
+            "-sh" = {
+              command = "find";
+              position = "anywhere";
+              setCursor = "%";
+              expansion = "-exec sh -c 'x=\"$1\"; %' -- {} ';'";
+            };
           };
-          gitAbbrs = commandAbbrs {
-            "g" = "git";
-            "ga" = "git add";
-            "gb" = "git branch";
-            "gc" = "git commit";
-            "gd" = "git diff";
-            "gl" = "git log";
-            "gp" = "git pull";
-            "gpf" = "git push --force-with-lease";
-            "gr" = "git rebase";
-            "gra" = "git rebase --abort";
-            "grc" = "git rebase --continue";
-            "gro" = "git rebase --onto";
-            "gri" = "git rebase --interactive";
-            "grs" = "git restore";
-            "gsh" = "git show";
-            "gst" = "git status";
-            "gsw" = "git switch";
-            "gswc" = "git switch --create";
-            "gswd" = "git switch --detach";
-            "gx" = "git reset";
-            "gxm" = "git reset --mixed";
-            "gxh" = "git reset --hard";
-            "gxs" = "git reset --soft";
+          bazelAbbrs = {
+            "baq" = commandAbbr "bazel aquery";
+            "bb" = commandAbbr "bazel build";
+            "bcq" = commandAbbr "bazel cquery";
+            "bcqf" = commandAbbr "bazel cquery --output files";
+            "bq" = commandAbbr "bazel query";
+            "bqb" = commandAbbr "bazel query --output build";
+            "bqlk" = commandAbbr "bazel query --output label_kind";
+            "br" = commandAbbr "bazel run";
+            "bt" = commandAbbr "bazel test";
           };
-          goAbbrs = commandAbbrs {
-            "gob" = "go build";
-            "gog" = "go get";
-            "goi" = "go install";
-            "gom" = "go mod";
-            "gomi" = "go mod init";
-            "gomt" = "go mod tidy";
-            "gor" = "go run";
-            "got" = "go test";
+          gitAbbrs = {
+            "g" = commandAbbr "git";
+            "ga" = commandAbbr "git add";
+            "gb" = commandAbbr "git branch";
+            "gc" = commandAbbr "git commit";
+            "gd" = commandAbbr "git diff";
+            "gl" = commandAbbr "git log";
+            "gp" = commandAbbr "git pull";
+            "gpf" = commandAbbr "git push --force-with-lease";
+            "gr" = commandAbbr "git rebase";
+            "gra" = commandAbbr "git rebase --abort";
+            "grc" = commandAbbr "git rebase --continue";
+            "gro" = commandAbbr "git rebase --onto";
+            "gri" = commandAbbr "git rebase --interactive";
+            "grs" = commandAbbr "git restore";
+            "gsh" = commandAbbr "git show";
+            "gst" = commandAbbr "git status";
+            "gsw" = commandAbbr "git switch";
+            "gswc" = commandAbbr "git switch --create";
+            "gswd" = commandAbbr "git switch --detach";
+            "gx" = commandAbbr "git reset";
+            "gxm" = commandAbbr "git reset --mixed";
+            "gxh" = commandAbbr "git reset --hard";
+            "gxs" = commandAbbr "git reset --soft";
           };
-          kittyAbbrs = commandAbbrs {
-            "kssh" = "kitten ssh";
-            "icat" = "kitten icat --align=left";
+          goAbbrs = {
+            "gob" = commandAbbr "go build";
+            "gog" = commandAbbr "go get";
+            "goi" = commandAbbr "go install";
+            "gom" = commandAbbr "go mod";
+            "gomi" = commandAbbr "go mod init";
+            "gomt" = commandAbbr "go mod tidy";
+            "gor" = commandAbbr "go run";
+            "got" = commandAbbr "go test";
           };
-          jjAbbrs = commandAbbrs {
-            "j/" = "jj split";
-            "j/p" = "jj split --parallel";
-            "ja" = "jj absorb";
-            "jb" = "jj bookmark";
-            "jbc" = "jj bookmark create";
-            "jbd" = "jj bookmark delete";
-            "jbf" = "jj bookmark forget";
-            "jbl" = "jj bookmark list";
-            "jbm" = "jj bookmark move";
-            "jbn" = "jj bookmark-names";
-            "jbr" = "jj bookmark rename";
-            "jbs" = "jj bookmark set";
-            "jbt" = "jj bookmark track";
-            "jbu" = "jj bookmark untrack";
-            "jc" = "jj commit";
-            "jcm" = "jj commit --message";
-            "jcf" = "jj config";
-            "jcfl" = "jj config list";
-            "jd" = "jj describe";
-            "jde" = "jj diffedit";
-            "jdf" = "jj diff";
-            "jdup" = "jj duplicate";
-            "je" = "jj edit";
-            "jf" = "jj file";
-            "jfa" = "jj file annotate";
-            "jfc" = "jj file chmod";
-            "jfl" = "jj file list";
-            "jfs" = "jj file show";
-            "jft" = "jj file track";
-            "jfu" = "jj file untrack";
-            "jg" = "jj git";
-            "jgc" = "jj git init --colocate";
-            "jgf" = "jj git fetch";
-            "jgi" = "jj git init";
-            "jgp" = "jj git push";
-            "jid" = "jj id";
-            "jk" = "jj abandon";
-            "jl" = "jj log";
-            "jlr" = "jj log --revisions";
-            "jm" = "jj simplify-parents";
-            "jmr" = "jj simplify-parents --revisions";
-            "jn" = "jj new";
-            "jna" = "jj new --no-edit --insert-after";
-            "jnb" = "jj new --no-edit --insert-before";
-            "jne" = "jj new --no-edit";
-            "jnt" = "jj new 'trunk()'";
-            "jol" = "jj operation log";
-            "jop" = "jj operation";
-            "jor" = "jj operation restore";
-            "jos" = "jj operation show";
-            "jou" = "jj operation undo";
-            "jr" = "jj rebase";
-            "jra" = "jj rebase --insert-after";
-            "jrb" = "jj rebase --insert-before";
-            "jrt" = "jj rebase --destination 'trunk()'";
-            "js" = "jj show";
-            "jsq" = "jj squash";
-            "jt" = "jj tag";
-            "jtl" = "jj tag list";
-            "jv" = "jj parallelize";
-            "jw" = "jj flow";
-            "jwca" = "jj flow changes add";
-            "jwcc" = "jj flow changes clean-empty";
-            "jwcm" = "jj flow changes move";
-            "jwcr" = "jj flow changes remove";
-            "jwp" = "jj flow push";
-            "jwr" = "jj flow rebase";
-            "jwrt" = "jj flow rebase 'trunk()'";
-            "jwt" = "jj flow tip";
-            "jx" = "jj revert";
-            "jz" = "jj restore";
-            "jzi" = "jj restore --interactive";
-            "jzd" = "jj restore --restore-descendants";
+          kittyAbbrs = {
+            "kssh" = commandAbbr "kitten ssh";
+            "icat" = commandAbbr "kitten icat --align=left";
           };
-          zellijAbbrs = commandAbbrs {
-            "zj" = "zellij";
-            "zjr" = "zellij run --";
-            "zje" = "zellij edit";
-            "zjl" = "zellij list-sessions";
-            "zja" = "zellij attach";
-            "zjk" = "zellij kill-session";
-            "zjd" = "zellij delete-all-sessions";
+          jjAbbrs = {
+            "-T" = {
+              command = "jj";
+              position = "anywhere";
+              setCursor = "%";
+              expansion = "--no-graph --template '%'";
+            };
+            "j/" = commandAbbr "jj split";
+            "j/p" = commandAbbr "jj split --parallel";
+            "ja" = commandAbbr "jj absorb";
+            "jb" = commandAbbr "jj bookmark";
+            "jbc" = commandAbbr "jj bookmark create";
+            "jbd" = commandAbbr "jj bookmark delete";
+            "jbf" = commandAbbr "jj bookmark forget";
+            "jbl" = commandAbbr "jj bookmark list";
+            "jbm" = commandAbbr "jj bookmark move";
+            "jbn" = commandAbbr "jj bookmark-names";
+            "jbr" = commandAbbr "jj bookmark rename";
+            "jbs" = commandAbbr "jj bookmark set";
+            "jbt" = commandAbbr "jj bookmark track";
+            "jbu" = commandAbbr "jj bookmark untrack";
+            "jc" = commandAbbr "jj commit";
+            "jcm" = commandAbbr "jj commit --message";
+            "jcf" = commandAbbr "jj config";
+            "jcfl" = commandAbbr "jj config list";
+            "jd" = commandAbbr "jj describe";
+            "jde" = commandAbbr "jj diffedit";
+            "jdf" = commandAbbr "jj diff";
+            "jdup" = commandAbbr "jj duplicate";
+            "je" = commandAbbr "jj edit";
+            "jf" = commandAbbr "jj file";
+            "jfa" = commandAbbr "jj file annotate";
+            "jfc" = commandAbbr "jj file chmod";
+            "jfl" = commandAbbr "jj file list";
+            "jfs" = commandAbbr "jj file show";
+            "jft" = commandAbbr "jj file track";
+            "jfu" = commandAbbr "jj file untrack";
+            "jg" = commandAbbr "jj git";
+            "jgc" = commandAbbr "jj git init --colocate";
+            "jgf" = commandAbbr "jj git fetch";
+            "jgi" = commandAbbr "jj git init";
+            "jgp" = commandAbbr "jj git push";
+            "jid" = commandAbbr "jj id";
+            "jk" = commandAbbr "jj abandon";
+            "jl" = commandAbbr "jj log";
+            "jlr" = commandAbbr "jj log --revisions";
+            "jm" = commandAbbr "jj simplify-parents";
+            "jmr" = commandAbbr "jj simplify-parents --revisions";
+            "jn" = commandAbbr "jj new";
+            "jna" = commandAbbr "jj new --no-edit --insert-after";
+            "jnb" = commandAbbr "jj new --no-edit --insert-before";
+            "jne" = commandAbbr "jj new --no-edit";
+            "jnt" = commandAbbr "jj new 'trunk()'";
+            "jol" = commandAbbr "jj operation log";
+            "jop" = commandAbbr "jj operation";
+            "jor" = commandAbbr "jj operation restore";
+            "jos" = commandAbbr "jj operation show";
+            "jou" = commandAbbr "jj operation undo";
+            "jr" = commandAbbr "jj rebase";
+            "jra" = commandAbbr "jj rebase --insert-after";
+            "jrb" = commandAbbr "jj rebase --insert-before";
+            "jrt" = commandAbbr "jj rebase --destination 'trunk()'";
+            "js" = commandAbbr "jj show";
+            "jsq" = commandAbbr "jj squash";
+            "jt" = commandAbbr "jj tag";
+            "jtl" = commandAbbr "jj tag list";
+            "jv" = commandAbbr "jj parallelize";
+            "jw" = commandAbbr "jj flow";
+            "jwca" = commandAbbr "jj flow changes add";
+            "jwcc" = commandAbbr "jj flow changes clean-empty";
+            "jwcm" = commandAbbr "jj flow changes move";
+            "jwcr" = commandAbbr "jj flow changes remove";
+            "jwp" = commandAbbr "jj flow push";
+            "jwr" = commandAbbr "jj flow rebase";
+            "jwrt" = commandAbbr "jj flow rebase 'trunk()'";
+            "jwt" = commandAbbr "jj flow tip";
+            "jx" = commandAbbr "jj revert";
+            "jz" = commandAbbr "jj restore";
+            "jzi" = commandAbbr "jj restore --interactive";
+            "jzd" = commandAbbr "jj restore --restore-descendants";
+          };
+          zellijAbbrs = {
+            "zj" = commandAbbr "zellij";
+            "zjr" = commandAbbr "zellij run --";
+            "zje" = commandAbbr "zellij edit";
+            "zjl" = commandAbbr "zellij list-sessions";
+            "zja" = commandAbbr "zellij attach";
+            "zjk" = commandAbbr "zellij kill-session";
+            "zjd" = commandAbbr "zellij delete-all-sessions";
           };
         }
       ));
