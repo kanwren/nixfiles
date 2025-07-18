@@ -1,4 +1,4 @@
-set shell := ["/bin/sh", "-c"]
+set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
 # Verbose builds: print everything and don't exit early on failure
 
@@ -23,36 +23,33 @@ _list-recipes:
     @just --evaluate | while IFS= read line; do echo "    $line"; done
 
 [private]
-hecate-system:
-    {{ nix_command }} build --no-link --print-out-paths '.#nixosConfigurations.hecate.config.system.build.toplevel'
+nixos-apply target command:
+    nixos-rebuild {{ if v != "" { "--print-build-logs --keep-going " } else { "" } }}--flake '.#{{ target }}' {{ quote(command) }} --ask-sudo-password
+
+[private]
+darwin-apply target command:
+    {{ nix_command }} build \
+        --no-link \
+        --print-out-paths \
+        '.#darwinConfigurations.{{ target }}.system'
+    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }} {{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.{{ target }}.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#{{ target }}' {{ quote(command) }}
 
 # Run a nixos-rebuild command on hecate
-hecate command="build": hecate-system
-    {{ if command =~ "^(boot|switch|test|dry-activate)$" { "sudo " } else { "" } }}nixos-rebuild --flake '.#hecate' {{ quote(command) }}
-
-[private]
-birdbox-system:
-    {{ nix_command }} build --no-link --print-out-paths '.#nixosConfigurations.birdbox.config.system.build.toplevel'
+hecate command="build": (nixos-apply 'hecate' command)
 
 # Run a nixos-rebuild command on birdbox
-birdbox command="build": birdbox-system
-    {{ if command =~ "^(boot|switch|test|dry-activate)$" { "sudo " } else { "" } }}nixos-rebuild --flake '.#birdbox' {{ quote(command) }}
-
-[private]
-caspar-system:
-    {{ nix_command }} build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'
+birdbox command="build": (nixos-apply 'birdbox' command)
 
 # Run a darwin-rebuild command on caspar
-caspar command="build": caspar-system
-    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.caspar.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#caspar' {{ quote(command) }}
+caspar command="build": (darwin-apply 'caspar' command)
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
-update-inputs:
-    {{ nix_command }} flake update --commit-lock-file
+update-inputs input="":
+    {{ nix_command }} flake update{{ if input != "" { ' ' + quote(input) } else { '' } }} --commit-lock-file
 
 # Pin an input in the flake.lock to a specific flake reference
-override-input input flake:
-    {{ nix_command }} flake lock --override-input {{ quote(input) }} {{ quote(flake) }}
+pin-input input target:
+    {{ nix_command }} flake lock --commit-lock-file --override-input {{ quote(input) }} {{ quote(target) }}
 
 # Check flake evaluation and run all checks
 check-flake:
@@ -63,10 +60,16 @@ check-formatting:
     {{ nix_command }} build '.#checks.{{ `nix eval --impure --expr 'builtins.currentSystem'` }}.check-format'
     just --unstable --fmt --check
 
-# Run the formatter
-reformat:
+[private]
+reformat_nix:
     {{ nix_command }} fmt -- .
+
+[private]
+reformat_just:
     just --unstable --fmt
+
+# Run the formatter
+reformat: reformat_nix reformat_just
 
 # Rebuild the nix-index index
 reindex:
@@ -77,8 +80,8 @@ reindex:
 install-nix force="false":
     if {{ if force == "true" { "true" } else { "! command -v nix" } }}; then {{ "curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install" }}; fi
 
-# Bootstrap caspar
-bootstrap-caspar: install-nix (caspar "switch") (change-shell "fish")
+# Bootstrap
+bootstrap-darwin host="": install-nix (darwin-apply (if host == "" { `hostname` } else { host }) "switch") (change-shell "fish")
 
 # Helpers
 
