@@ -142,8 +142,8 @@
           packages = [
             pkgs.bashInteractive
             pkgs.just
+
             # formatting
-            pkgs.lefthook
             self.formatter.${pkgs.system}
 
             # sops
