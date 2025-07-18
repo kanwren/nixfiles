@@ -62,6 +62,7 @@ in
 
   environment = {
     variables = {
+      LC_ALL = "C";
       LC_CTYPE = "en_US.UTF-8";
       EDITOR = "nvim";
       SHELL = "${pkgs.fish}/bin/fish";
