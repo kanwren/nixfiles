@@ -67,7 +67,7 @@ in
 
           # Misc shell utilities
 
-          "=" = {
+          "yield" = {
             description = "Yield the arguments";
             body = ''
               if test (count $argv) -gt 0
