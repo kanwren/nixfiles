@@ -3,6 +3,7 @@
 {
   imports = [
     ./disks.nix
+    ./immich.nix
     ./impermanence.nix
     ./tailscale.nix
     ./users/default.nix

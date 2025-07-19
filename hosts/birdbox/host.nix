@@ -62,6 +62,8 @@ nixpkgs.lib.nixosSystem {
       common-gpu-nvidia
     ])
 
+    self.nixosModules.tscaddy
+
     # configure the bus IDs for common-gpu-nvidia
     {
       hardware.nvidia = {
