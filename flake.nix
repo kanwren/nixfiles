@@ -108,8 +108,6 @@
           (final: prev: import ./pkgs { pkgs = final; })
         ];
 
-        installers = final: prev: final.callPackages ./installers { inherit nixos-generators; };
-
         fix-open-webui = final: prev: {
           inherit (nixpkgs-stable.legacyPackages.${prev.system})
             open-webui;

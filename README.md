@@ -9,19 +9,6 @@ My NixOS configurations and other Nix files :snowflake:
 - [`hecate`](hosts/hecate/)
 - [`caspar`](hosts/caspar/)
 
-## `installers`
-
-`installers/` contains a custom installer configuration, built with [nixos-generators](https://github.com/nix-community/nixos-generators).
-The `justfile` contains a recipe for building installers:
-
-```
-# x86_64-linux installer iso
-$ just build-nixos-installer x86_64-linux ./installers/configuration.nix
-
-# aarch64-linux installer sd image (requires 'boot.binfmt.emulatedSystems = [ "aarch64-linux" ];')
-$ just build-nixos-installer aarch64-linux ./installers/configuration.nix
-```
-
 ## Manual setup
 
 Some things cannot be set up automatically, especially some of the Catppuccin

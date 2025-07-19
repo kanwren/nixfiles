@@ -68,18 +68,6 @@ reformat:
     {{ nix_command }} fmt -- .
     just --unstable --fmt
 
-# List image formats supported by nixos-generators
-list-image-formats:
-    {{ nix_command }} run 'github:nix-community/nixos-generators#nixos-generate' -- --list
-
-# Use nixos-generate to build an image for the given system
-build-nixos-image format system configuration:
-    {{ nix_command }} run 'github:nix-community/nixos-generators#nixos-generate' -- --format {{ quote(format) }} --system {{ quote(system) }} --configuration ./installers/configuration.nix
-
-# Build a custom installer with nixos-generators
-build-nixos-installer system configuration="./installers/configuration.nix":
-    just build-nixos-image {{ if system =~ "^aarch64-" { "sd-aarch64-installer" } else { "install-iso" } }} {{ quote(system) }} {{ quote(configuration) }}
-
 # Rebuild the nix-index index
 reindex:
     {{ nix_command }} build --no-link --print-out-paths 'nixpkgs#nix-index'
