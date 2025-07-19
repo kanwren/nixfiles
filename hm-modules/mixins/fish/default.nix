@@ -243,7 +243,7 @@ in
               regex = ''.*\{\d+\.\.\d+\}.*'';
             };
             "expand_which_abbr" = {
-              position = "command";
+              position = "anywhere";
               function = "_expand_which";
               regex = ''=\w+'';
             };
