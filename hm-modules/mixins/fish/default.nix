@@ -245,7 +245,7 @@ in
             "expand_which_abbr" = {
               position = "anywhere";
               function = "_expand_which";
-              regex = ''=\w+'';
+              regex = ''=\S+'';
             };
             "!!" = {
               position = "anywhere";
