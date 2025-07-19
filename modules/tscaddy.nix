@@ -63,7 +63,7 @@ in
   config = lib.mkIf cfg.enable {
     services.caddy = {
       enable = true;
-      package = pkgs.callPackage ./src { };
+      package = pkgs.callPackage ./caddy { };
       globalConfig =
         let
           configForService = service: ''
@@ -105,3 +105,4 @@ in
       };
   };
 }
+

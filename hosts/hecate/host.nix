@@ -46,6 +46,7 @@ nixpkgs.lib.nixosSystem {
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     }
 
+    self.nixosModules.tscaddy
     self.nixosModules.pueue
 
     # hardware modules
