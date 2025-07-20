@@ -25,8 +25,8 @@ nixpkgs.lib.nixosSystem {
       nix = {
         settings = {
           experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
-          substituters = flakeConfig.nixConfig.extra-substituters;
-          trusted-public-keys = flakeConfig.nixConfig.extra-trusted-public-keys;
+          substituters = flakeConfig.nixConfig.extra-substituters or [ ];
+          trusted-public-keys = flakeConfig.nixConfig.extra-trusted-public-keys or [ ];
         };
         channel.enable = false;
       };
