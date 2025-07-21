@@ -4,6 +4,7 @@
   imports = [
     ./disks.nix
     ./impermanence.nix
+    ./tailscale.nix
     ./users/default.nix
   ];
 
@@ -104,15 +105,6 @@
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
       };
-    };
-
-    tailscale = {
-      enable = true;
-      useRoutingFeatures = "both";
-      extraUpFlags = [
-        "--ssh"
-        "--advertise-exit-node"
-      ];
     };
   };
 
