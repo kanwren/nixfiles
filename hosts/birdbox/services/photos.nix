@@ -22,7 +22,6 @@ in
     mediaLocation = nasPhotosMount;
     host = "127.0.0.1";
   };
-  systemd.services.immich-server.serviceConfig.Restart = "on-failure";
 
   # Mount NAS over CIFS as the backing image store for immich
   users = {
@@ -50,15 +49,6 @@ in
       # ```
     ];
   };
-  sops.secrets."immich/nas-credentials" = {
-    sopsFile = ../secrets/immich/nas-credentials.txt;
-    format = "binary";
-    mode = "0440";
-  };
-  systemd.services.immich-server = {
-    wants = [ "var-lib-immich.automount" ];
-    after = [ "var-lib-immich.automount" ];
-  };
 
   # Expose immich to tailnet via Caddy
   services.tscaddy = {
@@ -70,11 +60,20 @@ in
       dependencies = [ "immich-server.service" ];
     };
   };
-  sops.secrets."caddy/ts-authkey-immich" = {
-    sopsFile = ../secrets/caddy/ts-authkey-immich.txt;
-    format = "binary";
-    mode = "0440";
-    owner = config.services.caddy.user;
-    group = config.services.caddy.group;
+
+  sops.secrets = {
+    "immich/nas-credentials" = {
+      sopsFile = ../secrets/immich/nas-credentials.txt;
+      format = "binary";
+      mode = "0440";
+    };
+
+    "caddy/ts-authkey-immich" = {
+      sopsFile = ../secrets/caddy/ts-authkey-immich.txt;
+      format = "binary";
+      mode = "0440";
+      owner = config.services.caddy.user;
+      group = config.services.caddy.group;
+    };
   };
 }
