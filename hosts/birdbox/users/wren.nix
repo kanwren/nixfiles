@@ -76,7 +76,7 @@
   };
 
   sops.secrets."wren/nas-credentials" = {
-    sopsFile = ../secrets/nas-credentials.txt;
+    sopsFile = ../secrets/wren/nas-credentials.txt;
     format = "binary";
     mode = "0440";
   };
