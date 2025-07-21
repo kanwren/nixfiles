@@ -5,6 +5,7 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/NetworkManager"
       "/var/lib/bluetooth"
+      "/var/lib/caddy"
       "/var/lib/nixos"
       "/var/lib/postgresql"
       "/var/lib/private"
