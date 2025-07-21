@@ -56,8 +56,8 @@ in
     mode = "0440";
   };
   systemd.services.immich-server = {
-    wants = [ "mnt-immich.mount" ];
-    after = [ "mnt-immich.mount" ];
+    wants = [ "var-lib-immich.mount" ];
+    after = [ "var-lib-immich.mount" ];
   };
 
   # Expose immich to tailnet via Caddy
