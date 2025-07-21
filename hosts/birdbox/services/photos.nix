@@ -51,7 +51,7 @@ in
     ];
   };
   sops.secrets."immich/nas-credentials" = {
-    sopsFile = ./secrets/immich/nas-credentials.txt;
+    sopsFile = ../secrets/immich/nas-credentials.txt;
     format = "binary";
     mode = "0440";
   };
@@ -71,7 +71,7 @@ in
     };
   };
   sops.secrets."caddy/ts-authkey-immich" = {
-    sopsFile = ./secrets/caddy/ts-authkey-immich.txt;
+    sopsFile = ../secrets/caddy/ts-authkey-immich.txt;
     format = "binary";
     mode = "0440";
     owner = config.services.caddy.user;

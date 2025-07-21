@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./disks.nix
-    ./immich.nix
+    ./disk-config.nix
     ./impermanence.nix
+    ./services/photos.nix
     ./tailscale.nix
     ./users/default.nix
   ];
