@@ -3,7 +3,7 @@
 let
   intToString = n: assert builtins.isInt n; builtins.toString n;
 
-  nasPhotosMount = "/var/lib/immich";
+  nasPhotosMount = "/mnt/immich";
   nasHost = "gwenas";
   nasShare = "Wren/Photos";
 
