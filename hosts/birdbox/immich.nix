@@ -21,10 +21,6 @@ in
     accelerationDevices = null;
     mediaLocation = nasPhotosMount;
     host = "127.0.0.1";
-    environment = {
-      # don't run database migrations the first time so we can restore manually
-      DB_SKIP_MIGRATIONS = "true";
-    };
   };
   systemd.services.immich-server.serviceConfig.Restart = "on-failure";
 
