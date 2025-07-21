@@ -3,7 +3,6 @@
 {
   imports = [
     ./llm.nix
-    ./photos.nix
   ];
 
   services = {
