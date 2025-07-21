@@ -15,15 +15,10 @@
     files = [
       "/etc/machine-id"
       "/etc/resolv.conf"
-      "/etc/shadow"
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
     ];
-  };
-
-  environment.etc = {
-    "shadow".source = "/persist/etc/shadow";
   };
 }

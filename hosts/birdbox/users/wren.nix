@@ -1,8 +1,15 @@
 { pkgs, config, ... }:
 
 {
+  sops.secrets."wren/hashed-password" = {
+    sopsFile = ../secrets/wren/hashed-password.txt;
+    format = "binary";
+    mode = "0440";
+    neededForUsers = true;
+  };
+
   users.users.wren = {
-    initialPassword = "hunter2";
+    hashedPasswordFile = config.sops.secrets."wren/hashed-password".path;
     isNormalUser = true;
     uid = 1000;
     extraGroups = [

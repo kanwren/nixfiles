@@ -24,6 +24,8 @@
     autoUpgrade.enable = false;
   };
 
+  sops.age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
+
   nix = {
     settings = {
       keep-outputs = true;
@@ -154,10 +156,6 @@
     gnupg
     neovim
   ];
-
-  users = {
-    mutableUsers = true;
-  };
 
   home-manager = {
     useGlobalPkgs = true;
