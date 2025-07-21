@@ -102,7 +102,7 @@
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/hdd";
+                mountpoint = "/media/hdd";
               };
             };
           };
