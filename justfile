@@ -1,30 +1,54 @@
+set unstable := true
 set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
-
-# Verbose builds: print everything and don't exit early on failure
+set script-interpreter := ["/bin/sh", "-e", "-u", "-o", "pipefail"]
 
 v := ""
-
-# Extra flags to pass to the nix command
-
 extra_nix_flags := ""
-
-# Override this to use a nix not in the PATH
-
-nix_executable := "nix"
-
-# The final nix command
-
-nix_command := nix_executable + " --experimental-features 'nix-command flakes'" + (if v != "" { " --print-build-logs --keep-going" } else { "" }) + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
+[private]
+verbose_flags := (if v != "" { " --print-build-logs --keep-going" } else { "" })
+[private]
+nix := canonicalize(require("nix"))
+[private]
+nixos-rebuild := canonicalize(require("nixos-rebuild"))
+[private]
+nix_command := nix + " --experimental-features 'nix-command flakes'" + verbose_flags + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
+[private]
+just := just_executable() + " --set v " + quote(v) + " --set extra_nix_flags " + quote(extra_nix_flags) + " --set nix " + quote(nix)
 
 # Show this list
-_list-recipes:
+[private]
+list-recipes:
     @just --list --unsorted --list-prefix '    '
     @echo "Variables:"
     @just --evaluate | while IFS= read line; do echo "    $line"; done
 
 [private]
-nixos-apply target command:
-    nixos-rebuild {{ if v != "" { "--print-build-logs --keep-going " } else { "" } }}--flake '.#{{ target }}' {{ quote(command) }} --ask-sudo-password
+nixos-apply target command login build_type='local':
+    @{{ just }} nixos-apply-{{ build_type }} \
+        {{ quote(target) }} \
+        {{ quote(command) }} \
+        {{ if login != '' { quote(login) } else { '' } }} \
+        {{ if login != '' { quote(build_type) } else { '' } }}
+
+[private]
+nixos-apply-local target command:
+    nixos-rebuild --ask-sudo-password{{ verbose_flags }} {{ quote(command) }} --flake '.#{{ target }}'
+
+[private]
+[script]
+nixos-apply-remote target command login build_type:
+    {{ if build_type == 'local' { '' } else if build_type == 'remote' { '' } else { error('invalid build type: ' + build_type) } }}
+    set -euo pipefail
+    target={{ quote(target) }}
+    command={{ quote(command) }}
+    login={{ quote(login) }}
+    set -x
+    {{ if build_type == 'local' { nix_command + ' build --no-link --print-out-paths ' + "'.#nixosConfigurations.\"'\"${target}\"'\".config.system.build.toplevel'" } else { "" } }}
+    flake="$({{ nix_command }} flake prefetch {{ justfile_directory() }} --json | jq --raw-output '.storePath')"
+    {{ nix_command }} copy --to ssh-ng://"$login" "$flake"
+    {{ nix_command }} copy{{ if build_type == 'remote' { ' --derivation' } else { '' } }} --to ssh-ng://"$login" {{ quote(nixos-rebuild) }}
+    {{ nix_command }} build --no-link --store ssh-ng://"$login" {{ quote(nixos-rebuild) }}
+    ssh -t "$login" {{ quote(nixos-rebuild) }}' --ask-sudo-password '{{ quote(command) }}' --flake '"$flake"'#"'"$target"'"'
 
 [private]
 darwin-apply target command:
@@ -35,10 +59,10 @@ darwin-apply target command:
     {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }} {{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.{{ target }}.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#{{ target }}' {{ quote(command) }}
 
 # Run a nixos-rebuild command on hecate
-hecate command="build": (nixos-apply 'hecate' command)
+hecate command="build" login="": (nixos-apply 'hecate' command login 'local')
 
 # Run a nixos-rebuild command on birdbox
-birdbox command="build": (nixos-apply 'birdbox' command)
+birdbox command="build" login="": (nixos-apply 'birdbox' command login 'remote')
 
 # Run a darwin-rebuild command on caspar
 caspar command="build": (darwin-apply 'caspar' command)

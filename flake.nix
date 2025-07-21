@@ -140,6 +140,7 @@
           packages = [
             pkgs.bashInteractive
             pkgs.just
+            pkgs.jq
 
             # formatting
             self.formatter.${pkgs.system}
