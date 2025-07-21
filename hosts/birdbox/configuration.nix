@@ -4,6 +4,7 @@
   imports = [
     ./disk-config.nix
     ./impermanence.nix
+    ./services/llms.nix
     ./services/photos.nix
     ./tailscale.nix
     ./users/default.nix

@@ -1,10 +1,6 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ./llm.nix
-  ];
-
   services = {
     openssh = {
       enable = true;

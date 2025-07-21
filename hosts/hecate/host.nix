@@ -26,8 +26,6 @@ nixpkgs.lib.nixosSystem {
 
       nixpkgs.overlays = [
         self.overlays.default
-        # https://github.com/NixOS/nixpkgs/issues/424692
-        self.overlays.fix-open-webui
       ];
     })
 

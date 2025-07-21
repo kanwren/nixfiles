@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
 
   modules = nixpkgs.lib.flatten [
-    ({ config, ... }: {
+    {
       networking.hostName = "birdbox";
 
       system.stateVersion = "25.05";
@@ -31,8 +31,11 @@ nixpkgs.lib.nixosSystem {
         channel.enable = false;
       };
 
-      nixpkgs.overlays = [ self.overlays.default ];
-    })
+      nixpkgs.overlays = [
+        self.overlays.default
+        self.overlays.fix-open-webui
+      ];
+    }
 
     disko.nixosModules.disko
 
