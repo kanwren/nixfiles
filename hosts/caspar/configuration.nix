@@ -204,7 +204,6 @@ in
       "kitty"
       "plover"
       "talon"
-      "gimp"
     ];
   };
 
