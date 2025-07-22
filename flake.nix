@@ -23,12 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixlib.follows = "nixpkgs";
-    };
-
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,7 +56,6 @@
     , nix-darwin
     , nixos-hardware
     , sops-nix
-    , nixos-generators
     , catppuccin
     , fenix
     , naersk
