@@ -142,6 +142,19 @@
     };
   };
 
+  security.pam.mount = {
+    enable = true;
+    additionalSearchPaths = [ pkgs.cifs-utils ];
+    extraVolumes = [
+      {
+        name = "persist";
+        path = "/persist";
+        fsType = "cifs";
+        options = [ "credentials=/persist/.smbcredentials" "uid=wren" "gid=wren" "file_mode=600" "dir_mode=700" "nounix" ];
+      }
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     patchelf
     nix-index
