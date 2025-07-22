@@ -21,6 +21,12 @@ in
     accelerationDevices = null;
     mediaLocation = nasPhotosMount;
     host = "127.0.0.1";
+    machine-learning.environment = {
+      MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL = "ViT-B-32__openai";
+      MACHINE_LEARNING_PRELOAD__CLIP__VISUAL = "ViT-B-32__openai";
+      MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION = "buffalo_l";
+      MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION = "buffalo_l";
+    };
   };
 
   # Mount NAS over CIFS as the backing image store for immich
