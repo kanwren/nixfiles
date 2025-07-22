@@ -36,7 +36,6 @@ nixos-apply-local target command:
 [script]
 nixos-apply-remote target command login build_type:
     {{ if build_type == 'local' { '' } else if build_type == 'remote' { '' } else { error('invalid build type: ' + build_type) } }}
-    set -euo pipefail
     nixos_rebuild={{ quote(canonicalize(require("nixos-rebuild"))) }}
     target={{ quote(target) }}
     command={{ quote(command) }}
@@ -51,11 +50,7 @@ nixos-apply-remote target command login build_type:
 
 [private]
 darwin-apply target command:
-    {{ nix_command }} build \
-        --no-link \
-        --print-out-paths \
-        '.#darwinConfigurations."'{{ quote(target) }}'".system'
-    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ shell(nix_command + " build --no-link --print-out-paths '.#darwinConfigurations.\"" + quote(target) + "\".system'") / "sw" / "bin" / "darwin-rebuild" }} --flake '.#{{ target }}' {{ quote(command) }}
+    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ quote(canonicalize(require("darwin-rebuild"))) }} --flake '.#{{ target }}' {{ quote(command) }}
 
 # Run a nixos-rebuild command on hecate
 hecate command="build" login="": (nixos-apply 'hecate' command login 'local')
