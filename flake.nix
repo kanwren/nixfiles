@@ -64,17 +64,9 @@
     }:
     let
       defaultSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
-      forAllSystems = f:
-        nixpkgs.lib.genAttrs
-          defaultSystems
-          (system:
-            let
-              pkgs = import nixpkgs {
-                inherit system;
-                overlays = [ self.overlays.default ];
-              };
-            in
-            f pkgs);
+      pkgsFor = system: import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+      pkgsBySystem = nixpkgs.lib.genAttrs defaultSystems pkgsFor;
+      forAllSystems = f: nixpkgs.lib.mapAttrs (_: f) pkgsBySystem;
     in
     {
       nixosConfigurations = {
