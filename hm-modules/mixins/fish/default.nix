@@ -44,11 +44,12 @@ in
           fish_prompt = {
             description = "a minimal prompt";
             body = ''
+              set --local last_status $status
               if set -q SSH_TTY
                 prompt_login
                 printf ' '
               end
-              test $status = 0; and set_color --bold green; or set_color --bold red
+              test $last_status = 0; and set_color --bold green; or set_color --bold red
               printf '$'
               set_color normal
               printf ' '
