@@ -7,9 +7,7 @@ extra_nix_flags := ""
 [private]
 verbose_flags := (if v != "" { " --print-build-logs --keep-going" } else { "" })
 [private]
-nix := canonicalize(require("nix"))
-[private]
-nixos-rebuild := canonicalize(require("nixos-rebuild"))
+nix := "nix"
 [private]
 nix_command := nix + " --experimental-features 'nix-command flakes'" + verbose_flags + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
 [private]
@@ -32,13 +30,14 @@ nixos-apply target command login build_type='local':
 
 [private]
 nixos-apply-local target command:
-    nixos-rebuild --ask-sudo-password{{ verbose_flags }} {{ quote(command) }} --flake '.#{{ target }}'
+    {{ quote(canonicalize(require("nixos-rebuild"))) }} --ask-sudo-password{{ verbose_flags }} {{ quote(command) }} --flake '.#{{ target }}'
 
 [private]
 [script]
 nixos-apply-remote target command login build_type:
     {{ if build_type == 'local' { '' } else if build_type == 'remote' { '' } else { error('invalid build type: ' + build_type) } }}
     set -euo pipefail
+    nixos_rebuild={{ quote(canonicalize(require("nixos-rebuild"))) }}
     target={{ quote(target) }}
     command={{ quote(command) }}
     login={{ quote(login) }}
@@ -46,17 +45,17 @@ nixos-apply-remote target command login build_type:
     {{ if build_type == 'local' { nix_command + ' build --no-link --print-out-paths ' + "'.#nixosConfigurations.\"'\"${target}\"'\".config.system.build.toplevel'" } else { "" } }}
     flake="$({{ nix_command }} flake prefetch {{ justfile_directory() }} --json | jq --raw-output '.storePath')"
     {{ nix_command }} copy --to ssh-ng://"$login" "$flake"
-    {{ nix_command }} copy{{ if build_type == 'remote' { ' --derivation' } else { '' } }} --to ssh-ng://"$login" {{ quote(nixos-rebuild) }}
-    {{ nix_command }} build --no-link --store ssh-ng://"$login" {{ quote(nixos-rebuild) }}
-    ssh -t "$login" {{ quote(nixos-rebuild) }}' --ask-sudo-password '{{ quote(command) }}' --flake '"$flake"'#"'"$target"'"'
+    {{ nix_command }} copy{{ if build_type == 'remote' { ' --derivation' } else { '' } }} --to ssh-ng://"$login" "$nixos_rebuild"
+    {{ nix_command }} build --no-link --store ssh-ng://"$login" "$nixos_rebuild"
+    ssh -t "$login" "$nixos_rebuild"' --ask-sudo-password '{{ quote(command) }}' --flake '"$flake"'#"'"$target"'"'
 
 [private]
 darwin-apply target command:
     {{ nix_command }} build \
         --no-link \
         --print-out-paths \
-        '.#darwinConfigurations.{{ target }}.system'
-    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }} {{ quote(`nix --experimental-features 'nix-command flakes' build --no-link --print-out-paths '.#darwinConfigurations.{{ target }}.system'` / "sw" / "bin" / "darwin-rebuild") }} --flake '.#{{ target }}' {{ quote(command) }}
+        '.#darwinConfigurations."'{{ quote(target) }}'".system'
+    {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ shell(nix_command + " build --no-link --print-out-paths '.#darwinConfigurations.\"" + quote(target) + "\".system'") / "sw" / "bin" / "darwin-rebuild" }} --flake '.#{{ target }}' {{ quote(command) }}
 
 # Run a nixos-rebuild command on hecate
 hecate command="build" login="": (nixos-apply 'hecate' command login 'local')
