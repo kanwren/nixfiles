@@ -26,6 +26,7 @@ in
       MACHINE_LEARNING_PRELOAD__CLIP__VISUAL = "ViT-B-32__openai";
       MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION = "buffalo_l";
       MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION = "buffalo_l";
+      HF_XET_CACHE = "/var/cache/immich/huggingface-xet"; # TODO(wren): https://github.com/NixOS/nixpkgs/issues/418799
     };
   };
 
