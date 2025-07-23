@@ -36,7 +36,10 @@
   };
 
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      cudaSupport = false; # enable this on a case-by-case basia
+    };
   };
 
   networking = {
