@@ -21,8 +21,8 @@ list-recipes:
     @just --evaluate | while IFS= read line; do echo "    $line"; done
 
 [private]
-nixos-apply target command login build_type='local':
-    @{{ just }} nixos-apply-{{ build_type }} \
+nixos-apply target command login='' build_type='local':
+    @{{ just }} nixos-apply-{{ if login != '' { 'remote' } else { 'local' } }} \
         {{ quote(target) }} \
         {{ quote(command) }} \
         {{ if login != '' { quote(login) } else { '' } }} \
@@ -53,13 +53,13 @@ darwin-apply target command:
     {{ if command =~ "^(switch|activate)$" { "sudo " } else { "" } }}{{ quote(canonicalize(require("darwin-rebuild"))) }} --flake '.#{{ target }}' {{ quote(command) }}
 
 # Run a nixos-rebuild command on hecate
-hecate command="build" login="": (nixos-apply 'hecate' command login 'local')
+hecate command='build' login='' build="remote": (nixos-apply 'hecate' command login build)
 
 # Run a nixos-rebuild command on birdbox
-birdbox command="build" login="": (nixos-apply 'birdbox' command login 'remote')
+birdbox command='build' login='wren@birdbox' build='remote': (nixos-apply 'birdbox' command login build)
 
 # Run a darwin-rebuild command on caspar
-caspar command="build": (darwin-apply 'caspar' command)
+caspar command='build': (darwin-apply 'caspar' command)
 
 # Fetch new versions of all flake inputs and regenerate the flake.lock
 update-inputs input="":
