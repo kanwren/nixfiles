@@ -154,11 +154,11 @@ flow::changes::add() {
     flow="$(change_ids 'present(bookmarks(exact:"flow"))')"
 
     if [ "$flow" != "" ]; then
-        log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) | ('"$argc_revset"')'
+        log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) | ('"$argc_revset"')'
     else
         local old_children new_children flow_commit
         old_children="$(revset 'children('"$argc_revset"')')"
-        log_and_run jj new --no-edit 'all:'"$argc_revset" --message 'xxx:flow'
+        log_and_run jj new --no-edit "$argc_revset" --message 'xxx:flow'
         new_children="$(revset 'children('"$argc_revset"')')"
         flow_commit="$(change_id '('"$new_children"') ~ ('"$old_children"')')"
         log_and_run jj bookmark create flow --revision "$flow_commit"
@@ -192,7 +192,7 @@ flow::changes::remove() {
     fi
 
     # Otherwise, just remove the given parents
-    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_revset"')'
+    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) ~ ('"$argc_revset"')'
 }
 
 # @cmd Move a change managed by the flow to a different revision
@@ -201,7 +201,7 @@ flow::changes::remove() {
 # @arg new! The revision to add
 flow::changes::move() {
     register_rollback_instructions
-    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'all:parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
+    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
 }
 
 # @cmd Clean merged changes from flow tracking post-rebase
@@ -216,12 +216,12 @@ flow::changes::clean-empty() {
 # @arg destination! Revision of the new base for changes
 flow::rebase() {
     register_rollback_instructions
-    log_and_run jj rebase --source 'all:roots(('"$argc_destination"')..bookmarks(exact:"flow"))' --destination "$argc_destination"
+    log_and_run jj rebase --source 'roots(('"$argc_destination"')..bookmarks(exact:"flow"))' --destination "$argc_destination"
 }
 
 # @cmd Push all flow-managed branches
 flow::push() {
-    log_and_run jj git push --revisions 'all:trunk()..parents(bookmarks(exact:"flow")) ~ conflicts()'
+    log_and_run jj git push --revisions 'trunk()..parents(bookmarks(exact:"flow")) ~ conflicts()'
 }
 
 declare -r note_prefix='NB. '

@@ -48,6 +48,7 @@ in
           diff-editor = ":builtin";
           diff-formatter = "difftastic";
           merge-editor = "vimdiff";
+          always-allow-large-revsets = true;
         };
 
         merge-tools = {
