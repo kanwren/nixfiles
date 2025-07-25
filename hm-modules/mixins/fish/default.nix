@@ -77,6 +77,14 @@ in
             '';
           };
 
+          dump = {
+            description = "Quote each argument for fish and present the results like a command";
+            body = ''
+              string join -- ' ' (string escape --style=script -- $argv)
+              return 0
+            '';
+          };
+
           fzf_git_branch_widget = {
             description = "List and insert git branches";
             body = ''
