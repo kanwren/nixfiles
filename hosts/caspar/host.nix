@@ -1,37 +1,26 @@
-{ self
-, nixpkgs
-, nix-darwin
-, home-manager
-, catppuccin
-}:
+{ inputs, outputs }:
 
-nix-darwin.lib.darwinSystem {
+outputs.lib.mkDarwinSystem {
+  hostname = "caspar";
+
   system = "aarch64-darwin";
 
-  modules = [
-    {
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-    }
-
-    {
-      nix.registry.nixpkgs.to = { type = "path"; path = nixpkgs.outPath; };
-      nix.nixPath = nixpkgs.lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
-      nixpkgs.overlays = [ self.overlays.default ];
-    }
-
-    self.darwinModules.pueue
-
-    home-manager.darwinModules.home-manager
-    {
-      home-manager.sharedModules = [
-        catppuccin.homeModules.catppuccin
-        self.hmModules.h
-        self.hmModules.kubie
-        self.hmModules.mixins
-      ];
-    }
-
+  systemModules = [
+    inputs.home-manager.darwinModules.home-manager
+    outputs.darwinModules.pueue
     ./configuration.nix
+  ];
+
+  overlays = [
+    outputs.overlays.stable
+    outputs.overlays.additions
+  ];
+
+  hmModules = [
+    inputs.catppuccin.homeModules.catppuccin
+    outputs.hmModules.h
+    outputs.hmModules.kubie
+    outputs.hmModules.mixins
   ];
 }
 

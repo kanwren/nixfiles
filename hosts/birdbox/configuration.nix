@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -40,6 +40,15 @@
       allowUnfree = true;
       cudaSupport = false; # enable this on a case-by-case basia
     };
+  };
+
+  hardware.nvidia = {
+    prime = {
+      offload.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+    open = false;
   };
 
   networking = {
@@ -165,5 +174,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
   };
+
+  system.stateVersion = "25.05";
 }
 

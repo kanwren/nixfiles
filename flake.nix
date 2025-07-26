@@ -51,56 +51,41 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-stable
-    , home-manager
-    , nix-darwin
-    , nixos-hardware
-    , sops-nix
-    , catppuccin
-    , fenix
-    , naersk
-    , disko
-    , impermanence
+    , ...
     }:
     let
+      rev = self.rev or self.dirtyRev or null;
       defaultSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
-      pkgsFor = system: import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
-      pkgsBySystem = nixpkgs.lib.genAttrs defaultSystems pkgsFor;
-      forAllSystems = f: nixpkgs.lib.mapAttrs (_: f) pkgsBySystem;
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs
+          defaultSystems
+          (system: f nixpkgs.legacyPackages.${system});
     in
     {
       nixosConfigurations = {
-        hecate = import ./hosts/hecate/host.nix {
-          inherit self nixpkgs home-manager nixos-hardware sops-nix catppuccin;
-        };
-
-        birdbox = import ./hosts/birdbox/host.nix {
-          inherit self nixpkgs home-manager nixos-hardware sops-nix disko impermanence catppuccin;
-        };
+        hecate = import ./hosts/hecate/host.nix { inherit (self) inputs outputs; };
+        birdbox = import ./hosts/birdbox/host.nix { inherit (self) inputs outputs; };
       };
 
       darwinConfigurations = {
-        caspar = import ./hosts/caspar/host.nix {
-          inherit self nixpkgs nix-darwin home-manager catppuccin;
-        };
+        caspar = import ./hosts/caspar/host.nix { inherit (self) inputs outputs; };
       };
 
-      # Nixpkgs overlays
-      overlays = {
-        default = nixpkgs.lib.composeManyExtensions [
-          fenix.overlays.default
-          naersk.overlays.default
-          (final: prev: import ./pkgs { pkgs = final; })
-        ];
+      overlays = import ./overlays { inherit (self) inputs outputs; };
 
-        fix-open-webui = final: prev: {
-          inherit (nixpkgs-stable.legacyPackages.${prev.system})
-            open-webui;
-        };
-      } // import ./overlays;
+      nixosModules = import ./modules;
+      darwinModules = import ./darwin-modules;
+      hmModules = import ./hm-modules;
+
+      templates = import ./templates;
+
+      lib = import ./lib {
+        inherit (self) inputs;
+        inherit rev;
+      };
 
       packages = forAllSystems (pkgs: {
-        inherit (pkgs)
+        inherit (pkgs.extend self.overlays.additions)
           catppuccin-twemoji-hearts
           envtpl
           frum
@@ -110,15 +95,6 @@
           tfenv
           wd-fish;
       });
-
-      nixosModules = import ./modules;
-
-      darwinModules = import ./darwin-modules;
-
-      hmModules = import ./hm-modules;
-
-      # custom templates
-      templates = import ./templates;
 
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShellNoCC {
@@ -141,8 +117,7 @@
 
       checks = forAllSystems (pkgs: {
         check-format = pkgs.runCommand "check-format" { buildInputs = [ self.formatter.${pkgs.system} ]; } ''
-          nixpkgs-fmt --check ${./.}
-          touch "$out"
+          nixpkgs-fmt --check ${./.} && touch "$out"
         '';
       });
     };

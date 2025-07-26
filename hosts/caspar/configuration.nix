@@ -5,17 +5,12 @@ let
 in
 {
   imports = [
-    ./nix.nix
     ./certs.nix
   ];
 
-  networking = {
-    computerName = "caspar";
-    hostName = "caspar.local";
-    localHostName = "caspar";
-  };
-
   system = {
+    stateVersion = 5;
+
     primaryUser = "wrenn";
 
     keyboard = {
@@ -59,6 +54,9 @@ in
       };
     };
   };
+
+  ids.gids.nixbld = 350;
+  nixpkgs.config.allowUnfree = true;
 
   environment = {
     variables = {
@@ -209,6 +207,7 @@ in
   users.users.wrenn = {
     home = "/Users/wrenn";
   };
+  nix.settings.trusted-users = [ "wrenn" ];
 
   home-manager = {
     useGlobalPkgs = true;

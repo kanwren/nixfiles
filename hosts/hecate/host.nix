@@ -1,69 +1,34 @@
-{ self
-, nixpkgs
-, home-manager
-, nixos-hardware
-, sops-nix
-, catppuccin
+{ inputs
+, outputs
 }:
 
-nixpkgs.lib.nixosSystem {
-  system = "x86_64-linux";
+outputs.lib.mkNixosSystem {
+  hostname = "hecate";
 
-  modules = nixpkgs.lib.flatten [
-    # Bootstrapping
-    ({ config, ... }: {
-      networking.hostName = "hecate";
-
-      system.stateVersion = "25.05";
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Set up flakes and remove impure components. `nixosSystem` already
-      # injects `nixpkgs` into system flake registry and `NIX_PATH`.
-      nix = {
-        settings.experimental-features = [ "nix-command" "flakes" ];
-        channel.enable = false;
-      };
-
-      nixpkgs.overlays = [
-        self.overlays.default
-      ];
-    })
-
-    home-manager.nixosModules.home-manager
-    {
-      home-manager.sharedModules = [
-        catppuccin.homeModules.catppuccin
-        self.hmModules.h
-        self.hmModules.kubie
-        self.hmModules.mixins
-      ];
-    }
-
-    sops-nix.nixosModules.sops
-    {
-      sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    }
-
-    self.nixosModules.tscaddy
-    self.nixosModules.pueue
-
-    # hardware modules
-    (with nixos-hardware.nixosModules; [
-      common-pc-laptop
-      common-pc-laptop-ssd
-      common-cpu-amd
-      common-gpu-nvidia
-    ])
-
-    # configure the bus IDs for common-gpu-nvidia
-    {
-      hardware.nvidia = {
-        prime = { intelBusId = "PCI:5:0:0"; nvidiaBusId = "PCI:1:0:0"; };
-        open = false;
-      };
-    }
+  systemModules = [
+    inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    outputs.nixosModules.tscaddy
+    outputs.nixosModules.pueue
 
     ./hardware-configuration.nix
     ./configuration.nix
+  ];
+
+  overlays = [
+    outputs.overlays.stable
+    outputs.overlays.fixes
+    outputs.overlays.additions
+  ];
+
+  hmModules = [
+    inputs.catppuccin.homeModules.catppuccin
+    outputs.hmModules.h
+    outputs.hmModules.kubie
+    outputs.hmModules.mixins
   ];
 }
