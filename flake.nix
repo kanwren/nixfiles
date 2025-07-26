@@ -113,11 +113,11 @@
         };
       });
 
-      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllSystems (pkgs: pkgs.alejandra);
 
       checks = forAllSystems (pkgs: {
         check-format = pkgs.runCommand "check-format" { buildInputs = [ self.formatter.${pkgs.system} ]; } ''
-          nixpkgs-fmt --check ${./.} && touch "$out"
+          alejandra --check ${./.} && touch "$out"
         '';
       });
     };
