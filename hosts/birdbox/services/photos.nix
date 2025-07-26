@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   intToString = n: assert builtins.isInt n; builtins.toString n;
 
   nasPhotosMount = "/mnt/immich";
@@ -9,8 +11,7 @@ let
 
   immichUser = config.services.immich.user;
   immichGroup = config.services.immich.group;
-in
-{
+in {
   environment.systemPackages = [
     pkgs.immich-cli
     pkgs.cifs-utils
@@ -64,7 +65,7 @@ in
       host = "https://immich.swallow-chickadee.ts.net";
       target = "http://127.0.0.1:${intToString config.services.immich.port}";
       authKeyFile = config.sops.secrets."caddy/ts-authkey-immich".path;
-      dependencies = [ "immich-server.service" ];
+      dependencies = ["immich-server.service"];
     };
   };
 

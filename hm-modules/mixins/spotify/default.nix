@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.spotify;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.spotify;
+in {
   options.mixins.spotify.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -11,7 +13,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ spotify ];
+    home.packages = with pkgs; [spotify];
   };
 }
-

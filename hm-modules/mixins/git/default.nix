@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.git;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.git;
+in {
   options.mixins.git.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -12,7 +14,6 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.git = {
-
       enable = true;
       package = pkgs.gitAndTools.gitFull;
 
@@ -174,4 +175,3 @@ in
     };
   };
 }
-

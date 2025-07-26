@@ -1,5 +1,7 @@
-{ lib, buildGoModule }:
-
+{
+  lib,
+  buildGoModule,
+}:
 buildGoModule rec {
   pname = "caddy-with-extensions";
   version = "unstable-2025-05-10";

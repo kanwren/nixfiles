@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.mixins.k8s;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.mixins.k8s;
+in {
   options.mixins.k8s = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -69,7 +71,7 @@ in
           editjson = {
             shortCut = "Shift-E";
             description = "Edit as JSON";
-            scopes = [ "all" ];
+            scopes = ["all"];
             background = false;
             command = "${pkgs.kubectl}/bin/kubectl";
             args = [
@@ -87,37 +89,35 @@ in
           editsecret = {
             shortCut = "Shift-X";
             description = "Edit secret";
-            scopes = [ "secrets" ];
+            scopes = ["secrets"];
             background = false;
-            command =
-              let
-                k9s-edit-secret = pkgs.writeShellApplication {
-                  name = "k9s-edit-secret";
-                  runtimeInputs = [
-                    pkgs.coreutils
-                    pkgs.yq-go
-                    pkgs.kubectl
-                  ];
-                  bashOptions = [ "errexit" "nounset" "pipefail" ];
-                  text = ''
-                    declare context namespace resource
-                    context="''${1?missing argument: context}"
-                    namespace="''${2?missing argument: namespace}"
-                    resource="''${3?missing argument: resource}"
-                    declare -r context namespace resource
+            command = let
+              k9s-edit-secret = pkgs.writeShellApplication {
+                name = "k9s-edit-secret";
+                runtimeInputs = [
+                  pkgs.coreutils
+                  pkgs.yq-go
+                  pkgs.kubectl
+                ];
+                bashOptions = ["errexit" "nounset" "pipefail"];
+                text = ''
+                  declare context namespace resource
+                  context="''${1?missing argument: context}"
+                  namespace="''${2?missing argument: namespace}"
+                  resource="''${3?missing argument: resource}"
+                  declare -r context namespace resource
 
-                    declare manifest
-                    manifest="$(mktemp --suffix=.yaml)"
-                    declare -r manifest
+                  declare manifest
+                  manifest="$(mktemp --suffix=.yaml)"
+                  declare -r manifest
 
-                    kubectl --context="''${context}" --namespace="''${namespace}" get "''${resource}" --output=yaml | yq '.data[] |= @base64d' > "''${manifest}"
-                    # shellcheck disable=SC2046 # EDITOR typically allows passing flags via shell splitting
-                    ''${KUBE_EDITOR:-''${EDITOR:-vi}} "''${manifest}"
-                    yq '.data[] |= @base64' "''${manifest}" | kubectl --context="''${context}" --namespace="''${namespace}" apply --filename=-
-                  '';
-                };
-              in
-              "${k9s-edit-secret}/bin/k9s-edit-secret";
+                  kubectl --context="''${context}" --namespace="''${namespace}" get "''${resource}" --output=yaml | yq '.data[] |= @base64d' > "''${manifest}"
+                  # shellcheck disable=SC2046 # EDITOR typically allows passing flags via shell splitting
+                  ''${KUBE_EDITOR:-''${EDITOR:-vi}} "''${manifest}"
+                  yq '.data[] |= @base64' "''${manifest}" | kubectl --context="''${context}" --namespace="''${namespace}" apply --filename=-
+                '';
+              };
+            in "${k9s-edit-secret}/bin/k9s-edit-secret";
             args = [
               "$CONTEXT"
               "$NAMESPACE"

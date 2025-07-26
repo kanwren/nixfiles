@@ -1,5 +1,7 @@
-{ mkShell, tex-env }:
-
+{
+  mkShell,
+  tex-env,
+}:
 mkShell {
-  packages = [ tex-env ];
+  packages = [tex-env];
 }

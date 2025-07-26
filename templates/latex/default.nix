@@ -1,18 +1,21 @@
-{ stdenv, texlive }:
-
-rec {
+{
+  stdenv,
+  texlive,
+}: rec {
   tex-env = texlive.combine {
-    inherit (texlive)
+    inherit
+      (texlive)
       latexmk
       # Any extra libraries here
       # enumitem
-      scheme-small;
+      scheme-small
+      ;
   };
 
   docs.main = stdenv.mkDerivation {
     name = "main";
     src = ./.;
-    buildInputs = [ tex-env ];
+    buildInputs = [tex-env];
     buildPhase = "make clean && HOME=. make";
   };
 }

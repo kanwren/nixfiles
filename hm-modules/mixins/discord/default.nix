@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.discord;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.discord;
+in {
   options.mixins.discord.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -22,4 +24,3 @@ in
     xdg.configFile."BetterDiscord/themes".source = ./themes;
   };
 }
-

@@ -1,9 +1,11 @@
-{ pkgs, lib, config, ... }:
-
-let
-  homebrewPrefix = lib.strings.removeSuffix "/bin" (builtins.toString config.homebrew.brewPrefix);
-in
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  homebrewPrefix = lib.strings.removeSuffix "/bin" (builtins.toString config.homebrew.brewPrefix);
+in {
   imports = [
     ./certs.nix
   ];
@@ -15,16 +17,17 @@ in
 
     keyboard = {
       enableKeyMapping = true;
-      userKeyMapping =
-        let
-          escapeKey = 30064771113;
-          capsLockKey = 30064771129;
-          remap = from: to: { HIDKeyboardModifierMappingSrc = from; HIDKeyboardModifierMappingDst = to; };
-        in
-        [
-          (remap escapeKey capsLockKey)
-          (remap capsLockKey escapeKey)
-        ];
+      userKeyMapping = let
+        escapeKey = 30064771113;
+        capsLockKey = 30064771129;
+        remap = from: to: {
+          HIDKeyboardModifierMappingSrc = from;
+          HIDKeyboardModifierMappingDst = to;
+        };
+      in [
+        (remap escapeKey capsLockKey)
+        (remap capsLockKey escapeKey)
+      ];
     };
 
     defaults = {
@@ -121,7 +124,7 @@ in
       pkgs.automake
       pkgs.cmake
       pkgs.bazelisk
-      (pkgs.runCommandNoCCLocal "bazel-bazelisk-alias" { } ''
+      (pkgs.runCommandNoCCLocal "bazel-bazelisk-alias" {} ''
         mkdir -p "$out/bin"
         ln -s "${pkgs.bazelisk}/bin/bazelisk" "$out/bin/bazel"
       '')
@@ -207,7 +210,7 @@ in
   users.users.wrenn = {
     home = "/Users/wrenn";
   };
-  nix.settings.trusted-users = [ "wrenn" ];
+  nix.settings.trusted-users = ["wrenn"];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -222,7 +225,7 @@ in
         };
 
         packages = lib.flatten [
-          (builtins.attrValues (import ./scripts.nix { inherit pkgs lib; }))
+          (builtins.attrValues (import ./scripts.nix {inherit pkgs lib;}))
         ];
 
         shellAliases = {
@@ -282,7 +285,7 @@ in
           # give NixOS paths priority over brew and system paths
           fish_add_path --move --prepend --path ${
             lib.strings.concatMapStringsSep " " (p: builtins.toJSON "${p}/bin")
-              config.environment.profiles
+            config.environment.profiles
           }
 
           fish_add_path --move --prepend --path \
@@ -336,7 +339,7 @@ in
 
         kitty = {
           enable = true;
-          package = pkgs.kitty.overrideAttrs { doInstallCheck = false; };
+          package = pkgs.kitty.overrideAttrs {doInstallCheck = false;};
           extraConfig = builtins.readFile ./kitty.conf;
           shellIntegration.mode = "enabled";
         };
@@ -485,7 +488,7 @@ in
         };
       };
 
-      xdg.configFile = builtins.foldl' (acc: as: acc // as) { } [
+      xdg.configFile = builtins.foldl' (acc: as: acc // as) {} [
         {
           # aerospace configuration
           "aerospace/aerospace.toml".source = ./aerospace.toml;
@@ -495,21 +498,21 @@ in
           let
             extra-fish-completions =
               lib.mapAttrs'
-                (name: value: {
-                  name = "fish/completions/${name}.fish";
-                  inherit value;
-                })
-                {
-                  use-java.source = pkgs.writeText "use-java" ''
-                    complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
-                  '';
-                  aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" { nativeBuildInputs = [ pkgs.aws-iam-authenticator ]; } ''aws-iam-authenticator completion fish > $out'';
-                  # Docker is installed externally; add completions manually.
-                  docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
-                  jira.source = pkgs.runCommand "jira-cli-go-completions" { nativeBuildInputs = [ pkgs.jira-cli-go ]; } "jira completion fish > $out";
-                };
+              (name: value: {
+                name = "fish/completions/${name}.fish";
+                inherit value;
+              })
+              {
+                use-java.source = pkgs.writeText "use-java" ''
+                  complete --command use-java --no-files --keep-order --arguments "(path change-extension ''' (path basename /Library/Java/JavaVirtualMachines/jdk*.jdk) | string replace --regex '^jdk-?' ''' | sort --numeric-sort --reverse)"
+                '';
+                aws-iam-authenticator.source = pkgs.runCommand "aws-iam-authenticator-completions" {nativeBuildInputs = [pkgs.aws-iam-authenticator];} ''aws-iam-authenticator completion fish > $out'';
+                # Docker is installed externally; add completions manually.
+                docker.source = "${pkgs.docker}/share/fish/vendor_completions.d/docker.fish";
+                jira.source = pkgs.runCommand "jira-cli-go-completions" {nativeBuildInputs = [pkgs.jira-cli-go];} "jira completion fish > $out";
+              };
           in
-          extra-fish-completions
+            extra-fish-completions
         )
       ];
     };

@@ -1,5 +1,7 @@
-{ inputs, outputs }:
-
+{
+  inputs,
+  outputs,
+}:
 outputs.lib.mkNixosSystem {
   hostname = "birdbox";
 
@@ -33,4 +35,3 @@ outputs.lib.mkNixosSystem {
     outputs.hmModules.mixins
   ];
 }
-

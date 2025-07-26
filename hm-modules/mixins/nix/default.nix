@@ -1,10 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.nix;
-in
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.nix;
+in {
   options.mixins.nix.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

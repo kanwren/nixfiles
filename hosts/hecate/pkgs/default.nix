@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   environment = {
     systemPackages = with pkgs; [
       # nix stuff
@@ -94,4 +92,3 @@
     ];
   };
 }
-

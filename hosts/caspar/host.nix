@@ -1,5 +1,7 @@
-{ inputs, outputs }:
-
+{
+  inputs,
+  outputs,
+}:
 outputs.lib.mkDarwinSystem {
   hostname = "caspar";
 
@@ -23,4 +25,3 @@ outputs.lib.mkDarwinSystem {
     outputs.hmModules.mixins
   ];
 }
-

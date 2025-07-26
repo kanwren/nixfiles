@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.dunst;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.dunst;
+in {
   options.mixins.dunst.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -11,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.libnotify pkgs.dunst ];
+    home.packages = [pkgs.libnotify pkgs.dunst];
 
     services.dunst = {
       enable = true;
@@ -58,4 +60,3 @@ in
     };
   };
 }
-

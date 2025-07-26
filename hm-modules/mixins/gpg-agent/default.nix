@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.gpg-agent;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.gpg-agent;
+in {
   options.mixins.gpg-agent.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -23,4 +25,3 @@ in
     };
   };
 }
-

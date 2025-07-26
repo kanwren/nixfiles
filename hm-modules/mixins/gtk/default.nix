@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.mixins.gtk;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.gtk;
+in {
   options.mixins.gtk.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -19,7 +21,7 @@ in
       theme = {
         name = "catppuccin-mocha-lavender-standard";
         package = pkgs.catppuccin-gtk.override {
-          accents = [ "lavender" ];
+          accents = ["lavender"];
           variant = "mocha";
         };
       };
@@ -35,4 +37,3 @@ in
     };
   };
 }
-

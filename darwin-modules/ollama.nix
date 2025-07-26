@@ -1,12 +1,12 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-  cfg = config.services.ollama;
-in
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.services.ollama;
+in {
   options = {
     services.ollama.enable = mkOption {
       type = types.bool;
@@ -30,7 +30,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [cfg.package];
 
     launchd.user.agents.ollama = {
       command = "${cfg.package}/bin/ollama serve";

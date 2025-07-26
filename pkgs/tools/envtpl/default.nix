@@ -1,5 +1,8 @@
-{ lib, fetchFromGitHub, buildGoModule }:
-
+{
+  lib,
+  fetchFromGitHub,
+  buildGoModule,
+}:
 buildGoModule rec {
   pname = "envtpl";
   version = "2.0.0";
@@ -11,7 +14,7 @@ buildGoModule rec {
     hash = "sha256-6FSsU8yJABm8mPA8MVn2TjaBQU5nJY144bgIZUrELns=";
   };
 
-  subPackages = [ "cmd/envtpl" ];
+  subPackages = ["cmd/envtpl"];
 
   vendorHash = null;
 
@@ -22,4 +25,3 @@ buildGoModule rec {
     platforms = platforms.unix;
   };
 }
-
