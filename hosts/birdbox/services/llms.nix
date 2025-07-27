@@ -22,6 +22,7 @@
         ollama = {
           host = "https://ollama.swallow-chickadee.ts.net";
           target = "http://127.0.0.1:${toString config.services.ollama.port}";
+          keepHost = false;
           authKeyFile = config.sops.secrets."caddy/ts-authkey-ollama".path;
           dependencies = ["ollama.service"];
         };
