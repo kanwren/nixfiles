@@ -68,6 +68,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.caddy = {
       enable = true;
+      enableReload = false;
       package = pkgs.callPackage ./caddy {};
       globalConfig = let
         configForService = service: ''
@@ -78,7 +79,7 @@ in {
         '';
       in ''
         tailscale {
-        ${lib.strings.concatMapStringsSep "\n" configForService nodes}
+          ${lib.strings.concatMapStringsSep "\n" configForService nodes}
         }
       '';
       virtualHosts = let
