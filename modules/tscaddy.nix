@@ -42,6 +42,22 @@ in {
             '';
           };
 
+          keepHost = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = ''
+              Whether to keep the HTTP 'Host' header when proxying
+            '';
+          };
+
+          extraProxyConfig = lib.mkOption {
+            type = lib.types.nullOr lib.types.lines;
+            default = null;
+            description = ''
+              Extra configuration for the Caddy reverse_proxy
+            '';
+          };
+
           authKeyFile = lib.mkOption {
             type = lib.types.path;
             description = ''
@@ -89,7 +105,10 @@ in {
             extraConfig = ''
               bind tailscale/${opts.name}
               tailscale_auth
-              reverse_proxy ${opts.target}
+              reverse_proxy ${opts.target} {
+                ${lib.optionalString (!opts.keepHost) "header_up -Host"}
+                ${lib.optionalString (opts.extraProxyConfig != null) opts.extraProxyConfig}
+              }
             '';
           };
         };
