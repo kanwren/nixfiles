@@ -8,6 +8,7 @@
     ./impermanence.nix
     ./services/bookmarks.nix
     ./services/llms.nix
+    ./services/minecraft.nix
     ./services/photos.nix
     ./services/wiki.nix
     ./services/www.nix

@@ -7,6 +7,7 @@
       "/var/lib/bluetooth"
       "/var/lib/caddy"
       "/var/lib/gitit"
+      "/var/lib/minecraft-ftb"
       "/var/lib/nixos"
       "/var/lib/postgresql"
       "/var/lib/private/ollama"
