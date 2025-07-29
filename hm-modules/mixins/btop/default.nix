@@ -1,10 +1,11 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.btop;
-in {
+in
+{
   options.mixins.btop.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

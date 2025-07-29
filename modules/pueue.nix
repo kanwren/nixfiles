@@ -1,12 +1,12 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with lib; let
   cfg = config.services.pueue;
-in {
+in
+{
   options = {
     services.pueue.enable = mkOption {
       type = types.bool;
@@ -30,7 +30,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [cfg.package];
+    environment.systemPackages = [ cfg.package ];
 
     systemd.user.services.pueue = {
       description = "Pueue task manager";
@@ -39,7 +39,7 @@ in {
         Restart = "always";
         ExecStart = "${cfg.package}/bin/pueued --verbose";
       };
-      wantedBy = ["default.target"];
+      wantedBy = [ "default.target" ];
     };
   };
 }

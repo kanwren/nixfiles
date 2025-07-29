@@ -1,6 +1,6 @@
-{
-  lib,
-  buildGoModule,
+{ lib
+, buildGoModule
+,
 }:
 buildGoModule rec {
   pname = "caddy-with-extensions";

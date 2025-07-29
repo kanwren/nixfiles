@@ -1,11 +1,12 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs
+, config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.git;
-in {
+in
+{
   options.mixins.git.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

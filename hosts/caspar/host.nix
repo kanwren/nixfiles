@@ -1,6 +1,6 @@
-{
-  inputs,
-  outputs,
+{ inputs
+, outputs
+,
 }:
 outputs.lib.mkDarwinSystem {
   hostname = "caspar";

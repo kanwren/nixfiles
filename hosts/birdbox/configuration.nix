@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   imports = [
     ./disk-config.nix
@@ -20,20 +19,20 @@
 
     tmp.cleanOnBoot = true;
 
-    binfmt.emulatedSystems = ["aarch64-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   system = {
     autoUpgrade.enable = false;
   };
 
-  sops.age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+  sops.age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
 
   nix = {
     settings = {
       keep-outputs = true;
       keep-derivations = true;
-      trusted-users = ["root" "wren"];
+      trusted-users = [ "root" "wren" ];
     };
   };
 
@@ -58,7 +57,7 @@
 
   networking = {
     networkmanager.enable = true;
-    firewall.trustedInterfaces = [config.services.tailscale.interfaceName];
+    firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
   };
 
   time = {

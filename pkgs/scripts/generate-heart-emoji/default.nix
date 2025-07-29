@@ -1,10 +1,11 @@
-{
-  replaceVarsWith,
-  runtimeShell,
-  unixtools,
-  gnugrep,
-  inkscape,
-}: let
+{ replaceVarsWith
+, runtimeShell
+, unixtools
+, gnugrep
+, inkscape
+,
+}:
+let
   script = replaceVarsWith {
     name = "generate-heart-emoji";
     src = ./generate_heart_emoji.sh;
@@ -19,6 +20,6 @@
     description = "Generate a twemoji heart with the given color";
   };
 in
-  script.overrideAttrs (old: {
-    meta = (old.meta or {}) // meta;
-  })
+script.overrideAttrs (old: {
+  meta = (old.meta or { }) // meta;
+})

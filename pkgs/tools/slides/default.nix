@@ -1,12 +1,13 @@
-{
-  slides,
-  graph-easy,
-  plantuml,
-  perlPackages,
-  fetchurl,
-  lib,
-  symlinkJoin,
-}: let
+{ slides
+, graph-easy
+, plantuml
+, perlPackages
+, fetchurl
+, lib
+, symlinkJoin
+,
+}:
+let
   graph_easy_as_svg = perlPackages.buildPerlPackage {
     pname = "Graph-Easy-As_svg";
     version = "0.28";
@@ -24,14 +25,14 @@
   };
 
   graph-easy-full = graph-easy.overrideAttrs (old: {
-    propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ [graph_easy_as_svg];
+    propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ graph_easy_as_svg ];
   });
 in
-  symlinkJoin {
-    name = "slides-full";
-    paths = [
-      slides
-      graph-easy-full
-      plantuml
-    ];
-  }
+symlinkJoin {
+  name = "slides-full";
+  paths = [
+    slides
+    graph-easy-full
+    plantuml
+  ];
+}

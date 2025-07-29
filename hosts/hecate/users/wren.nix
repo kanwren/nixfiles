@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   users.users.wren = {
     initialPassword = "setup";
     isNormalUser = true;
@@ -18,13 +18,13 @@
     shell = pkgs.fish;
   };
 
-  nix.settings.trusted-users = ["wren"];
+  nix.settings.trusted-users = [ "wren" ];
 
   home-manager.users.wren = {
     home = {
       stateVersion = "25.05";
 
-      sessionPath = ["$HOME/bin"];
+      sessionPath = [ "$HOME/bin" ];
 
       sessionVariables = {
         EDITOR = "nvim";

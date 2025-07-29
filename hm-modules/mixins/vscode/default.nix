@@ -1,10 +1,11 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.vscode;
-in {
+in
+{
   options.mixins.vscode.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

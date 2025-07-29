@@ -1,11 +1,12 @@
 # Requires h home-manager module
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.h;
-in {
+in
+{
   options.mixins.h.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

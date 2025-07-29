@@ -1,10 +1,10 @@
-{
-  stdenvNoCC,
-  lib,
-  fetchFromGitHub,
-  makeWrapper,
-  gnugrep,
-  unzip,
+{ stdenvNoCC
+, lib
+, fetchFromGitHub
+, makeWrapper
+, gnugrep
+, unzip
+,
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "tfenv";
@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-2Fpaj/UQDE7PNFX9GNr4tygvKmm/X0yWVVerJ+Y6eks=";
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -50,6 +50,6 @@ stdenvNoCC.mkDerivation rec {
     description = "Terraform version manager";
     homepage = "https://github.com/tfutils/tfenv";
     platforms = lib.platforms.unix;
-    licenses = [lib.licenses.mit];
+    licenses = [ lib.licenses.mit ];
   };
 }

@@ -1,6 +1,6 @@
-{
-  stdenv,
-  texlive,
+{ stdenv
+, texlive
+,
 }: rec {
   tex-env = texlive.combine {
     inherit
@@ -15,7 +15,7 @@
   docs.main = stdenv.mkDerivation {
     name = "main";
     src = ./.;
-    buildInputs = [tex-env];
+    buildInputs = [ tex-env ];
     buildPhase = "make clean && HOME=. make";
   };
 }

@@ -1,8 +1,9 @@
-{
-  lib,
-  runCommand,
-  generate-heart-emoji,
-}: let
+{ lib
+, runCommand
+, generate-heart-emoji
+,
+}:
+let
   catppuccin-mocha = {
     rosewater = "#f5e0dc";
     flamingo = "#f2cdcd";
@@ -23,26 +24,26 @@
     crust = "#11111b";
   };
 in
-  runCommand "catppuccin-twemoji-hearts" {buildInputs = [generate-heart-emoji];} ''
-    mkdir -p "$out"/share/emoji
-    ${
-      let
-        attrsToList = as:
-          builtins.map (name: {
-            inherit name;
-            value = as.${name};
-          }) (builtins.attrNames as);
+runCommand "catppuccin-twemoji-hearts" { buildInputs = [ generate-heart-emoji ]; } ''
+  mkdir -p "$out"/share/emoji
+  ${
+    let
+      attrsToList = as:
+        builtins.map (name: {
+          inherit name;
+          value = as.${name};
+        }) (builtins.attrNames as);
 
-        mkHeart = name: color: ''
-          generate-heart-emoji ${lib.escapeShellArg color} --format png --outfile "$out"/share/emoji/heart_${name}.png
-        '';
-      in
-        builtins.concatStringsSep "\n"
-        (builtins.map ({
-          name,
-          value,
-        }:
-          mkHeart name value)
-        (attrsToList catppuccin-mocha))
-    }
-  ''
+      mkHeart = name: color: ''
+        generate-heart-emoji ${lib.escapeShellArg color} --format png --outfile "$out"/share/emoji/heart_${name}.png
+      '';
+    in
+      builtins.concatStringsSep "\n"
+      (builtins.map ({
+        name,
+        value,
+      }:
+        mkHeart name value)
+      (attrsToList catppuccin-mocha))
+  }
+''

@@ -1,7 +1,6 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
   sops.secrets."wren/hashed-password" = {
     sopsFile = ../secrets/wren/hashed-password.txt;
@@ -19,21 +18,21 @@
     ];
     createHome = true;
     shell = pkgs.fish;
-    packages = [];
+    packages = [ ];
   };
 
   home-manager.users.wren = {
     home = {
       stateVersion = "25.05";
 
-      sessionPath = ["$HOME/bin"];
+      sessionPath = [ "$HOME/bin" ];
 
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
 
-      packages = [];
+      packages = [ ];
 
       persistence."/persist/home/wren" = {
         allowOther = true;
@@ -52,7 +51,7 @@
           ".local/share/zoxide"
           ".local/share/wd"
         ];
-        files = [];
+        files = [ ];
       };
     };
 
@@ -83,34 +82,35 @@
     mode = "0440";
   };
 
-  fileSystems = let
-    host = "gwenas";
-    base = "/home/wren/nas";
-    shares = [
-      "Anime"
-      "Books"
-      "Documents"
-      "Downloads"
-      "Music"
-      "Shared"
-      "TV"
-      "Wren"
-    ];
-    mkShare = share: {
-      name = "${base}/${share}";
-      value = {
-        device = "//${host}/${share}";
-        fsType = "cifs";
-        options = [
-          "x-systemd.automount"
-          "noauto"
-          "x-systemd.idle-timeout=60"
-          "x-systemd.device-timeout=5s"
-          "x-systemd.mount-timeout=5s"
-          "credentials=${config.sops.secrets."wren/nas-credentials".path}"
-        ];
+  fileSystems =
+    let
+      host = "gwenas";
+      base = "/home/wren/nas";
+      shares = [
+        "Anime"
+        "Books"
+        "Documents"
+        "Downloads"
+        "Music"
+        "Shared"
+        "TV"
+        "Wren"
+      ];
+      mkShare = share: {
+        name = "${base}/${share}";
+        value = {
+          device = "//${host}/${share}";
+          fsType = "cifs";
+          options = [
+            "x-systemd.automount"
+            "noauto"
+            "x-systemd.idle-timeout=60"
+            "x-systemd.device-timeout=5s"
+            "x-systemd.mount-timeout=5s"
+            "credentials=${config.sops.secrets."wren/nas-credentials".path}"
+          ];
+        };
       };
-    };
-  in
+    in
     builtins.listToAttrs (builtins.map mkShare shares);
 }

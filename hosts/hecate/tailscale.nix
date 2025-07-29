@@ -9,7 +9,7 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = ["tailscale0"];
+    trustedInterfaces = [ "tailscale0" ];
   };
 
   services.tscaddy.enable = true;

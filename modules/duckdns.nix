@@ -1,12 +1,12 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with lib; let
   cfg = config.services.duckdns;
-in {
+in
+{
   options = {
     services.duckdns = {
       enable = mkEnableOption "Duck DNS";
@@ -76,8 +76,8 @@ in {
       };
 
       timers.update-duckdns-ip = {
-        wantedBy = ["timers.target"];
-        partOf = ["update-duckdns-ip.service"];
+        wantedBy = [ "timers.target" ];
+        partOf = [ "update-duckdns-ip.service" ];
         timerConfig.OnCalendar = cfg.onCalendar;
       };
     };
