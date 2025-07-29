@@ -14,4 +14,7 @@
   envtpl = pkgs.callPackage ./tools/envtpl {};
   frum = pkgs.callPackage ./tools/frum {};
   tfenv = pkgs.callPackage ./tools/tfenv {};
+
+  # games
+  minecraft-server-ftb-neoforge = pkgs.callPackage ./games/minecraft-server-ftb-neoforge {};
 }
