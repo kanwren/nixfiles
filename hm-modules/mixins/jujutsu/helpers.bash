@@ -257,3 +257,24 @@ note::list() {
         ++ "\n\n"
     '
 }
+
+# @cmd Interact with trailers
+trailer() { :; }
+
+# @cmd Look up a trailer
+# @arg key! Trailer key
+# @arg revset! Revision(s)
+trailer::get() {
+    jj log --revisions "$argc_revset" --no-graph --template 'trailers.filter(|x| x.key() == "'"${argc_key}"'").map(|x| x.value()).join("\n") '
+}
+
+# @cmd Look up trailers
+# @arg revset! Revision(s)
+# @flag -j --json Return results in JSON
+trailer::list() {
+    if [ "${argc_json-}" = 1 ]; then
+        jj log --revisions "$argc_revset" --no-graph --template '"{" ++ x.trailers().map(|t| json(t.key()) ++ ":" ++ json(t.value())).join(",") ++ "}"'
+    else
+        jj log --revisions "$argc_revset" --no-graph --template 'trailers'
+    fi
+}

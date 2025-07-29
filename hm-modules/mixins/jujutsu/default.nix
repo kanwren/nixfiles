@@ -1,32 +1,33 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs
+, config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.jujutsu;
 
   jj-helpers =
     pkgs.runCommandNoCC
-    "argc-build-jj-helpers"
-    {
-      nativeBuildInputs = [pkgs.coreutils pkgs.argc];
-      meta.mainProgram = "jj";
-    }
-    ''
-      orig=${
-        let
-          helpers = pkgs.replaceVars ./helpers.bash {
-            jj = lib.getExe pkgs.jujutsu;
-            jq = lib.getExe pkgs.jq;
-            sed = lib.getExe pkgs.gnused;
-          };
-        in
-          lib.strings.escapeShellArg (lib.getExe (pkgs.writers.writeBashBin "jj" helpers))
+      "argc-build-jj-helpers"
+      {
+        nativeBuildInputs = [ pkgs.coreutils pkgs.argc ];
+        meta.mainProgram = "jj";
       }
-      argc --argc-build "$orig" "$out/bin/$(basename "$orig")"
-    '';
-in {
+      ''
+        orig=${
+          let
+            helpers = pkgs.replaceVars ./helpers.bash {
+              jj = lib.getExe pkgs.jujutsu;
+              jq = lib.getExe pkgs.jq;
+              sed = lib.getExe pkgs.gnused;
+            };
+          in
+            lib.strings.escapeShellArg (lib.getExe (pkgs.writers.writeBashBin "jj" helpers))
+        }
+        argc --argc-build "$orig" "$out/bin/$(basename "$orig")"
+      '';
+in
+{
   options.mixins.jujutsu.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -60,13 +61,13 @@ in {
             program = "nvim";
             # similar to the default, but opens files in a different order to
             # preserve commands like `1do`.
-            merge-args = ["-d" "-M" "$left" "$base" "$right" "$output" "-c" "$wincmd w | wincmd J | set modifiable write"];
+            merge-args = [ "-d" "-M" "$left" "$base" "$right" "$output" "-c" "$wincmd w | wincmd J | set modifiable write" ];
             merge-tool-edits-conflict-markers = true;
           };
 
           difftastic = {
             program = "${pkgs.difftastic}/bin/difft";
-            diff-args = ["--color=always" "$left" "$right"];
+            diff-args = [ "--color=always" "$left" "$right" ];
           };
         };
 
@@ -74,21 +75,24 @@ in {
           log = "@ | ancestors(immutable_heads().., 2) | heads(immutable_heads())";
         };
 
-        aliases = let
-          mkExecAlias = program: args: ["util" "exec" "--" program] ++ args;
-          mkHelpersAlias = subcommandName: mkExecAlias (lib.getExe' jj-helpers "jj") [subcommandName];
-        in {
-          "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [];
-          "worklog" = ["log" "-r" "(trunk()..@):: | (trunk()..@)-"];
-          "reword" = mkHelpersAlias "reword";
-          "id" = mkHelpersAlias "id";
-          "description" = mkHelpersAlias "description";
-          "subject" = mkHelpersAlias "subject";
-          "note" = mkHelpersAlias "note";
-          "bookmark-names" = mkHelpersAlias "bookmark-names";
-          "pre-commit" = mkHelpersAlias "pre-commit";
-          "flow" = mkHelpersAlias "flow";
-        };
+        aliases =
+          let
+            mkExecAlias = program: args: [ "util" "exec" "--" program ] ++ args;
+            mkHelpersAlias = subcommandName: mkExecAlias (lib.getExe' jj-helpers "jj") [ subcommandName ];
+          in
+          {
+            "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [ ];
+            "worklog" = [ "log" "-r" "(trunk()..@):: | (trunk()..@)-" ];
+            "reword" = mkHelpersAlias "reword";
+            "id" = mkHelpersAlias "id";
+            "description" = mkHelpersAlias "description";
+            "subject" = mkHelpersAlias "subject";
+            "note" = mkHelpersAlias "note";
+            "trailer" = mkHelpersAlias "trailer";
+            "bookmark-names" = mkHelpersAlias "bookmark-names";
+            "pre-commit" = mkHelpersAlias "pre-commit";
+            "flow" = mkHelpersAlias "flow";
+          };
 
         revset-aliases = {
           # graph utilities
@@ -103,19 +107,20 @@ in {
 
           # commit info
           "user(x)" = "author(x) | committer(x)";
-          "mine()" = let
-            names = [
-              "Nicole Wren"
-              "Nicole Prindle"
-            ];
-            emails = [
-              "nicole@wren.systems"
-              "nprindle18@gmail.com"
-              "wrenn@squareup.com"
-              "nprindle@squareup.com"
-            ];
-            toAuthor = x: "author(exact:${builtins.toJSON x})";
-          in
+          "mine()" =
+            let
+              names = [
+                "Nicole Wren"
+                "Nicole Prindle"
+              ];
+              emails = [
+                "nicole@wren.systems"
+                "nprindle18@gmail.com"
+                "wrenn@squareup.com"
+                "nprindle@squareup.com"
+              ];
+              toAuthor = x: "author(exact:${builtins.toJSON x})";
+            in
             builtins.concatStringsSep " | " (builtins.map toAuthor (emails ++ names));
 
           # note utilities
