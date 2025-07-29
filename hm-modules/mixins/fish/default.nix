@@ -85,46 +85,6 @@ in {
           '';
         };
 
-        fzf_git_branch_widget = {
-          description = "List and insert git branches";
-          body = ''
-            set -l commandline (__fzf_parse_commandline)
-            set -l fzf_query $commandline[2]
-            set -l prefix $commandline[3]
-
-            set -l result
-            begin
-              set -lx FZF_DEFAULT_OPTS (__fzf_defaults "--reverse")
-              set -lx FZF_DEFAULT_COMMAND "$FZF_CTRL_T_COMMAND"
-              set -lx FZF_DEFAULT_OPTS_FILE ""
-              set fzfcmd (__fzfcmd)
-
-              set refs (git for-each-ref refs/heads refs/remotes --exclude='refs/remotes/*/HEAD' --format='%(refname:lstrip=2)')
-              or return 1
-
-              printf '%s\n' $refs \
-                | $fzfcmd --query "$fzf_query" \
-                | while read -l sel; set -a result $sel; end
-            end
-
-            if test (count $result) -eq 0
-              commandline -f repaint
-              return
-            end
-
-            # Remove last token from commandline.
-            commandline -t ""
-
-            for i in $result
-              commandline -it -- $prefix
-              commandline -it -- (string escape $i)
-              commandline -it -- ' '
-            end
-
-            commandline -f repaint
-          '';
-        };
-
         # AWS CLI utility functions
 
         "asp" = {
