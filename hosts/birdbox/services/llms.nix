@@ -1,7 +1,10 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services = {
     ollama = {
       enable = true;
+      package = pkgs.ollama-cuda.override {
+        cudaArches = [ "61" ];
+      };
       acceleration = "cuda";
       port = 11434;
       host = "127.0.0.1";
