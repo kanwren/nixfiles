@@ -97,6 +97,7 @@
           tfenv
           wd-fish
           caddy-with-plugins
+          ftb-server-installer
           ;
       });
 

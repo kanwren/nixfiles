@@ -18,4 +18,7 @@ rec {
 
   # apps
   caddy-with-plugins = pkgs.callPackage ./apps/caddy-with-plugins { };
+
+  # games
+  ftb-server-installer = pkgs.callPackage ./games/ftb-server-installer { };
 }
