@@ -93,6 +93,7 @@
         slides-full
         tfenv
         wd-fish
+        ftb-server-installer
         ;
     });
 
