@@ -206,7 +206,11 @@ in {
         _expand_which = {
           description = "Expand =foo to the path to foo";
           body = ''
-            command --search (string sub --start 2 $argv[1])
+            if test (string sub --end 2 $argv[1]) = '=='
+              realpath (command --search (string sub --start 3 $argv[1]))
+            else
+              command --search (string sub --start 2 $argv[1])
+            end
           '';
         };
 
@@ -253,7 +257,7 @@ in {
             "expand_which_abbr" = {
               position = "anywhere";
               function = "_expand_which";
-              regex = ''=\S+'';
+              regex = ''==?\S+'';
             };
             "!!" = {
               position = "anywhere";
