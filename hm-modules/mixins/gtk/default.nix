@@ -1,11 +1,12 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs
+, config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.gtk;
-in {
+in
+{
   options.mixins.gtk.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -17,13 +18,6 @@ in {
       enable = true;
       font = {
         name = "FiraCode Nerd Font Mono";
-      };
-      theme = {
-        name = "catppuccin-mocha-lavender-standard";
-        package = pkgs.catppuccin-gtk.override {
-          accents = ["lavender"];
-          variant = "mocha";
-        };
       };
       iconTheme = {
         name = "Papirus";

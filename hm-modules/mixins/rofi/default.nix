@@ -1,11 +1,12 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs
+, config
+, lib
+, ...
+}:
+let
   cfg = config.mixins.rofi;
-in {
+in
+{
   options.mixins.rofi.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -16,7 +17,6 @@ in {
     programs.rofi = {
       enable = true;
       terminal = "${pkgs.kitty}/bin/kitty";
-      theme = ./catppuccin.rasi;
       font = "FiraCode Nerd Font 11";
       extraConfig = {
         show-icons = true;
