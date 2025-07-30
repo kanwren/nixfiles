@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.haskell;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.haskell;
+in {
   options.mixins.haskell.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

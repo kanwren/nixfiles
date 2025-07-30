@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.zathura;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.zathura;
+in {
   options.mixins.zathura.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

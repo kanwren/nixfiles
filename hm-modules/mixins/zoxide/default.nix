@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.zoxide;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.zoxide;
+in {
   options.mixins.zoxide.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

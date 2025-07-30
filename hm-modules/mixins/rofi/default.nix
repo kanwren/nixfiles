@@ -1,12 +1,11 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.rofi;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.rofi;
+in {
   options.mixins.rofi.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

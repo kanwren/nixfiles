@@ -1,9 +1,13 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services = {
     ollama = {
       enable = true;
       package = pkgs.ollama-cuda.override {
-        cudaArches = [ "61" ];
+        cudaArches = ["61"];
       };
       acceleration = "cuda";
       port = 11434;
@@ -29,13 +33,13 @@
           target = "http://127.0.0.1:${toString config.services.ollama.port}";
           keepHost = false;
           authKeyFile = config.sops.secrets."caddy/ts-authkey-ollama".path;
-          dependencies = [ "ollama.service" ];
+          dependencies = ["ollama.service"];
         };
         open-webui = {
           host = "https://open-webui.swallow-chickadee.ts.net";
           target = "http://127.0.0.1:${toString config.services.open-webui.port}";
           authKeyFile = config.sops.secrets."caddy/ts-authkey-open-webui".path;
-          dependencies = [ "open-webui.service" ];
+          dependencies = ["open-webui.service"];
         };
       };
     };

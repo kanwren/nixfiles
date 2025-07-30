@@ -1,8 +1,8 @@
-{ lib
-, fetchFromGitHub
-, buildFishPlugin
-, gnused
-,
+{
+  lib,
+  fetchFromGitHub,
+  buildFishPlugin,
+  gnused,
 }:
 buildFishPlugin {
   pname = "wd-fish";

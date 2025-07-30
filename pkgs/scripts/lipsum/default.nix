@@ -1,11 +1,10 @@
-{ replaceVarsWith
-, runtimeShell
-, unixtools
-, curl
-, jq
-,
-}:
-let
+{
+  replaceVarsWith,
+  runtimeShell,
+  unixtools,
+  curl,
+  jq,
+}: let
   script = replaceVarsWith {
     name = "lipsum";
     src = ./lipsum.sh;
@@ -20,6 +19,6 @@ let
     description = "Generate lorem ipsum text";
   };
 in
-script.overrideAttrs (old: {
-  meta = (old.meta or { }) // meta;
-})
+  script.overrideAttrs (old: {
+    meta = (old.meta or {}) // meta;
+  })

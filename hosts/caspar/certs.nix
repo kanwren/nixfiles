@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   certFile = "/etc/ssl/certs/ca-bundle.crt";
-in
-{
+in {
   security.pki.installCACerts = false;
   environment.variables.NIX_SSL_CERT_FILE = certFile;
   system.activationScripts.extraActivation.text = ''

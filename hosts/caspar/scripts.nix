@@ -1,13 +1,11 @@
-{ pkgs
-, lib
-,
-}:
-let
+{
+  pkgs,
+  lib,
+}: let
   addDepsToPath = deps: ''
     export PATH=${lib.makeBinPath deps}''${PATH:+:$PATH}
   '';
-in
-{
+in {
   # (Re)-process a shell script with [argc](https://github.com/sigoden/argc) to
   # insert static argument parsing code, without a dependency on argc itself
   reargc = pkgs.writers.writeBashBin "reargc" ''

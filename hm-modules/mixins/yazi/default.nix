@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.yazi;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.yazi;
+in {
   options.mixins.yazi.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

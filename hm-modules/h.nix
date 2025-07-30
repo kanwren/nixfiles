@@ -1,12 +1,11 @@
-{ pkgs
-, lib
-, config
-, ...
-}:
-let
-  cfg = config.programs.h;
-in
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.programs.h;
+in {
   options.programs.h = {
     enable = lib.mkEnableOption "h";
 

@@ -1,12 +1,11 @@
 # Requires catppuccin home-manager module
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.catppuccin;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.catppuccin;
+in {
   options.mixins.catppuccin.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

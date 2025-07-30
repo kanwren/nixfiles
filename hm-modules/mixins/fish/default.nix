@@ -1,12 +1,11 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.fish;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.fish;
+in {
   options.mixins.fish.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -16,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.fishPlugins.foreign-env
-      (pkgs.fishPlugins.fzf-fish.overrideAttrs { doCheck = false; })
+      (pkgs.fishPlugins.fzf-fish.overrideAttrs {doCheck = false;})
       pkgs.wd-fish
     ];
 
@@ -37,172 +36,170 @@ in
         and cd "$fish_most_recent_dir"
       '';
 
-      functions =
-        let
-          aws = "${pkgs.awscli2}/bin/aws";
-          fzf = "${pkgs.fzf}/bin/fzf";
-          jq = "${pkgs.jq}/bin/jq";
-        in
-        {
-          fish_prompt = {
-            description = "a minimal prompt";
-            body = ''
-              set --local last_status $status
-              if set -q SSH_TTY
-                prompt_login
-                printf ' '
-              end
-              test $last_status = 0; and set_color --bold green; or set_color --bold red
-              printf '$'
-              set_color normal
+      functions = let
+        aws = "${pkgs.awscli2}/bin/aws";
+        fzf = "${pkgs.fzf}/bin/fzf";
+        jq = "${pkgs.jq}/bin/jq";
+      in {
+        fish_prompt = {
+          description = "a minimal prompt";
+          body = ''
+            set --local last_status $status
+            if set -q SSH_TTY
+              prompt_login
               printf ' '
-            '';
-          };
-
-          fish_mode_prompt = {
-            description = "no mode prompt";
-            body = "";
-          };
-
-          fish_greeting = {
-            description = "no greeting";
-            body = "";
-          };
-
-          # Misc shell utilities
-
-          "yield" = {
-            description = "Yield the arguments";
-            body = ''
-              if test (count $argv) -gt 0
-                printf '%s\n' $argv
-              end
-            '';
-          };
-
-          dump = {
-            description = "Quote each argument for fish and present the results like a command";
-            body = ''
-              string join -- ' ' (string escape --style=script -- $argv)
-              return 0
-            '';
-          };
-
-          # AWS CLI utility functions
-
-          "asp" = {
-            description = "Switch AWS profiles";
-            body = ''
-              set --local choice ("${aws}" configure list-profiles | "${fzf}")
-              or return $status
-              set --global --export AWS_PROFILE $choice
-            '';
-          };
-
-          "assume" = {
-            description = "Assume an AWS role for a profile";
-            body = ''
-              set --query AWS_PROFILE
-              and set --local profile "$AWS_PROFILE"
-              or set profile ("${aws}" configure list-profiles | "${fzf}")
-              or return $status
-
-              set --local creds ("${aws}" configure export-credentials --profile "$profile")
-              or begin
-                set --local ret $status
-                printf 'Failed to assume role for profile %s\n' (string escape "$profile")
-                return $ret
-              end
-
-              set --global --export AWS_ACCESS_KEY_ID     (echo $creds | "${jq}" --raw-output '.AccessKeyId')
-              set --global --export AWS_SECRET_ACCESS_KEY (echo $creds | "${jq}" --raw-output '.SecretAccessKey')
-              set --global --export AWS_SESSION_TOKEN     (echo $creds | "${jq}" --raw-output '.SessionToken')
-              printf 'Assumed role for profile %s\n' (string escape "$profile")
-            '';
-          };
-
-          "unassume" = {
-            description = "Un-assume an AWS role";
-            body = ''
-              set --query AWS_PROFILE;           and set --erase AWS_PROFILE
-              set --query AWS_ACCESS_KEY_ID;     and set --erase AWS_ACCESS_KEY_ID
-              set --query AWS_SECRET_ACCESS_KEY; and set --erase AWS_SECRET_ACCESS_KEY
-              set --query AWS_SESSION_TOKEN;     and set --erase AWS_SESSION_TOKEN
-              return 0
-            '';
-          };
-
-          # Abbreviation expansion functions
-
-          _pfor_expand = {
-            description = "Expand a pfor command";
-            body = ''
-              set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
-              set result 'parallel'
-              if test (count $varname) -gt 1
-                set result "$result"' -C'"'"' '"'"
-              end
-              set result "$result"' -j10 -kq fish -c '"'"
-              for i in (seq 1 (count $varname))
-                set result "$result"'set '$varname[$i]' $argv['$i']; '
-              end
-              set result "$result%'"
-              if test (count $varname) -gt 1
-                for i in (seq 1 (count $varname))
-                  set result "$result"' {'$i'}'
-                end
-              else
-                  set result "$result"' {}'
-              end
-              printf '%s' "$result"
-            '';
-          };
-
-          _expand_seq = {
-            description = "Expand {start..end} to (seq start end)";
-            body = ''
-              set nums (string match -rg '(.*)\\{(\\d+)\\.\\.(\\d+)\\}(.*)' $argv[1])
-              printf '%s(seq %d %d)%s' $nums
-            '';
-          };
-
-          _expand_which = {
-            description = "Expand =foo to the path to foo";
-            body = ''
-              if test (string sub --end 2 $argv[1]) = '=='
-                realpath (command --search (string sub --start 3 $argv[1]))
-              else
-                command --search (string sub --start 2 $argv[1])
-              end
-            '';
-          };
-
-          _expand_last_command = {
-            description = "Expand the last command";
-            body = ''
-              echo $history[1]
-            '';
-          };
-
-          _expand_multidotdot = {
-            description = "Expand .n to n directories up";
-            body = ''
-              set arg $argv[1]
-              for ixs in (string match --index --regex '(?<![^/])\.[1-9]\d*(?![^/])' -- $arg)
-                  set ix (string split -- ' ' $ixs)
-                  set start $ix[1]
-                  set length $ix[2]
-                  set prefix '''
-                  test (math $start) -gt 1; and set prefix (string sub --end (math $start - 1) -- $arg)
-                  set suffix (string sub --start (math $start + $length) -- $arg)
-                  set nparts (string sub --start (math $start + 1) --length (math $length - 1) -- $arg)
-                  set dots (string repeat --count $nparts ../)
-                  set arg "$prefix$dots$suffix"
-              end
-              printf '%s!' $arg
-            '';
-          };
+            end
+            test $last_status = 0; and set_color --bold green; or set_color --bold red
+            printf '$'
+            set_color normal
+            printf ' '
+          '';
         };
+
+        fish_mode_prompt = {
+          description = "no mode prompt";
+          body = "";
+        };
+
+        fish_greeting = {
+          description = "no greeting";
+          body = "";
+        };
+
+        # Misc shell utilities
+
+        "yield" = {
+          description = "Yield the arguments";
+          body = ''
+            if test (count $argv) -gt 0
+              printf '%s\n' $argv
+            end
+          '';
+        };
+
+        dump = {
+          description = "Quote each argument for fish and present the results like a command";
+          body = ''
+            string join -- ' ' (string escape --style=script -- $argv)
+            return 0
+          '';
+        };
+
+        # AWS CLI utility functions
+
+        "asp" = {
+          description = "Switch AWS profiles";
+          body = ''
+            set --local choice ("${aws}" configure list-profiles | "${fzf}")
+            or return $status
+            set --global --export AWS_PROFILE $choice
+          '';
+        };
+
+        "assume" = {
+          description = "Assume an AWS role for a profile";
+          body = ''
+            set --query AWS_PROFILE
+            and set --local profile "$AWS_PROFILE"
+            or set profile ("${aws}" configure list-profiles | "${fzf}")
+            or return $status
+
+            set --local creds ("${aws}" configure export-credentials --profile "$profile")
+            or begin
+              set --local ret $status
+              printf 'Failed to assume role for profile %s\n' (string escape "$profile")
+              return $ret
+            end
+
+            set --global --export AWS_ACCESS_KEY_ID     (echo $creds | "${jq}" --raw-output '.AccessKeyId')
+            set --global --export AWS_SECRET_ACCESS_KEY (echo $creds | "${jq}" --raw-output '.SecretAccessKey')
+            set --global --export AWS_SESSION_TOKEN     (echo $creds | "${jq}" --raw-output '.SessionToken')
+            printf 'Assumed role for profile %s\n' (string escape "$profile")
+          '';
+        };
+
+        "unassume" = {
+          description = "Un-assume an AWS role";
+          body = ''
+            set --query AWS_PROFILE;           and set --erase AWS_PROFILE
+            set --query AWS_ACCESS_KEY_ID;     and set --erase AWS_ACCESS_KEY_ID
+            set --query AWS_SECRET_ACCESS_KEY; and set --erase AWS_SECRET_ACCESS_KEY
+            set --query AWS_SESSION_TOKEN;     and set --erase AWS_SESSION_TOKEN
+            return 0
+          '';
+        };
+
+        # Abbreviation expansion functions
+
+        _pfor_expand = {
+          description = "Expand a pfor command";
+          body = ''
+            set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
+            set result 'parallel'
+            if test (count $varname) -gt 1
+              set result "$result"' -C'"'"' '"'"
+            end
+            set result "$result"' -j10 -kq fish -c '"'"
+            for i in (seq 1 (count $varname))
+              set result "$result"'set '$varname[$i]' $argv['$i']; '
+            end
+            set result "$result%'"
+            if test (count $varname) -gt 1
+              for i in (seq 1 (count $varname))
+                set result "$result"' {'$i'}'
+              end
+            else
+                set result "$result"' {}'
+            end
+            printf '%s' "$result"
+          '';
+        };
+
+        _expand_seq = {
+          description = "Expand {start..end} to (seq start end)";
+          body = ''
+            set nums (string match -rg '(.*)\\{(\\d+)\\.\\.(\\d+)\\}(.*)' $argv[1])
+            printf '%s(seq %d %d)%s' $nums
+          '';
+        };
+
+        _expand_which = {
+          description = "Expand =foo to the path to foo";
+          body = ''
+            if test (string sub --end 2 $argv[1]) = '=='
+              realpath (command --search (string sub --start 3 $argv[1]))
+            else
+              command --search (string sub --start 2 $argv[1])
+            end
+          '';
+        };
+
+        _expand_last_command = {
+          description = "Expand the last command";
+          body = ''
+            echo $history[1]
+          '';
+        };
+
+        _expand_multidotdot = {
+          description = "Expand .n to n directories up";
+          body = ''
+            set arg $argv[1]
+            for ixs in (string match --index --regex '(?<![^/])\.[1-9]\d*(?![^/])' -- $arg)
+                set ix (string split -- ' ' $ixs)
+                set start $ix[1]
+                set length $ix[2]
+                set prefix '''
+                test (math $start) -gt 1; and set prefix (string sub --end (math $start - 1) -- $arg)
+                set suffix (string sub --start (math $start + $length) -- $arg)
+                set nparts (string sub --start (math $start + 1) --length (math $length - 1) -- $arg)
+                set dots (string repeat --count $nparts ../)
+                set arg "$prefix$dots$suffix"
+            end
+            printf '%s!' $arg
+          '';
+        };
+      };
 
       shellAbbrs = lib.attrsets.mergeAttrsList (builtins.attrValues (
         let
@@ -210,8 +207,7 @@ in
             position = "command";
             expansion = cmd;
           };
-        in
-        {
+        in {
           syntaxAbbrs = {
             "expand_seq_abbr" = {
               position = "anywhere";

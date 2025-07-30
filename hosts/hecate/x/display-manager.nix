@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   services.xserver.displayManager = {
     lightdm = {
       enable = true;
@@ -10,7 +10,7 @@
         theme = {
           name = "catppuccin-mocha-lavender-standard";
           package = pkgs.catppuccin-gtk.override {
-            accents = [ "lavender" ];
+            accents = ["lavender"];
             variant = "mocha";
           };
         };

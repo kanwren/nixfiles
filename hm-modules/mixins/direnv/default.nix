@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.direnv;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.direnv;
+in {
   options.mixins.direnv.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

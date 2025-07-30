@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  cfg = config.mixins.kitty;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.mixins.kitty;
+in {
   options.mixins.kitty.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
