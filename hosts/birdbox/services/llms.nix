@@ -13,9 +13,9 @@
       port = 11434;
       host = "127.0.0.1";
       loadModels = [
-        "deepseek-r1:1.5b"
-        "tom_himanen/deepseek-r1-roo-cline-tools:1.5b"
-        "llama3.2:3b"
+        "qwen2.5-coder:1.5b"
+        "qwen2.5-coder:3b"
+        "qwen2.5-coder:7b"
       ];
     };
 
