@@ -8,6 +8,7 @@
     ./impermanence.nix
     ./services/llms.nix
     ./services/photos.nix
+    ./services/wiki.nix
     ./tailscale.nix
     ./users/default.nix
   ];
