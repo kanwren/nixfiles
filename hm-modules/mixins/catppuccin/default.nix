@@ -13,13 +13,15 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    xdg.enable = true;
-
     catppuccin = {
       enable = true;
       flavor = "mocha";
       accent = "lavender";
       gtk.enable = true;
+      kvantum.enable = false;
+      firefox.profiles.default.enable = false;
     };
+
+    xdg.enable = true;
   };
 }
