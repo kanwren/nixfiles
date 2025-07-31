@@ -16,6 +16,7 @@ in {
     programs.rofi = {
       enable = true;
       terminal = "${pkgs.kitty}/bin/kitty";
+      theme = ./catppuccin.rasi;
       font = "FiraCode Nerd Font 11";
       extraConfig = {
         show-icons = true;

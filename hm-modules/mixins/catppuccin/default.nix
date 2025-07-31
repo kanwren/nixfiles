@@ -19,6 +19,7 @@ in {
       accent = "lavender";
       gtk.enable = true;
       kvantum.enable = false;
+      rofi.enable = false;
       firefox.profiles.default.enable = false;
     };
 
