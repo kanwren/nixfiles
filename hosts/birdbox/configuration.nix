@@ -6,6 +6,7 @@
   imports = [
     ./disk-config.nix
     ./impermanence.nix
+    ./services/bookmarks.nix
     ./services/llms.nix
     ./services/photos.nix
     ./services/wiki.nix
