@@ -201,7 +201,7 @@ in {
           export GIT_SSH_COMMAND="${lib.getExe' pkgs.openssh "ssh"} -o 'StrictHostKeyChecking no' -i ${cfg.autopush.deployKeyPath}"
           remote=${remotePath}
           ${gitExe} pull "$remote" @ --rebase || true
-          ${gitExe} -C ${repoPath} push "$remote" @
+          ${gitExe} -C ${repoPath} push "$remote" @ || true
         '';
         postCommitScript = lib.escapeShellArg (lib.getExe postCommit);
       in
