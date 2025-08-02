@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   intToString = n:
     if !builtins.isInt n
     then builtins.throw "intToString: expected an int"
@@ -14,6 +18,11 @@ in {
       default-page-type = "Markdown";
       base-url = "https://wiki.swallow-chickadee.ts.net";
       authentication-method = "generic";
+      front-page = "Front Page";
+      no-delete = lib.strings.concatStringsSep ", " [
+        "Front Page"
+        "Help"
+      ];
     };
     autopush = {
       enable = true;
