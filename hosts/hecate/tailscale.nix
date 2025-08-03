@@ -12,5 +12,5 @@
     trustedInterfaces = ["tailscale0"];
   };
 
-  services.tscaddy.enable = true;
+  services.tscaddy.enable = false;
 }
