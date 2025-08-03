@@ -11,6 +11,7 @@
       "/var/lib/postgresql"
       "/var/lib/private/ollama"
       "/var/lib/private/open-webui"
+      "/var/lib/private/readeck"
       "/var/lib/systemd"
       "/var/lib/tailscale"
       "/var/log"
