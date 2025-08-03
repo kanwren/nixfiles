@@ -33,6 +33,13 @@ in
           "Front Page"
           "Help"
         ];
+        pandoc-user-data =
+          let
+            gitit-pandoc-config = pkgs.runCommandNoCC "gitit-pandoc-config" { } ''
+              install -Dt $out/share/pandoc/filters ${./wiki}/filters/*
+            '';
+          in
+          "${gitit-pandoc-config}/share/pandoc";
       };
       autopush = {
         enable = true;
