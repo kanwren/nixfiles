@@ -10,6 +10,7 @@
     ./services/llms.nix
     ./services/photos.nix
     ./services/wiki.nix
+    ./services/www.nix
     ./tailscale.nix
     ./users/default.nix
   ];

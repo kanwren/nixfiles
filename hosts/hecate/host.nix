@@ -12,7 +12,6 @@ outputs.lib.mkNixosSystem {
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
-    outputs.nixosModules.tscaddy
     outputs.nixosModules.pueue
 
     ./hardware-configuration.nix

@@ -93,6 +93,7 @@
         slides-full
         tfenv
         wd-fish
+        caddy-with-plugins
         ;
     });
 

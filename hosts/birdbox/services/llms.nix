@@ -29,14 +29,14 @@
       enable = true;
       nodes = {
         ollama = {
-          host = "https://ollama.swallow-chickadee.ts.net";
+          tailnetName = "swallow-chickadee";
           target = "http://127.0.0.1:${toString config.services.ollama.port}";
           keepHost = false;
           authKeyFile = config.sops.secrets."caddy/ts-authkey-ollama".path;
           dependencies = ["ollama.service"];
         };
         open-webui = {
-          host = "https://open-webui.swallow-chickadee.ts.net";
+          tailnetName = "swallow-chickadee";
           target = "http://127.0.0.1:${toString config.services.open-webui.port}";
           authKeyFile = config.sops.secrets."caddy/ts-authkey-open-webui".path;
           dependencies = ["open-webui.service"];

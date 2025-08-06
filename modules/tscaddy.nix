@@ -26,11 +26,11 @@ in {
             '';
           };
 
-          host = lib.mkOption {
+          tailnetName = lib.mkOption {
             type = lib.types.str;
-            example = "https://my-service-name.tail-scale.ts.net";
+            example = "pig-lizard";
             description = ''
-              The full hostname for the service
+              The tailnet name; the full hostname will be <name>.<tailnet>.ts.net.
             '';
           };
 
@@ -85,7 +85,6 @@ in {
     services.caddy = {
       enable = true;
       enableReload = false;
-      package = pkgs.callPackage ./caddy {};
       globalConfig = let
         configForService = service: ''
           ${service.name} {
@@ -98,17 +97,34 @@ in {
           ${lib.strings.concatMapStringsSep "\n" configForService nodes}
         }
       '';
+      extraConfig = let
+        serviceSnippet = opts: ''
+          (tailscale_handle_${opts.name}) {
+            bind tailscale/${opts.name}
+            tailscale_auth
+            reverse_proxy ${opts.target} {
+              ${lib.optionalString (!opts.keepHost) "header_up -Host"}
+              ${lib.optionalString (opts.extraProxyConfig != null) opts.extraProxyConfig}
+            }
+          }
+        '';
+      in
+        builtins.concatStringsSep "\n" (builtins.map serviceSnippet nodes);
       virtualHosts = let
-        configureService = opts: {
-          name = opts.host;
+        configureService = opts: let
+          host = "${opts.name}.${opts.tailnetName}.ts.net";
+          http = "http://${host}:80";
+          https = "https://${host}:443";
+        in {
+          name = lib.concatStringsSep ", " [http https];
           value = {
             extraConfig = ''
-              bind tailscale/${opts.name}
-              tailscale_auth
-              reverse_proxy ${opts.target} {
-                ${lib.optionalString (!opts.keepHost) "header_up -Host"}
-                ${lib.optionalString (opts.extraProxyConfig != null) opts.extraProxyConfig}
+              @http protocol http
+              redir @http https://{host}{uri} 308
+              tls {
+                get_certificate tailscale
               }
+              import tailscale_handle_${opts.name}
             '';
           };
         };

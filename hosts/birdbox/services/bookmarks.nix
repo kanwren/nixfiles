@@ -18,7 +18,7 @@ in {
   services.tscaddy = {
     enable = true;
     nodes.bookmarks = {
-      host = "https://bookmarks.swallow-chickadee.ts.net";
+      tailnetName = "swallow-chickadee";
       target = "http://127.0.0.1:${toString port}";
       authKeyFile = config.sops.secrets."caddy/ts-authkey-readeck".path;
       dependencies = ["readeck.service"];

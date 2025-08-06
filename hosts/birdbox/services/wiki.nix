@@ -8,40 +8,48 @@
     then builtins.throw "intToString: expected an int"
     else toString n;
 in {
-  services.gitit = {
-    enable = true;
-    config = {
-      address = "127.0.0.1";
-      port = 17503;
-      wiki-title = "Monty's Wiki";
-      repository-type = "Git";
-      default-page-type = "Markdown";
-      base-url = "https://wiki.swallow-chickadee.ts.net";
-      authentication-method = "generic";
-      front-page = "Front Page";
-      no-delete = lib.strings.concatStringsSep ", " [
-        "Front Page"
-        "Help"
-      ];
-    };
-    autopush = {
+  services = {
+    gitit = {
       enable = true;
-      remotePath = config.sops.secrets."gitit/remote".path;
-      deployKeyPath = config.sops.secrets."gitit/deploy-key".path;
+      config = {
+        address = "127.0.0.1";
+        port = 17503;
+        wiki-title = "Monty's Wiki";
+        repository-type = "Git";
+        default-page-type = "Markdown";
+        base-url = "https://wiki.swallow-chickadee.ts.net";
+        authentication-method = "generic";
+        front-page = "Front Page";
+        no-delete = lib.strings.concatStringsSep ", " [
+          "Front Page"
+          "Help"
+        ];
+      };
+      autopush = {
+        enable = true;
+        remotePath = config.sops.secrets."gitit/remote".path;
+        deployKeyPath = config.sops.secrets."gitit/deploy-key".path;
+      };
     };
-  };
 
-  services.tscaddy = {
-    enable = true;
-    nodes.wiki = {
-      host = "https://wiki.swallow-chickadee.ts.net";
-      target = "http://127.0.0.1:${intToString config.services.gitit.config.port}";
-      authKeyFile = config.sops.secrets."caddy/ts-authkey-gitit".path;
-      dependencies = ["gitit.service"];
-      extraProxyConfig = ''
-        header_up REMOTE_USER {http.auth.user.tailscale_login}
-      '';
+    tscaddy = {
+      enable = true;
+      nodes.wiki = {
+        tailnetName = "swallow-chickadee";
+        target = "http://127.0.0.1:${intToString config.services.gitit.config.port}";
+        authKeyFile = config.sops.secrets."caddy/ts-authkey-gitit".path;
+        dependencies = ["gitit.service"];
+        extraProxyConfig = ''
+          header_up REMOTE_USER {http.auth.user.tailscale_login}
+        '';
+      };
     };
+
+    caddy.virtualHosts."http://wiki.cule.gay, https://wiki.cule.gay".extraConfig = ''
+      @http protocol http
+      redir @http https://{host}{uri} 308
+      import tailscale_handle_wiki
+    '';
   };
 
   sops.secrets = {

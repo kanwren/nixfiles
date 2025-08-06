@@ -3,6 +3,7 @@ module caddy
 go 1.24.2
 
 require (
+	github.com/caddy-dns/acmedns v0.4.1
 	github.com/caddyserver/caddy/v2 v2.10.0
 	github.com/tailscale/caddy-tailscale v0.0.0-20250508175905-642f61fea3cc
 )
@@ -106,6 +107,7 @@ require (
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/kortschak/wol v0.0.0-20200729010619-da482cc4850a // indirect
+	github.com/libdns/acmedns v0.3.0-beta.2 // indirect
 	github.com/libdns/libdns v1.0.0-beta.1 // indirect
 	github.com/manifoldco/promptui v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

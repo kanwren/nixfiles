@@ -3,12 +3,12 @@
   buildGoModule,
 }:
 buildGoModule rec {
-  pname = "caddy-with-extensions";
-  version = "unstable-2025-05-10";
+  pname = "caddy-with-plugins";
+  version = "unstable-2025-08-05";
   src = ./.;
 
   runVend = true;
-  vendorHash = "sha256-jrY0NpI27mcTGZ+qTw7fyRsHllpCsnESk1J0l+0riro=";
+  vendorHash = "sha256-g2pys2/gftZGHJ2Hy1mKOiZHFBHtDS7OJub4Tkhvlk4=";
 
   ldflags = [
     "-s"

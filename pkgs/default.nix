@@ -14,4 +14,7 @@
   envtpl = pkgs.callPackage ./tools/envtpl {};
   frum = pkgs.callPackage ./tools/frum {};
   tfenv = pkgs.callPackage ./tools/tfenv {};
+
+  # apps
+  caddy-with-plugins = pkgs.callPackage ./apps/caddy-with-plugins {};
 }
