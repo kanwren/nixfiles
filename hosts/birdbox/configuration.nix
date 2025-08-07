@@ -174,7 +174,10 @@
     openssl
     mkpasswd
     gnupg
-    neovim
+    (neovim.override {
+      viAlias = true;
+      vimAlias = true;
+    })
   ];
 
   home-manager = {
