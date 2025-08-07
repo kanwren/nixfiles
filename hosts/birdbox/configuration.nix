@@ -29,6 +29,8 @@
     autoUpgrade.enable = false;
   };
 
+  documentation.man.generateCaches = false;
+
   sops.age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
 
   nix = {
