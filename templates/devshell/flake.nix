@@ -21,7 +21,9 @@
       in
         f pkgs);
   in {
-    overlays.default = final: prev: {};
+    overlays = {
+      default = final: prev: {};
+    };
 
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShell {
