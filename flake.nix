@@ -98,6 +98,7 @@
           wd-fish
           caddy-with-plugins
           ftb-server-installer
+          ts-l4-rproxy
           ;
       });
 
