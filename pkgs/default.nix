@@ -15,6 +15,7 @@ rec {
   envtpl = pkgs.callPackage ./tools/envtpl { };
   frum = pkgs.callPackage ./tools/frum { };
   tfenv = pkgs.callPackage ./tools/tfenv { };
+  ts-l4-rproxy = pkgs.callPackage ./tools/ts-l4-rproxy { };
 
   # apps
   caddy-with-plugins = pkgs.callPackage ./apps/caddy-with-plugins { };

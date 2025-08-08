@@ -1,4 +1,8 @@
-{ lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 let
   port = 25565;
@@ -43,4 +47,30 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [ port ];
+
+  # Expose to tailnet behind TCP reverse proxy
+  services.ts-l4-rproxy = {
+    enable = true;
+    nodes.ftb = {
+      stateDir = "/var/lib/ts-l4-rproxy/ftb";
+      environmentFile = config.sops.templates."ts-l4-rproxy.env".path;
+      proxies = [
+        {
+          protocol = "tcp";
+          listenAddr = ":25565";
+          targetAddr = "127.0.0.1:${toString config.services.minecraft-ftb-server.serverProperties.port}";
+        }
+      ];
+    };
+  };
+
+  sops = {
+    templates."ts-l4-rproxy.env".content = ''
+      TS_AUTHKEY=${config.sops.placeholder."minecraft-ftb-server/ts-authkey"}
+    '';
+    secrets."minecraft-ftb-server/ts-authkey" = {
+      sopsFile = ../secrets/minecraft-ftb-server/ts-authkey.txt;
+      format = "binary";
+    };
+  };
 }

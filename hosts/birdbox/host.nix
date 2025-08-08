@@ -17,6 +17,7 @@ outputs.lib.mkNixosSystem {
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     outputs.nixosModules.tscaddy
     outputs.nixosModules.gitit
+    outputs.nixosModules.ts-l4-rproxy
     outputs.nixosModules.minecraft-ftb
 
     ./hardware-configuration.nix
