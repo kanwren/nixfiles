@@ -94,6 +94,7 @@
         tfenv
         wd-fish
         ftb-server-installer
+        ts-l4-rproxy
         ;
     });
 

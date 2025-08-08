@@ -14,6 +14,7 @@
   envtpl = pkgs.callPackage ./tools/envtpl {};
   frum = pkgs.callPackage ./tools/frum {};
   tfenv = pkgs.callPackage ./tools/tfenv {};
+  ts-l4-rproxy = pkgs.callPackage ./tools/ts-l4-rproxy {};
 
   # games
   ftb-server-installer = pkgs.callPackage ./games/ftb-server-installer {};
