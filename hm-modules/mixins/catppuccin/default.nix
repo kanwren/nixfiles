@@ -17,10 +17,9 @@ in {
       enable = true;
       flavor = "mocha";
       accent = "lavender";
-      gtk.enable = true;
       kvantum.enable = false;
       rofi.enable = false;
-      firefox.profiles.default.enable = false;
+      firefox.enable = false;
     };
 
     xdg.enable = true;

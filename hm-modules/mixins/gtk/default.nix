@@ -18,9 +18,12 @@ in {
       font = {
         name = "FiraCode Nerd Font Mono";
       };
-      iconTheme = {
-        name = "Papirus";
-        package = pkgs.papirus-icon-theme;
+      theme = {
+        name = "catppuccin-mocha-lavender-standard";
+        package = pkgs.catppuccin-gtk.override {
+          accents = ["lavender"];
+          variant = "mocha";
+        };
       };
     };
 
