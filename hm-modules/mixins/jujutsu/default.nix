@@ -53,6 +53,7 @@ in {
           diff-formatter = "difftastic";
           merge-editor = "vimdiff";
           always-allow-large-revsets = true;
+          conflict-marker-style = "diff";
         };
 
         merge-tools = {
@@ -62,6 +63,7 @@ in {
             # preserve commands like `1do`.
             merge-args = ["-d" "-M" "$left" "$base" "$right" "$output" "-c" "$wincmd w | wincmd J | set modifiable write"];
             merge-tool-edits-conflict-markers = true;
+            conflict-marker-style = "git";
           };
 
           difftastic = {
