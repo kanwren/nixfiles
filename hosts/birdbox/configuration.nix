@@ -32,7 +32,10 @@
 
   documentation.man.generateCaches = false;
 
-  sops.age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+  sops = {
+    age.sshKeyPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+    gnupg.sshKeyPaths = ["/persist/etc/ssh/ssh_host_rsa_key"];
+  };
 
   nix = {
     settings = {
