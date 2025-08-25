@@ -51,7 +51,10 @@
       ];
     };
 
-    mixins.enable = true;
+    mixins = {
+      enable = true;
+      browsers.chromium.enable = false;
+    };
 
     programs.jujutsu.settings = {
       user.email = "nicole@wren.systems";
