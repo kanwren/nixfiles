@@ -191,5 +191,10 @@
     fuse.userAllowOther = true;
   };
 
+  documentation = {
+    # Cache generation takes a really long time when fish is enabled
+    man.generateCaches = false;
+  };
+
   system.stateVersion = "25.05";
 }
