@@ -207,7 +207,6 @@ in {
     casks = [
       "nikitabobko/tap/aerospace"
       "kitty"
-      "plover"
       "talon"
     ];
   };
