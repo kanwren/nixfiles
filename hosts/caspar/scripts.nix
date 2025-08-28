@@ -68,19 +68,4 @@ in {
     ${addDepsToPath [pkgs.coreutils pkgs.gnumake pkgs.gawk pkgs.gnugrep]}
     make -pRrq | awk -v RS= -F: '/(^|\n)# Files(\n|$)/,/(^|\n)# Finished Make data base/ {if ($1 !~ "^[#.]") {print $1}}' | sort | grep '^[[:alnum:]]'
   '';
-
-  "nix.meta" = pkgs.writers.writeBashBin "nix.meta" ''
-    set -euo pipefail
-    ${addDepsToPath [pkgs.jq]}
-    nix eval "$1".meta --json | jq -r '
-      [
-        "Name:\n    \(.name // "???")\(if .mainProgram then " (`\(.mainProgram)`)" else "" end)",
-        "Homepage:\n    \(.homepage // "Not found")",
-        "License:\n    \(.licenses // .license | if type == "array" then map(.fullName // "???") | join(", ") elif type == "object" then .fullName // "???" else "unknown" end)",
-        "Maintainers:\n    \(.maintainers | if type == "array" then map(.name // .email // .github // "???") | join(", ") elif type == "object" then .name // .email // .github // "???" else "none" end)",
-        "Status:\n    \([if .broken then "broken" else empty end, if .available then "available" else "unavailable" end, if .unsupported then "unsupported" else "supported" end, if .unfree then "unfree" else "free" end, if .insecure then "insecure" else empty end] | join(", "))",
-        "Description:\([.description, .longDescription] | map(select(.) | gsub("^\\s+|\\s+$"; "") | gsub("^|\n"; "\n    ")) | join("\n"))"
-      ] | join("\n")
-    '
-  '';
 }
