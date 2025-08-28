@@ -171,6 +171,11 @@ in {
       ## misc
       pkgs.jira-cli-go
     ];
+
+    # This file is patched out-of-band on this machine. Move the target to a
+    # different file, and manually patch the original mutable file to source the
+    # nix versions.
+    etc."bashrc".target = "bashrc_nix";
   };
 
   fonts.packages = [
