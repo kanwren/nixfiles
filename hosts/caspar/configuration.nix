@@ -357,24 +357,21 @@ in {
             key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
           };
           aliases = {
-            s = "status";
-            cane = "commit --amend --no-edit";
+            squash = "commit --amend --no-edit";
             amend = "commit --amend";
-            diffc = "diff --cached";
+            staged = "diff --cached";
             conflicts = "diff --name-status --diff-filter=U";
             ff = "merge --ff-only";
-            rh = "reset --hard";
-            ri = "rebase --interactive";
             ls = "log --oneline";
-            lr = "log --left-right --graph --oneline";
+            compare = "log --left-right --graph --oneline";
             graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
-            changed = "show --name-status --oneline";
+            changes = "diff --name-status --oneline";
             mkexec = "update-index --chmod=+x";
             root = "rev-parse --show-toplevel";
-            ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
-
             alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
             ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+            ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
+            praise = "blame";
           };
           extraConfig = {
             credential = {

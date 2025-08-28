@@ -28,49 +28,22 @@ in {
       ];
 
       aliases = {
-        # Aliases for filling in options
-        cane = "commit --amend --no-edit";
-        cm = "commit --message";
+        squash = "commit --amend --no-edit";
         amend = "commit --amend";
-
-        cob = "checkout -b";
-        detach = "checkout --detach";
-
-        diffc = "diff --cached";
+        detach = "switch --detach";
+        staged = "diff --cached";
         conflicts = "diff --name-status --diff-filter=U";
-        # diff with filter
-        difff = "diff --diff-filter";
-        # diff file names only; for example, "git diffno --diff-filter=U | xargs vim"
-        diffno = "diff --name-only";
-        diffnof = "diff --name-only --diff-filter";
-
-        rh = "reset --hard";
-
-        ri = "rebase --interactive";
-
+        ff = "merge --ff-only";
         ls = "log --oneline";
-        graph = "log --graph --oneline";
-        cmp = "log --left-right --graph --oneline";
-
-        changed = "show --name-status --oneline";
-
+        compare = "log --left-right --graph --oneline";
+        graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
+        changes = "show --name-status --oneline";
         mkexec = "update-index --chmod=+x";
-
         root = "rev-parse --show-toplevel";
-
-        # Abbreviations for common commands
-        s = "status";
-        b = "branch";
-        co = "checkout";
-        r = "reset";
-
-        # Utility
         alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-        ignore-io = ''! f(){ join(){ local IFS=","; echo "$*"; }; curl -sL https://www.toptal.com/developers/gitignore/api/$(join $*); }; f'';
-
-        # Jokes
+        ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+        ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
         praise = "blame";
-        pansect = "bisect";
       };
 
       extraConfig = {
