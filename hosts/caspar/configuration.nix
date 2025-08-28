@@ -25,7 +25,7 @@ in {
           HIDKeyboardModifierMappingDst = to;
         };
       in [
-        (remap escapeKey capsLockKey)
+        # (remap escapeKey capsLockKey)
         (remap capsLockKey escapeKey)
       ];
     };
