@@ -72,7 +72,7 @@ in {
           description = "Yield the arguments";
           body = ''
             if test (count $argv) -gt 0
-              printf '%s\n' $argv
+              printf '%s\0' $argv | string split0
             end
           '';
         };
