@@ -80,17 +80,18 @@ in {
           mkExecAlias = program: args: ["util" "exec" "--" program] ++ args;
           mkHelpersAlias = subcommandName: mkExecAlias (lib.getExe' jj-helpers "jj") [subcommandName];
         in {
+          "bookmark-names" = mkHelpersAlias "bookmark-names";
+          "description" = mkHelpersAlias "description";
+          "flow" = mkHelpersAlias "flow";
+          "id" = mkHelpersAlias "id";
+          "note" = mkHelpersAlias "note";
+          "pre-commit" = mkHelpersAlias "pre-commit";
+          "reword" = mkHelpersAlias "reword";
+          "subject" = mkHelpersAlias "subject";
+          "trailer" = mkHelpersAlias "trailer";
+          "tug" = ["bookmark" "move" "--from" "heads(ancestors(parents(@)) & bookmarks())" "--to" "parents(@)"];
           "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [];
           "worklog" = ["log" "-r" "(trunk()..@):: | (trunk()..@)-"];
-          "reword" = mkHelpersAlias "reword";
-          "id" = mkHelpersAlias "id";
-          "description" = mkHelpersAlias "description";
-          "subject" = mkHelpersAlias "subject";
-          "note" = mkHelpersAlias "note";
-          "trailer" = mkHelpersAlias "trailer";
-          "bookmark-names" = mkHelpersAlias "bookmark-names";
-          "pre-commit" = mkHelpersAlias "pre-commit";
-          "flow" = mkHelpersAlias "flow";
         };
 
         revset-aliases = {
