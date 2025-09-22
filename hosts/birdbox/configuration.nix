@@ -111,13 +111,13 @@
 
   services = {
     logind = {
-      lidSwitch = "suspend";
-      lidSwitchExternalPower = "ignore";
-      lidSwitchDocked = "ignore";
-      extraConfig = ''
-        IdleAction=ignore
-        HandlePowerKey=ignore
-      '';
+      settings.Login = {
+        HandleLidSwitch = "suspend";
+        HandleLidSwitchDocked = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
+        HandlePowerKey = "ignore";
+        IdleAction = "ignore";
+      };
     };
 
     pipewire = {

@@ -37,7 +37,7 @@
       git
       whois
       # profiling
-      linuxPackages.perf
+      perf
       hyperfine
       # help, docs
       man-pages
