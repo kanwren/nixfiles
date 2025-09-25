@@ -116,6 +116,7 @@ in {
               "nicole@wren.systems"
               "nprindle18@gmail.com"
               "wrenn@squareup.com"
+              "wrenn@block.xyz"
               "nprindle@squareup.com"
             ];
             toAuthor = x: "author(exact:${builtins.toJSON x})";
