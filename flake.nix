@@ -66,7 +66,6 @@
     };
 
     darwinConfigurations = {
-      caspar = import ./hosts/caspar/host.nix {inherit (self) inputs outputs;};
       nightjar = import ./hosts/nightjar/host.nix {inherit (self) inputs outputs;};
     };
 
