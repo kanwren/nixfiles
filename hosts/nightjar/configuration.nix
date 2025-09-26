@@ -43,6 +43,7 @@ in {
       finder = {
         AppleShowAllExtensions = true;
         AppleShowAllFiles = true;
+        CreateDesktop = false;
         ShowStatusBar = true;
         ShowPathbar = true;
         FXEnableExtensionChangeWarning = false;
@@ -54,6 +55,11 @@ in {
 
       NSGlobalDomain = {
         NSWindowShouldDragOnGesture = true;
+        "com.apple.swipescrolldirection" = false;
+      };
+
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = 3.0;
       };
     };
   };
