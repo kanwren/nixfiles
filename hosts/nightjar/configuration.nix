@@ -357,10 +357,10 @@ in {
         git = {
           enable = true;
           userName = "Nicole Wren";
-          userEmail = "wrenn@squareup.com";
+          userEmail = "wrenn@block.xyz";
           signing = {
             signByDefault = true;
-            key = "DCC3076C9F46DFD330C3DFFDA4B4CC3C080B1C66";
+            key = "85C1D51ACE6FFEC848B78D89E6A60F3BD112FD42";
           };
           aliases = {
             squash = "commit --amend --no-edit";
@@ -485,7 +485,7 @@ in {
         };
 
         jujutsu.settings = {
-          user.email = "wrenn@squareup.com";
+          user.email = "wrenn@block.xyz";
           signing = {
             behavior = "own";
             backend = "gpg";
