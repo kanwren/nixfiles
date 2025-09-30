@@ -344,7 +344,7 @@ in {
         go = {
           enable = true;
           package = pkgs.go_latest;
-          goPath = "Development/go";
+          env.GOPATH = "/Users/wrenn/Development/go";
         };
 
         kitty = {
