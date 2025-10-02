@@ -356,7 +356,7 @@ in {
             "jop" = commandAbbr "jj operation";
             "jor" = commandAbbr "jj operation restore";
             "jos" = commandAbbr "jj operation show";
-            "jou" = commandAbbr "jj operation undo";
+            "jox" = commandAbbr "jj operation revert";
             "jr" = commandAbbr "jj rebase";
             "jra" = commandAbbr "jj rebase --insert-after";
             "jrb" = commandAbbr "jj rebase --insert-before";
