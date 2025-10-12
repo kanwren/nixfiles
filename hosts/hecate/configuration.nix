@@ -129,6 +129,11 @@
         dates = "weekly";
       };
     };
+    virtualbox.host = {
+      enable = true;
+      enableKvm = true;
+      addNetworkInterface = false;
+    };
   };
 
   services = {
