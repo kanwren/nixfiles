@@ -61,7 +61,7 @@ install-nix force="false":
 darwin-change-shell SHELL:
     #!/bin/sh
     set -eux
-    current_shell="$({{ nix-command }} shell 'nixpkgs#getent' -c getent passwd "$USER" | cut -d: -f7)"
+    current_shell="$({{ nix_command }} shell 'nixpkgs#getent' -c getent passwd "$USER" | cut -d: -f7)"
     new_shell="/run/current-system/sw/bin/"{{ quote(SHELL) }}
     if ! test -f "$new_shell"; then
         echo "error: $new_shell not found"
