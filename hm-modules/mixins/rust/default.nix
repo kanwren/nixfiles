@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.rust;
-in {
+in
+{
   options.mixins.rust.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

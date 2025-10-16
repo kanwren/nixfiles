@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.kitty;
-in {
+in
+{
   options.mixins.kitty.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

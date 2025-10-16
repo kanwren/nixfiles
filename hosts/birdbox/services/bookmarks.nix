@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   port = 19041;
-in {
+in
+{
   services.readeck = {
     enable = true;
     settings = {
@@ -21,7 +23,7 @@ in {
       tailnetName = "swallow-chickadee";
       target = "http://127.0.0.1:${toString port}";
       authKeyFile = config.sops.secrets."caddy/ts-authkey-readeck".path;
-      dependencies = ["readeck.service"];
+      dependencies = [ "readeck.service" ];
     };
   };
 

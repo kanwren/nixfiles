@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.rofi;
-in {
+in
+{
   options.mixins.rofi.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

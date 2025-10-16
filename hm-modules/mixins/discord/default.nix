@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.discord;
-in {
+in
+{
   options.mixins.discord.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

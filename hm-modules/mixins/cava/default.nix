@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.cava;
-in {
+in
+{
   options.mixins.cava.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

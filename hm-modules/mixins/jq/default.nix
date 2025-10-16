@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.jq;
-in {
+in
+{
   options.mixins.jq.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;

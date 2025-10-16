@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./display-manager.nix
     ./fonts.nix

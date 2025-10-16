@@ -9,6 +9,6 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = ["tailscale0"];
+    trustedInterfaces = [ "tailscale0" ];
   };
 }

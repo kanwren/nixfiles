@@ -1,5 +1,6 @@
-{config, ...}: {
-  environment.persistence."/persist".directories = ["/home/gwen"];
+{ config, ... }:
+{
+  environment.persistence."/persist".directories = [ "/home/gwen" ];
 
   sops.secrets."gwen/hashed-password" = {
     sopsFile = ../secrets/gwen/hashed-password.txt;
@@ -15,6 +16,6 @@
       "wheel"
     ];
     createHome = true;
-    packages = [];
+    packages = [ ];
   };
 }

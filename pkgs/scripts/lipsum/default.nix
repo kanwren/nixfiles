@@ -4,7 +4,8 @@
   unixtools,
   curl,
   jq,
-}: let
+}:
+let
   script = replaceVarsWith {
     name = "lipsum";
     src = ./lipsum.sh;
@@ -19,6 +20,6 @@
     description = "Generate lorem ipsum text";
   };
 in
-  script.overrideAttrs (old: {
-    meta = (old.meta or {}) // meta;
-  })
+script.overrideAttrs (old: {
+  meta = (old.meta or { }) // meta;
+})

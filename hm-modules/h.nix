@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.programs.h;
-in {
+in
+{
   options.programs.h = {
     enable = lib.mkEnableOption "h";
 

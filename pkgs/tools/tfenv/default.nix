@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-2Fpaj/UQDE7PNFX9GNr4tygvKmm/X0yWVVerJ+Y6eks=";
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -34,10 +34,12 @@ stdenvNoCC.mkDerivation rec {
     patchShebangs --host $out/libexec
 
     wrapProgram "$out/bin/tfenv" \
-      --prefix PATH : "${lib.makeBinPath [
-      gnugrep
-      unzip
-    ]}" \
+      --prefix PATH : "${
+        lib.makeBinPath [
+          gnugrep
+          unzip
+        ]
+      }" \
       --run 'export TFENV_CONFIG_DIR="''${TFENV_CONFIG_DIR:-$HOME/.cache/tfenv}"' \
       --run 'mkdir -p "''${TFENV_CONFIG_DIR}"'
 
@@ -50,6 +52,6 @@ stdenvNoCC.mkDerivation rec {
     description = "Terraform version manager";
     homepage = "https://github.com/tfutils/tfenv";
     platforms = lib.platforms.unix;
-    licenses = [lib.licenses.mit];
+    licenses = [ lib.licenses.mit ];
   };
 }

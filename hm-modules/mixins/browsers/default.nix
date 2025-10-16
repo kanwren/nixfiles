@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.browsers;
-in {
+in
+{
   options.mixins.browsers = {
     enable = lib.mkOption {
       type = lib.types.bool;

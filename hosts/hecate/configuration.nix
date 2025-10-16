@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./caches.nix
     ./pkgs
@@ -8,19 +9,19 @@
     ./x
   ];
 
-  sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
-    trusted-users = ["root"];
+    trusted-users = [ "root" ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = ["nvidia_drm.fbdev=1"];
+    kernelParams = [ "nvidia_drm.fbdev=1" ];
 
     loader = {
       systemd-boot.enable = true;
@@ -31,7 +32,7 @@
     tmp.cleanOnBoot = true;
 
     # enable aarch64-linux emulation
-    binfmt.emulatedSystems = ["aarch64-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   networking = {
@@ -42,8 +43,8 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [];
-      allowedUDPPorts = [];
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
   };
 

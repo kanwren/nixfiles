@@ -7,7 +7,8 @@
 # init settings
 let
   cfg = config.mixins.bash;
-in {
+in
+{
   options.mixins.bash.enable = lib.mkOption {
     type = lib.types.bool;
     default = config.mixins.enable;
@@ -29,8 +30,16 @@ in {
     historyFile = "$HOME/.bash_history";
     historySize = 1000000;
     historyFileSize = 1000000;
-    historyControl = ["ignorespace" "ignoredups"];
-    historyIgnore = ["ls" "cd" "exit" "history"];
+    historyControl = [
+      "ignorespace"
+      "ignoredups"
+    ];
+    historyIgnore = [
+      "ls"
+      "cd"
+      "exit"
+      "history"
+    ];
 
     initExtra = ''
       test "$(ulimit -n)" -lt 8192 && ulimit -n 8192

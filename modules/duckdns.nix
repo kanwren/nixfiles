@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.duckdns;
-in {
+in
+{
   options = {
     services.duckdns = {
       enable = mkEnableOption "Duck DNS";
@@ -62,22 +64,23 @@ in {
         serviceConfig.Type = "oneshot";
         script = ''
           ${
-            if cfg.token != null
-            then ''
-              url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=${cfg.token}&verbose=true&ip="
-            ''
-            else ''
-              token="$(< ${cfg.tokenPath})"
-              url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=$token&verbose=true&ip="
-            ''
+            if cfg.token != null then
+              ''
+                url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=${cfg.token}&verbose=true&ip="
+              ''
+            else
+              ''
+                token="$(< ${cfg.tokenPath})"
+                url="https://www.duckdns.org/update?domains=${cfg.subdomain}&token=$token&verbose=true&ip="
+              ''
           }
           echo url="$url" | ${pkgs.curl}/bin/curl -k -o /tmp/duck.log -K - >/dev/null 2>&1
         '';
       };
 
       timers.update-duckdns-ip = {
-        wantedBy = ["timers.target"];
-        partOf = ["update-duckdns-ip.service"];
+        wantedBy = [ "timers.target" ];
+        partOf = [ "update-duckdns-ip.service" ];
         timerConfig.OnCalendar = cfg.onCalendar;
       };
     };

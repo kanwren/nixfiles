@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mixins.zellij;
-in {
+in
+{
   options.mixins.zellij = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -31,16 +33,15 @@ in {
       enableFishIntegration = cfg.shellIntegration.enable;
     };
 
-    home.sessionVariables = let
-      autoAttach = cfg.shellIntegration.enable && cfg.shellIntegration.autoAttach;
-      autoAttachStr =
-        if autoAttach
-        then "true"
-        else "false";
-    in {
-      ZELLIJ_AUTO_ATTACH = autoAttachStr;
-      ZELLIJ_AUTO_EXIT = autoAttachStr;
-    };
+    home.sessionVariables =
+      let
+        autoAttach = cfg.shellIntegration.enable && cfg.shellIntegration.autoAttach;
+        autoAttachStr = if autoAttach then "true" else "false";
+      in
+      {
+        ZELLIJ_AUTO_ATTACH = autoAttachStr;
+        ZELLIJ_AUTO_EXIT = autoAttachStr;
+      };
 
     # NOTE: the home-manager toKDL generator represents node children as an
     # attrset, which is the wrong type for KDL's model (can't repeat keys, and

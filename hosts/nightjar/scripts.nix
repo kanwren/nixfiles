@@ -1,11 +1,13 @@
 {
   pkgs,
   lib,
-}: let
+}:
+let
   addDepsToPath = deps: ''
     export PATH=${lib.makeBinPath deps}''${PATH:+:$PATH}
   '';
-in {
+in
+{
   # (Re)-process a shell script with [argc](https://github.com/sigoden/argc) to
   # insert static argument parsing code, without a dependency on argc itself
   reargc = pkgs.writers.writeBashBin "reargc" ''
@@ -21,7 +23,10 @@ in {
   # $ go mod graph | awk 'BEGIN{OFS="\n"} {$1=$1; print $0}' | awk -F@ '/@/{$1=$1; print $0}' | sort -Vu
   fake-mod = pkgs.writers.writeBashBin "fake-mod" ''
     set -euo pipefail
-    ${addDepsToPath [pkgs.coreutils pkgs.jq]}
+    ${addDepsToPath [
+      pkgs.coreutils
+      pkgs.jq
+    ]}
 
     die() {
       echo "$@" >&2
@@ -65,7 +70,12 @@ in {
 
   list-make-targets = pkgs.writers.writeBashBin "list-make-targets" ''
     set -euo pipefail
-    ${addDepsToPath [pkgs.coreutils pkgs.gnumake pkgs.gawk pkgs.gnugrep]}
+    ${addDepsToPath [
+      pkgs.coreutils
+      pkgs.gnumake
+      pkgs.gawk
+      pkgs.gnugrep
+    ]}
     make -pRrq | awk -v RS= -F: '/(^|\n)# Files(\n|$)/,/(^|\n)# Finished Make data base/ {if ($1 !~ "^[#.]") {print $1}}' | sort | grep '^[[:alnum:]]'
   '';
 }

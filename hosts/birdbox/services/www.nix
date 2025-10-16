@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # ACME-DNS for wildcard TLS cert for custom domain:
   #
   # To register, run the following for the secret contents:

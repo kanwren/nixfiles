@@ -3,21 +3,23 @@
   pkgs,
   lib,
   ...
-}: let
-  intToString = n:
-    if !builtins.isInt n
-    then builtins.throw "intToString: expected an int"
-    else toString n;
-in {
+}:
+let
+  intToString =
+    n: if !builtins.isInt n then builtins.throw "intToString: expected an int" else toString n;
+in
+{
   services = {
     gitit = {
       enable = true;
-      package = pkgs.stable.runCommandNoCC "gitit-stable" {nativeBuildInputs = [pkgs.stable.makeWrapper];} ''
-        mkdir -p "$out"/bin
-        install -D --mode=0755 ${lib.escapeShellArg pkgs.stable.gitit}/bin/* --target-directory="$out/bin"
-        wrapProgram "$out/bin/gitit" \
-          --prefix PATH : ${lib.escapeShellArg (lib.makeBinPath [pkgs.stable.git])}
-      '';
+      package =
+        pkgs.stable.runCommandNoCC "gitit-stable" { nativeBuildInputs = [ pkgs.stable.makeWrapper ]; }
+          ''
+            mkdir -p "$out"/bin
+            install -D --mode=0755 ${lib.escapeShellArg pkgs.stable.gitit}/bin/* --target-directory="$out/bin"
+            wrapProgram "$out/bin/gitit" \
+              --prefix PATH : ${lib.escapeShellArg (lib.makeBinPath [ pkgs.stable.git ])}
+          '';
       config = {
         address = "127.0.0.1";
         port = 17503;
@@ -45,7 +47,7 @@ in {
         tailnetName = "swallow-chickadee";
         target = "http://127.0.0.1:${intToString config.services.gitit.config.port}";
         authKeyFile = config.sops.secrets."caddy/ts-authkey-gitit".path;
-        dependencies = ["gitit.service"];
+        dependencies = [ "gitit.service" ];
         extraProxyConfig = ''
           header_up REMOTE_USER {http.auth.user.tailscale_login}
         '';
