@@ -114,11 +114,11 @@
       };
     });
 
-    formatter = forAllSystems (pkgs: pkgs.alejandra);
+    formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
 
     checks = forAllSystems (pkgs: {
-      check-format = pkgs.runCommand "check-format" {buildInputs = [self.formatter.${pkgs.system}];} ''
-        alejandra --check ${./.} && touch "$out"
+      check-format = pkgs.runCommand "check-format" {buildInputs = [pkgs.nixfmt-tree];} ''
+        treefmt --ci ${./.} && touch "$out"
       '';
     });
   };
