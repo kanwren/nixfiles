@@ -327,9 +327,9 @@ in
               "jbt" = commandAbbr "jj bookmark track";
               "jbu" = commandAbbr "jj bookmark untrack";
               "jc" = commandAbbr "jj commit";
-              "jcm" = commandAbbr "jj commit --message";
               "jcf" = commandAbbr "jj config";
               "jcfl" = commandAbbr "jj config list";
+              "jcm" = commandAbbr "jj commit --message";
               "jd" = commandAbbr "jj describe";
               "jde" = commandAbbr "jj diffedit";
               "jdf" = commandAbbr "jj diff";
@@ -351,8 +351,8 @@ in
               "jk" = commandAbbr "jj abandon";
               "jl" = commandAbbr "jj log";
               "jlr" = commandAbbr "jj log --revisions";
-              "jm" = commandAbbr "jj simplify-parents";
-              "jmr" = commandAbbr "jj simplify-parents --revisions";
+              "jm" = commandAbbr "jj metaedit";
+              "jmc" = commandAbbr "jj metaedit --update-change-id";
               "jn" = commandAbbr "jj new";
               "jna" = commandAbbr "jj new --no-edit --insert-after";
               "jnb" = commandAbbr "jj new --no-edit --insert-before";
@@ -368,6 +368,8 @@ in
               "jrb" = commandAbbr "jj rebase --insert-before";
               "jrt" = commandAbbr "jj rebase --destination 'trunk()'";
               "js" = commandAbbr "jj show";
+              "jsp" = commandAbbr "jj simplify-parents";
+              "jspr" = commandAbbr "jj simplify-parents --revisions";
               "jsq" = commandAbbr "jj squash";
               "jt" = commandAbbr "jj tag";
               "jtl" = commandAbbr "jj tag list";
@@ -383,8 +385,8 @@ in
               "jwt" = commandAbbr "jj flow tip";
               "jx" = commandAbbr "jj revert";
               "jz" = commandAbbr "jj restore";
-              "jzi" = commandAbbr "jj restore --interactive";
               "jzd" = commandAbbr "jj restore --restore-descendants";
+              "jzi" = commandAbbr "jj restore --interactive";
             };
             zellijAbbrs = {
               "zj" = commandAbbr "zellij";
