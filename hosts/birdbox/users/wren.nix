@@ -77,42 +77,4 @@
       user.email = "nicole@wren.systems";
     };
   };
-
-  sops.secrets."wren/nas-credentials" = {
-    sopsFile = ../secrets/wren/nas-credentials.txt;
-    format = "binary";
-    mode = "0440";
-  };
-
-  fileSystems =
-    let
-      host = "gwenas";
-      base = "/home/wren/nas";
-      shares = [
-        "Anime"
-        "Books"
-        "Documents"
-        "Downloads"
-        "Music"
-        "Shared"
-        "TV"
-        "Wren"
-      ];
-      mkShare = share: {
-        name = "${base}/${share}";
-        value = {
-          device = "//${host}/${share}";
-          fsType = "cifs";
-          options = [
-            "x-systemd.automount"
-            "noauto"
-            "x-systemd.idle-timeout=60"
-            "x-systemd.device-timeout=5s"
-            "x-systemd.mount-timeout=5s"
-            "credentials=${config.sops.secrets."wren/nas-credentials".path}"
-          ];
-        };
-      };
-    in
-    builtins.listToAttrs (builtins.map mkShare shares);
 }
