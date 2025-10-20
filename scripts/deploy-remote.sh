@@ -5,32 +5,30 @@ shopt -so nounset
 shopt -so pipefail
 
 usage() {
-  >&2 echo 'deploy-remote.sh <name> <login>'
+  >&2 echo 'deploy-remote.sh <name> <login> [<command>]'
+}
+
+log_and_run() {
+  (
+    set -x
+    "$@"
+  )
 }
 
 main() {
-  if [ "$#" -ne 2 ]; then
+  if [ "$#" -ne 2 ] && [ "$#" -ne 3 ]; then
     usage
     return 1
   fi
 
   name="$1"
   login="$2"
+  command="${3:-switch}"
 
-  # Copy the configuration over
-  flake="$(nix flake prefetch . --json | jq --join-output '.storePath')"
-  nix copy --to ssh-ng://"$login" "$flake"
-
-  # Build the configuration remotely
-  nix build --print-build-logs --print-out-paths --no-link --store ssh-ng://"$login" "$flake"'#nixosConfigurations.'"$name"'.config.system.build.toplevel'
-
-  # Copy our current nixos-rebuild
-  nixos_rebuild="$(readlink -f "$(which nixos-rebuild)")"
-  nix copy --to ssh-ng://"$login" "$nixos_rebuild"
-  nix build --print-build-logs --print-out-paths --no-link --store ssh-ng://"$login" "$nixos_rebuild"
-
-  # nixos-rebuild switch
-  ssh -t "$login" "$nixos_rebuild"' --ask-sudo-password switch --flake '"$flake"'#'"$name"
+  # Build the configuration and copy the result over
+  out_path="$(log_and_run nix build --print-build-logs --print-out-paths --no-link '.#nixosConfigurations.'"$name"'.config.system.build.toplevel')"
+  log_and_run nix copy --to ssh-ng://"$login" "$out_path"
+  log_and_run ssh -t "$login" sudo "$out_path"/bin/switch-to-configuration "$command"
 }
 
 main "$@"
