@@ -53,7 +53,9 @@
           ".local/share/zoxide"
           ".local/share/wd"
         ];
-        files = [ ];
+        files = [
+          ".config/nix/nix.conf" # for extra signing keys, etc.
+        ];
       };
     };
 
