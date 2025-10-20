@@ -32,18 +32,13 @@ in
 
     jvmOpts = lib.concatStringsSep " " [
       # 4G RAM
-      "-Xmx4G"
-      "-Xms4G"
-
-      # G1 garbage collector tuning
-      "-XX:+UseG1GC"
+      "-Xmx16G"
+      "-Xms16G"
+      "-XX:+UseZGC"
+      "-XX:+ZGenerational"
+      "-XX:+AlwaysPreTouch"
+      "-XX:+UseStringDeduplication"
       "-Dsun.rmi.dgc.server.gcInterval=600000"
-      "-XX:+UnlockExperimentalVMOptions"
-      "-XX:+DisableExplicitGC"
-      "-XX:G1NewSizePercent=20"
-      "-XX:G1ReservePercent=20"
-      "-XX:MaxGCPauseMillis=50"
-      "-XX:G1HeapRegionSize=32"
     ];
   };
 
