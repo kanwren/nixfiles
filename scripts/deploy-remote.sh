@@ -27,6 +27,7 @@ main() {
 
   # Build the configuration and copy the result over
   out_path="$(log_and_run nix build --print-build-logs --print-out-paths --no-link '.#nixosConfigurations.'"$name"'.config.system.build.toplevel')"
+  log_and_run nix store sign --recursive --key-file /etc/nix/secret-key "$out_path"
   log_and_run nix copy --to ssh-ng://"$login" "$out_path"
   log_and_run ssh -t "$login" sudo "$out_path"/bin/switch-to-configuration "$command"
 }
