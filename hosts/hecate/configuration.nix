@@ -22,6 +22,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "nvidia_drm.fbdev=1" ];
+    kernelModules = [ "hid_nintendo" ];
 
     loader = {
       systemd-boot.enable = true;
@@ -106,6 +107,12 @@
       enable = true;
       powerOnBoot = true;
       package = pkgs.bluez;
+      input = {
+        General = {
+          ClassicBondedOnly = false;
+          UserspaceHID = true;
+        };
+      };
     };
   };
 
@@ -160,6 +167,9 @@
 
     # bluetooth manager (or use bluetoothctl, but this has a nice applet)
     blueman.enable = true;
+
+    # Nintendo Pro controller
+    joycond.enable = true;
 
     # cups
     printing = {
