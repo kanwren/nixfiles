@@ -25,6 +25,7 @@
     ./rofi
     ./rust
     ./spotify
+    ./sway
     ./zathura
     ./zellij
     ./zoxide
