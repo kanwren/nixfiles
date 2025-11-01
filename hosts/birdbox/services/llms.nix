@@ -6,7 +6,7 @@
 {
   services = {
     ollama = {
-      enable = true;
+      enable = false;
       package = pkgs.ollama-cuda.override {
         cudaArches = [ "61" ];
       };
@@ -21,7 +21,7 @@
     };
 
     open-webui = {
-      enable = true;
+      enable = false;
       port = 8005;
       host = "127.0.0.1";
     };
