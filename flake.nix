@@ -109,7 +109,7 @@
             pkgs.jq
 
             # formatting
-            self.formatter.${pkgs.system}
+            self.formatter.${pkgs.stdenv.hostPlatform.system}
 
             # sops
             pkgs.sops

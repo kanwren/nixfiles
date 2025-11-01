@@ -8,7 +8,7 @@ let
   cfg = config.mixins.jujutsu;
 
   jj-helpers =
-    pkgs.runCommandNoCC "argc-build-jj-helpers"
+    pkgs.runCommand "argc-build-jj-helpers"
       {
         nativeBuildInputs = [
           pkgs.coreutils

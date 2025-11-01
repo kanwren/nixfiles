@@ -184,7 +184,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryPackage = pkgs.pinentry;
+      pinentryPackage = pkgs.pinentry-curses;
     };
 
     nm-applet.enable = true;

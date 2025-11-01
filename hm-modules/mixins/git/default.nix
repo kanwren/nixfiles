@@ -17,19 +17,15 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      package = pkgs.gitAndTools.gitFull;
+      package = pkgs.gitFull;
 
-      userName = "Nicole Wren";
-      userEmail = "nicole@wren.systems";
+      settings = {
+      user = {
+        name = "Nicole Wren";
+        email = "nicole@wren.systems";
+      };
 
-      ignores = [
-        "tags"
-        ".direnv/"
-        ".claude/"
-        "CLAUDE.local.md"
-      ];
-
-      aliases = {
+      alias = {
         squash = "commit --amend --no-edit";
         amend = "commit --amend";
         detach = "switch --detach";
@@ -48,7 +44,6 @@ in
         praise = "blame";
       };
 
-      extraConfig = {
         credential = {
           helper = "manager";
         };
@@ -136,6 +131,13 @@ in
           addEmptyPathspec = false;
         };
       };
+
+      ignores = [
+        "tags"
+        ".direnv/"
+        ".claude/"
+        "CLAUDE.local.md"
+      ];
 
       lfs.enable = true;
 

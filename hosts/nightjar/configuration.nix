@@ -123,7 +123,7 @@ in
       pkgs.sd
       pkgs.fd
       pkgs.rsync
-      pkgs.gitAndTools.gitFull
+      pkgs.gitFull
       pkgs.hyperfine
       pkgs.tealdeer
       pkgs.cht-sh
@@ -134,7 +134,7 @@ in
       pkgs.automake
       pkgs.cmake
       pkgs.bazelisk
-      (pkgs.runCommandNoCCLocal "bazel-bazelisk-alias" { } ''
+      (pkgs.runCommandLocal "bazel-bazelisk-alias" { } ''
         mkdir -p "$out/bin"
         ln -s "${pkgs.bazelisk}/bin/bazelisk" "$out/bin/bazel"
       '')
@@ -359,30 +359,28 @@ in
 
         git = {
           enable = true;
-          userName = "Nicole Wren";
-          userEmail = "wrenn@block.xyz";
-          signing = {
-            signByDefault = true;
-            key = "85C1D51ACE6FFEC848B78D89E6A60F3BD112FD42";
-          };
-          aliases = {
-            squash = "commit --amend --no-edit";
-            amend = "commit --amend";
-            staged = "diff --cached";
-            conflicts = "diff --name-status --diff-filter=U";
-            ff = "merge --ff-only";
-            ls = "log --oneline";
-            compare = "log --left-right --graph --oneline";
-            graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
-            changes = "diff --name-status --oneline";
-            mkexec = "update-index --chmod=+x";
-            root = "rev-parse --show-toplevel";
-            alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-            ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
-            ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
-            praise = "blame";
-          };
-          extraConfig = {
+          settings = {
+user = {
+            name = "Nicole Wren";
+            email = "wrenn@block.xyz";
+};
+            alias = {
+              squash = "commit --amend --no-edit";
+              amend = "commit --amend";
+              staged = "diff --cached";
+              conflicts = "diff --name-status --diff-filter=U";
+              ff = "merge --ff-only";
+              ls = "log --oneline";
+              compare = "log --left-right --graph --oneline";
+              graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
+              changes = "diff --name-status --oneline";
+              mkexec = "update-index --chmod=+x";
+              root = "rev-parse --show-toplevel";
+              alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
+              ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+              ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
+              praise = "blame";
+            };
             credential = {
               helper = "osxkeychain";
             };
@@ -469,6 +467,10 @@ in
             advice = {
               addEmptyPathspec = false;
             };
+          };
+          signing = {
+            signByDefault = true;
+            key = "85C1D51ACE6FFEC848B78D89E6A60F3BD112FD42";
           };
           ignores = [
             "*.iml"

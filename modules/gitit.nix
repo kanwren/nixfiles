@@ -18,7 +18,7 @@ let
     max-upload-size = "5000K";
     max-page-size = "5000K";
     mail-command = "";
-    mime-types-file = "${pkgs.mime-types}/etc/mime.types";
+    mime-types-file = "${pkgs.mailcap}/etc/mime.types";
   };
 
   gititOverrides = {

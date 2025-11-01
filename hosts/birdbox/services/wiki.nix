@@ -13,7 +13,7 @@ in
     gitit = {
       enable = true;
       package =
-        pkgs.stable.runCommandNoCC "gitit-stable" { nativeBuildInputs = [ pkgs.stable.makeWrapper ]; }
+        pkgs.stable.runCommand "gitit-stable" { nativeBuildInputs = [ pkgs.stable.makeWrapper ]; }
           ''
             mkdir -p "$out"/bin
             install -D --mode=0755 ${lib.escapeShellArg pkgs.stable.gitit}/bin/* --target-directory="$out/bin"
