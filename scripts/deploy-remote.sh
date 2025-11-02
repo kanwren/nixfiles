@@ -32,7 +32,7 @@ main() {
   log_and_run nix store sign --recursive --key-file /etc/nix/secret-key "$out_path"
   log_and_run nix copy --to ssh-ng://"$login" "$out_path"
   if [[ $command =~ ^switch|boot$ ]]; then
-    log_and_run nix-env --profile /nix/var/nix/profiles/system --set "$out_path"
+    log_and_run ssh -t "$login" sudo nix-env --profile /nix/var/nix/profiles/system --set "$out_path"
   fi
   log_and_run ssh -t "$login" sudo "$out_path"/bin/switch-to-configuration "$command"
 }
