@@ -360,10 +360,10 @@ in
         git = {
           enable = true;
           settings = {
-user = {
-            name = "Nicole Wren";
-            email = "wrenn@block.xyz";
-};
+            user = {
+              name = "Nicole Wren";
+              email = "wrenn@block.xyz";
+            };
             alias = {
               squash = "commit --amend --no-edit";
               amend = "commit --amend";

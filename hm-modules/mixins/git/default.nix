@@ -20,29 +20,29 @@ in
       package = pkgs.gitFull;
 
       settings = {
-      user = {
-        name = "Nicole Wren";
-        email = "nicole@wren.systems";
-      };
+        user = {
+          name = "Nicole Wren";
+          email = "nicole@wren.systems";
+        };
 
-      alias = {
-        squash = "commit --amend --no-edit";
-        amend = "commit --amend";
-        detach = "switch --detach";
-        staged = "diff --cached";
-        conflicts = "diff --name-status --diff-filter=U";
-        ff = "merge --ff-only";
-        ls = "log --oneline";
-        compare = "log --left-right --graph --oneline";
-        graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
-        changes = "show --name-status --oneline";
-        mkexec = "update-index --chmod=+x";
-        root = "rev-parse --show-toplevel";
-        alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-        ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
-        ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
-        praise = "blame";
-      };
+        alias = {
+          squash = "commit --amend --no-edit";
+          amend = "commit --amend";
+          detach = "switch --detach";
+          staged = "diff --cached";
+          conflicts = "diff --name-status --diff-filter=U";
+          ff = "merge --ff-only";
+          ls = "log --oneline";
+          compare = "log --left-right --graph --oneline";
+          graph = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(bold blue)%h - %C(reset)%C(green)(%ar)%C(reset) - %s %C(dim)- %an%C(reset)%C(yellow)%d'";
+          changes = "show --name-status --oneline";
+          mkexec = "update-index --chmod=+x";
+          root = "rev-parse --show-toplevel";
+          alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
+          ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+          ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
+          praise = "blame";
+        };
 
         credential = {
           helper = "manager";
