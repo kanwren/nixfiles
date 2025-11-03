@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -28,40 +29,48 @@
 
     tscaddy = {
       enable = true;
-      nodes = {
-        ollama = {
-          tailnetName = "swallow-chickadee";
-          target = "http://127.0.0.1:${toString config.services.ollama.port}";
-          keepHost = false;
-          authKeyFile = config.sops.secrets."caddy/ts-authkey-ollama".path;
-          dependencies = [ "ollama.service" ];
+      nodes =
+        lib.mkIf config.services.ollama.enable {
+          ollama = {
+            tailnetName = "swallow-chickadee";
+            target = "http://127.0.0.1:${toString config.services.ollama.port}";
+            keepHost = false;
+            authKeyFile = config.sops.secrets."caddy/ts-authkey-ollama".path;
+            dependencies = [ "ollama.service" ];
+          };
+        }
+        // lib.mkIf config.services.open-webui.enable {
+          open-webui = {
+            tailnetName = "swallow-chickadee";
+            target = "http://127.0.0.1:${toString config.services.open-webui.port}";
+            authKeyFile = config.sops.secrets."caddy/ts-authkey-open-webui".path;
+            dependencies = [ "open-webui.service" ];
+          };
         };
-        open-webui = {
-          tailnetName = "swallow-chickadee";
-          target = "http://127.0.0.1:${toString config.services.open-webui.port}";
-          authKeyFile = config.sops.secrets."caddy/ts-authkey-open-webui".path;
-          dependencies = [ "open-webui.service" ];
-        };
+    };
+  };
+
+  systemd.services = lib.mkIf config.services.open-webui.enable {
+    open-webui.serviceConfig.Restart = "always";
+  };
+
+  sops.secrets =
+    lib.mkIf config.services.ollama.enable {
+      "caddy/ts-authkey-ollama" = {
+        sopsFile = ../secrets/caddy/ts-authkey-ollama.txt;
+        format = "binary";
+        mode = "0440";
+        owner = config.services.caddy.user;
+        inherit (config.services.caddy) group;
+      };
+    }
+    // lib.mkIf config.services.open-webui.enable {
+      "caddy/ts-authkey-open-webui" = {
+        sopsFile = ../secrets/caddy/ts-authkey-open-webui.txt;
+        format = "binary";
+        mode = "0440";
+        owner = config.services.caddy.user;
+        inherit (config.services.caddy) group;
       };
     };
-  };
-
-  systemd.services.open-webui.serviceConfig.Restart = "always";
-
-  sops.secrets = {
-    "caddy/ts-authkey-ollama" = {
-      sopsFile = ../secrets/caddy/ts-authkey-ollama.txt;
-      format = "binary";
-      mode = "0440";
-      owner = config.services.caddy.user;
-      inherit (config.services.caddy) group;
-    };
-    "caddy/ts-authkey-open-webui" = {
-      sopsFile = ../secrets/caddy/ts-authkey-open-webui.txt;
-      format = "binary";
-      mode = "0440";
-      owner = config.services.caddy.user;
-      inherit (config.services.caddy) group;
-    };
-  };
 }
