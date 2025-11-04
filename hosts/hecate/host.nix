@@ -12,9 +12,11 @@ outputs.lib.mkNixosSystem {
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.disko.nixosModules.disko
     outputs.nixosModules.pueue
 
     ./hardware-configuration.nix
+    ./disko-config.nix
     ./configuration.nix
   ];
 
