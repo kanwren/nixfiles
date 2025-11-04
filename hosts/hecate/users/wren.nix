@@ -41,7 +41,7 @@
 
         # applications
         xfce.thunar # file browser
-        bitwarden # password manager
+        bitwarden-desktop # password manager
         kdePackages.filelight # disk usage visualization
         signal-desktop # messaging
         obsidian # note taking
