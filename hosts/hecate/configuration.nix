@@ -219,77 +219,255 @@
       windowManager.i3 = {
         enable = true;
         package = pkgs.i3;
-        configFile = pkgs.replaceVars ./i3config/i3config {
-          spill_container_script = pkgs.replaceVarsWith {
-            src = ./i3config/spill_container.bash;
-            isExecutable = true;
-            replacements = {
-              inherit (pkgs) runtimeShell jq;
-              i3 = config.services.xserver.windowManager.i3.package;
-            };
-          };
+        configFile = pkgs.writeText "i3config" ''
+          # keys
+          set $mod Mod4
+          floating_modifier $mod
 
-          pick_game_script = pkgs.replaceVarsWith {
-            src = ./i3config/pick_game.bash;
-            isExecutable = true;
-            replacements = {
-              inherit (pkgs) runtimeShell rofi;
-            };
-          };
+          # display
+          font pango:DejaVu Sans Mono 12
+          for_window [class=".*"] border pixel 1
+          hide_edge_borders both
+          gaps inner 10
+          gaps outer 10
 
-          copyq_launch_script = pkgs.replaceVarsWith {
-            src = ./i3config/copyq_launch.bash;
-            isExecutable = true;
-            replacements = {
-              inherit (pkgs) runtimeShell copyq;
-            };
-          };
+          # startup programs
+          exec --no-startup-id compton
+          exec --no-startup-id copyq
+          exec --no-startup-id nm-applet
+          exec --no-startup-id blueman-applet
+          exec --no-startup-id mate-volume-control-status-icon
+          exec --no-startup-id ibus-daemon --daemonize --replace
+          exec --no-startup-id flameshot
 
-          i3status_config = pkgs.writeText "i3status.conf" ''
-            general {
-                    colors = true
-                    color_good = "#a6e3a1"
-                    color_degraded = "#f9e2af"
-                    color_bad = "#f38ba8"
-                    interval = 5
-            }
+          # basic keybindings
+          bindsym $mod+Shift+q kill
+          bindsym $mod+i exec i3-input -f pango:monospace 12
+          bindsym $mod+Shift+i exec betterlockscreen -l dimblur
+          bindsym $mod+Shift+o exec betterlockscreen -s dimblur
+          bindsym $mod+Shift+Return exec "rofi -modi drun,run,ssh -show drun -fuzzy"
+          bindsym $mod+Shift+w exec "rofi -show window"
+          bindsym Print exec flameshot gui
+          bindsym $mod+Return exec kitty
+          bindsym $mod+b exec firefox
+          bindsym $mod+n exec copyq show
 
-            order += "wireless _first_"
-            order += "ethernet _first_"
-            order += "battery all"
-            order += "memory"
-            order += "disk /"
-            order += "tztime local"
+          # media buttons
+          bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 5%+ # Increase sound volume
+          bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 5%- # Decrease sound volume
+          bindsym XF86AudioMute        exec --no-startup-id amixer sset Master 1+ toggle # Toggle mute
+          bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+          bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
+          bindsym XF86AudioPlay  exec playerctl play-pause
+          bindsym XF86AudioPause exec playerctl pause
+          bindsym XF86AudioNext  exec playerctl next
+          bindsym XF86AudioPrev  exec playerctl previous
+          bindsym XF86Calculator exec qalculate-gtk
+          bindsym --release XF86PowerOff mode "system"
 
-            wireless _first_ {
-                    format_up = "W %quality at %essid"
-                    format_down = "W down"
-            }
+          # system commands
+          bindsym $mod+c mode "quickcommand"
+          mode "quickcommand" {
+              bindsym r               restart;                mode "default"
+              bindsym Shift+e         exit;                   mode "default"
+              bindsym Control+Shift+s exec shutdown now;      mode "default"
+              bindsym Control+Shift+r exec shutdown -r now;   mode "default"
+              bindsym Escape mode "default"
+          }
 
-            ethernet _first_ {
-                    format_up = "E %speed"
-                    format_down = "E down"
-            }
+          # tiling movement
+          bindsym $mod+h focus left
+          bindsym $mod+j focus down
+          bindsym $mod+k focus up
+          bindsym $mod+l focus right
+          bindsym $mod+Shift+h move left
+          bindsym $mod+Shift+j move down
+          bindsym $mod+Shift+k move up
+          bindsym $mod+Shift+l move right
+          bindsym $mod+Control+Shift+h move left 80 px
+          bindsym $mod+Control+Shift+j move down 80 px
+          bindsym $mod+Control+Shift+k move up 80 px
+          bindsym $mod+Control+Shift+l move right 80 px
 
-            battery all {
-                    format = "%status %percentage %remaining"
-            }
+          # window layouts and properties
+          bindsym $mod+Shift+minus split v
+          bindsym $mod+Shift+backslash split h
+          bindsym $mod+s layout stacking
+          bindsym $mod+w layout tabbed
+          bindsym $mod+e layout toggle split
+          bindsym $mod+p focus parent
+          bindsym $mod+Shift+p focus child
+          bindsym $mod+Shift+space floating toggle
+          bindsym --whole-window $mod+button2 floating toggle
+          bindsym $mod+space focus mode_toggle
+          bindsym $mod+f fullscreen toggle
+          bindsym $mod+y sticky toggle
+          bindsym $mod+Shift+BackSpace move scratchpad
+          bindsym $mod+backslash scratchpad show
 
-            memory {
-                    format = "%used/%available"
-                    threshold_degraded = "1G"
-                    format_degraded = "MEM < %available"
-            }
+          # float certain windows automatically
+          for_window [class="^Thunar$"] floating enable
+          for_window [class="^Qalculate-gtk$"] floating enable
+          for_window [class="^copyq$"] floating enable
 
-            disk "/" {
-                    format = "%avail"
-            }
+          # resizing
+          bindsym $mod+r mode "resize"
+          mode "resize" {
+              bindsym h resize shrink width 10 px or 1 ppt
+              bindsym j resize grow height 10 px or 1 ppt
+              bindsym k resize shrink height 10 px or 1 ppt
+              bindsym l resize grow width 10 px or 1 ppt
 
-            tztime local {
-                    format = "%Y-%m-%d %H:%M:%S"
-            }
-          '';
-        };
+              bindsym Shift+h resize shrink width 50 px or 5 ppt
+              bindsym Shift+j resize grow height 50 px or 5 ppt
+              bindsym Shift+k resize shrink height 50 px or 5 ppt
+              bindsym Shift+l resize grow width 50 px or 5 ppt
+
+              bindsym Control+Shift+h resize shrink width 150 px or 15 ppt
+              bindsym Control+Shift+j resize grow height 150 px or 15 ppt
+              bindsym Control+Shift+k resize shrink height 150 px or 15 ppt
+              bindsym Control+Shift+l resize grow width 150 px or 15 ppt
+
+              bindsym Escape mode "default"
+          }
+
+          # marking
+          bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
+          bindsym $mod+Shift+m exec i3-input -F 'unmark %s' -l 1 -P 'mark: '
+          bindsym $mod+Control+Shift+m unmark
+          bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
+
+          # automatic marks
+          for_window [class="^discord$"] mark d
+          for_window [class="^Spotify$"] mark s
+          for_window [class="^Bitwarden$"] mark p
+
+          # swapping
+          bindsym $mod+bracketleft mark --add swapee
+          bindsym $mod+bracketright swap container with mark swapee; unmark swapee
+
+          # bar control
+          bindsym $mod+u bar mode toggle
+          bindsym $mod+Shift+u bar mode invisible
+          bindsym $mod+Control+Shift+u bar hidden_state toggle
+
+          # workspaces
+          set $ws1  "1"
+          set $ws2  "2"
+          set $ws3  "3"
+          set $ws4  "4"
+          set $ws5  "5"
+          set $ws6  "6"
+          set $ws7  "7"
+          set $ws8  "8"
+          set $ws9  "9"
+          set $ws10 "10"
+
+          bindsym $mod+1 workspace $ws1
+          bindsym $mod+2 workspace $ws2
+          bindsym $mod+3 workspace $ws3
+          bindsym $mod+4 workspace $ws4
+          bindsym $mod+5 workspace $ws5
+          bindsym $mod+6 workspace $ws6
+          bindsym $mod+7 workspace $ws7
+          bindsym $mod+8 workspace $ws8
+          bindsym $mod+9 workspace $ws9
+          bindsym $mod+0 workspace $ws10
+
+          bindsym $mod+Left  workspace prev
+          bindsym $mod+Right workspace next
+          bindsym $mod+Tab   workspace back_and_forth
+
+          bindsym $mod+Shift+1 move container to workspace $ws1
+          bindsym $mod+Shift+2 move container to workspace $ws2
+          bindsym $mod+Shift+3 move container to workspace $ws3
+          bindsym $mod+Shift+4 move container to workspace $ws4
+          bindsym $mod+Shift+5 move container to workspace $ws5
+          bindsym $mod+Shift+6 move container to workspace $ws6
+          bindsym $mod+Shift+7 move container to workspace $ws7
+          bindsym $mod+Shift+8 move container to workspace $ws8
+          bindsym $mod+Shift+9 move container to workspace $ws9
+          bindsym $mod+Shift+0 move container to workspace $ws10
+
+          bindsym $mod+Control+h move workspace to output left
+          bindsym $mod+Control+j move workspace to output down
+          bindsym $mod+Control+k move workspace to output up
+          bindsym $mod+Control+l move workspace to output right
+
+          # i3status
+          set $base #1e1e2e
+          set $text #cdd6f4
+          set $pink #f5c2e7
+          set $lavender #b4befe
+          set $blue #89b4fa
+          set $red #f38ba8
+          bar {
+              status_command i3status -c ${
+                pkgs.writeText "i3status.conf" ''
+                  general {
+                          colors = true
+                          color_good = "#a6e3a1"
+                          color_degraded = "#f9e2af"
+                          color_bad = "#f38ba8"
+                          interval = 5
+                  }
+
+                  order += "wireless _first_"
+                  order += "ethernet _first_"
+                  order += "battery all"
+                  order += "memory"
+                  order += "disk /"
+                  order += "tztime local"
+
+                  wireless _first_ {
+                          format_up = "W %quality at %essid"
+                          format_down = "W down"
+                  }
+
+                  ethernet _first_ {
+                          format_up = "E %speed"
+                          format_down = "E down"
+                  }
+
+                  battery all {
+                          format = "%status %percentage %remaining"
+                  }
+
+                  memory {
+                          format = "%used/%available"
+                          threshold_degraded = "1G"
+                          format_degraded = "MEM < %available"
+                  }
+
+                  disk "/" {
+                          format = "%avail"
+                  }
+
+                  tztime local {
+                          format = "%Y-%m-%d %H:%M:%S"
+                  }
+                ''
+              }
+              hidden_state hide
+              mode dock
+              modifier $mod
+              colors {
+                  background         #131020
+                  statusline         $text
+                  focused_statusline $text
+                  separator          $text
+                  focused_separator  $text
+                  focused_workspace  $base $pink $base
+                  active_workspace   $base $base $blue
+                  inactive_workspace $base $base $text
+                  urgent_workspace   $base $base $red
+                  binding_mode       $base $lavender $base
+              }
+          }
+
+          # desktop background
+          exec sh ~/.fehbg
+        '';
         extraPackages = with pkgs; [
           rofi
           i3status
