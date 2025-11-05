@@ -555,76 +555,53 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    cachix
-    patchelf
-    nix-index
-    nix-prefetch-git
-    nixpkgs-fmt
-    sqlite-interactive
-    binutils-unwrapped
-    moreutils
-    usbutils
-    pciutils
-    dnsutils
-    findutils
-    findutils.locate
-    zlib
-    parallel
-    parted
-    ntfsprogs
-    bat
-    bat-extras.core
-    ripgrep
-    fd
-    sd
-    eza
-    fzf
-    wget
-    curl
-    sshfs
-    git
-    whois
-    perf
-    hyperfine
-    man-pages
-    tldr
-    cht-sh
-    tree
-    file
-    dos2unix
-    xxd
-    entr
-    ctags
-    gnutar
-    gzip
-    bzip2
-    zip
-    unzip
-    xz
-    unrar
-    unar
-    bc
-    libqalculate
-    openssl
-    mkpasswd
-    gnupg
-    gocryptfs
-    cryptor
-    kitty
-    brightnessctl
-    mons
-    xsel
-    exiftool
-    feh
-    imagemagick
-    ffmpeg
-    ghostscript
-    gimp
-    zathura
-    qpdf
-    mpv
-    simplescreenrecorder
+  environment.systemPackages = [
+    pkgs.bat
+    pkgs.bat-extras.core
+    pkgs.bc
+    pkgs.binutils-unwrapped
+    pkgs.bzip2
+    pkgs.curl
+    pkgs.dnsutils
+    pkgs.dos2unix
+    pkgs.exiftool
+    pkgs.eza
+    pkgs.fd
+    pkgs.feh
+    pkgs.ffmpeg
+    pkgs.file
+    pkgs.findutils
+    pkgs.fzf
+    pkgs.ghostscript
+    pkgs.git
+    pkgs.gnupg
+    pkgs.gnutar
+    pkgs.gocryptfs
+    pkgs.gzip
+    pkgs.imagemagick
+    pkgs.kitty
+    pkgs.libqalculate
+    pkgs.man-pages
+    pkgs.mkpasswd
+    pkgs.mons
+    pkgs.nix-index
+    pkgs.openssl
+    pkgs.parallel
+    pkgs.parted
+    pkgs.patchelf
+    pkgs.qpdf
+    pkgs.ripgrep
+    pkgs.tldr
+    pkgs.tree
+    pkgs.unar
+    pkgs.unzip
+    pkgs.wget
+    pkgs.whois
+    pkgs.xsel
+    pkgs.xxd
+    pkgs.xz
+    pkgs.zip
+    pkgs.zlib
   ];
 
   users = {
@@ -649,52 +626,47 @@
     };
   };
 
-  home-manager.users.wren = {
-    home = {
-      stateVersion = "25.05";
-
-      sessionPath = [ "$HOME/bin" ];
-
-      sessionVariables = {
-        EDITOR = "nvim";
-        VISUAL = "nvim";
-      };
-
-      packages = with pkgs; [
-        h
-        tokei
-        miniserve
-        qrencode
-        xfce.thunar
-        bitwarden-desktop
-        kdePackages.filelight
-        signal-desktop
-        obsidian
-        libreoffice
-        musescore
-        qalculate-gtk
-        anki
-      ];
-    };
-
-    mixins = {
-      enable = true;
-      browsers.chromium.enable = false;
-    };
-
-    programs.jujutsu.settings = {
-      user.email = "nicole@wren.systems";
-      signing = {
-        behavior = "own";
-        backend = "gpg";
-        key = "002937658A2F43138C3B267E339C3A5C672CEA46";
-      };
-    };
-  };
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    users.wren = {
+      home = {
+        stateVersion = "25.05";
+
+        sessionPath = [ "$HOME/bin" ];
+
+        sessionVariables = {
+          EDITOR = "nvim";
+          VISUAL = "nvim";
+        };
+
+        packages = [
+          pkgs.bitwarden-desktop
+          pkgs.kdePackages.filelight
+          pkgs.libreoffice
+          pkgs.mpv
+          pkgs.obsidian
+          pkgs.qalculate-gtk
+          pkgs.signal-desktop
+          pkgs.xfce.thunar
+          pkgs.zathura
+        ];
+      };
+
+      mixins = {
+        enable = true;
+        browsers.chromium.enable = false;
+      };
+
+      programs.jujutsu.settings = {
+        user.email = "nicole@wren.systems";
+        signing = {
+          behavior = "own";
+          backend = "gpg";
+          key = "002937658A2F43138C3B267E339C3A5C672CEA46";
+        };
+      };
+    };
   };
 
   system.stateVersion = "25.05";
