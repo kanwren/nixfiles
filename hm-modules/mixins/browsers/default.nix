@@ -28,7 +28,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.firefox.enable || cfg.chromium.enable) {
     programs.firefox = lib.mkIf cfg.firefox.enable {
       enable = true;
       # TODO: user chrome

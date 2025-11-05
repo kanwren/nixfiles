@@ -649,13 +649,35 @@
           pkgs.qalculate-gtk
           pkgs.signal-desktop
           pkgs.xfce.thunar
-          pkgs.zathura
         ];
       };
 
       mixins = {
-        enable = true;
-        browsers.chromium.enable = false;
+        bash.enable = true;
+        btop.enable = true;
+        browsers.firefox.enable = true;
+        catppuccin.enable = true;
+        cava.enable = true;
+        direnv.enable = true;
+        discord.enable = true;
+        dunst.enable = true;
+        fish.enable = true;
+        flameshot.enable = true;
+        gh.enable = true;
+        git.enable = true;
+        gpg-agent.enable = true;
+        gtk.enable = true;
+        h.enable = true;
+        jq.enable = true;
+        jujutsu.enable = true;
+        kitty.enable = true;
+        nix.enable = true;
+        rofi.enable = true;
+        rust.enable = true;
+        spotify.enable = true;
+        zathura.enable = true;
+        zellij.enable = true;
+        zoxide.enable = true;
       };
 
       programs.jujutsu.settings = {
