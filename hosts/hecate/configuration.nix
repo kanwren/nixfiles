@@ -1,6 +1,6 @@
 {
   pkgs,
-  config,
+  lib,
   ...
 }:
 
@@ -193,7 +193,7 @@
 
       xkb = {
         layout = "us";
-        options = "caps:escape";
+        options = lib.strings.concatStringsSep "," [ "caps:escape" "numpad:mac" ];
       };
 
       displayManager.lightdm = {
