@@ -513,7 +513,7 @@
     };
 
     logind.settings.Login = {
-      HandleLidSwitch = "suspend";
+      HandleLidSwitch = "ignore";
       HandleLidSwitchDocked = "ignore";
       HandleLidSwitchExternalPower = "ignore";
       HandlePowerKey = "ignore";
