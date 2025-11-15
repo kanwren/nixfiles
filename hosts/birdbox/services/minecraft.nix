@@ -25,6 +25,7 @@ in
       difficulty = "normal";
       spawn-protection = 0;
       max-players = 8;
+      allow-flight = true;
 
       white-list = true;
       enforce-whitelist = true;
