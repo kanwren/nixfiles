@@ -193,7 +193,10 @@
 
       xkb = {
         layout = "us";
-        options = lib.strings.concatStringsSep "," [ "caps:escape" "numpad:mac" ];
+        options = lib.strings.concatStringsSep "," [
+          "caps:escape"
+          "numpad:mac"
+        ];
       };
 
       displayManager.lightdm = {
@@ -402,52 +405,50 @@
           set $blue #89b4fa
           set $red #f38ba8
           bar {
-              status_command i3status -c ${
-                pkgs.writeText "i3status.conf" ''
-                  general {
-                          colors = true
-                          color_good = "#a6e3a1"
-                          color_degraded = "#f9e2af"
-                          color_bad = "#f38ba8"
-                          interval = 5
-                  }
+              status_command i3status -c ${pkgs.writeText "i3status.conf" ''
+                general {
+                        colors = true
+                        color_good = "#a6e3a1"
+                        color_degraded = "#f9e2af"
+                        color_bad = "#f38ba8"
+                        interval = 5
+                }
 
-                  order += "wireless _first_"
-                  order += "ethernet _first_"
-                  order += "battery all"
-                  order += "memory"
-                  order += "disk /"
-                  order += "tztime local"
+                order += "wireless _first_"
+                order += "ethernet _first_"
+                order += "battery all"
+                order += "memory"
+                order += "disk /"
+                order += "tztime local"
 
-                  wireless _first_ {
-                          format_up = "W %quality at %essid"
-                          format_down = "W down"
-                  }
+                wireless _first_ {
+                        format_up = "W %quality at %essid"
+                        format_down = "W down"
+                }
 
-                  ethernet _first_ {
-                          format_up = "E %speed"
-                          format_down = "E down"
-                  }
+                ethernet _first_ {
+                        format_up = "E %speed"
+                        format_down = "E down"
+                }
 
-                  battery all {
-                          format = "%status %percentage %remaining"
-                  }
+                battery all {
+                        format = "%status %percentage %remaining"
+                }
 
-                  memory {
-                          format = "%used/%available"
-                          threshold_degraded = "1G"
-                          format_degraded = "MEM < %available"
-                  }
+                memory {
+                        format = "%used/%available"
+                        threshold_degraded = "1G"
+                        format_degraded = "MEM < %available"
+                }
 
-                  disk "/" {
-                          format = "%avail"
-                  }
+                disk "/" {
+                        format = "%avail"
+                }
 
-                  tztime local {
-                          format = "%Y-%m-%d %H:%M:%S"
-                  }
-                ''
-              }
+                tztime local {
+                        format = "%Y-%m-%d %H:%M:%S"
+                }
+              ''}
               hidden_state hide
               mode dock
               modifier $mod
@@ -678,6 +679,32 @@
         zathura.enable = true;
         zellij.enable = true;
         zoxide.enable = true;
+      };
+
+      services.grobi = {
+        enable = true;
+        rules = [
+          {
+            name = "Dock";
+            outputs_connected = [ "HDMI-1" ];
+            configure_single = "HDMI-1";
+            primary = "HDMI-1";
+            atomic = true;
+            execute_after = [
+              "test -f ~/.fehbg && source ~/.fehbg"
+            ];
+          }
+          {
+            name = "Mobile";
+            outputs_disconnected = [ "HDMI-1" ];
+            configure_single = "eDP-1";
+            primary = "eDP-1";
+            atomic = true;
+            execute_after = [
+              "test -f ~/.fehbg && source ~/.fehbg"
+            ];
+          }
+        ];
       };
 
       programs.jujutsu.settings = {
