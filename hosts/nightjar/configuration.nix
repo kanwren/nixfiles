@@ -69,7 +69,12 @@ in
   };
 
   ids.gids.nixbld = 350;
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowBrokenPredicate = p: builtins.elem (lib.getName p) [
+      "fzf.fish"
+    ];
+  };
 
   environment = {
     variables = {
