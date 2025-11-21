@@ -70,7 +70,7 @@ in
 
   ids.gids.nixbld = 350;
   nixpkgs.config = {
-    allowUnfree = true;
+    allowUnfreePredicate = _: false;
     allowBrokenPredicate = p: builtins.elem (lib.getName p) [
       "fzf.fish"
     ];
