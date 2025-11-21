@@ -124,7 +124,6 @@ in
               "--to"
               "parents(@)"
             ];
-            "ui" = mkExecAlias (lib.getExe' pkgs.jj-fzf "jj-fzf") [ ];
             "worklog" = [
               "log"
               "-r"
