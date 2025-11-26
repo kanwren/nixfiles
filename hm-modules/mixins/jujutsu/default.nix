@@ -40,6 +40,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       pkgs.difftastic
+      pkgs.watchman
     ];
 
     programs.jujutsu = {
@@ -201,6 +202,12 @@ in
 
         git = {
           private-commits = lib.mkDefault ''description(regex:"(?i)^(wip|todo|x+)(\\(.*\\))?:") | notes()'';
+          subprocess = true;
+        };
+
+        fsmonitor = {
+          backend = "watchman";
+          watchman.register-snapshot-trigger = true;
         };
       };
     };
