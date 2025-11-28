@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -12,14 +11,6 @@ in
   services = {
     gitit = {
       enable = true;
-      package =
-        pkgs.stable.runCommand "gitit-stable" { nativeBuildInputs = [ pkgs.stable.makeWrapper ]; }
-          ''
-            mkdir -p "$out"/bin
-            install -D --mode=0755 ${lib.escapeShellArg pkgs.stable.gitit}/bin/* --target-directory="$out/bin"
-            wrapProgram "$out/bin/gitit" \
-              --prefix PATH : ${lib.escapeShellArg (lib.makeBinPath [ pkgs.stable.git ])}
-          '';
       config = {
         address = "127.0.0.1";
         port = 17503;
