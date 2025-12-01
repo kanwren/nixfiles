@@ -42,10 +42,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
   };
 
   outputs =
@@ -66,7 +62,6 @@
     {
       nixosConfigurations = {
         hecate = import ./hosts/hecate/host.nix { inherit (self) inputs outputs; };
-        birdbox = import ./hosts/birdbox/host.nix { inherit (self) inputs outputs; };
       };
 
       darwinConfigurations = {
@@ -96,8 +91,6 @@
           slides-full
           tfenv
           wd-fish
-          caddy-with-plugins
-          ftb-server-installer
           ;
       });
 
