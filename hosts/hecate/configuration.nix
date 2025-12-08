@@ -566,6 +566,7 @@
     pkgs.dnsutils
     pkgs.dos2unix
     pkgs.exiftool
+    pkgs.nettools
     pkgs.eza
     pkgs.fd
     pkgs.feh
