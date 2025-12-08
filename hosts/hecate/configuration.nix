@@ -121,7 +121,7 @@
   };
 
   virtualisation = {
-    docker = {
+    podman = {
       enable = true;
       autoPrune = {
         enable = true;
