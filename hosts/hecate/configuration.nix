@@ -586,6 +586,7 @@
     pkgs.man-pages
     pkgs.mkpasswd
     pkgs.mons
+    pkgs.ncdu
     pkgs.nix-index
     pkgs.openssl
     pkgs.parallel
@@ -644,7 +645,6 @@
 
         packages = [
           pkgs.bitwarden-desktop
-          pkgs.kdePackages.filelight
           pkgs.libreoffice
           pkgs.mpv
           pkgs.obsidian
