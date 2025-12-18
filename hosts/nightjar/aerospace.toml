@@ -28,51 +28,51 @@ automatically-unhide-macos-hidden-apps = true
     outer.right =      0
 
 [mode.main.binding]
-    alt-enter = '''exec-and-forget open -na kitty'''
+    cmd-alt-enter = '''exec-and-forget open -na kitty'''
 
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
-    alt-f = 'fullscreen'
-    alt-shift-f = 'macos-native-fullscreen'
+    cmd-alt-slash = 'layout tiles horizontal vertical'
+    cmd-alt-comma = 'layout accordion horizontal vertical'
+    cmd-alt-f = 'fullscreen'
+    cmd-alt-shift-f = 'macos-native-fullscreen'
 
-    alt-h = 'focus left'
-    alt-j = 'focus down'
-    alt-k = 'focus up'
-    alt-l = 'focus right'
+    cmd-alt-h = 'focus left'
+    cmd-alt-j = 'focus down'
+    cmd-alt-k = 'focus up'
+    cmd-alt-l = 'focus right'
 
-    alt-shift-h = 'move left'
-    alt-shift-j = 'move down'
-    alt-shift-k = 'move up'
-    alt-shift-l = 'move right'
+    cmd-alt-shift-h = 'move left'
+    cmd-alt-shift-j = 'move down'
+    cmd-alt-shift-k = 'move up'
+    cmd-alt-shift-l = 'move right'
 
-    alt-minus = 'resize smart -50'
-    alt-equal = 'resize smart +50'
+    cmd-alt-minus = 'resize smart -50'
+    cmd-alt-equal = 'resize smart +50'
 
-    alt-tab = 'workspace-back-and-forth'
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-0 = 'workspace 10'
+    cmd-alt-tab = 'workspace-back-and-forth'
+    cmd-alt-1 = 'workspace 1'
+    cmd-alt-2 = 'workspace 2'
+    cmd-alt-3 = 'workspace 3'
+    cmd-alt-4 = 'workspace 4'
+    cmd-alt-5 = 'workspace 5'
+    cmd-alt-6 = 'workspace 6'
+    cmd-alt-7 = 'workspace 7'
+    cmd-alt-8 = 'workspace 8'
+    cmd-alt-9 = 'workspace 9'
+    cmd-alt-0 = 'workspace 10'
 
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
-    alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-0 = 'move-node-to-workspace 10'
+    cmd-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+    cmd-alt-shift-1 = 'move-node-to-workspace 1'
+    cmd-alt-shift-2 = 'move-node-to-workspace 2'
+    cmd-alt-shift-3 = 'move-node-to-workspace 3'
+    cmd-alt-shift-4 = 'move-node-to-workspace 4'
+    cmd-alt-shift-5 = 'move-node-to-workspace 5'
+    cmd-alt-shift-6 = 'move-node-to-workspace 6'
+    cmd-alt-shift-7 = 'move-node-to-workspace 7'
+    cmd-alt-shift-8 = 'move-node-to-workspace 8'
+    cmd-alt-shift-9 = 'move-node-to-workspace 9'
+    cmd-alt-shift-0 = 'move-node-to-workspace 10'
 
-    alt-shift-semicolon = 'mode service'
+    cmd-alt-shift-semicolon = 'mode service'
 
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
@@ -81,10 +81,10 @@ automatically-unhide-macos-hidden-apps = true
     r = ['flatten-workspace-tree', 'mode main']
     f = ['layout floating tiling', 'mode main']
 
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
+    cmd-alt-shift-h = ['join-with left', 'mode main']
+    cmd-alt-shift-j = ['join-with down', 'mode main']
+    cmd-alt-shift-k = ['join-with up', 'mode main']
+    cmd-alt-shift-l = ['join-with right', 'mode main']
 
     down = 'volume down'
     up = 'volume up'
