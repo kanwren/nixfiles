@@ -554,6 +554,8 @@
         xp = "xsel -ob";
       };
     };
+
+    steam.enable = true;
   };
 
   environment.systemPackages = [
