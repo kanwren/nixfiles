@@ -652,7 +652,7 @@
           pkgs.obsidian
           pkgs.qalculate-gtk
           pkgs.signal-desktop
-          pkgs.xfce.thunar
+          pkgs.thunar
           pkgs.dolphin-emu
           pkgs.mcrcon
           pkgs.joycond-cemuhook
