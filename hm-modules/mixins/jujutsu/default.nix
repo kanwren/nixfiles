@@ -90,8 +90,36 @@ in
           };
         };
 
+        fix.tools = {
+          # Strip trailing whitespace
+          trailing-whitespace = {
+            enabled = false;
+            patterns = [ "all()" ];
+            command = [
+              "sed"
+              "s/\\+$//"
+            ];
+          };
+
+          # Ensure files end in a newline
+          eof = {
+            enabled = false;
+            patterns = [ "all()" ];
+            command = [
+              "sed"
+              "$a\\"
+            ];
+          };
+
+          gofmt = {
+            enabled = true;
+            patterns = [ "glob:'**/*.go'" ];
+            command = [ "gofmt" ];
+          };
+        };
+
         revsets = {
-          log = "@ | ancestors(immutable_heads().., 2) | heads(immutable_heads())";
+          log = "present(@) | ancestors(immutable_heads().., 2) | present(trunk())";
         };
 
         aliases =
