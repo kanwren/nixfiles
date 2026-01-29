@@ -149,9 +149,9 @@ in
               "bookmark"
               "move"
               "--from"
-              "heads(ancestors(parents(@)) & bookmarks())"
+              "heads(ancestors(@) & bookmarks())"
               "--to"
-              "parents(@)"
+              ''exactly(heads(ancestors(@) & mutable() & ~description(exact:"") & (~empty() | merges())), 1)''
             ];
             "worklog" = [
               "log"
