@@ -141,6 +141,7 @@ in
             "flow" = mkHelpersAlias "flow";
             "id" = mkHelpersAlias "id";
             "note" = mkHelpersAlias "note";
+            "pr" = mkHelpersAlias "pr";
             "pre-commit" = mkHelpersAlias "pre-commit";
             "reword" = mkHelpersAlias "reword";
             "subject" = mkHelpersAlias "subject";

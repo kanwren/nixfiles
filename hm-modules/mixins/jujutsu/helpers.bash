@@ -278,3 +278,22 @@ trailer::list() {
         jj log --revisions "$argc_revset" --no-graph --template 'trailers'
     fi
 }
+
+# @cmd Create a PR
+# @arg args* Arguments for 'gh pr create'
+pr() {
+    local bookmarks
+    bookmarks="$(jj log --revisions "exactly(heads(ancestors(@) & bookmarks()), 1)" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u)"
+
+    local num_bookmarks
+    num_bookmarks="$(echo "$bookmarks" | wc -l)"
+    if [ "$num_bookmarks" -ne 1 ]; then
+        >&2 printf 'error: expected exactly one bookmark, but got %d\n' "$num_bookmarks"
+        exit 1
+    fi
+
+    local title
+    title="$(jj log --ignore-working-copy --revisions "$bookmarks" --no-graph --template 'description.first_line()')"
+
+    gh pr create --head "$bookmarks" --title "$title" "${argc_args[@]}"
+}
