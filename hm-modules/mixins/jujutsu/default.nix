@@ -138,8 +138,8 @@ in
           {
             "bookmark-names" = mkHelpersAlias "bookmark-names";
             "description" = mkHelpersAlias "description";
-            "flow" = mkHelpersAlias "flow";
             "id" = mkHelpersAlias "id";
+            "mm" = mkHelpersAlias "mm";
             "note" = mkHelpersAlias "note";
             "pr" = mkHelpersAlias "pr";
             "pre-commit" = mkHelpersAlias "pre-commit";

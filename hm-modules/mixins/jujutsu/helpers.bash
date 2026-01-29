@@ -134,94 +134,94 @@ pre-commit() {
 }
 
 # @cmd Manage a branch-of-branches for a megamerge workflow
-flow() { :; }
+mm() { :; }
 
-# @cmd Move to the tip of the flow
-flow::tip() {
-    log_and_run jj new 'bookmarks(exact:"flow")'
+# @cmd Move to the tip of the megamerge
+mm::tip() {
+    log_and_run jj new 'bookmarks(exact:"MM")'
 }
 
-# @cmd Manage the set of changes managed by the flow
+# @cmd Manage the set of changes managed by the megamerge
 # @alias change,c
-flow::changes() { :; }
+mm::changes() { :; }
 
-# @cmd Add a revision to the changes managed by the flow
+# @cmd Add a revision to the changes managed by the megamerge
 # @arg revset! The revision to add
-flow::changes::add() {
+mm::changes::add() {
     register_rollback_instructions
 
-    local flow
-    flow="$(change_ids 'present(bookmarks(exact:"flow"))')"
+    local mm
+    mm="$(change_ids 'present(bookmarks(exact:"MM"))')"
 
-    if [ "$flow" != "" ]; then
-        log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) | ('"$argc_revset"')'
+    if [ "$mm" != "" ]; then
+        log_and_run jj rebase --source 'bookmarks(exact:"MM")' --destination 'parents(bookmarks(exact:"MM")) | ('"$argc_revset"')'
     else
-        local old_children new_children flow_commit
+        local old_children new_children mm_commit
         old_children="$(revset 'children('"$argc_revset"')')"
-        log_and_run jj new --no-edit "$argc_revset" --message 'xxx:flow'
+        log_and_run jj new --no-edit "$argc_revset" --message 'xxx:megamerge'
         new_children="$(revset 'children('"$argc_revset"')')"
-        flow_commit="$(change_id '('"$new_children"') ~ ('"$old_children"')')"
-        log_and_run jj bookmark create flow --revision "$flow_commit"
+        mm_commit="$(change_id '('"$new_children"') ~ ('"$old_children"')')"
+        log_and_run jj bookmark create 'MM' --revision "$mm_commit"
     fi
 }
 
-# @cmd Remove a revision from the changes managed by the flow
+# @cmd Remove a revision from the changes managed by the megamerge
 # @alias rm
 # @arg revset! The revision to remove
-flow::changes::remove() {
+mm::changes::remove() {
     register_rollback_instructions
 
-    local num_parents flow_empty
+    local num_parents mm_empty
 
     # If there are no parents now, we're done
-    num_parents="$(change_ids 'parents(present(bookmarks(exact:"flow")))' | wc -l)"
+    num_parents="$(change_ids 'parents(present(bookmarks(exact:"MM")))' | wc -l)"
     if [ "$num_parents" -eq 0 ]; then
         printf '%s\n' 'nothing to do'
         return
     fi
 
     # If removing the argument would remove all parents, delete the bookmark
-    num_parents="$(change_ids 'parents(bookmarks(exact:"flow")) ~ ('"$argc_revset"')' | wc -l)"
+    num_parents="$(change_ids 'parents(bookmarks(exact:"MM")) ~ ('"$argc_revset"')' | wc -l)"
     if [ "$num_parents" -eq 0 ]; then
-        flow_empty="$(change_ids 'bookmarks(exact:"flow") & none() & description(exact:"")')"
-        if [ "$flow_empty" != "" ]; then
-            log_and_run jj abandon 'bookmarks(exact:"flow")'
+        mm_empty="$(change_ids 'bookmarks(exact:"MM") & none() & description(exact:"")')"
+        if [ "$mm_empty" != "" ]; then
+            log_and_run jj abandon 'bookmarks(exact:"MM")'
         fi
-        log_and_run jj bookmark delete flow
+        log_and_run jj bookmark delete 'MM'
         return
     fi
 
     # Otherwise, just remove the given parents
-    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) ~ ('"$argc_revset"')'
+    log_and_run jj rebase --source 'bookmarks(exact:"MM")' --destination 'parents(bookmarks(exact:"MM")) ~ ('"$argc_revset"')'
 }
 
-# @cmd Move a change managed by the flow to a different revision
+# @cmd Move a change managed by the megamerge to a different revision
 # @alias mv
 # @arg old! The revision to remove
 # @arg new! The revision to add
-flow::changes::move() {
+mm::changes::move() {
     register_rollback_instructions
-    log_and_run jj rebase --source 'bookmarks(exact:"flow")' --destination 'parents(bookmarks(exact:"flow")) ~ ('"$argc_old"') | ('"$argc_new"')'
+    log_and_run jj rebase --source 'bookmarks(exact:"MM")' --destination 'parents(bookmarks(exact:"MM")) ~ ('"$argc_old"') | ('"$argc_new"')'
 }
 
-# @cmd Clean merged changes from flow tracking post-rebase
+# @cmd Clean merged changes from megamerge tracking post-rebase
 # @alias clean
-flow::changes::clean-empty() {
+mm::changes::clean-empty() {
     register_rollback_instructions
-    log_and_run jj abandon 'trunk()..parents(bookmarks(exact:"flow")) ~ descendants(trunk()..parents(bookmarks(exact:"flow")) ~ empty())'
-    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"flow")'
+    log_and_run jj abandon 'trunk()..parents(bookmarks(exact:"MM")) ~ descendants(trunk()..parents(bookmarks(exact:"MM")) ~ empty())'
+    log_and_run jj simplify-parents --revisions 'bookmarks(exact:"MM")'
 }
 
-# @cmd Rebase all changes managed by the flow onto a destination
+# @cmd Rebase all changes managed by the megamerge onto a destination
 # @arg destination! Revision of the new base for changes
-flow::rebase() {
+mm::rebase() {
     register_rollback_instructions
-    log_and_run jj rebase --source 'roots(('"$argc_destination"')..bookmarks(exact:"flow"))' --destination "$argc_destination"
+    log_and_run jj rebase --source 'roots(('"$argc_destination"')..bookmarks(exact:"MM"))' --destination "$argc_destination"
 }
 
-# @cmd Push all flow-managed branches
-flow::push() {
-    log_and_run jj git push --revisions 'trunk()..parents(bookmarks(exact:"flow")) ~ conflicts()'
+# @cmd Push all megamerge-managed branches
+mm::push() {
+    log_and_run jj git push --revisions 'trunk()..parents(bookmarks(exact:"MM")) ~ conflicts()'
 }
 
 declare -r note_prefix='NB. '
