@@ -16,7 +16,6 @@
     ./jq
     ./jujutsu
     ./k8s
-    ./kitty
     ./nix
     ./zathura
     ./zellij

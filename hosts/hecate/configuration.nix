@@ -281,7 +281,6 @@
     pkgs.gocryptfs
     pkgs.gzip
     pkgs.imagemagick
-    pkgs.kitty
     pkgs.libqalculate
     pkgs.man-pages
     pkgs.mkpasswd
@@ -371,7 +370,6 @@
         h.enable = true;
         jq.enable = true;
         jujutsu.enable = true;
-        kitty.enable = true;
         nix.enable = true;
         zathura.enable = true;
         zellij.enable = true;
@@ -422,6 +420,14 @@
         };
 
         firefox.enable = true;
+
+        ghostty = {
+          enable = true;
+          settings = {
+            font-size = 11.0;
+            font-family = "FiraCode Nerd Font Mono";
+          };
+        };
       };
     };
   };
