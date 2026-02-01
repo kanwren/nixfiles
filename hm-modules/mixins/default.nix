@@ -2,15 +2,11 @@
 {
   imports = [
     ./bash
-    ./browsers
     ./btop
     ./catppuccin
-    ./cava
     ./direnv
     ./discord
-    ./dunst
     ./fish
-    ./flameshot
     ./gh
     ./git
     ./gpg-agent
@@ -22,9 +18,6 @@
     ./k8s
     ./kitty
     ./nix
-    ./rofi
-    ./rust
-    ./spotify
     ./zathura
     ./zellij
     ./zoxide

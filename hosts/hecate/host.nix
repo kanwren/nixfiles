@@ -28,6 +28,7 @@ outputs.lib.mkNixosSystem {
 
   hmModules = [
     inputs.catppuccin.homeModules.catppuccin
+    inputs.noctalia.homeModules.default
     outputs.hmModules.h
     outputs.hmModules.kubie
     outputs.hmModules.mixins
