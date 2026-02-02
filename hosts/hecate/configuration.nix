@@ -178,6 +178,8 @@
       openFirewall = true;
     };
 
+    upower.enable = true;
+
     gnome.gnome-keyring.enable = true;
 
     atd.enable = true;
