@@ -183,8 +183,6 @@ in
       pkgs.fnm
       pkgs.shellcheck
       pkgs.tfenv
-      ## version control
-      pkgs.pre-commit
       ## misc
       pkgs.jira-cli-go
     ];
