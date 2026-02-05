@@ -268,7 +268,6 @@
     pkgs.dnsutils
     pkgs.dos2unix
     pkgs.exiftool
-    pkgs.nettools
     pkgs.eza
     pkgs.fd
     pkgs.feh
@@ -288,11 +287,13 @@
     pkgs.mkpasswd
     pkgs.mons
     pkgs.ncdu
+    pkgs.nettools
     pkgs.nix-index
     pkgs.openssl
     pkgs.parallel
     pkgs.parted
     pkgs.patchelf
+    pkgs.pwvucontrol
     pkgs.qpdf
     pkgs.ripgrep
     pkgs.swaylock
