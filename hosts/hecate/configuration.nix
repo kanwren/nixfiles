@@ -379,32 +379,6 @@
         zoxide.enable = true;
       };
 
-      services.grobi = {
-        enable = true;
-        rules = [
-          {
-            name = "Dock";
-            outputs_connected = [ "HDMI-1" ];
-            configure_single = "HDMI-1";
-            primary = "HDMI-1";
-            atomic = true;
-            execute_after = [
-              "test -f ~/.fehbg && source ~/.fehbg"
-            ];
-          }
-          {
-            name = "Mobile";
-            outputs_disconnected = [ "HDMI-1" ];
-            configure_single = "eDP-1";
-            primary = "eDP-1";
-            atomic = true;
-            execute_after = [
-              "test -f ~/.fehbg && source ~/.fehbg"
-            ];
-          }
-        ];
-      };
-
       programs = {
         jujutsu.settings = {
           user.email = "nicole@wren.systems";
