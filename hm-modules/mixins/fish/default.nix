@@ -51,6 +51,15 @@ in
             '';
           };
 
+          fish_right_prompt = {
+            description = "show cwd on right";
+            body = /* fish */ ''
+              set_color $fish_color_cwd
+              prompt_pwd
+              set_color normal
+            '';
+          };
+
           fish_mode_prompt = {
             description = "no mode prompt";
             body = "";
