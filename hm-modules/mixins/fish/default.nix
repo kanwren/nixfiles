@@ -27,15 +27,6 @@ in
       interactiveShellInit = ''
         # use vi bindings
         fish_vi_key_bindings
-
-        function save_dir --on-variable PWD
-          set -U fish_most_recent_dir $PWD
-        end
-
-        # restore last directory when new shell is opened
-        set --query fish_most_recent_dir
-        and test -d "$fish_most_recent_dir"
-        and cd "$fish_most_recent_dir"
       '';
 
       functions =
