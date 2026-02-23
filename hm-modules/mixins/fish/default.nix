@@ -24,7 +24,7 @@ in
     programs.fish = {
       enable = true;
 
-      interactiveShellInit = ''
+      interactiveShellInit = /* fish */ ''
         # use vi bindings
         fish_vi_key_bindings
       '';
@@ -38,7 +38,7 @@ in
         {
           fish_prompt = {
             description = "a minimal prompt";
-            body = ''
+            body = /* fish */ ''
               set --local last_status $status
               if set -q SSH_TTY
                 prompt_login
@@ -65,7 +65,7 @@ in
 
           "yield" = {
             description = "Yield the arguments";
-            body = ''
+            body = /* fish */ ''
               if test (count $argv) -gt 0
                 printf '%s\0' $argv | string split0
               end
@@ -74,7 +74,7 @@ in
 
           dump = {
             description = "Quote each argument for fish and present the results like a command";
-            body = ''
+            body = /* fish */ ''
               string join -- ' ' (string escape --style=script -- $argv)
               return 0
             '';
@@ -84,7 +84,7 @@ in
 
           "asp" = {
             description = "Switch AWS profiles";
-            body = ''
+            body = /* fish */ ''
               set --local choice ("${aws}" configure list-profiles | "${fzf}")
               or return $status
               set --global --export AWS_PROFILE $choice
@@ -93,7 +93,7 @@ in
 
           "assume" = {
             description = "Assume an AWS role for a profile";
-            body = ''
+            body = /* fish */ ''
               set --query AWS_PROFILE
               and set --local profile "$AWS_PROFILE"
               or set profile ("${aws}" configure list-profiles | "${fzf}")
@@ -115,7 +115,7 @@ in
 
           "unassume" = {
             description = "Un-assume an AWS role";
-            body = ''
+            body = /* fish */ ''
               set --query AWS_PROFILE;           and set --erase AWS_PROFILE
               set --query AWS_ACCESS_KEY_ID;     and set --erase AWS_ACCESS_KEY_ID
               set --query AWS_SECRET_ACCESS_KEY; and set --erase AWS_SECRET_ACCESS_KEY
@@ -128,7 +128,7 @@ in
 
           _pfor_expand = {
             description = "Expand a pfor command";
-            body = ''
+            body = /* fish */ ''
               set varname (string split --no-empty -- '.' (string replace --regex '.*?\\.' ''' $argv[1]))
               set result 'parallel'
               if test (count $varname) -gt 1
@@ -152,7 +152,7 @@ in
 
           _expand_seq = {
             description = "Expand {start..end} to (seq start end)";
-            body = ''
+            body = /* fish */ ''
               set nums (string match -rg '(.*)\\{(\\d+)\\.\\.(\\d+)\\}(.*)' $argv[1])
               printf '%s(seq %d %d)%s' $nums
             '';
@@ -160,7 +160,7 @@ in
 
           _expand_which = {
             description = "Expand =foo to the path to foo";
-            body = ''
+            body = /* fish */ ''
               if test (string sub --end 2 $argv[1]) = '=='
                 realpath (command --search (string sub --start 3 $argv[1]))
               else
@@ -171,14 +171,14 @@ in
 
           _expand_last_command = {
             description = "Expand the last command";
-            body = ''
+            body = /* fish */ ''
               echo $history[1]
             '';
           };
 
           _expand_multidotdot = {
             description = "Expand .n to n directories up";
-            body = ''
+            body = /* fish */ ''
               set arg $argv[1]
               for ixs in (string match --index --regex '(?<![^/])\.[1-9]\d*(?![^/])' -- $arg)
                   set ix (string split -- ' ' $ixs)
