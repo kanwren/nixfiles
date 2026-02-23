@@ -374,6 +374,7 @@
         jq.enable = true;
         jujutsu.enable = true;
         nix.enable = true;
+        yazi.enable = true;
         zathura.enable = true;
         zellij.enable = true;
         zoxide.enable = true;
