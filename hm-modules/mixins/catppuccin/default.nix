@@ -22,6 +22,7 @@ in
       kvantum.enable = false;
       rofi.enable = false;
       firefox.enable = false;
+      yazi.enable = false;
     };
 
     xdg.enable = true;

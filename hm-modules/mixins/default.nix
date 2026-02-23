@@ -17,6 +17,7 @@
     ./jujutsu
     ./k8s
     ./nix
+    ./yazi
     ./zathura
     ./zellij
     ./zoxide
