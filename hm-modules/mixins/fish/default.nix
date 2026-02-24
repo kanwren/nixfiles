@@ -301,10 +301,6 @@ in
               "gor" = commandAbbr "go run";
               "got" = commandAbbr "go test";
             };
-            kittyAbbrs = {
-              "kssh" = commandAbbr "kitten ssh";
-              "icat" = commandAbbr "kitten icat --align=left";
-            };
             jjAbbrs = {
               "-T" = {
                 command = "jj";
@@ -329,6 +325,7 @@ in
               "jc" = commandAbbr "jj commit";
               "jcf" = commandAbbr "jj config";
               "jcfl" = commandAbbr "jj config list";
+              "jci" = commandAbbr "jj commit --interactive";
               "jcm" = commandAbbr "jj commit --message";
               "jd" = commandAbbr "jj describe";
               "jde" = commandAbbr "jj diffedit";
@@ -343,7 +340,6 @@ in
               "jft" = commandAbbr "jj file track";
               "jfu" = commandAbbr "jj file untrack";
               "jg" = commandAbbr "jj git";
-              "jgc" = commandAbbr "jj git init --colocate";
               "jgf" = commandAbbr "jj git fetch";
               "jgi" = commandAbbr "jj git init";
               "jgp" = commandAbbr "jj git push";
@@ -367,6 +363,8 @@ in
               "jnb" = commandAbbr "jj new --no-edit --insert-before";
               "jne" = commandAbbr "jj new --no-edit";
               "jnt" = commandAbbr "jj new 'trunk()'";
+              "joa" = commandAbbr "jj operation abandon";
+              "jod" = commandAbbr "jj operation diff";
               "jol" = commandAbbr "jj operation log";
               "jop" = commandAbbr "jj operation";
               "jor" = commandAbbr "jj operation restore";
@@ -382,6 +380,7 @@ in
               "jsq" = commandAbbr "jj squash";
               "jt" = commandAbbr "jj tag";
               "jtl" = commandAbbr "jj tag list";
+              "ju" = commandAbbr "jj undo";
               "jv" = commandAbbr "jj parallelize";
               "jw" = commandAbbr "jj workspace";
               "jwa" = commandAbbr "jj workspace add";
