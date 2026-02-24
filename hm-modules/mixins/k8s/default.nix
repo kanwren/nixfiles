@@ -53,17 +53,35 @@ in
           {
             "k" = "kubectl";
             "kaf" = "kubectl apply --filename";
+            "kann" = "kubectl annotate";
             "kc" = "kubie ctx";
-            "kn" = "kubie ns";
             "kcc" = "kubectl config current-context";
+            "kcn" = "kubectl config set contexts.(kubectl config current-context).namespace";
+            "kcnu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
             "kcp" = "kubectl cp";
             "kcu" = "kubectl config unset current-context";
             "kd" = "kubectl describe";
-            "krm" = "kubectl delete";
-            "ked" = "kubectl edit";
+            "kdel" = "kubectl delete";
+            "kdf" = "kubectl diff";
+            "kdff" = "kubectl diff --filename";
+            "ke" = "kubectl edit";
             "kg" = "kubectl get";
+            "kgj" = "kubectl get --output json";
+            "kgw" = "kubectl get --output wide";
+            "kgy" = "kubectl get --output yaml";
             "kl" = "kubectl logs";
-            "knu" = "kubectl config unset contexts.(kubectl config current-context).namespace";
+            "klbl" = "kubectl label";
+            "klf" = "kubectl logs --follow";
+            "kn" = "kubie ns";
+            "kpj" = "kubectl patch --type=json";
+            "kpm" = "kubectl patch --type=merge";
+            "kps" = "kubectl patch --type=strategic";
+            "kro" = "kubectl rollout";
+            "kror" = "kubectl rollout restart";
+            "kros" = "kubectl rollout status";
+            "krou" = "kubectl rollout undo";
+            "ks" = "kubectl scale";
+            "ksr" = "kubectl scale --replicas";
             "kx" = "kubectl exec --stdin=true --tty=true";
           }
         ]
