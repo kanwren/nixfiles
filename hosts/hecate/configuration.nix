@@ -171,6 +171,14 @@
       };
     };
 
+    udev = {
+      enable = true;
+      # allow jarne tools to pair with keyboard from browser
+      extraRules = ''
+        SUBSYSTEM=="hidraw", KERNELS=="*:4C4A:0001.*", MODE="0666"
+      '';
+    };
+
     blueman.enable = true;
 
     printing = {
