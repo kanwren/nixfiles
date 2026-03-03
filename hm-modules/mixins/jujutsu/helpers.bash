@@ -128,7 +128,7 @@ bookmark-names() {
 # @arg revset=@ The revisions for which the changed files in them should be run against pre-commit
 pre-commit() {
     local _files
-    _files="$(jj log --revisions "${argc_revset}" --no-graph --template 'diff.files().map(|x| stringify(x.path()).escape_json())' | jq --null-input --raw-output '[inputs] | sort | unique | @sh')"
+    _files="$(jj log --revisions "$argc_revset" --no-graph --template 'diff.files().map(|x| stringify(x.path()).escape_json())' | jq --null-input --raw-output '[inputs] | sort | unique | @sh')"
     declare -a files="(${_files})"
     command pre-commit run --files "${files[@]}"
 }
@@ -265,7 +265,7 @@ trailer() { :; }
 # @arg key! Trailer key
 # @arg revset! Revision(s)
 trailer::get() {
-    jj log --revisions "$argc_revset" --no-graph --template 'trailers.filter(|x| x.key() == "'"${argc_key}"'").map(|x| x.value()).join("\n") '
+    jj log --revisions "$argc_revset" --no-graph --template 'trailers.filter(|x| x.key() == "'"$argc_key"'").map(|x| x.value()).join("\n") '
 }
 
 # @cmd Look up trailers
@@ -280,10 +280,11 @@ trailer::list() {
 }
 
 # @cmd Create a PR
+# @arg revision Revision pointing to the commit to PR
 # @arg args* Arguments for 'gh pr create'
 pr() {
     local bookmarks
-    bookmarks="$(jj log --revisions "exactly(heads(ancestors(@) & bookmarks()), 1)" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u)"
+    bookmarks="$(jj log --revisions "exactly(heads(ancestors($argc_revision) & bookmarks()), 1)" --no-graph --template 'bookmarks.map(|b| b.name() ++ "\n").join("")' | sort -u)"
 
     local num_bookmarks
     num_bookmarks="$(echo "$bookmarks" | wc -l)"
