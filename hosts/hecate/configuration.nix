@@ -409,9 +409,18 @@
 
         ghostty = {
           enable = true;
+          systemd.enable = true;
           settings = {
             font-size = 11.0;
             font-family = "FiraCode Nerd Font Mono";
+            shell-integration-features = lib.concatStringsSep "," [
+              "cursor"
+              "sudo"
+              "title"
+              "no-ssh-env"
+              "ssh-terminfo"
+              "path"
+            ];
           };
         };
       };
