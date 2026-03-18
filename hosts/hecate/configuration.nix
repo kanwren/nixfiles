@@ -356,14 +356,15 @@
 
         packages = [
           pkgs.bitwarden-desktop
+          pkgs.dolphin-emu
+          pkgs.joycond-cemuhook
           pkgs.libreoffice
-          pkgs.mpv
-          pkgs.obsidian
+          pkgs.mcrcon
+          pkgs.python314Packages.subliminal
           pkgs.qalculate-gtk
           pkgs.signal-desktop
-          pkgs.dolphin-emu
-          pkgs.mcrcon
-          pkgs.joycond-cemuhook
+          pkgs.transmission_4-gtk
+          pkgs.trash-cli
           pkgs.xwayland-satellite
         ];
       };
@@ -389,21 +390,7 @@
       };
 
       programs = {
-        jujutsu.settings = {
-          user.email = "nicole@wren.systems";
-          signing = {
-            behavior = "own";
-            backend = "gpg";
-            key = "002937658A2F43138C3B267E339C3A5C672CEA46";
-          };
-        };
-
-        noctalia-shell = {
-          enable = true;
-          settings = {
-            # TODO
-          };
-        };
+        chromium.enable = true;
 
         firefox.enable = true;
 
@@ -423,6 +410,30 @@
             ];
           };
         };
+
+        jujutsu.settings = {
+          user.email = "nicole@wren.systems";
+          signing = {
+            behavior = "own";
+            backend = "gpg";
+            key = "002937658A2F43138C3B267E339C3A5C672CEA46";
+          };
+        };
+
+        mpv.enable = true;
+
+        noctalia-shell = {
+          enable = true;
+          settings = {
+            # TODO
+          };
+        };
+
+        obsidian.enable = true;
+
+        rclone.enable = true;
+
+        yt-dlp.enable = true;
       };
     };
   };
