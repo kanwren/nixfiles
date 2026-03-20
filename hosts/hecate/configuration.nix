@@ -301,6 +301,7 @@
     pkgs.parallel
     pkgs.parted
     pkgs.patchelf
+    pkgs.pulseaudio
     pkgs.pwvucontrol
     pkgs.qpdf
     pkgs.ripgrep
@@ -359,6 +360,7 @@
           pkgs.joycond-cemuhook
           pkgs.libreoffice
           pkgs.mcrcon
+          pkgs.mkvtoolnix
           pkgs.python314Packages.subliminal
           pkgs.qalculate-gtk
           pkgs.signal-desktop
