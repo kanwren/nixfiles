@@ -356,6 +356,7 @@
         };
 
         packages = [
+          pkgs.bitwarden-desktop
           pkgs.dolphin-emu
           pkgs.joycond-cemuhook
           pkgs.libreoffice
