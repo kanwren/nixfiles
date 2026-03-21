@@ -20,6 +20,7 @@ in
       flavor = "mocha";
       accent = "lavender";
       kvantum.enable = false;
+      mpv.enable = false;
       rofi.enable = false;
       firefox.enable = false;
       yazi.enable = false;
