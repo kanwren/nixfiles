@@ -5,7 +5,7 @@
   ...
 }:
 let
-  homebrewPrefix = lib.strings.removeSuffix "/bin" (builtins.toString config.homebrew.brewPrefix);
+  homebrewPrefix = builtins.toString config.homebrew.prefix;
 in
 {
   imports = [
@@ -476,6 +476,7 @@ in
           signing = {
             signByDefault = true;
             key = "85C1D51ACE6FFEC848B78D89E6A60F3BD112FD42";
+            format = "openpgp";
           };
           ignores = [
             "*.iml"
