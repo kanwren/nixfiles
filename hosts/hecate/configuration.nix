@@ -132,7 +132,7 @@
 
   documentation = {
     # Cache generation takes a really long time when fish is enabled
-    man.generateCaches = false;
+    man.cache.enable = false;
   };
 
   services = {
