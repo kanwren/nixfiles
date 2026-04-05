@@ -365,6 +365,7 @@
           pkgs.mkvtoolnix
           pkgs.python314Packages.subliminal
           pkgs.qalculate-gtk
+          pkgs.qt6Packages.qt6ct # fixes some QT theming, such as Dolphin
           pkgs.signal-desktop
           pkgs.transmission_4-gtk
           pkgs.trash-cli
