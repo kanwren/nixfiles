@@ -356,6 +356,7 @@
         };
 
         packages = [
+          pkgs.adw-gtk3 # fixes GTK theming, per https://github.com/noctalia-dev/noctalia-shell/issues/1713
           pkgs.bitwarden-desktop
           pkgs.dolphin-emu
           pkgs.joycond-cemuhook
