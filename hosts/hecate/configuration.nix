@@ -211,8 +211,8 @@
             };
           };
           iconTheme = {
-            name = "Papirus-Adapta-Nokto";
-            package = pkgs.papirus-icon-theme;
+            name = "FairyWren_Dark";
+            package = pkgs.fairywren;
           };
         };
         background = ../../desktop-backgrounds/hearts.png;
