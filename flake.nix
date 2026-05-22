@@ -18,11 +18,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -108,10 +103,6 @@
 
             # formatting
             self.formatter.${pkgs.stdenv.hostPlatform.system}
-
-            # sops
-            pkgs.sops
-            pkgs.ssh-to-age
           ];
         };
       });

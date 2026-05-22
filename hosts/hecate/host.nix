@@ -7,7 +7,6 @@ outputs.lib.mkNixosSystem {
 
   systemModules = [
     inputs.home-manager.nixosModules.home-manager
-    inputs.sops-nix.nixosModules.sops
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     inputs.nixos-hardware.nixosModules.common-cpu-amd
