@@ -197,6 +197,7 @@
 
     xserver = {
       enable = true;
+
       displayManager.lightdm = {
         enable = true;
         greeters.gtk = {
@@ -215,6 +216,11 @@
           };
         };
         background = ../../desktop-backgrounds/hearts.png;
+      };
+
+      xkb = {
+        layout = "us";
+        options = "caps:escape,compose:ralt,terminate:ctrl_alt_bksp";
       };
     };
 
