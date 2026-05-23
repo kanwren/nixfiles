@@ -87,7 +87,6 @@
           "ctrl+0=reset_font_size"
 
           "ctrl+shift+f=start_search"
-          "escape=end_search"
           "ctrl+shift+c=copy_to_clipboard:mixed"
           "ctrl+shift+v=paste_from_clipboard"
           "ctrl+shift+j=write_screen_file:paste,plain"
