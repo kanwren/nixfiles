@@ -3,11 +3,13 @@
     { pkgs, ... }:
     {
       environment.systemPackages = [
+        pkgs.calibre
         pkgs.feh
         pkgs.ghostscript
-        pkgs.qpdf
-        pkgs.mpv
         pkgs.libreoffice
+        pkgs.mpv
+        pkgs.qpdf
+        pkgs.xournalpp
       ];
     };
 }

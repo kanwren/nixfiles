@@ -3,8 +3,6 @@ let
     pkgs: with pkgs; [
       bat
       bat-extras.core
-      ncdu
-      nettools
       bc
       binutils-unwrapped
       bzip2
@@ -14,8 +12,8 @@ let
       coreutils
       curl
       diffutils
-      dos2unix
       dnsutils
+      dos2unix
       exiftool
       eza
       fd
@@ -29,20 +27,24 @@ let
       gnumake
       gnused
       gnutar
+      gocryptfs
       gptfdisk
       gzip
-      imagemagick
       hyperfine
+      imagemagick
       jq
       just
       libqalculate
+      libwebp
       lz4
       man-pages
       mkpasswd
       moreutils
+      ncdu
       neovim
       net-tools
       netcat
+      nettools
       nix-diff
       nix-index
       nix-tree
@@ -50,7 +52,6 @@ let
       openssl
       parallel
       parted
-      gocryptfs
       patch
       patchelf
       ripgrep
@@ -62,13 +63,13 @@ let
       sshfs
       tealdeer
       tmux
+      trash-cli
       tree
       unar
       unzip
       watch
       wget
       whois
-      trash-cli
       xxd
       xz
       yq-go
