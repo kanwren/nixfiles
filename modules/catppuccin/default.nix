@@ -1,8 +1,35 @@
 { inputs, ... }:
 
 {
+  flake.modules.nixos.catppuccin =
+    { pkgs, ... }:
+    {
+      services.xserver.displayManager.lightdm = {
+        greeters.gtk = {
+          theme = {
+            name = "catppuccin-mocha-lavender-standard";
+            package = pkgs.catppuccin-gtk.override {
+              accents = [ "lavender" ];
+              variant = "mocha";
+            };
+          };
+
+          iconTheme = {
+            name = "FairyWren_Dark";
+            package = pkgs.fairywren;
+          };
+        };
+
+        background = ../../desktop-backgrounds/hearts.png;
+      };
+
+      environment.systemPackages = [
+        pkgs.fairywren
+      ];
+    };
+
   flake.modules.homeManager.catppuccin =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
       imports = [ inputs.catppuccin.homeModules.catppuccin ];
 
@@ -31,7 +58,10 @@
           };
         };
 
-        gtk4.theme = config.gtk.theme;
+        iconTheme = {
+          name = "FairyWren_Dark";
+          package = pkgs.fairywren;
+        };
       };
 
       qt = {
