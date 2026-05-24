@@ -46,10 +46,6 @@
       url = "github:hercules-ci/flake-parts";
     };
 
-    import-tree = {
-      url = "github:denful/import-tree";
-    };
-
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
     };
@@ -63,7 +59,12 @@
     };
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
-
-  nixConfig = { };
+  outputs =
+    inputs:
+    let
+      inherit (inputs.nixpkgs) lib;
+      isFlakeModuleSrc = f: f.type == "regular" && f.hasExt "nix" && !lib.strings.hasPrefix "_" f.name;
+      flakeModules = lib.fileset.toList (lib.fileset.fileFilter isFlakeModuleSrc ./modules);
+    in
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = flakeModules; };
 }
