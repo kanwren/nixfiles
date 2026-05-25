@@ -64,7 +64,12 @@
     let
       inherit (inputs.nixpkgs) lib;
       isFlakeModuleSrc = f: f.type == "regular" && f.hasExt "nix" && !lib.strings.hasPrefix "_" f.name;
-      flakeModules = lib.fileset.toList (lib.fileset.fileFilter isFlakeModuleSrc ./modules);
+      flakeModules =
+        with lib.fileset;
+        let
+          templateIgnores = difference ./modules/templates ./modules/templates/default.nix;
+        in
+        difference (fileFilter isFlakeModuleSrc ./modules) templateIgnores;
     in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = flakeModules; };
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = lib.fileset.toList flakeModules; };
 }
