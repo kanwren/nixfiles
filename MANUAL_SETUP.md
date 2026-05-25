@@ -41,4 +41,3 @@ manually.
         - [Tabby cat](https://addons.mozilla.org/en-US/firefox/addon/tabby-cat-friend/)
 - Wallpapers: <https://github.com/catppuccin/wallpapers>
   - Update wallpaper with `betterlockscreen -u ...` and `betterlockscreen -w`
-

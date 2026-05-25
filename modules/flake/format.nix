@@ -13,18 +13,27 @@
 
     programs = {
       deadnix.enable = true;
-      nixfmt.enable = true;
-      shfmt.enable = true;
-      statix.enable = true;
       just.enable = true;
+      kdlfmt.enable = true;
+      mdformat.enable = true;
+      nixfmt.enable = true;
+      oxipng.enable = true;
+      prettier.enable = true;
+      statix.enable = true;
+      shfmt = {
+        enable = true;
+        useEditorConfig = true;
+      };
     };
 
     settings = {
       on-unmatched = "fatal";
       global.excludes = [
-        ".envrc"
         ".editorconfig"
         ".gitignore"
+        "*.txt"
+        "*.conf"
+        "*.jpg"
       ];
     };
   };

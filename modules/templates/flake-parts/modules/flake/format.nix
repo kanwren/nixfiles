@@ -22,7 +22,6 @@
     settings = {
       on-unmatched = "fatal";
       global.excludes = [
-        ".envrc"
         ".editorconfig"
         ".gitignore"
       ];

@@ -1,4 +1,4 @@
-set unstable := true
+set unstable
 set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 set script-interpreter := ["/bin/sh", "-e", "-u", "-o", "pipefail"]
 

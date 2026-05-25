@@ -21,7 +21,7 @@
             mkexec = "update-index --chmod=+x";
             root = "rev-parse --show-toplevel";
             alias = ''! f(){ git config --get-regexp ^alias | cut -c 7- | sed -e "s/ \(.*\)/ = \1/"; }; f'';
-            ignore = ''! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f'';
+            ignore = "! f(){ curl -sL https://www.toptal.com/developers/gitignore/api/$@ ; }; f";
             ignored = ''! f(){ find "$(realpath --relative-to=. "$(git rev-parse --show-toplevel)")" -type f -exec git check-ignore -v {} + | awk '{if ($1 !~ /^\//) print $2}' ; }; f'';
             praise = "blame";
           };

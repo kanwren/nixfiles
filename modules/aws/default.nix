@@ -1,4 +1,4 @@
-toplevel:
+_toplevel:
 
 {
   flake.modules.homeManager.aws =
@@ -71,6 +71,6 @@ toplevel:
           {
             nativeBuildInputs = [ pkgs.aws-iam-authenticator ];
           }
-          ''aws-iam-authenticator completion fish > $out'';
+          "aws-iam-authenticator completion fish > $out";
     };
 }

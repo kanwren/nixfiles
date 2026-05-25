@@ -8,7 +8,19 @@ indent_size = 2
 
 [*.{sh,bash}]
 indent_style = space
-indent_size = 2
+indent_size = 4
+
+[*.{html,css,js,ts}]
+indent_style = space
+indent_size = 4
+
+[*.json]
+indent_style = space
+indent_size = 4
+
+[*.kdl]
+indent_style = space
+indent_size = 4
 
 [justfile]
 indent_style = space
