@@ -11,7 +11,7 @@
     modules = [
       {
         networking.computerName = "nightjar";
-        primaryUser = "wrenn";
+        system.primaryUser = "wrenn";
 
         # These files are provisioned out-of-band on this machine.
         environment.etc."bashrc".target = "bashrc_nix"; # Manually patch to source bashrc_nix

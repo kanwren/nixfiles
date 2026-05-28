@@ -94,12 +94,12 @@ in
 
         networking = {
           localHostName = config.networking.computerName;
-          hostName = "${config.nentworking.localHostName}.local";
+          hostName = "${config.networking.localHostName}.local";
         };
 
         nixpkgs.overlays = [
-          config.flake.overlays.default
-          config.flake.overlays.pkgs-unstable
+          toplevel.config.flake.overlays.default
+          toplevel.config.flake.overlays.pkgs-unstable
         ];
 
         environment.variables = {

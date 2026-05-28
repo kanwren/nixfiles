@@ -50,6 +50,8 @@
       gtk = {
         enable = true;
 
+        gtk4.theme = null;
+
         theme = {
           name = "catppuccin-mocha-lavender-standard";
           package = pkgs.catppuccin-gtk.override {

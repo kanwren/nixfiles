@@ -51,7 +51,6 @@ let
       nmap
       openssl
       parallel
-      parted
       patch
       patchelf
       ripgrep
@@ -85,6 +84,7 @@ in
         commonPackages pkgs
         ++ (with pkgs; [
           unixtools.util-linux
+          parted
           gocryptfs
         ]);
     };
