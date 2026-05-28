@@ -6,6 +6,7 @@
 
     darwin.shell = {
       programs.fish.enable = true;
+      nixpkgs.config.problems.handlers."fzf.fish".broken = "warn";
     };
 
     homeManager.shell =

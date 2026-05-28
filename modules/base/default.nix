@@ -26,6 +26,8 @@ in
         nixpkgs.overlays = [
           config.flake.overlays.default
           config.flake.overlays.pkgs-unstable
+          inputs.fenix.overlays.default
+          inputs.naersk.overlays.default
         ];
 
         boot = {
@@ -100,6 +102,8 @@ in
         nixpkgs.overlays = [
           toplevel.config.flake.overlays.default
           toplevel.config.flake.overlays.pkgs-unstable
+          inputs.fenix.overlays.default
+          inputs.naersk.overlays.default
         ];
 
         environment.variables = {

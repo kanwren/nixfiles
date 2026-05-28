@@ -29,7 +29,12 @@
     };
 
   flake.modules.homeManager.catppuccin =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       imports = [ inputs.catppuccin.homeModules.catppuccin ];
 
@@ -43,6 +48,7 @@
         mpv.enable = false;
         rofi.enable = false;
         yazi.enable = false;
+        gtk.icon.enable = pkgs.stdenv.hostPlatform.isLinux;
       };
 
       xdg.enable = true;
@@ -50,7 +56,7 @@
       gtk = {
         enable = true;
 
-        gtk4.theme = null;
+        gtk4.theme = config.gtk.theme;
 
         theme = {
           name = "catppuccin-mocha-lavender-standard";
@@ -60,14 +66,18 @@
           };
         };
 
-        iconTheme = {
-          name = "FairyWren_Dark";
-          package = pkgs.fairywren;
-        };
+        iconTheme =
+          if pkgs.stdenv.hostPlatform.isLinux then
+            {
+              name = "FairyWren_Dark";
+              package = pkgs.fairywren;
+            }
+          else
+            null;
       };
 
       qt = {
-        enable = true;
+        enable = pkgs.stdenv.hostPlatform.isLinux;
         platformTheme.name = "gtk";
       };
     };

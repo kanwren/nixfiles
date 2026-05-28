@@ -10,7 +10,7 @@
     homeManager.aerospace =
       { pkgs, ... }:
       {
-        xdg.configFile."aerospace/aerospace.toml".source = pkgs.writers.writeTOML {
+        xdg.configFile."aerospace/aerospace.toml".source = pkgs.writers.writeTOML "aerospace.toml" {
           # See https://nikitabobko.github.io/AeroSpace/guide for configuration details
 
           start-at-login = true;

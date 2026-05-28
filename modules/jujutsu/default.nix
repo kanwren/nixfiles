@@ -45,8 +45,8 @@ in
     {
       home.packages = [
         pkgs.difftastic
-        pkgs.watchman
-      ];
+      ]
+      ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.watchman;
 
       programs.jujutsu = {
         enable = true;
@@ -223,7 +223,7 @@ in
             subprocess = true;
           };
 
-          fsmonitor = {
+          fsmonitor = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
             backend = "watchman";
             watchman.register-snapshot-trigger = true;
           };

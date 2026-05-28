@@ -74,7 +74,7 @@ in
 
         fish.interactiveShellInit = ''
           ${lib.getExe pkgs.wrenpkgs.frum} init | source
-          ${lib.getExe pkgs.wrenpkgs.fnm} env | source
+          ${lib.getExe pkgs.fnm} env | source
         '';
 
         git.settings = {
