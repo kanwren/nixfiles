@@ -31,7 +31,6 @@
   flake.modules.homeManager.catppuccin =
     {
       pkgs,
-      lib,
       config,
       ...
     }:
@@ -48,7 +47,7 @@
         mpv.enable = false;
         rofi.enable = false;
         yazi.enable = false;
-        gtk.icon.enable = pkgs.stdenv.hostPlatform.isLinux;
+        gtk.icon.enable = false;
       };
 
       xdg.enable = true;
