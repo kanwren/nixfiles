@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, ... }@toplevel:
 
 let
   userInfo = {
@@ -18,20 +18,20 @@ in
   };
 
   flake.modules.homeManager."users/wrenn" =
-    { pkgs, lib, ... }:
+    { pkgs, lib, config, ... }:
     {
       imports = [
-        config.flake.modules.homeManager.aws
-        config.flake.modules.homeManager.bazel
-        config.flake.modules.homeManager.btop
-        config.flake.modules.homeManager.catppuccin
-        config.flake.modules.homeManager.git
-        config.flake.modules.homeManager.go
-        config.flake.modules.homeManager.gpg
-        config.flake.modules.homeManager.jujutsu
-        config.flake.modules.homeManager.k8s
-        config.flake.modules.homeManager.shell
-        config.flake.modules.homeManager.zellij
+        toplevel.config.flake.modules.homeManager.aws
+        toplevel.config.flake.modules.homeManager.bazel
+        toplevel.config.flake.modules.homeManager.btop
+        toplevel.config.flake.modules.homeManager.catppuccin
+        toplevel.config.flake.modules.homeManager.git
+        toplevel.config.flake.modules.homeManager.go
+        toplevel.config.flake.modules.homeManager.gpg
+        toplevel.config.flake.modules.homeManager.jujutsu
+        toplevel.config.flake.modules.homeManager.k8s
+        toplevel.config.flake.modules.homeManager.shell
+        toplevel.config.flake.modules.homeManager.zellij
       ];
 
       home = {
@@ -70,7 +70,7 @@ in
       programs = {
         h.codeRoot = "$HOME/Development/code";
 
-        go.env.GOPATH = "$HOME/Development/go";
+        go.env.GOPATH = "${config.home.homeDirectory}/Development/go";
 
         fish.interactiveShellInit = ''
           ${lib.getExe pkgs.wrenpkgs.frum} init | source
