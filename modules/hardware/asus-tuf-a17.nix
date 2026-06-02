@@ -43,6 +43,8 @@
       hardware = {
         cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+        enableRedistributableFirmware = lib.mkDefault true;
+
         nvidia = {
           prime = {
             intelBusId = "PCI:5:0:0";
