@@ -14,6 +14,7 @@
       config.flake.modules.nixos.base
       config.flake.modules.nixos.bluetooth
       config.flake.modules.nixos.catppuccin
+      config.flake.modules.nixos.gaming
       config.flake.modules.nixos.graphics
       config.flake.modules.nixos.jarne
       config.flake.modules.nixos.shell
