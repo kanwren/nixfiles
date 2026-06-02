@@ -29,6 +29,8 @@ in
 
       nix.settings.trusted-users = [ "wren" ];
 
+      nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
+
       home-manager.users.wren = {
         imports = [ toplevel.config.flake.modules.homeManager."users/wren" ];
       };
