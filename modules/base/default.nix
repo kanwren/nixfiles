@@ -4,9 +4,6 @@
   ...
 }@toplevel:
 
-let
-  rev = inputs.self.rev or inputs.self.dirtyRev or null;
-in
 {
   flake.modules = {
     nixos.base =
@@ -19,7 +16,6 @@ in
 
         system = {
           stateVersion = lib.mkDefault "25.05";
-          configurationRevision = rev;
           autoUpgrade.enable = false;
         };
 
@@ -89,10 +85,7 @@ in
           toplevel.config.flake.modules.darwin.gpg
         ];
 
-        system = {
-          stateVersion = 5;
-          configurationRevision = rev;
-        };
+        system.stateVersion = 5;
 
         networking = {
           localHostName = config.networking.computerName;
