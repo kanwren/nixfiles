@@ -69,7 +69,7 @@
 
       nixpkgs = {
         hostPlatform = "x86_64-linux";
-        allowedUnfreePackages = [
+        config.allowUnfreePackages = [
           "nvidia-x11"
           "nvidia-settings"
         ];
