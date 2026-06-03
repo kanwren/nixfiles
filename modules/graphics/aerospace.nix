@@ -45,7 +45,7 @@
           };
 
           mode.main.binding = {
-            cmd-alt-enter = "exec-and-forget open -na Ghostty";
+            cmd-alt-enter = "exec-and-forget open -a Ghostty";
 
             cmd-alt-slash = "layout tiles horizontal vertical";
             cmd-alt-comma = "layout accordion horizontal vertical";
