@@ -48,6 +48,7 @@ in
         toplevel.config.flake.modules.homeManager.git
         toplevel.config.flake.modules.homeManager.go
         toplevel.config.flake.modules.homeManager.gpg
+        toplevel.config.flake.modules.homeManager.graphics
         toplevel.config.flake.modules.homeManager.jujutsu
         toplevel.config.flake.modules.homeManager.noctalia
         toplevel.config.flake.modules.homeManager.shell

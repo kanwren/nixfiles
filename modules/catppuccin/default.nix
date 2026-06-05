@@ -4,6 +4,19 @@
   flake.modules.nixos.catppuccin =
     { pkgs, ... }:
     {
+      imports = [ inputs.catppuccin.nixosModules.catppuccin ];
+
+      catppuccin = {
+        enable = true;
+        autoEnable = false;
+
+        flavor = "mocha";
+        accent = "lavender";
+
+        grub.enable = true;
+        tty.enable = true;
+      };
+
       services.xserver.displayManager.lightdm = {
         greeters.gtk = {
           theme = {
@@ -22,10 +35,6 @@
 
         background = ../../desktop-backgrounds/hearts.png;
       };
-
-      environment.systemPackages = [
-        pkgs.fairywren
-      ];
     };
 
   flake.modules.homeManager.catppuccin =
@@ -39,25 +48,33 @@
 
       catppuccin = {
         enable = true;
-        autoEnable = true;
+        autoEnable = false;
+
         flavor = "mocha";
         accent = "lavender";
 
+        # false options included for emphasis, when it has explicitly broken something
+        bat.enable = true;
+        btop.enable = true;
+        cava.enable = true;
+        eza.enable = true;
         firefox.enable = false;
-        kvantum.enable = false;
+        fish.enable = true;
+        fzf.enable = true;
+        ghostty.enable = true;
+        k9s.enable = true;
         mpv.enable = false;
-        rofi.enable = false;
+        swaylock.enable = true;
+        tmux.enable = true;
         yazi.enable = false;
-        gtk.icon.enable = false;
+        zathura.enable = true;
+        zellij.enable = true;
+
+        cursors.enable = config.gtk.enable;
+        gtk.icon.enable = config.gtk.enable;
       };
 
-      xdg.enable = true;
-
       gtk = {
-        enable = true;
-
-        gtk4.theme = config.gtk.theme;
-
         theme = {
           name = "catppuccin-mocha-lavender-standard";
           package = pkgs.catppuccin-gtk.override {
@@ -65,20 +82,6 @@
             variant = "mocha";
           };
         };
-
-        iconTheme =
-          if pkgs.stdenv.hostPlatform.isLinux then
-            {
-              name = "FairyWren_Dark";
-              package = pkgs.fairywren;
-            }
-          else
-            null;
-      };
-
-      qt = {
-        enable = pkgs.stdenv.hostPlatform.isLinux;
-        platformTheme.name = "gtk";
       };
     };
 }
