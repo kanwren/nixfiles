@@ -40,11 +40,6 @@
 
         i18n.defaultLocale = "en_US.UTF-8";
 
-        networking = {
-          firewall.enable = true;
-          networkmanager.enable = true;
-        };
-
         programs.command-not-found.enable = false;
 
         security = {
