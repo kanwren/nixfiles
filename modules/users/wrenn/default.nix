@@ -18,7 +18,12 @@ in
   };
 
   flake.modules.homeManager."users/wrenn" =
-    { pkgs, lib, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       imports = [
         toplevel.config.flake.modules.homeManager.aws

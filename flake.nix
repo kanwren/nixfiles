@@ -67,12 +67,17 @@
     let
       inherit (inputs.nixpkgs) lib;
       isFlakeModuleSrc = f: f.type == "regular" && f.hasExt "nix" && !lib.strings.hasPrefix "_" f.name;
-      flakeModules =
+      moduleDirs = [
+        ./flake
+        ./hosts
+        ./modules
+      ];
+      modules =
         with lib.fileset;
         let
           templateIgnores = difference ./modules/templates ./modules/templates/default.nix;
         in
-        difference (fileFilter isFlakeModuleSrc ./modules) templateIgnores;
+        difference (lib.fileset.unions (map (fileFilter isFlakeModuleSrc) moduleDirs)) templateIgnores;
     in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = lib.fileset.toList flakeModules; };
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = lib.fileset.toList modules; };
 }

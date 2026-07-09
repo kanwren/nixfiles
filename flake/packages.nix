@@ -25,7 +25,7 @@ in
     in
     {
       wrenpkgs = prev.lib.filesystem.packagesFromDirectoryRecursive {
-        directory = ../../pkgs/by-name;
+        directory = ../pkgs/by-name;
         inherit (scope) newScope callPackage;
       };
     };
