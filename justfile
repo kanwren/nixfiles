@@ -2,51 +2,29 @@ set unstable
 set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 set script-interpreter := ["/bin/sh", "-e", "-u", "-o", "pipefail"]
 
-v := ""
-extra_nix_flags := ""
 [private]
-verbose_flags := (if v != "" { " --print-build-logs --keep-going" } else { "" })
-[private]
-nix := "nix"
-[private]
-nix_command := nix + " --experimental-features 'nix-command flakes'" + verbose_flags + (if extra_nix_flags != "" { " " + extra_nix_flags } else { "" })
-[private]
-just := just_executable() + " --set v " + quote(v) + " --set extra_nix_flags " + quote(extra_nix_flags) + " --set nix " + quote(nix)
+nix_command := "nix --experimental-features 'nix-command flakes' --print-build-logs --keep-going"
 
 # Show this list
 [private]
 list-recipes:
     @just --list --unsorted --list-prefix '    '
-    @echo "Variables:"
-    @just --evaluate | while IFS= read line; do echo "    $line"; done
 
-# Fetch new versions of all flake inputs and regenerate the flake.lock
-update-inputs input="":
+# Fetch new versions of flake inputs
+update input="":
     {{ nix_command }} flake update{{ if input != "" { ' ' + quote(input) } else { '' } }} --commit-lock-file
 
-# Pin an input in the flake.lock to a specific flake reference
+# Pin a flake input to a specific reference
 pin-input input target:
     {{ nix_command }} flake lock --commit-lock-file --override-input {{ quote(input) }} {{ quote(target) }}
 
-# Check flake evaluation and run all checks
-check-flake:
+# Run all flake checks
+check:
     {{ nix_command }} flake check
 
-# Check formatting
-check-formatting:
-    {{ nix_command }} build '.#checks.{{ `nix eval --impure --expr 'builtins.currentSystem'` }}.check-format'
-    just --unstable --fmt --check
-
-[private]
-reformat_nix:
-    {{ nix_command }} fmt -- .
-
-[private]
-reformat_just:
-    just --unstable --fmt
-
 # Run the formatter
-reformat: reformat_nix reformat_just
+fmt:
+    {{ nix_command }} fmt
 
 # Rebuild the nix-index index
 reindex:
