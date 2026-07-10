@@ -11,6 +11,7 @@ in
     { pkgs, ... }:
     {
       users.users.wren = {
+        description = "Wren";
         isNormalUser = true;
         extraGroups = [
           "wheel"
