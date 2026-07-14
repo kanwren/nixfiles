@@ -3,7 +3,15 @@
 {
   flake.modules = {
     darwin.aerospace = {
-      homebrew.casks = [ "nikitabobko/tap/aerospace" ];
+      homebrew.taps = [
+        { name = "nikitabobko/tap"; }
+      ];
+      homebrew.casks = [
+        {
+          name = "nikitabobko/tap/aerospace";
+          trusted = true;
+        }
+      ];
       home-manager.sharedModules = [ config.flake.modules.homeManager.aerospace ];
     };
 
