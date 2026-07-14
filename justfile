@@ -1,6 +1,7 @@
 set unstable
 set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 set script-interpreter := ["/bin/sh", "-e", "-u", "-o", "pipefail"]
+set positional-arguments
 
 [private]
 nix_command := "nix --experimental-features 'nix-command flakes' --print-build-logs --keep-going"
@@ -11,8 +12,8 @@ list-recipes:
     @just --list --unsorted --list-prefix '    '
 
 # Fetch new versions of flake inputs
-update input="":
-    {{ nix_command }} flake update{{ if input != "" { ' ' + quote(input) } else { '' } }} --commit-lock-file
+update *inputs:
+    {{ nix_command }} flake update "$@" --commit-lock-file
 
 # Pin a flake input to a specific reference
 pin-input input target:
