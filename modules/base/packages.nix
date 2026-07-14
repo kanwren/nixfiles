@@ -90,8 +90,13 @@ in
     };
 
   flake.modules.darwin.base =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
-      environment.systemPackages = commonPackages pkgs;
+      environment.systemPackages =
+        let
+          # TODO: this should not be needed
+          brokenPackageNames = [ "unar" ];
+        in
+        lib.filter (pkg: !builtins.elem (lib.getName pkg) brokenPackageNames) (commonPackages pkgs);
     };
 }
