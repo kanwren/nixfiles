@@ -15,7 +15,14 @@
 
         # These files are provisioned out-of-band on this machine.
         environment.etc."bashrc".target = "bashrc_nix"; # Manually patch to source bashrc_nix
-        home-manager.sharedModules = [ { home.file.".bashrc".force = true; } ];
+        home-manager.sharedModules = [
+          {
+            home.file = {
+              ".bashrc".force = true;
+              ".profile".force = true;
+            };
+          }
+        ];
       }
 
       config.flake.modules.darwin.base
