@@ -4,6 +4,16 @@
 }:
 
 {
+  flake.modules.nixos.noctalia = {
+    imports = [
+      inputs.noctalia-greeter.nixosModules.default
+    ];
+
+    programs.noctalia-greeter.enable = true;
+
+    services.power-profiles-daemon.enable = true;
+  };
+
   flake.modules.homeManager.noctalia =
     { pkgs, ... }:
     {
@@ -11,7 +21,7 @@
         inputs.noctalia.homeModules.default
       ];
 
-      programs.noctalia-shell = {
+      programs.noctalia = {
         enable = true;
         settings = {
           # TODO
