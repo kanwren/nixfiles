@@ -2,42 +2,116 @@ set unstable
 set shell := ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 set script-interpreter := ["/bin/sh", "-e", "-u", "-o", "pipefail"]
 set positional-arguments
+set lazy
 
-[private]
 nix_command := "nix --experimental-features 'nix-command flakes' --print-build-logs --keep-going"
+hostname := `hostname`
 
-# Show this list
+[doc("Show this list")]
 [private]
-list-recipes:
+help:
     @just --list --unsorted --list-prefix '    '
 
-# Fetch new versions of flake inputs
+[arg("persist", long="persist", short="p", value="true", help="Build and persist for next system restart, but do not activate")]
+[arg("dry_run", long="dry-run", short="d", value="true", help="Build and show what would happen upon activation")]
+[arg("activate", long="activate", short="a", value="true", help="Build and activate, but do not persist for next system restart")]
+[doc("Apply the system configuration")]
+[group("system")]
+[linux]
+apply activate="" persist="" dry_run="": build
+    {{ assert((if dry_run != "" { activate + persist } else { "" }) == "", "error: cannot use --dry-run with --activate or --persist") }}
+    sudo nixos-rebuild {{ if activate != "" { if persist != "" { "switch" } else { "test" } } else if persist != "" { "boot" } else if dry_run != "" { "dry-activate" } else { "switch" } }} --flake '.#{{ hostname }}'
+
+[arg("dry_run", long="dry-run", short="d", value="true", help="Build and show what would happen upon activation")]
+[arg("activate", long="activate", short="a", value="true", help="Build and activate, but do not persist for next system restart")]
+[doc("Apply the system configuration")]
+[group("system")]
+[macos]
+apply activate="" dry_run="": build
+    sudo darwin-rebuild {{ if activate != "" { "activate" } else { "switch" } }}{{ if dry_run != "" { " --dry-run" } else { "" } }} --flake '.#{{ hostname }}'
+
+[doc("Activate this configuration and persist it for next system restart")]
+[group("system")]
+switch: (apply "true" "true" "")
+
+[doc("Activate this configuration")]
+[group("system")]
+activate: (apply "true" "" "")
+
+[doc("Persist this configuration for next system restart")]
+[group("system")]
+boot: (apply "" "true" "")
+
+[doc("Build the system configuration")]
+[group("system")]
+[linux]
+build:
+    {{ nix_command }} build --no-link --print-out-paths --print-build-logs --keep-going '.#nixosConfigurations.{{ hostname }}.config.system.build.toplevel'
+
+[doc("Build the system configuration")]
+[group("system")]
+[macos]
+build:
+    {{ nix_command }} build --no-link --print-out-paths --print-build-logs --keep-going '.#nixosConfigurations.{{ hostname }}.system'
+
+[doc('Enter a repl with the system configuration')]
+[group("system")]
+[linux]
+repl:
+    nix repl '.#nixosConfigurations.{{ hostname }}'
+
+[doc('Enter a repl with the system configuration')]
+[group("system")]
+[macos]
+repl:
+    nix repl '.#darwinConfigurations.{{ hostname }}'
+
+[doc("View the system generation history")]
+[group("system")]
+history:
+    nix profile history --profile /nix/var/nix/profiles/system
+
+[doc("Roll back to another generation")]
+[group("system")]
+[linux]
+rollback generation="":
+    sudo sh -c 'nix profile rollback --profile /nix/var/nix/profiles/system{{ if generation != "" { " --to " + generation } else { "" } }} && /nix/var/nix/profiles/system/bin/switch-to-configuration switch'
+
+[doc("Roll back to another generation")]
+[group("system")]
+[macos]
+rollback generation="":
+    sudo sh -c 'nix profile rollback --profile /nix/var/nix/profiles/system{{ if generation != "" { " --to " + generation } else { "" } }} && /nix/var/nix/profiles/system/activate'
+
+[doc("Fetch new versions of flake inputs")]
+[group("flake")]
 update *inputs:
     {{ nix_command }} flake update "$@" --commit-lock-file
 
-# Pin a flake input to a specific reference
+[doc("Pin a flake input to a specific reference")]
+[group("flake")]
 pin-input input target:
     {{ nix_command }} flake lock --commit-lock-file --override-input {{ quote(input) }} {{ quote(target) }}
 
-# Run all flake checks
+[doc("Run all flake checks")]
+[group("flake")]
 check:
     {{ nix_command }} flake check
 
-# Run the formatter
+[doc("Run the formatter")]
+[group("flake")]
 fmt:
     {{ nix_command }} fmt
 
-# Rebuild the nix-index index
+[doc("Rebuild the nix-index index")]
+[group("utils")]
 reindex:
-    {{ nix_command }} build --no-link --print-out-paths 'nixpkgs#nix-index'
-    {{ nix_command }} run 'nixpkgs#nix-index'
+    RAYON_NUM_THREADS=2 {{ nix_command }} run 'nixpkgs#nix-index'
 
-# Run the nix installer
-install-nix force="false":
-    if {{ if force == "true" { "true" } else { "! command -v nix" } }}; then {{ "curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install" }}; fi
-
-# Change the login shell for the current user
-darwin-change-shell SHELL:
+[doc("Change the login shell for the current user")]
+[group("utils")]
+[macos]
+change-shell SHELL:
     #!/bin/sh
     set -eux
     current_shell="$({{ nix_command }} shell 'nixpkgs#getent' -c getent passwd "$USER" | cut -d: -f7)"
