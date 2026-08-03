@@ -103,11 +103,6 @@ check:
 fmt:
     {{ nix_command }} fmt
 
-[doc("Rebuild the nix-index index")]
-[group("utils")]
-reindex:
-    RAYON_NUM_THREADS=2 {{ nix_command }} run 'nixpkgs#nix-index'
-
 [doc("Change the login shell for the current user")]
 [group("utils")]
 [macos]

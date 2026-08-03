@@ -8,7 +8,6 @@ let
       bzip2
       certigo
       certstrap
-      comma
       coreutils
       curl
       diffutils
@@ -46,7 +45,6 @@ let
       netcat
       nettools
       nix-diff
-      nix-index
       nix-tree
       nmap
       openssl
