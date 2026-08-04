@@ -43,6 +43,9 @@
       config,
       ...
     }:
+    let
+      inherit (pkgs.stdenv.hostPlatform) isLinux;
+    in
     {
       imports = [ inputs.catppuccin.homeModules.catppuccin ];
 
@@ -57,7 +60,6 @@
         bat.enable = true;
         btop.enable = true;
         cava.enable = true;
-        cursors.enable = true;
         eza.enable = true;
         firefox.enable = false;
         fish.enable = true;
@@ -71,6 +73,7 @@
         zathura.enable = true;
         zellij.enable = true;
 
+        cursors.enable = isLinux;
         gtk.icon.enable = config.gtk.enable;
       };
 

@@ -5,7 +5,7 @@
       inherit (pkgs.stdenv.hostPlatform) isLinux;
     in
     {
-      home.pointerCursor.enable = true;
+      home.pointerCursor.enable = isLinux;
 
       gtk = {
         enable = isLinux;
