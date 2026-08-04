@@ -57,6 +57,7 @@
         bat.enable = true;
         btop.enable = true;
         cava.enable = true;
+        cursors.enable = true;
         eza.enable = true;
         firefox.enable = false;
         fish.enable = true;
@@ -70,7 +71,6 @@
         zathura.enable = true;
         zellij.enable = true;
 
-        cursors.enable = config.gtk.enable;
         gtk.icon.enable = config.gtk.enable;
       };
 
