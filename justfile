@@ -5,7 +5,7 @@ set positional-arguments
 set lazy
 
 nix_command := "nix --experimental-features 'nix-command flakes' --print-build-logs --keep-going"
-hostname := `hostname`
+hostname := `hostname -s`
 
 [doc("Show this list")]
 [private]
@@ -18,7 +18,7 @@ help:
 [doc("Apply the system configuration")]
 [group("system")]
 [linux]
-apply activate="" persist="" dry_run="": build
+apply activate="" persist="" dry_run="":
     {{ assert((if dry_run != "" { activate + persist } else { "" }) == "", "error: cannot use --dry-run with --activate or --persist") }}
     sudo nixos-rebuild {{ if activate != "" { if persist != "" { "switch" } else { "test" } } else if persist != "" { "boot" } else if dry_run != "" { "dry-activate" } else { "switch" } }} --flake '.#{{ hostname }}'
 
@@ -27,7 +27,7 @@ apply activate="" persist="" dry_run="": build
 [doc("Apply the system configuration")]
 [group("system")]
 [macos]
-apply activate="" dry_run="": build
+apply activate="" persist="" dry_run="":
     sudo darwin-rebuild {{ if activate != "" { "activate" } else { "switch" } }}{{ if dry_run != "" { " --dry-run" } else { "" } }} --flake '.#{{ hostname }}'
 
 [doc("Activate this configuration and persist it for next system restart")]
@@ -52,7 +52,7 @@ build:
 [group("system")]
 [macos]
 build:
-    {{ nix_command }} build --no-link --print-out-paths --print-build-logs --keep-going '.#nixosConfigurations.{{ hostname }}.system'
+    {{ nix_command }} build --no-link --print-out-paths --print-build-logs --keep-going '.#darwinConfigurations.{{ hostname }}.system'
 
 [doc('Enter a repl with the system configuration')]
 [group("system")]
