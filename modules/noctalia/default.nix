@@ -9,7 +9,12 @@
       inputs.noctalia-greeter.nixosModules.default
     ];
 
-    programs.noctalia-greeter.enable = true;
+    programs.noctalia-greeter = {
+      enable = true;
+      settings = {
+        idle.timeout = 300;
+      };
+    };
 
     services.power-profiles-daemon.enable = true;
   };
