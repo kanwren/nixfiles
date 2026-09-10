@@ -58,10 +58,6 @@
       url = "github:numtide/treefmt-nix";
     };
 
-    make-shell = {
-      url = "github:nicknovitski/make-shell";
-    };
-
     systems = {
       url = "github:nix-systems/default";
     };
