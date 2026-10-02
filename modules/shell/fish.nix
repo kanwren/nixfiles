@@ -57,7 +57,7 @@
 
             # Misc shell utilities
 
-            "yield" = {
+            yield = {
               description = "Yield the arguments";
               body = /* fish */ ''
                 if test (count $argv) -gt 0
@@ -74,6 +74,34 @@
               '';
             };
 
+            sourceenv = {
+              description = "Source a .env file";
+              body = /* fish */ ''
+                set --local result 0
+                set --local exported_vars
+
+                for file in $argv
+                  if not test -f $file
+                    printf 'failed to load file: %s\n' $file >&2
+                    set result 1
+                  end
+
+                  while read --local line
+                    string match --quiet --regex '^\\s*(#.*)?$' $line
+                    and continue
+
+                    set --local item (string split --max 1 '=' $line)
+                    set --global --export $item[1] (string unescape --style=script -- $item[2])
+                    set --append exported_vars $item[1]
+                  end < $file
+
+                  printf 'exported %s\n' (string join ' ' -- $exported_vars)
+                end
+
+                return $result
+              '';
+            };
+
             _expand_which = {
               description = "Expand =foo to the path to foo";
               body = /* fish */ ''
@@ -82,13 +110,6 @@
                 else
                   command --search (string sub --start 2 $argv[1])
                 end
-              '';
-            };
-
-            _expand_last_command = {
-              description = "Expand the last command";
-              body = /* fish */ ''
-                echo $history[1]
               '';
             };
           };
@@ -103,10 +124,6 @@
               position = "anywhere";
               function = /* fish */ "_expand_which";
               regex = ''==?\S+'';
-            };
-            "!!" = {
-              position = "anywhere";
-              function = /* fish */ "_expand_last_command";
             };
             "find1" = {
               position = "command";
