@@ -57,8 +57,8 @@
 
             # Misc shell utilities
 
-            yield = {
-              description = "Yield the arguments";
+            list = {
+              description = "Yield the list of arguments";
               body = /* fish */ ''
                 if test (count $argv) -gt 0
                   printf '%s\0' $argv | string split0
