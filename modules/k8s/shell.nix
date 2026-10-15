@@ -43,7 +43,6 @@ toplevel:
               "kcp" = "kubectl cp";
               "kcu" = "kubectl config unset current-context";
               "kd" = "kubectl describe";
-              "kdel" = "kubectl delete";
               "kdf" = "kubectl diff";
               "kdff" = "kubectl diff --filename";
               "ke" = "kubectl edit";
@@ -58,6 +57,7 @@ toplevel:
               "kpj" = "kubectl patch --type=json";
               "kpm" = "kubectl patch --type=merge";
               "kps" = "kubectl patch --type=strategic";
+              "krm" = "kubectl delete";
               "kro" = "kubectl rollout";
               "kror" = "kubectl rollout restart";
               "kros" = "kubectl rollout status";
