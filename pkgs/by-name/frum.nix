@@ -1,7 +1,7 @@
 {
   lib,
   fetchFromGitHub,
-  openssl_3,
+  openssl,
   readline,
   libyaml,
   zlib,
@@ -28,7 +28,7 @@ naersk-lib.buildPackage {
   };
 
   buildInputs = [
-    openssl_3.dev
+    openssl.dev
     readline
     libyaml
     zlib
