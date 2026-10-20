@@ -43,7 +43,7 @@
             eval "$("${cfg.package}/bin/up" --setup)"
           '';
 
-          zsh.initExtra = ''
+          zsh.initContent = ''
             eval "$("${cfg.package}/bin/h" --setup "${cfg.codeRoot}")"
             eval "$("${cfg.package}/bin/up" --setup)"
           '';
