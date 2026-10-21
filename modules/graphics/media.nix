@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       environment.systemPackages = [
-        pkgs.calibre
+        # pkgs.calibre
         pkgs.feh
         pkgs.ghostscript
         pkgs.libreoffice
